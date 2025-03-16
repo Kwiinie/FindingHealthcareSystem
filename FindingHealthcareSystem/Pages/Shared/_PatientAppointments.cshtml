@@ -1,0 +1,121 @@
+﻿@using BusinessObjects.DTOs
+@using BusinessObjects.Enums
+@model Pages.Professional.Appointment.IndexModel
+
+@{
+    string[] dayOfWeeks = new string[6] { "T2", "T3", "T4", "T5", "T6", "T7" };
+    List<DateTime> days = new List<DateTime>();
+    DateTime today = Model.Monday;
+    DateTime monday = today.AddDays(-(int)today.DayOfWeek + (int)DayOfWeek.Monday);
+
+
+    List<string> GenerateSlot(int hourStart, int hourEnd, int interval)
+    {
+        var slots = new List<string>();
+        var start = new TimeSpan(hourStart, 0, 0);
+        var end = new TimeSpan(hourEnd, 0, 0);
+
+        for (var time = start; time < end; time = time.Add(new TimeSpan(0, interval, 0)))
+        {
+            slots.Add(time.ToString("hh\\:mm"));
+        }
+        return slots;
+    }
+    var slots = GenerateSlot(7, 17, 60);
+
+    string GetCellStyle(AppointmentStatus status)
+    {
+        return status switch
+        {
+            AppointmentStatus.Pending => @"   
+    border-left-width: 8px;
+    border-left-color:yellow;
+    border-left-style: solid;
+    background-color: #ffff0047;",
+            AppointmentStatus.Rejected => @"
+    border-left-width: 8px;
+    border-left-color:red;
+    border-left-style: solid;
+    background-color: #ff000085;",
+            AppointmentStatus.Completed => @" 
+    border-left-width: 8px;
+    border-left-color:green;
+    border-left-style: solid;
+    background-color: #00800070;",
+            _ => ""
+        };
+    }
+}
+<div id="patientAppointment" class="card border-0 rounded-3 shadow-sm mb-4">
+    <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+        <h5 class="card-title m-0">Lịch hẹn hôm nay</h5>
+        <div class="d-flex gap-2">
+            <button class="btn btn-primary" id="nextWeekBtn" data-next=-7> <i class="bi bi-chevron-left"></i> </button>
+            <input id="inputDate" type="date" class="form-control" value="@monday.ToString("yyyy-MM-dd")" />
+            <button class="btn btn-primary" id="nextWeekBtn" data-next=7> <i class="bi bi-chevron-right"></i> </button>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-sm btn-outline-primary">
+                <i class="bi bi-filter me-1"></i> Lọc
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-success">
+                <i class="bi bi-download me-1"></i> Xuất
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle text-center" style="table-layout:fixed; border-collapse: collapse; word-wrap: break-word;">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col" style="width: 10%; text-align:center;">Thời gian</th>
+                        @{
+                            @for (int i = 0; i < 6; i++)
+                            {
+                                DateTime day = monday.AddDays(i);
+                                days.Add(day);
+                                <th scope="col">
+                                    <div>@dayOfWeeks[i]</div>
+                                    <div>@day.ToString("dd/MM")</div>
+                                </th>
+                            }
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var slot in slots)
+                    {
+                        <tr>
+                            <td scope="col" class="p-2">@slot</td>
+                            @foreach (var day in days)
+                            {
+                                <td style="width:100%;">
+                                    @foreach (var appointment in Model.Appointments.Where(x => x.Date.Date == day.Date && x.Date.TimeOfDay == TimeSpan.Parse(slot)))
+                                    {
+                                        <div class="card" style="@(GetCellStyle(appointment.Status))">
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-start">
+                                                    <span class="me-1">Tên: </span>
+                                                    <span>@(appointment.Patient?.User != null ? appointment.Patient?.User.Fullname : "Nguyễn văn A")</span>
+                                                </div>
+                                                <div class="d-flex justify-content-start">
+                                                    <span class="me-1">Tuổi: </span>
+                                                    <span>@(appointment.Patient != null ? appointment.Patient?.Age : "30 tuổi")</span>
+                                                </div>
+                                                <div class="d-flex justify-content-start">
+                                                    <span class="me-1" style="white-space: nowrap;">Tình trạng: </span>
+                                                    <span class="card-text">@appointment.ProviderType.ToString()</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

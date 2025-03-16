@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace FindingHealthcareSystem.Pages.Professional.Appointment
+namespace FindingHealthcareSystem.Pages.Doctor
 {
-    public class PatientAppointmentModel : PageModel
+    public class IndexModel : PageModel
     {
         public void OnGet()
         {

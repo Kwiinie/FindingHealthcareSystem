@@ -3,6 +3,9 @@ using BusinessObjects;
 using BusinessObjects.Dtos.User;
 using BusinessObjects.DTOs.Articles;
 using BusinessObjects.DTOs.Category;
+using BusinessObjects.DTOs.Auth;
+using BusinessObjects.DTOs;
+using BusinessObjects.DTOs.Auth;
 using BusinessObjects.DTOs.Department;
 using BusinessObjects.DTOs.Facility;
 
@@ -29,6 +32,9 @@ namespace Services.Mappers
             CreateMap<Article, ArticleUpdateDTO>().ReverseMap();
             CreateMap<Article, ArticleReadDTO>().ReverseMap();  
 
+            CreateMap<User, LoginDto>().ReverseMap();
+            CreateMap<Appointment, AppointmentDTO>().ReverseMap();
+            CreateMap<User, LoginDto>().ReverseMap();
         }
     }
 }
