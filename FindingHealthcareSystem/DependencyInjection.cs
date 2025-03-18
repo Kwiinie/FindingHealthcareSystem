@@ -34,6 +34,7 @@ namespace FindingHealthcareSystem
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IFacilityRepository, FacilityRepository>();
             services.AddScoped<IProfessionalRepository, ProfessionalRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
 
             ////////////////////////////////////////////////
@@ -49,6 +50,8 @@ namespace FindingHealthcareSystem
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ISpecialtyService, SpecialtyService>();
             services.AddScoped<IProfessionalService, ProfessionalService>();
+            services.AddScoped<IUserService, UserService>();
+
 
             return services;
         }

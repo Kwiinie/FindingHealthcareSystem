@@ -23,7 +23,7 @@ public partial class Professional : BaseEntity
 
     public string? Experience { get; set; }
 
-    public string? WorkingHours { get; set; }
+    public string? WorkingHours { get; set; } /// giờ làm vieecjj khoảng thời gian 
 
     public ProfessionalRequestStatus RequestStatus { get; set; }
 

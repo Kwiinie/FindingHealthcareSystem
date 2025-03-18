@@ -1,5 +1,6 @@
 ﻿using BusinessObjects.Commons;
 using BusinessObjects.Dtos.User;
+using BusinessObjects.DTOs.User;
 using BusinessObjects.Entities;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,18 @@ namespace Services.Interfaces
         int pageSize);
 
         Task<GeneralUserDto?> GetUserByIdAsync(int userId);
+        Task AddUserAsync(GeneralUserDto userDto);
+        Task UpdateUserAsync(GeneralUserDto userDto);
+        Task DeleteUserAsync(int id);
+
+        Task<List<Specialty>> GetAllSpecialtiesAsync();
+        Task<List<FacilityDepartment>> GetAllHospitalsAsync();
+
+        Task<List<Expertise>> GetAllExpertises();
+
+        Task RegisterUserAsync(RegisterUserDto userDto);
+
+
 
     }
 }
