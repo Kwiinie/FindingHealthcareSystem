@@ -20,19 +20,15 @@ namespace Services.Services
             _httpClient = httpClient;
         }
 
-        public async Task<List<City>> GetCities(string proCode)
+        public async Task<List<District>> GetCities(string proCode)
         {
-            var apiUrl = $"https://provinces.open-api.vn/api/d/{proCode}/districts";
+            var apiUrl = $"https://provinces.open-api.vn/api/p/{proCode}?depth=2";
 
             var response = await _httpClient.GetStringAsync(apiUrl);
-            var cities = JsonConvert.DeserializeObject<List<City>>(response);
 
-            foreach (var c in cities)
-            {
-                c.Wards = await GetWards(c.Code);
-            }
+            var province = JsonConvert.DeserializeObject<Province>(response);
 
-            return cities;
+            return province.Districts;
         }
 
         public async Task<List<Province>> GetProvinces()
@@ -40,18 +36,19 @@ namespace Services.Services
             var apiUrl = "https://provinces.open-api.vn/api/p/";
             var response = await _httpClient.GetStringAsync(apiUrl);
             var provinces = JsonConvert.DeserializeObject<List<Province>>(response);
-/*
-            foreach (var province in provinces)
-            {
-                province.Cities = await GetCities(province.Code);
-            }*/
 
             return provinces;
         }
 
-        public Task<List<Ward>> GetWards(string cityCode)
+        public async Task<List<Ward>> GetWards(string cityCode)
         {
-            throw new NotImplementedException();
+            var apiUrl = $"https://provinces.open-api.vn/api/d/{cityCode}?depth=2";
+
+            var response = await _httpClient.GetStringAsync(apiUrl);
+            var district = JsonConvert.DeserializeObject<District>(response);
+
+            return district.Wards;
         }
+
     }
 }

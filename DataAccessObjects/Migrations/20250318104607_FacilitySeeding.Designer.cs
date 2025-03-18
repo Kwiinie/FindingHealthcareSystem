@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessObjects.Migrations
 {
     [DbContext(typeof(FindingHealthcareSystemContext))]
-    [Migration("20250317162535_fixdb")]
-    partial class fixdb
+    [Migration("20250318104607_FacilitySeeding")]
+    partial class FacilitySeeding
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -670,6 +670,104 @@ namespace DataAccessObjects.Migrations
                     b.HasIndex("TypeId");
 
                     b.ToTable("Facilities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "Số 1, Phố Lê Thánh Tông",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Bệnh viện công cung cấp dịch vụ y tế chuyên nghiệp với chi phí hợp lý.",
+                            District = "Quận Hoàn Kiếm",
+                            IsDeleted = false,
+                            Name = "Bệnh viện Đa khoa Quốc tế Hà Nội",
+                            OperationDay = new DateOnly(2025, 3, 17),
+                            Province = "Thành phố Hà Nội",
+                            Status = "Active",
+                            TypeId = 1,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ward = "Phường Hàng Bạc"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Address = "Số 25, Đường Lý Thường Kiệt",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Bệnh viện tư chuyên cung cấp dịch vụ y tế chất lượng cao.",
+                            District = "Quận 10",
+                            IsDeleted = false,
+                            Name = "Bệnh viện Đa khoa Vạn Hạnh",
+                            OperationDay = new DateOnly(2025, 3, 17),
+                            Province = "Thành phố Hồ Chí Minh",
+                            Status = "Active",
+                            TypeId = 2,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ward = "Phường Phú Trung"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Address = "Số 45, Đường Võ Văn Tần",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Trung tâm y tế cung cấp dịch vụ chăm sóc sức khỏe cơ bản cho cộng đồng.",
+                            District = "Quận 3",
+                            IsDeleted = false,
+                            Name = "Trung tâm Y tế Quận 3",
+                            OperationDay = new DateOnly(2025, 3, 17),
+                            Province = "Thành phố Hồ Chí Minh",
+                            Status = "Active",
+                            TypeId = 3,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ward = "Phường 7"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Address = "Số 78, Phố Giải Phóng",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Bệnh viện công lớn chuyên khoa về nội, ngoại, và các chuyên khoa khác.",
+                            District = "Quận Đống Đa",
+                            IsDeleted = false,
+                            Name = "Bệnh viện Bạch Mai",
+                            OperationDay = new DateOnly(2025, 3, 17),
+                            Province = "Thành phố Hà Nội",
+                            Status = "Active",
+                            TypeId = 1,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ward = "Phường Phương Liên"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Address = "Số 458, Đường Minh Khai",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Bệnh viện tư quốc tế với các dịch vụ khám chữa bệnh tiên tiến và chuyên nghiệp.",
+                            District = "Quận Cầu Giấy",
+                            IsDeleted = false,
+                            Name = "Bệnh viện Quốc tế Vinmec",
+                            OperationDay = new DateOnly(2025, 3, 17),
+                            Province = "Thành phố Hà Nội",
+                            Status = "Active",
+                            TypeId = 2,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ward = "Phường Dịch Vọng"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Address = "Số 50, Đường Nguyễn Văn Linh",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Trung tâm y tế cung cấp các dịch vụ chăm sóc sức khỏe cộng đồng và các dịch vụ phòng ngừa.",
+                            District = "Quận 7",
+                            IsDeleted = false,
+                            Name = "Trung tâm Y tế Quận 7",
+                            OperationDay = new DateOnly(2025, 3, 17),
+                            Province = "Thành phố Hồ Chí Minh",
+                            Status = "Active",
+                            TypeId = 3,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ward = "Phường Phú Mỹ"
+                        });
                 });
 
             modelBuilder.Entity("BusinessObjects.Entities.FacilityDepartment", b =>
@@ -708,6 +806,116 @@ namespace DataAccessObjects.Migrations
                     b.HasIndex("FacilityId");
 
                     b.ToTable("FacilityDepartments");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 1,
+                            FacilityId = 1,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 2,
+                            FacilityId = 1,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 3,
+                            FacilityId = 2,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 4,
+                            FacilityId = 2,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 5,
+                            FacilityId = 3,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 6,
+                            FacilityId = 3,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 7,
+                            FacilityId = 4,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 8,
+                            FacilityId = 4,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 9,
+                            FacilityId = 5,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 10,
+                            FacilityId = 5,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 11,
+                            FacilityId = 6,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 12,
+                            FacilityId = 6,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("BusinessObjects.Entities.FacilityType", b =>
@@ -748,27 +956,27 @@ namespace DataAccessObjects.Migrations
                         {
                             Id = 1,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Cơ sở y tế chuyên điều trị các bệnh lý đa dạng.",
+                            Description = "Bệnh viện do nhà nước sở hữu và quản lý, cung cấp dịch vụ y tế cho người dân với chi phí thấp hơn.",
                             IsDeleted = false,
-                            Name = "Bệnh viện",
+                            Name = "Bệnh viện công",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 2,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Cơ sở y tế nhỏ, chủ yếu khám chữa bệnh ngoại trú.",
+                            Description = "Bệnh viện thuộc sở hữu của các cá nhân hoặc tổ chức tư nhân, cung cấp dịch vụ y tế với chất lượng cao và chi phí có thể cao hơn.",
                             IsDeleted = false,
-                            Name = "Phòng khám",
+                            Name = "Bệnh viện tư",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 3,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Cửa hàng cung cấp thuốc và các sản phẩm y tế.",
+                            Description = "Cơ sở cung cấp dịch vụ y tế cơ bản và phòng ngừa cho cộng đồng.",
                             IsDeleted = false,
-                            Name = "Nhà thuốc",
+                            Name = "Trung tâm y tế",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
@@ -1029,14 +1237,14 @@ namespace DataAccessObjects.Migrations
                         new
                         {
                             Id = 1,
-                            Address = "Số 10, Đường X, Hà Nội",
+                            Address = "Số 10, Đường X",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Degree = "Bác sĩ đa khoa",
-                            District = "Ba Đình",
+                            District = "Quận Ba Đình",
                             Experience = "Có 10 năm kinh nghiệm trong lĩnh vực khám chữa bệnh",
                             ExpertiseId = 1,
                             IsDeleted = false,
-                            Province = "Hà Nội",
+                            Province = "Thành phố Hà Nội",
                             RequestStatus = "Approved",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 4,
@@ -1046,14 +1254,14 @@ namespace DataAccessObjects.Migrations
                         new
                         {
                             Id = 2,
-                            Address = "Số 15, Đường Y, Hồ Chí Minh",
+                            Address = "Số 15, Đường Y",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Degree = "Bác sĩ y học cổ truyền",
                             District = "Quận 1",
                             Experience = "Có 5 năm kinh nghiệm trong điều trị các bệnh lý bằng y học cổ truyền",
                             ExpertiseId = 2,
                             IsDeleted = false,
-                            Province = "Hồ Chí Minh",
+                            Province = "Thành phố Hồ Chí Minh",
                             RequestStatus = "Pending",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 5,

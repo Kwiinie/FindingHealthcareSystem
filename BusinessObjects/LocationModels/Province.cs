@@ -11,6 +11,6 @@ namespace BusinessObjects.LocationModels
 
         public string Name { get; set; }
         public string Code { get; set; }
-        public List<City> Cities { get; set; } = new List<City>();
+        public List<District> Districts { get; set; } = new List<District>();
     }
 }

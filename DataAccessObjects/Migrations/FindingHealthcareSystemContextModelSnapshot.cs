@@ -672,46 +672,46 @@ namespace DataAccessObjects.Migrations
                         new
                         {
                             Id = 1,
-                            Address = "Số 1, Phố Lê Thánh Tông, Hoàn Kiếm, Hà Nội",
+                            Address = "Số 1, Phố Lê Thánh Tông",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Bệnh viện công cung cấp dịch vụ y tế chuyên nghiệp với chi phí hợp lý.",
-                            District = "Hoàn Kiếm",
+                            District = "Quận Hoàn Kiếm",
                             IsDeleted = false,
                             Name = "Bệnh viện Đa khoa Quốc tế Hà Nội",
                             OperationDay = new DateOnly(2025, 3, 17),
-                            Province = "Hà Nội",
+                            Province = "Thành phố Hà Nội",
                             Status = "Active",
                             TypeId = 1,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Ward = "Hàng Bạc"
+                            Ward = "Phường Hàng Bạc"
                         },
                         new
                         {
                             Id = 2,
-                            Address = "Số 25, Đường Lý Thường Kiệt, Quận 10, Hồ Chí Minh",
+                            Address = "Số 25, Đường Lý Thường Kiệt",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Bệnh viện tư chuyên cung cấp dịch vụ y tế chất lượng cao.",
                             District = "Quận 10",
                             IsDeleted = false,
                             Name = "Bệnh viện Đa khoa Vạn Hạnh",
                             OperationDay = new DateOnly(2025, 3, 17),
-                            Province = "Hồ Chí Minh",
+                            Province = "Thành phố Hồ Chí Minh",
                             Status = "Active",
                             TypeId = 2,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Ward = "Phú Trung"
+                            Ward = "Phường Phú Trung"
                         },
                         new
                         {
                             Id = 3,
-                            Address = "Số 45, Đường Võ Văn Tần, Quận 3, Hồ Chí Minh",
+                            Address = "Số 45, Đường Võ Văn Tần",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Trung tâm y tế cung cấp dịch vụ chăm sóc sức khỏe cơ bản cho cộng đồng.",
                             District = "Quận 3",
                             IsDeleted = false,
                             Name = "Trung tâm Y tế Quận 3",
                             OperationDay = new DateOnly(2025, 3, 17),
-                            Province = "Hồ Chí Minh",
+                            Province = "Thành phố Hồ Chí Minh",
                             Status = "Active",
                             TypeId = 3,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -720,50 +720,50 @@ namespace DataAccessObjects.Migrations
                         new
                         {
                             Id = 4,
-                            Address = "Số 78, Phố Giải Phóng, Đống Đa, Hà Nội",
+                            Address = "Số 78, Phố Giải Phóng",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Bệnh viện công lớn chuyên khoa về nội, ngoại, và các chuyên khoa khác.",
-                            District = "Đống Đa",
+                            District = "Quận Đống Đa",
                             IsDeleted = false,
                             Name = "Bệnh viện Bạch Mai",
                             OperationDay = new DateOnly(2025, 3, 17),
-                            Province = "Hà Nội",
+                            Province = "Thành phố Hà Nội",
                             Status = "Active",
                             TypeId = 1,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Ward = "Phương Liên"
+                            Ward = "Phường Phương Liên"
                         },
                         new
                         {
                             Id = 5,
-                            Address = "Số 458, Đường Minh Khai, Cầu Giấy, Hà Nội",
+                            Address = "Số 458, Đường Minh Khai",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Bệnh viện tư quốc tế với các dịch vụ khám chữa bệnh tiên tiến và chuyên nghiệp.",
-                            District = "Cầu Giấy",
+                            District = "Quận Cầu Giấy",
                             IsDeleted = false,
                             Name = "Bệnh viện Quốc tế Vinmec",
                             OperationDay = new DateOnly(2025, 3, 17),
-                            Province = "Hà Nội",
+                            Province = "Thành phố Hà Nội",
                             Status = "Active",
                             TypeId = 2,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Ward = "Dịch Vọng"
+                            Ward = "Phường Dịch Vọng"
                         },
                         new
                         {
                             Id = 6,
-                            Address = "Số 50, Đường Nguyễn Văn Linh, Quận 7, Hồ Chí Minh",
+                            Address = "Số 50, Đường Nguyễn Văn Linh",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Trung tâm y tế cung cấp các dịch vụ chăm sóc sức khỏe cộng đồng và các dịch vụ phòng ngừa.",
                             District = "Quận 7",
                             IsDeleted = false,
                             Name = "Trung tâm Y tế Quận 7",
                             OperationDay = new DateOnly(2025, 3, 17),
-                            Province = "Hồ Chí Minh",
+                            Province = "Thành phố Hồ Chí Minh",
                             Status = "Active",
                             TypeId = 3,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Ward = "Phú Mỹ"
+                            Ward = "Phường Phú Mỹ"
                         });
                 });
 
@@ -1234,14 +1234,14 @@ namespace DataAccessObjects.Migrations
                         new
                         {
                             Id = 1,
-                            Address = "Số 10, Đường X, Hà Nội",
+                            Address = "Số 10, Đường X",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Degree = "Bác sĩ đa khoa",
-                            District = "Ba Đình",
+                            District = "Quận Ba Đình",
                             Experience = "Có 10 năm kinh nghiệm trong lĩnh vực khám chữa bệnh",
                             ExpertiseId = 1,
                             IsDeleted = false,
-                            Province = "Hà Nội",
+                            Province = "Thành phố Hà Nội",
                             RequestStatus = "Approved",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 4,
@@ -1251,14 +1251,14 @@ namespace DataAccessObjects.Migrations
                         new
                         {
                             Id = 2,
-                            Address = "Số 15, Đường Y, Hồ Chí Minh",
+                            Address = "Số 15, Đường Y",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Degree = "Bác sĩ y học cổ truyền",
                             District = "Quận 1",
                             Experience = "Có 5 năm kinh nghiệm trong điều trị các bệnh lý bằng y học cổ truyền",
                             ExpertiseId = 2,
                             IsDeleted = false,
-                            Province = "Hồ Chí Minh",
+                            Province = "Thành phố Hồ Chí Minh",
                             RequestStatus = "Pending",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 5,

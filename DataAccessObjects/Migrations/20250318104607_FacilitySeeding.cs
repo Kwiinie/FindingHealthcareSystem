@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DataAccessObjects.Migrations
 {
     /// <inheritdoc />
-    public partial class SeedUser : Migration
+    public partial class FacilitySeeding : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -153,10 +153,11 @@ namespace DataAccessObjects.Migrations
                     OperationDay = table.Column<DateOnly>(type: "date", nullable: true),
                     Province = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     District = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Ward = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImgUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()")
@@ -236,7 +237,7 @@ namespace DataAccessObjects.Migrations
                     ExpertiseId = table.Column<int>(type: "int", nullable: true),
                     Province = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     District = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Ward = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Degree = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Experience = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -598,9 +599,9 @@ namespace DataAccessObjects.Migrations
                 columns: new[] { "Id", "Description", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Cơ sở y tế chuyên điều trị các bệnh lý đa dạng.", "Bệnh viện" },
-                    { 2, "Cơ sở y tế nhỏ, chủ yếu khám chữa bệnh ngoại trú.", "Phòng khám" },
-                    { 3, "Cửa hàng cung cấp thuốc và các sản phẩm y tế.", "Nhà thuốc" }
+                    { 1, "Bệnh viện do nhà nước sở hữu và quản lý, cung cấp dịch vụ y tế cho người dân với chi phí thấp hơn.", "Bệnh viện công" },
+                    { 2, "Bệnh viện thuộc sở hữu của các cá nhân hoặc tổ chức tư nhân, cung cấp dịch vụ y tế với chất lượng cao và chi phí có thể cao hơn.", "Bệnh viện tư" },
+                    { 3, "Cơ sở cung cấp dịch vụ y tế cơ bản và phòng ngừa cho cộng đồng.", "Trung tâm y tế" }
                 });
 
             migrationBuilder.InsertData(
@@ -638,6 +639,19 @@ namespace DataAccessObjects.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Facilities",
+                columns: new[] { "Id", "Address", "Description", "District", "ImgUrl", "Name", "OperationDay", "Province", "Status", "TypeId", "Ward" },
+                values: new object[,]
+                {
+                    { 1, "Số 1, Phố Lê Thánh Tông", "Bệnh viện công cung cấp dịch vụ y tế chuyên nghiệp với chi phí hợp lý.", "Quận Hoàn Kiếm", null, "Bệnh viện Đa khoa Quốc tế Hà Nội", new DateOnly(2025, 3, 17), "Thành phố Hà Nội", "Active", 1, "Phường Hàng Bạc" },
+                    { 2, "Số 25, Đường Lý Thường Kiệt", "Bệnh viện tư chuyên cung cấp dịch vụ y tế chất lượng cao.", "Quận 10", null, "Bệnh viện Đa khoa Vạn Hạnh", new DateOnly(2025, 3, 17), "Thành phố Hồ Chí Minh", "Active", 2, "Phường Phú Trung" },
+                    { 3, "Số 45, Đường Võ Văn Tần", "Trung tâm y tế cung cấp dịch vụ chăm sóc sức khỏe cơ bản cho cộng đồng.", "Quận 3", null, "Trung tâm Y tế Quận 3", new DateOnly(2025, 3, 17), "Thành phố Hồ Chí Minh", "Active", 3, "Phường 7" },
+                    { 4, "Số 78, Phố Giải Phóng", "Bệnh viện công lớn chuyên khoa về nội, ngoại, và các chuyên khoa khác.", "Quận Đống Đa", null, "Bệnh viện Bạch Mai", new DateOnly(2025, 3, 17), "Thành phố Hà Nội", "Active", 1, "Phường Phương Liên" },
+                    { 5, "Số 458, Đường Minh Khai", "Bệnh viện tư quốc tế với các dịch vụ khám chữa bệnh tiên tiến và chuyên nghiệp.", "Quận Cầu Giấy", null, "Bệnh viện Quốc tế Vinmec", new DateOnly(2025, 3, 17), "Thành phố Hà Nội", "Active", 2, "Phường Dịch Vọng" },
+                    { 6, "Số 50, Đường Nguyễn Văn Linh", "Trung tâm y tế cung cấp các dịch vụ chăm sóc sức khỏe cộng đồng và các dịch vụ phòng ngừa.", "Quận 7", null, "Trung tâm Y tế Quận 7", new DateOnly(2025, 3, 17), "Thành phố Hồ Chí Minh", "Active", 3, "Phường Phú Mỹ" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Patients",
                 columns: new[] { "Id", "Note", "UserId" },
                 values: new object[,]
@@ -648,11 +662,30 @@ namespace DataAccessObjects.Migrations
 
             migrationBuilder.InsertData(
                 table: "Professionals",
-                columns: new[] { "Id", "Address", "City", "Degree", "District", "Experience", "ExpertiseId", "ExpertiseId1", "Province", "RequestStatus", "UserId", "WorkingHours" },
+                columns: new[] { "Id", "Address", "Degree", "District", "Experience", "ExpertiseId", "ExpertiseId1", "Province", "RequestStatus", "UserId", "Ward", "WorkingHours" },
                 values: new object[,]
                 {
-                    { 1, "Số 10, Đường X, Hà Nội", "Hà Nội", "Bác sĩ đa khoa", "Ba Đình", "Có 10 năm kinh nghiệm trong lĩnh vực khám chữa bệnh", 1, null, "Hà Nội", "Approved", 4, "Thứ 2 - Thứ 6, 8:00 - 17:00" },
-                    { 2, "Số 15, Đường Y, Hồ Chí Minh", "Hồ Chí Minh", "Bác sĩ y học cổ truyền", "Quận 1", "Có 5 năm kinh nghiệm trong điều trị các bệnh lý bằng y học cổ truyền", 2, null, "Hồ Chí Minh", "Pending", 5, "Thứ 2 - Thứ 7, 9:00 - 18:00" }
+                    { 1, "Số 10, Đường X", "Bác sĩ đa khoa", "Quận Ba Đình", "Có 10 năm kinh nghiệm trong lĩnh vực khám chữa bệnh", 1, null, "Thành phố Hà Nội", "Approved", 4, "Phường Cửa Đông", "Thứ 2 - Thứ 6, 8:00 - 17:00" },
+                    { 2, "Số 15, Đường Y", "Bác sĩ y học cổ truyền", "Quận 1", "Có 5 năm kinh nghiệm trong điều trị các bệnh lý bằng y học cổ truyền", 2, null, "Thành phố Hồ Chí Minh", "Pending", 5, "Phường Bến Nghé", "Thứ 2 - Thứ 7, 9:00 - 18:00" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "FacilityDepartments",
+                columns: new[] { "Id", "DepartmentId", "FacilityId" },
+                values: new object[,]
+                {
+                    { 1, 1, 1 },
+                    { 2, 2, 1 },
+                    { 3, 3, 2 },
+                    { 4, 4, 2 },
+                    { 5, 5, 3 },
+                    { 6, 6, 3 },
+                    { 7, 7, 4 },
+                    { 8, 8, 4 },
+                    { 9, 9, 5 },
+                    { 10, 10, 5 },
+                    { 11, 11, 6 },
+                    { 12, 12, 6 }
                 });
 
             migrationBuilder.InsertData(
