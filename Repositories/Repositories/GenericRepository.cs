@@ -1,5 +1,7 @@
 ﻿using BusinessObjects.Commons;
+using DataAccessObjects.DAOs;
 using DataAccessObjects.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -47,6 +49,12 @@ namespace Repositories.Repositories
             string includeProperties = "")
         {
             return await _dao.GetPagedListAsync(filter, pageIndex, pageSize, orderBy, includeProperties);
+        }
+
+        public async Task<IEnumerable<T>> SearchAsync(Dictionary<string, object?> filters, List<string>? includes = null)
+        {
+            var query = _dao.GetFilteredQuery(filters, includes);
+            return await query.ToListAsync();
         }
 
         public async Task AddAsync(T entity)

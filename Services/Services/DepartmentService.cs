@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BusinessObjects.Dtos.User;
 using BusinessObjects.DTOs.Department;
+using BusinessObjects.DTOs.Facility;
 using BusinessObjects.Entities;
 using Services.Interfaces;
 using System;
@@ -29,6 +30,57 @@ namespace Services.Services
                 return new List<DepartmentDto>();
             }
             return _mapper.Map<List<DepartmentDto>>(departments);
+        }
+
+        public async Task<DepartmentDto> Create(DepartmentDto departmentDto)
+        {
+            if (string.IsNullOrEmpty(departmentDto.Name))
+            {
+                throw new Exception("Department name is required");
+            }
+            if (string.IsNullOrEmpty(departmentDto.Description))
+            {
+                throw new Exception("Department description is required");
+            }
+            var departmentRepo = _unitOfWork.GetRepository<Department>();
+            var department = _mapper.Map<Department>(departmentDto);
+            await departmentRepo.AddAsync(department);
+            await _unitOfWork.SaveChangesAsync();
+            return _mapper.Map<DepartmentDto>(department);
+        }
+
+        public async Task<DepartmentDto> Update(int id, DepartmentDto departmentDto)
+        {
+            if (string.IsNullOrEmpty(departmentDto.Name))
+            {
+                throw new Exception("Department name is required");
+            }
+            if (string.IsNullOrEmpty(departmentDto.Description))
+            {
+                throw new Exception("Department description is required");
+            }
+            var departmentRepo = _unitOfWork.GetRepository<Department>();
+            var department = await departmentRepo.GetByIdAsync(id);
+            if (department == null)
+            {
+                throw new Exception("Department not found");
+            }
+            department.Name = departmentDto.Name;
+            department.Description = departmentDto.Description;
+            departmentRepo.Update(department);
+            await _unitOfWork.SaveChangesAsync();
+            return _mapper.Map<DepartmentDto>(department);
+        }
+
+        public async Task<DepartmentDto> GetById(int id)
+        {
+            var departmentRepo = _unitOfWork.GetRepository<Department>();
+            var department = await departmentRepo.GetByIdAsync(id);
+            if (department == null)
+            {
+                throw new Exception("Department not found");
+            }
+            return _mapper.Map<DepartmentDto>(department);
         }
     }
 }

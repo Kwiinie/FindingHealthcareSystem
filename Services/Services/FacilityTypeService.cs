@@ -31,5 +31,71 @@ namespace Services.Services
             }
             return _mapper.Map<List<FacilityTypeDto>>(facilities);
         }
+
+        public async Task<FacilityTypeDto> Create (FacilityTypeDto facilityTypeDto)
+        {
+            if (string.IsNullOrEmpty(facilityTypeDto.Name))
+            {
+                throw new Exception("Facility Type name is required");
+            }
+            if (string.IsNullOrEmpty(facilityTypeDto.Description))
+            {
+                throw new Exception("Facility Type description is required");
+            }
+            var facRepo = _unitOfWork.GetRepository<FacilityType>();
+            var facility = _mapper.Map<FacilityType>(facilityTypeDto);
+            await facRepo.AddAsync(facility);
+            await _unitOfWork.SaveChangesAsync();
+            return _mapper.Map<FacilityTypeDto>(facility);
+        }
+
+        public async Task<FacilityTypeDto> Update(int id, FacilityTypeDto facilityTypeDto)
+        {
+            if (string.IsNullOrEmpty(facilityTypeDto.Name))
+            {
+                throw new Exception("Facility Type name is required");
+            }
+            if (string.IsNullOrEmpty(facilityTypeDto.Description))
+            {
+                throw new Exception("Facility Type description is required");
+            }
+            var facRepo = _unitOfWork.GetRepository<FacilityType>();
+            var facility = await facRepo.GetByIdAsync(id);
+            if (facility == null)
+            {
+                throw new Exception("Facility Type not found");
+            }
+            facility.Name = facilityTypeDto.Name;
+            facility.Description = facilityTypeDto.Description;
+            facRepo.Update(facility);
+            await _unitOfWork.SaveChangesAsync();
+            return _mapper.Map<FacilityTypeDto>(facility);
+        }
+
+        public async Task<FacilityTypeDto> GetById(int id)
+        {
+            var facRepo = _unitOfWork.GetRepository<FacilityType>();
+            var facility = await facRepo.GetByIdAsync(id);
+            if (facility == null)
+            {
+                throw new Exception("Facility Type not found");
+            }
+            return _mapper.Map<FacilityTypeDto>(facility);
+        }
+
+        public async Task<FacilityTypeDto> DeleteAsync(int id)
+        {
+            var facRepo = _unitOfWork.GetRepository<FacilityType>();
+            var facility = await facRepo.GetByIdAsync(id);
+            if (facility == null)
+            {
+                throw new Exception("Facility Type not found");
+            }
+            facility.IsDeleted = true;
+            facility.UpdatedAt = DateTime.UtcNow.AddHours(7);
+            facRepo.Update(facility);
+            await _unitOfWork.SaveChangesAsync();
+            return _mapper.Map<FacilityTypeDto>(facility);
+        }
     }
 }

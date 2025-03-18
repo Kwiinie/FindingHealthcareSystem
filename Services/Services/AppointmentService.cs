@@ -70,6 +70,11 @@ namespace Services.Services
             throw new NotImplementedException();
         }
 
+        public Task<IEnumerable<AppointmentDTO>> SearchAsync(Dictionary<string, object?> filters, List<string>? includes = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(AppointmentDTO entity)
         {
             throw new NotImplementedException();

@@ -18,21 +18,40 @@ namespace FindingHealthcareSystem
         public static IServiceCollection AddApplicationService(this IServiceCollection services)
         {
             services.AddAutoMapper(typeof(MappingProfile));
-            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddHttpContextAccessor();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+                
+            ///////////////////////////////////////////////////////
+            ///                      DAOS                      ///
+            /////////////////////////////////////////////////////
+            services.AddScoped<IFacilityDao, FacilityDao>();
             services.AddScoped(typeof(IGenericDAO<>), typeof(GenericDAO<>));
+
+
+            ////////////////////////////////////////////////////
+            ///                 REPOSITORIES                ///
+            //////////////////////////////////////////////////
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<IFacilityRepository, FacilityRepository>();
+            services.AddScoped<IProfessionalRepository, ProfessionalRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+
+
+            ////////////////////////////////////////////////
+            ///                 SERVICES                ///
+            //////////////////////////////////////////////
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IDepartmentService, DepartmentService>();
             services.AddScoped<IFacilityTypeService, FacilityTypeService>();
             services.AddScoped<IAppointmentService, AppointmentService>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient<ILocationService, LocationService>();
             services.AddScoped<IAuthService, AuthService>();
-            services.AddHttpContextAccessor();
-            services.AddTransient<ILocationService, LocationService>();
+            services.AddScoped<IFacilityService, FacilityService>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<ISpecialtyService, SpecialtyService>();
+            services.AddScoped<IProfessionalService, ProfessionalService>();
+            services.AddScoped<IUserService, UserService>();
 
-            services.AddTransient<ILocationService, LocationService>();
-            services.AddScoped<IAuthService, AuthService>();
-            services.AddHttpContextAccessor();
 
             return services;
         }

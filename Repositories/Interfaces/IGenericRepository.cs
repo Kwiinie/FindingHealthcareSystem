@@ -20,6 +20,7 @@ namespace Repositories.Interfaces
             int pageSize,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
             string includeProperties = "");
+        Task<IEnumerable<T>> SearchAsync(Dictionary<string, object?> filters, List<string>? includes = null);
         Task AddAsync(T entity);
         Task AddRangeAsync(IEnumerable<T> entities);
         void Update(T entity);
