@@ -151,7 +151,16 @@
                                     </div>
                                 </li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="/profile"><i class="bi bi-person me-2"></i>Hồ sơ cá nhân</a></li>
+                                <li>
+                                    @if (currentUser.Role == "Patient")
+                                    {
+                                        <a class="dropdown-item" href="/patient/profile/@currentUser.Id"><i class="bi bi-person me-2"></i>Hồ sơ cá nhân</a>
+                                    }
+                                    else if (currentUser.Role == "Professional")
+                                    {
+                                        <a class="dropdown-item" href="/professional/@currentUser.Id"><i class="bi bi-person me-2"></i>Hồ sơ cá nhân</a>
+                                    }
+                                </li>
                                 <li>
                                     <form method="post" asp-page-handler="Logout" id="logoutForm">
                                         <button type="submit" class="dropdown-item"><i class="bi bi-box-arrow-right me-2"></i>Đăng xuất</button>
