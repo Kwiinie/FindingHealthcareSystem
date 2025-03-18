@@ -1,9 +1,293 @@
-﻿@page "facility/{id}"
+﻿@page "/facility/{id}"
 @model FindingHealthcareSystem.Pages.Facility.DetailModel
 @{
 }
 <div class="container mt-10">
-    <h1>
-        view detail of a facility including reviews, services,... (guest-patient role)
-    </h1>
+    <div class="row justify-content-center">
+        <div class="col">
+            <!-- Facility Profile Section -->
+            <div class="profile-card">
+                <div class="profile-header">
+                    <!-- AUTHORIZATION REQUIRED !! -->
+                    <button class="btn btn-primary edit-button" data-bs-toggle="modal" data-bs-target="#editFacilityModal">
+                        <i class="fas fa-edit"></i> Chỉnh sửa thông tin
+                    </button>
+
+                    <div class="row">
+                        <div class="col-md-3 text-center">
+                            <img src="~/img/defaultFacility.jpg" alt="Facility Photo" class="profile-img">
+                        </div>
+                        <div class="col-md-9">
+                            <h2 id="facilityName">Tên cơ sở y tế</h2>
+                            <h5 class="text-primary" id="facilityTypeName">Loại cơ sở y tế</h5>
+                            <div class="mt-3">
+                                <div id="departments">
+                                    <span class="expertise-badge">Khoa Nội</span>
+                                    <span class="expertise-badge">Khoa Ngoại</span>
+                                    <span class="expertise-badge">Khoa Nhi</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-info">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <div class="info-label">Trạng thái</div>
+                                <div class="status-info">
+                                    <span id="facilityStatus" class="badge bg-success">Đang hoạt động</span>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <div class="info-label">Địa chỉ</div>
+                                <p>
+                                    <i class="fas fa-map-marker-alt location-icon"></i>
+                                    <span id="address">facility.address, facility.ward, facility.district, facility.province</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <div class="info-label">Ngày thành lập</div>
+                                <p id="operationDay">01/01/2020</p>
+                            </div>
+
+                            <div class="mb-4">
+                                <div class="info-label">Mô tả</div>
+                                <p id="description">Cơ sở y tế chuyên cung cấp các dịch vụ chăm sóc sức khỏe chất lượng cao...</p>
+                            </div>
+
+                            <div class="mb-4">
+                                <div class="info-label">Giờ làm việc</div>
+                                <p id="workingHours">Thứ hai-Thứ bảy: 7:00 AM - 8:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services Section -->
+            <div class="profile-card">
+                <div class="profile-info">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="section-title">Dịch vụ</h3>
+
+                        <!-- AUTHORIZATION REQUIRED !! -->
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addServiceModal">
+                            <i class="fas fa-plus"></i> Thêm dịch vụ
+                        </button>
+                    </div>
+
+                    <div id="servicesContainer">
+                        <!-- Service cards will be populated here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reviews Section -->
+            <div class="profile-card">
+                <div class="profile-info">
+                    <h3 class="section-title">Đánh giá</h3>
+
+                    <div class="filter-menu">
+                        <div class="row">
+                            <div class="col text-end">
+                                <div class="btn-group" role="group">
+                                    <input type="radio" class="btn-check" name="ratingFilter" id="allRatings" autocomplete="off" checked>
+                                    <label class="btn btn-outline-primary btn-sm" for="allRatings">All</label>
+
+                                    <input type="radio" class="btn-check" name="ratingFilter" id="rating5" autocomplete="off">
+                                    <label class="btn btn-outline-primary btn-sm" for="rating5">5★</label>
+
+                                    <input type="radio" class="btn-check" name="ratingFilter" id="rating4" autocomplete="off">
+                                    <label class="btn btn-outline-primary btn-sm" for="rating4">4★</label>
+
+                                    <input type="radio" class="btn-check" name="ratingFilter" id="rating3" autocomplete="off">
+                                    <label class="btn btn-outline-primary btn-sm" for="rating3">3★</label>
+
+                                    <input type="radio" class="btn-check" name="ratingFilter" id="rating2" autocomplete="off">
+                                    <label class="btn btn-outline-primary btn-sm" for="rating2">2★ & 1★</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="reviewsContainer">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Facility Modal -->
+<div class="modal fade" id="editFacilityModal" tabindex="-1" aria-labelledby="editFacilityModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editFacilityModalLabel">Chỉnh sửa thông tin cơ sở y tế</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editFacilityForm">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="editFacilityName" class="form-label">Tên cơ sở y tế</label>
+                            <input type="text" class="form-control" id="editFacilityName" value="">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="editFacilityType" class="form-label">Loại cơ sở y tế</label>
+                            <select class="form-select" id="editFacilityType">
+                                <option value="1">Bệnh viện</option>
+                                <option value="2">Phòng khám</option>
+                                <option value="3">Trung tâm y tế</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editDepartments" class="form-label">Khoa phòng</label>
+                        <select class="form-select" id="editDepartments" multiple>
+                            <option value="1">Khoa Nội</option>
+                            <option value="2">Khoa Ngoại</option>
+                            <option value="3">Khoa Nhi</option>
+                            <option value="4">Khoa Sản</option>
+                            <option value="5">Khoa Mắt</option>
+                        </select>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="editProvince" class="form-label">Tỉnh/thành phố</label>
+                            <select class="form-select" id="editProvince">
+                                <option value="1">Hà Nội</option>
+                                <option value="2">TP. Hồ Chí Minh</option>
+                                <option value="3">Đà Nẵng</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="editDistrict" class="form-label">Quận/huyện</label>
+                            <select class="form-select" id="editDistrict">
+                                <option value="1">Quận 1</option>
+                                <option value="2">Quận 2</option>
+                                <option value="3">Quận 3</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="editWard" class="form-label">Phường/xã</label>
+                            <select class="form-select" id="editWard">
+                                <option value="1">Phường A</option>
+                                <option value="2">Phường B</option>
+                                <option value="3">Phường C</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editDetailAddress" class="form-label">Địa chỉ chi tiết</label>
+                        <input type="text" class="form-control" id="editDetailAddress" value="">
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="editOperationDay" class="form-label">Ngày thành lập</label>
+                            <input type="date" class="form-control" id="editOperationDay" value="">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="editStatus" class="form-label">Trạng thái</label>
+                            <select class="form-select" id="editStatus">
+                                <option value="1">Đang hoạt động</option>
+                                <option value="2">Tạm ngưng</option>
+                                <option value="3">Đóng cửa</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editDescription" class="form-label">Mô tả</label>
+                        <textarea class="form-control" id="editDescription" rows="3"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editFacilityImage" class="form-label">Ảnh cơ sở y tế</label>
+                        <input type="file" class="form-control" id="editFacilityImage">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" id="saveFacilityChanges">Lưu thay đổi</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Service Modal -->
+<div class="modal fade" id="addServiceModal" tabindex="-1" aria-labelledby="addServiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addServiceModalLabel">Thêm dịch vụ mới</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addServiceForm">
+                    <div class="mb-3">
+                        <label for="serviceName" class="form-label">Tên dịch vụ</label>
+                        <input type="text" class="form-control" id="serviceName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="servicePrice" class="form-label">Giá (VNĐ)</label>
+                        <input type="number" class="form-control" id="servicePrice" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="serviceDescription" class="form-label">Mô tả</label>
+                        <textarea class="form-control" id="serviceDescription" rows="3" required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" id="saveNewService">Thêm dịch vụ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Service Modal -->
+<div class="modal fade" id="editServiceModal" tabindex="-1" aria-labelledby="editServiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editServiceModalLabel">Chỉnh sửa dịch vụ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editServiceForm">
+                    <input type="hidden" id="editServiceId">
+                    <div class="mb-3">
+                        <label for="editServiceName" class="form-label">Tên dịch vụ</label>
+                        <input type="text" class="form-control" id="editServiceName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editServicePrice" class="form-label">Giá (VNĐ)</label>
+                        <input type="number" class="form-control" id="editServicePrice" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editServiceDescription" class="form-label">Mô tả</label>
+                        <textarea class="form-control" id="editServiceDescription" rows="3" required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger me-auto" id="deleteService">Xóa dịch vụ</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" id="saveServiceChanges">Lưu thay đổi</button>
+            </div>
+        </div>
+    </div>
 </div>

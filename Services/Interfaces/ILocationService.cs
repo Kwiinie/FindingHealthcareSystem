@@ -10,7 +10,7 @@ namespace Services.Interfaces
     public interface ILocationService
     {
         Task<List<Province>> GetProvinces();
-        Task<List<City>> GetCities(string proCode);
+        Task<List<District>> GetCities(string proCode);
         Task<List<Ward>> GetWards(string cityCode);
 
 

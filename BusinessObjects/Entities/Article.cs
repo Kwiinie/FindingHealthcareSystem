@@ -19,6 +19,7 @@ public partial class Article : BaseEntity
     public virtual Category? Category { get; set; }
 
     public virtual User? CreatedBy { get; set; }
+    public bool Status { get; set; } = false;
     public virtual ICollection<ArticleImage> ArticleImages { get; set; } = new List<ArticleImage>();
 
 }

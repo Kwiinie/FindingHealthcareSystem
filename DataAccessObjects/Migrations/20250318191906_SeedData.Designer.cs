@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessObjects.Migrations
 {
     [DbContext(typeof(FindingHealthcareSystemContext))]
-    [Migration("20250317162535_fixdb")]
-    partial class fixdb
+    [Migration("20250318191906_SeedData")]
+    partial class SeedData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -118,6 +118,9 @@ namespace DataAccessObjects.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
@@ -133,6 +136,80 @@ namespace DataAccessObjects.Migrations
                     b.HasIndex("CreatedById");
 
                     b.ToTable("Articles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryId = 1,
+                            Content = "<p>Kiểm tra sức khỏe định kỳ là một trong những phương pháp quan trọng giúp phát hiện sớm các vấn đề sức khỏe tiềm ẩn. Việc kiểm tra thường xuyên không chỉ giúp bạn hiểu rõ hơn về tình trạng sức khỏe của mình mà còn giúp bác sĩ đưa ra các biện pháp điều trị kịp thời nếu phát hiện ra vấn đề.</p><p><strong>Các lợi ích chính của việc kiểm tra sức khỏe định kỳ bao gồm:</strong></p><ol><li><strong>Phát hiện sớm các bệnh lý tiềm ẩn</strong>: Việc kiểm tra sức khỏe giúp phát hiện sớm các bệnh lý như tiểu đường, huyết áp cao, hay các vấn đề tim mạch mà bạn có thể không nhận ra. Việc phát hiện sớm giúp điều trị hiệu quả hơn, giảm thiểu các biến chứng nghiêm trọng về sau.</li><li><strong>Tiết kiệm chi phí điều trị</strong>: Việc phát hiện bệnh sớm sẽ giúp bạn tiết kiệm chi phí điều trị, bởi vì bệnh sẽ dễ dàng được điều trị hơn khi phát hiện ở giai đoạn đầu. Điều này không chỉ giúp giảm chi phí cá nhân mà còn giúp hệ thống y tế giảm gánh nặng.</li><li><strong>Tăng tuổi thọ</strong>: Các kiểm tra định kỳ giúp phát hiện sớm các yếu tố nguy cơ sức khỏe và điều chỉnh kịp thời, từ đó tăng khả năng sống lâu. Ví dụ, việc kiểm soát mức huyết áp hoặc cholesterol có thể giúp giảm nguy cơ đột quỵ và các bệnh tim mạch.</li><li><strong>Cải thiện chất lượng cuộc sống</strong>: Việc kiểm tra sức khỏe sẽ giúp bạn có lối sống lành mạnh hơn, với chế độ ăn uống và tập thể dục phù hợp. Điều này sẽ giúp bạn có nhiều năng lượng hơn và cảm thấy tự tin vào sức khỏe của mình.</li><li><strong>Giảm căng thẳng và lo âu</strong>: Khi bạn biết rằng sức khỏe của mình ổn định, bạn sẽ cảm thấy an tâm và ít lo lắng hơn. Việc biết rằng bạn không mắc bệnh gì nghiêm trọng giúp bạn giảm bớt lo âu, từ đó cải thiện tâm trạng và chất lượng cuộc sống.</li></ol>",
+                            CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedById = 1,
+                            IsDeleted = false,
+                            Status = false,
+                            Title = "5 Lợi Ích Của Việc Kiểm Tra Sức Khỏe Định Kỳ",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryId = 1,
+                            Content = "<p>Tiêm chủng là một trong những phương pháp phòng ngừa bệnh hiệu quả nhất mà chúng ta có. Việc tiêm chủng định kỳ giúp cơ thể tạo ra miễn dịch đối với các bệnh truyền nhiễm, bảo vệ không chỉ cho bản thân mà còn cho cộng đồng. Dưới đây là những lý do tại sao tiêm chủng là quan trọng và cần thiết:</p><p><strong>1. Bảo vệ khỏi bệnh truyền nhiễm</strong>: Tiêm chủng giúp cơ thể chống lại các bệnh như sởi, thủy đậu, viêm gan B, bạch hầu và nhiều bệnh khác. Bằng cách tiêm phòng, bạn giảm nguy cơ mắc phải các bệnh này, giúp bạn bảo vệ sức khỏe của mình và những người xung quanh. Các bệnh truyền nhiễm có thể gây hậu quả nghiêm trọng, thậm chí là tử vong, nhưng có thể phòng ngừa dễ dàng nhờ tiêm chủng.</p><p><strong>2. Bảo vệ cộng đồng</strong>: Tiêm chủng không chỉ giúp bảo vệ bản thân mà còn giúp bảo vệ những người xung quanh, đặc biệt là những người không thể tiêm chủng như trẻ em, phụ nữ mang thai hoặc người có hệ miễn dịch yếu. Khi càng nhiều người trong cộng đồng tiêm phòng, khả năng lây lan của bệnh sẽ giảm thiểu, từ đó bảo vệ cả cộng đồng khỏi sự bùng phát của các dịch bệnh.</p><p><strong>3. Ngăn ngừa dịch bệnh</strong>: Khi đủ nhiều người trong cộng đồng được tiêm phòng, các dịch bệnh sẽ không có cơ hội bùng phát, giúp bảo vệ cả cộng đồng khỏi những đợt dịch nguy hiểm. Điều này đã được chứng minh qua nhiều quốc gia trên thế giới khi tiêm chủng giúp ngăn ngừa sự bùng phát của các bệnh như sởi, bại liệt, và cúm.</p><p><strong>4. Giảm chi phí chăm sóc sức khỏe</strong>: Khi tiêm chủng, bạn giảm nguy cơ mắc bệnh, từ đó giảm chi phí điều trị và chăm sóc y tế lâu dài. Các bệnh do không tiêm phòng có thể tốn kém hơn rất nhiều trong việc điều trị và chăm sóc sau này.</p><p><strong>5. Đảm bảo an toàn cho trẻ em</strong>: Việc tiêm chủng cho trẻ em giúp bảo vệ các em khỏi những bệnh tật nguy hiểm và giảm tỷ lệ tử vong do bệnh truyền nhiễm. Trẻ em có hệ miễn dịch yếu, nên việc tiêm chủng là biện pháp cần thiết để bảo vệ các em khỏi các mối đe dọa bệnh tật.</p>",
+                            CreatedAt = new DateTime(2025, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedById = 1,
+                            IsDeleted = false,
+                            Status = false,
+                            Title = "Tầm Quan Trọng Của Việc Tiêm Chủng Định Kỳ",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryId = 2,
+                            Content = "<p>Một chế độ ăn uống cân bằng là nền tảng quan trọng để duy trì sức khỏe. Để có một chế độ ăn uống lành mạnh, bạn cần đảm bảo rằng cơ thể nhận được đủ các nhóm chất dinh dưỡng cần thiết. Sau đây là một số lời khuyên để duy trì chế độ ăn uống cân bằng và hợp lý:</p><p><strong>1. Ăn đủ 5 nhóm thực phẩm</strong>: Đảm bảo rằng mỗi bữa ăn của bạn bao gồm đủ các nhóm thực phẩm như tinh bột (gạo, khoai), protein (thịt, cá, đậu), chất béo lành mạnh (dầu olive, bơ), vitamin và khoáng chất (rau xanh, trái cây), và chất xơ. Việc kết hợp đa dạng các thực phẩm sẽ cung cấp đầy đủ dinh dưỡng cho cơ thể.</p><p><strong>2. Hạn chế thức ăn chế biến sẵn</strong>: Thực phẩm chế biến sẵn chứa nhiều chất bảo quản, đường và muối, có thể gây hại cho sức khỏe nếu tiêu thụ quá nhiều. Hãy tránh thức ăn nhanh, thực phẩm chiên rán, và thay vào đó là các món ăn tươi sống, chế biến tại nhà.</p><p><strong>3. Uống đủ nước</strong>: Cung cấp đủ nước cho cơ thể là một yếu tố quan trọng trong chế độ ăn uống. Nước giúp cơ thể hấp thu chất dinh dưỡng, giải độc và duy trì nhiệt độ cơ thể ổn định. Bạn nên uống ít nhất 8 cốc nước mỗi ngày và uống thêm nếu bạn tham gia các hoạt động thể thao.</p><p><strong>4. Ăn nhiều rau củ quả</strong>: Rau củ quả chứa nhiều vitamin, khoáng chất và chất xơ, giúp hỗ trợ hệ tiêu hóa, tăng cường hệ miễn dịch và giúp da khỏe mạnh. Hãy cố gắng ăn ít nhất 5 khẩu phần rau quả mỗi ngày để cung cấp các dưỡng chất thiết yếu cho cơ thể.</p><p><strong>5. Kiểm soát lượng đường và muối</strong>: Việc giảm lượng đường và muối trong chế độ ăn uống có thể giúp ngăn ngừa các bệnh lý như tiểu đường, huyết áp cao và bệnh tim. Bạn nên hạn chế các thực phẩm ngọt và thức uống có gas, thay vào đó là ăn trái cây tươi và sử dụng gia vị tự nhiên.</p>",
+                            CreatedAt = new DateTime(2025, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedById = 1,
+                            IsDeleted = false,
+                            Status = false,
+                            Title = "Chế Độ Ăn Uống Cân Bằng Cho Sức Khỏe",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CategoryId = 2,
+                            Content = "<p>Hệ tiêu hóa đóng một vai trò quan trọng trong việc duy trì sức khỏe. Khi hệ tiêu hóa hoạt động tốt, cơ thể sẽ hấp thụ dinh dưỡng hiệu quả, giảm nguy cơ mắc các bệnh lý và cải thiện chất lượng cuộc sống. Dưới đây là một số thực phẩm giúp cải thiện hệ tiêu hóa:</p><p><strong>1. Sữa chua</strong>: Sữa chua chứa các vi khuẩn có lợi giúp duy trì sự cân bằng của hệ vi sinh đường ruột, từ đó giúp hệ tiêu hóa hoạt động hiệu quả hơn. Các lợi khuẩn này giúp cải thiện sự hấp thu chất dinh dưỡng và tăng cường hệ miễn dịch.</p><p><strong>2. Chuối</strong>: Chuối là một nguồn cung cấp chất xơ tuyệt vời, giúp cải thiện nhu động ruột và ngăn ngừa táo bón. Chuối cũng có thể làm dịu dạ dày và giúp giảm cảm giác đầy bụng.</p><p><strong>3. Rau xanh</strong>: Các loại rau như rau cải, rau bina và bông cải xanh chứa nhiều chất xơ và vitamin, giúp tăng cường chức năng tiêu hóa và làm sạch đường ruột. Rau xanh giúp cải thiện nhu động ruột và giảm nguy cơ mắc bệnh về đường tiêu hóa.</p><p><strong>4. Hạt chia</strong>: Hạt chia giàu chất xơ, giúp cải thiện nhu động ruột và giảm táo bón. Ngoài ra, hạt chia còn cung cấp các axit béo omega-3 có lợi cho sức khỏe.</p><p><strong>5. Gừng</strong>: Gừng có tính kháng viêm và có thể giúp làm dịu dạ dày, hỗ trợ tiêu hóa và giảm đầy bụng. Uống trà gừng hoặc thêm gừng tươi vào các món ăn có thể giúp cải thiện hệ tiêu hóa.</p>",
+                            CreatedAt = new DateTime(2025, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedById = 1,
+                            IsDeleted = false,
+                            Status = false,
+                            Title = "Thực Phẩm Giúp Cải Thiện Hệ Tiêu Hóa",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CategoryId = 1,
+                            Content = "<p>Bệnh tim mạch là một trong những nguyên nhân hàng đầu gây tử vong trên toàn cầu. Tuy nhiên, bệnh tim mạch có thể được phòng ngừa thông qua các biện pháp thay đổi lối sống lành mạnh. Dưới đây là những phương pháp phòng ngừa hiệu quả bệnh tim mạch:</p><p><strong>1. Duy trì một chế độ ăn uống lành mạnh</strong>: Chế độ ăn uống giàu trái cây, rau củ, ngũ cốc nguyên hạt, và giảm thiểu các thực phẩm giàu chất béo bão hòa và cholesterol sẽ giúp bảo vệ tim mạch. Hãy bổ sung các thực phẩm giàu omega-3 như cá hồi và các loại hạt giúp làm giảm nguy cơ bệnh tim.</p><p><strong>2. Tập thể dục thường xuyên</strong>: Các nghiên cứu đã chứng minh rằng việc tập thể dục thường xuyên, ít nhất 30 phút mỗi ngày, giúp cải thiện sức khỏe tim mạch. Việc này giúp tăng cường lưu thông máu, kiểm soát huyết áp và cholesterol.</p><p><strong>3. Kiểm soát cân nặng</strong>: Thừa cân làm tăng nguy cơ mắc bệnh tim mạch. Việc duy trì cân nặng hợp lý thông qua chế độ ăn uống và luyện tập sẽ giảm thiểu gánh nặng cho tim, giúp tim hoạt động hiệu quả hơn.</p><p><strong>4. Hạn chế căng thẳng</strong>: Căng thẳng kéo dài có thể làm tăng huyết áp và làm tổn thương mạch máu. Hãy áp dụng các phương pháp giảm stress như thiền, yoga, hoặc đi bộ để giảm mức độ căng thẳng trong cuộc sống hàng ngày.</p><p><strong>5. Kiểm tra sức khỏe định kỳ</strong>: Việc kiểm tra sức khỏe định kỳ, bao gồm kiểm tra huyết áp và mức cholesterol, sẽ giúp bạn phát hiện sớm các yếu tố nguy cơ và có biện pháp can thiệp kịp thời để bảo vệ sức khỏe tim mạch.</p>",
+                            CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedById = 1,
+                            IsDeleted = false,
+                            Status = false,
+                            Title = "Cách Phòng Ngừa Bệnh Tim Mạch",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CategoryId = 3,
+                            Content = "<p>Ung thư phổi là một trong những loại ung thư nguy hiểm và có tỷ lệ tử vong cao. Việc phát hiện bệnh sớm sẽ giúp điều trị hiệu quả và cải thiện cơ hội sống sót. Dưới đây là một số dấu hiệu cảnh báo ung thư phổi mà bạn không nên bỏ qua:</p><p><strong>1. Ho kéo dài</strong>: Ho kéo dài, đặc biệt là ho có đờm hoặc ho ra máu, có thể là dấu hiệu của ung thư phổi. Nếu bạn có ho liên tục trong nhiều tuần, hãy đi kiểm tra để xác định nguyên nhân.</p><p><strong>2. Khó thở</strong>: Khó thở hoặc cảm giác hụt hơi khi làm những việc bình thường có thể là triệu chứng của bệnh ung thư phổi. Sự tắc nghẽn trong phổi do khối u có thể làm giảm khả năng hô hấp của bạn.</p><p><strong>3. Đau ngực</strong>: Đau hoặc cảm giác tức ngực, đặc biệt là khi ho hoặc thở sâu, có thể là dấu hiệu của ung thư phổi. Cơn đau có thể lan ra vai hoặc lưng, đặc biệt khi khối u chèn ép lên các cơ quan lân cận.</p><p><strong>4. Giảm cân không rõ lý do</strong>: Giảm cân đột ngột mà không thay đổi chế độ ăn uống hoặc lối sống có thể là một dấu hiệu của ung thư phổi. Đây là triệu chứng chung của nhiều loại ung thư, trong đó có ung thư phổi.</p><p><strong>5. Mệt mỏi kéo dài</strong>: Cảm giác mệt mỏi và yếu ớt kéo dài có thể là dấu hiệu của ung thư phổi. Khi các tế bào ung thư phát triển, cơ thể sẽ trở nên mệt mỏi hơn, và năng lượng của bạn sẽ giảm sút.</p><p>Việc kiểm tra y tế kịp thời sẽ giúp phát hiện ung thư phổi ở giai đoạn sớm, từ đó tăng cơ hội điều trị và cải thiện khả năng sống sót của bệnh nhân.</p>",
+                            CreatedAt = new DateTime(2025, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedById = 1,
+                            IsDeleted = false,
+                            Status = false,
+                            Title = "Những Dấu Hiệu Cảnh Báo Ung Thư Phổi",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("BusinessObjects.Entities.ArticleImage", b =>
@@ -240,6 +317,62 @@ namespace DataAccessObjects.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Các bài viết về các chủ đề y tế, chăm sóc sức khỏe, và bệnh lý.",
+                            IsDeleted = false,
+                            Name = "Y tế",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Các bài viết về dinh dưỡng, chế độ ăn uống và cách duy trì sức khỏe qua thực phẩm.",
+                            IsDeleted = false,
+                            Name = "Dinh dưỡng",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Các bài viết về các bệnh lý phổ biến, nguyên nhân và cách phòng ngừa.",
+                            IsDeleted = false,
+                            Name = "Bệnh lý",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Các bài viết về cách chăm sóc sức khỏe bản thân và gia đình.",
+                            IsDeleted = false,
+                            Name = "Chăm sóc sức khỏe",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Các bài viết về các loại phẫu thuật, quy trình và phục hồi sau phẫu thuật.",
+                            IsDeleted = false,
+                            Name = "Phẫu thuật",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Các bài viết về sức khỏe tinh thần, tâm lý học và cách duy trì tinh thần khỏe mạnh.",
+                            IsDeleted = false,
+                            Name = "Sức khỏe tâm lý",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("BusinessObjects.Entities.Department", b =>
@@ -670,6 +803,104 @@ namespace DataAccessObjects.Migrations
                     b.HasIndex("TypeId");
 
                     b.ToTable("Facilities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "Số 1, Phố Lê Thánh Tông",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Bệnh viện công cung cấp dịch vụ y tế chuyên nghiệp với chi phí hợp lý.",
+                            District = "Quận Hoàn Kiếm",
+                            IsDeleted = false,
+                            Name = "Bệnh viện Đa khoa Quốc tế Hà Nội",
+                            OperationDay = new DateOnly(2025, 3, 17),
+                            Province = "Thành phố Hà Nội",
+                            Status = "Active",
+                            TypeId = 1,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ward = "Phường Hàng Bạc"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Address = "Số 25, Đường Lý Thường Kiệt",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Bệnh viện tư chuyên cung cấp dịch vụ y tế chất lượng cao.",
+                            District = "Quận 10",
+                            IsDeleted = false,
+                            Name = "Bệnh viện Đa khoa Vạn Hạnh",
+                            OperationDay = new DateOnly(2025, 3, 17),
+                            Province = "Thành phố Hồ Chí Minh",
+                            Status = "Active",
+                            TypeId = 2,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ward = "Phường Phú Trung"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Address = "Số 45, Đường Võ Văn Tần",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Trung tâm y tế cung cấp dịch vụ chăm sóc sức khỏe cơ bản cho cộng đồng.",
+                            District = "Quận 3",
+                            IsDeleted = false,
+                            Name = "Trung tâm Y tế Quận 3",
+                            OperationDay = new DateOnly(2025, 3, 17),
+                            Province = "Thành phố Hồ Chí Minh",
+                            Status = "Active",
+                            TypeId = 3,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ward = "Phường 7"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Address = "Số 78, Phố Giải Phóng",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Bệnh viện công lớn chuyên khoa về nội, ngoại, và các chuyên khoa khác.",
+                            District = "Quận Đống Đa",
+                            IsDeleted = false,
+                            Name = "Bệnh viện Bạch Mai",
+                            OperationDay = new DateOnly(2025, 3, 17),
+                            Province = "Thành phố Hà Nội",
+                            Status = "Active",
+                            TypeId = 1,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ward = "Phường Phương Liên"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Address = "Số 458, Đường Minh Khai",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Bệnh viện tư quốc tế với các dịch vụ khám chữa bệnh tiên tiến và chuyên nghiệp.",
+                            District = "Quận Cầu Giấy",
+                            IsDeleted = false,
+                            Name = "Bệnh viện Quốc tế Vinmec",
+                            OperationDay = new DateOnly(2025, 3, 17),
+                            Province = "Thành phố Hà Nội",
+                            Status = "Active",
+                            TypeId = 2,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ward = "Phường Dịch Vọng"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Address = "Số 50, Đường Nguyễn Văn Linh",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Trung tâm y tế cung cấp các dịch vụ chăm sóc sức khỏe cộng đồng và các dịch vụ phòng ngừa.",
+                            District = "Quận 7",
+                            IsDeleted = false,
+                            Name = "Trung tâm Y tế Quận 7",
+                            OperationDay = new DateOnly(2025, 3, 17),
+                            Province = "Thành phố Hồ Chí Minh",
+                            Status = "Active",
+                            TypeId = 3,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ward = "Phường Phú Mỹ"
+                        });
                 });
 
             modelBuilder.Entity("BusinessObjects.Entities.FacilityDepartment", b =>
@@ -708,6 +939,116 @@ namespace DataAccessObjects.Migrations
                     b.HasIndex("FacilityId");
 
                     b.ToTable("FacilityDepartments");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 1,
+                            FacilityId = 1,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 2,
+                            FacilityId = 1,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 3,
+                            FacilityId = 2,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 4,
+                            FacilityId = 2,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 5,
+                            FacilityId = 3,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 6,
+                            FacilityId = 3,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 7,
+                            FacilityId = 4,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 8,
+                            FacilityId = 4,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 9,
+                            FacilityId = 5,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 10,
+                            FacilityId = 5,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 11,
+                            FacilityId = 6,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 12,
+                            FacilityId = 6,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("BusinessObjects.Entities.FacilityType", b =>
@@ -748,27 +1089,27 @@ namespace DataAccessObjects.Migrations
                         {
                             Id = 1,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Cơ sở y tế chuyên điều trị các bệnh lý đa dạng.",
+                            Description = "Bệnh viện do nhà nước sở hữu và quản lý, cung cấp dịch vụ y tế cho người dân với chi phí thấp hơn.",
                             IsDeleted = false,
-                            Name = "Bệnh viện",
+                            Name = "Bệnh viện công",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 2,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Cơ sở y tế nhỏ, chủ yếu khám chữa bệnh ngoại trú.",
+                            Description = "Bệnh viện thuộc sở hữu của các cá nhân hoặc tổ chức tư nhân, cung cấp dịch vụ y tế với chất lượng cao và chi phí có thể cao hơn.",
                             IsDeleted = false,
-                            Name = "Phòng khám",
+                            Name = "Bệnh viện tư",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 3,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Cửa hàng cung cấp thuốc và các sản phẩm y tế.",
+                            Description = "Cơ sở cung cấp dịch vụ y tế cơ bản và phòng ngừa cho cộng đồng.",
                             IsDeleted = false,
-                            Name = "Nhà thuốc",
+                            Name = "Trung tâm y tế",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
@@ -954,6 +1295,74 @@ namespace DataAccessObjects.Migrations
                     b.HasIndex("ProfessionalId");
 
                     b.ToTable("PrivateServices");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám tổng quát để kiểm tra sức khỏe định kỳ.",
+                            IsDeleted = false,
+                            Name = "Khám bệnh tổng quát",
+                            Price = 300000m,
+                            ProfessionalId = 1,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám sức khỏe phụ khoa cho nữ giới.",
+                            IsDeleted = false,
+                            Name = "Khám sức khỏe phụ khoa",
+                            Price = 350000m,
+                            ProfessionalId = 1,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám các bệnh lý về tim mạch, huyết áp và các bệnh lý liên quan.",
+                            IsDeleted = false,
+                            Name = "Khám bệnh lý tim mạch",
+                            Price = 500000m,
+                            ProfessionalId = 1,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Sử dụng y học cổ truyền để điều trị các bệnh lý như đau nhức, viêm nhiễm.",
+                            IsDeleted = false,
+                            Name = "Điều trị bằng y học cổ truyền",
+                            Price = 500000m,
+                            ProfessionalId = 2,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Điều trị đau lưng bằng phương pháp châm cứu truyền thống.",
+                            IsDeleted = false,
+                            Name = "Châm cứu điều trị đau lưng",
+                            Price = 400000m,
+                            ProfessionalId = 2,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Xoa bóp và bấm huyệt giúp giảm căng thẳng và mệt mỏi.",
+                            IsDeleted = false,
+                            Name = "Xoa bóp bấm huyệt",
+                            Price = 350000m,
+                            ProfessionalId = 2,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("BusinessObjects.Entities.Professional", b =>
@@ -1029,14 +1438,14 @@ namespace DataAccessObjects.Migrations
                         new
                         {
                             Id = 1,
-                            Address = "Số 10, Đường X, Hà Nội",
+                            Address = "Số 10, Đường X",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Degree = "Bác sĩ đa khoa",
-                            District = "Ba Đình",
+                            District = "Quận Ba Đình",
                             Experience = "Có 10 năm kinh nghiệm trong lĩnh vực khám chữa bệnh",
                             ExpertiseId = 1,
                             IsDeleted = false,
-                            Province = "Hà Nội",
+                            Province = "Thành phố Hà Nội",
                             RequestStatus = "Approved",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 4,
@@ -1046,14 +1455,14 @@ namespace DataAccessObjects.Migrations
                         new
                         {
                             Id = 2,
-                            Address = "Số 15, Đường Y, Hồ Chí Minh",
+                            Address = "Số 15, Đường Y",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Degree = "Bác sĩ y học cổ truyền",
                             District = "Quận 1",
                             Experience = "Có 5 năm kinh nghiệm trong điều trị các bệnh lý bằng y học cổ truyền",
                             ExpertiseId = 2,
                             IsDeleted = false,
-                            Province = "Hồ Chí Minh",
+                            Province = "Thành phố Hồ Chí Minh",
                             RequestStatus = "Pending",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 5,
@@ -1169,6 +1578,151 @@ namespace DataAccessObjects.Migrations
                     b.HasIndex("FacilityId");
 
                     b.ToTable("PublicServices");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám tổng quát để kiểm tra sức khỏe định kỳ.",
+                            FacilityId = 1,
+                            IsDeleted = false,
+                            Name = "Khám bệnh tổng quát",
+                            Price = 300000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Xét nghiệm máu để kiểm tra các chỉ số sức khỏe.",
+                            FacilityId = 1,
+                            IsDeleted = false,
+                            Name = "Xét nghiệm máu",
+                            Price = 150000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám các bệnh lý về tim mạch, huyết áp và các bệnh lý liên quan.",
+                            FacilityId = 1,
+                            IsDeleted = false,
+                            Name = "Khám bệnh lý tim mạch",
+                            Price = 500000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Sử dụng phương pháp y học cổ truyền để điều trị các bệnh lý như đau nhức, viêm nhiễm.",
+                            FacilityId = 2,
+                            IsDeleted = false,
+                            Name = "Điều trị bằng y học cổ truyền",
+                            Price = 400000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Châm cứu để điều trị các cơn đau lưng mãn tính.",
+                            FacilityId = 2,
+                            IsDeleted = false,
+                            Name = "Châm cứu điều trị đau lưng",
+                            Price = 350000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Xoa bóp và bấm huyệt giúp giảm căng thẳng và mệt mỏi.",
+                            FacilityId = 2,
+                            IsDeleted = false,
+                            Name = "Xoa bóp bấm huyệt",
+                            Price = 250000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám các bệnh lý về tai mũi họng như viêm họng, viêm amidan.",
+                            FacilityId = 1,
+                            IsDeleted = false,
+                            Name = "Khám tai mũi họng",
+                            Price = 200000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám mắt để kiểm tra sức khỏe mắt, phát hiện các bệnh lý như cận thị, loạn thị.",
+                            FacilityId = 1,
+                            IsDeleted = false,
+                            Name = "Khám mắt",
+                            Price = 250000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Sử dụng thuốc thảo dược để điều trị các bệnh lý như cảm cúm, tiêu hóa.",
+                            FacilityId = 2,
+                            IsDeleted = false,
+                            Name = "Điều trị bằng thuốc thảo dược",
+                            Price = 300000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám và kiểm tra tình trạng răng miệng, phát hiện sâu răng, viêm lợi.",
+                            FacilityId = 3,
+                            IsDeleted = false,
+                            Name = "Khám răng miệng",
+                            Price = 250000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Lấy cao răng, giúp làm sạch răng miệng và ngăn ngừa bệnh về nướu.",
+                            FacilityId = 3,
+                            IsDeleted = false,
+                            Name = "Lấy cao răng",
+                            Price = 150000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Cấy ghép răng implant cho những người mất răng.",
+                            FacilityId = 3,
+                            IsDeleted = false,
+                            Name = "Cấy ghép răng implant",
+                            Price = 1000000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Dịch vụ tẩy trắng răng giúp cải thiện màu sắc răng miệng.",
+                            FacilityId = 3,
+                            IsDeleted = false,
+                            Name = "Tẩy trắng răng",
+                            Price = 500000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("BusinessObjects.Entities.Review", b =>

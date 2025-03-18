@@ -37,7 +37,7 @@ namespace FindingHealthcareSystem.Pages
 
         public async Task OnGetAsync()
         {
-            Provinces = await _locationService.GetProvinces(); 
+            //Provinces = await _locationService.GetProvinces(); 
             Departments = await _departmentService.GetAllDepartments();
             FacilityTypes = await _facilityTypeService.GetAllFacilityTypes();
 
