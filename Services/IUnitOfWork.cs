@@ -12,6 +12,7 @@ namespace Services
         IGenericRepository<T> GetRepository<T>() where T : class;
 
         IFacilityRepository FacilityRepository { get; }
+        IProfessionalRepository ProfessionalRepository { get; }
 
         Task<int> SaveChangesAsync();
     } 

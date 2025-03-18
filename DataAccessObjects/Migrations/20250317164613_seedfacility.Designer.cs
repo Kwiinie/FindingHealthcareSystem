@@ -4,6 +4,7 @@ using DataAccessObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessObjects.Migrations
 {
     [DbContext(typeof(FindingHealthcareSystemContext))]
-    partial class FindingHealthcareSystemContextModelSnapshot : ModelSnapshot
+    [Migration("20250317164613_seedfacility")]
+    partial class seedfacility
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -676,6 +679,7 @@ namespace DataAccessObjects.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Bệnh viện công cung cấp dịch vụ y tế chuyên nghiệp với chi phí hợp lý.",
                             District = "Hoàn Kiếm",
+                            ImgUrl = "",
                             IsDeleted = false,
                             Name = "Bệnh viện Đa khoa Quốc tế Hà Nội",
                             OperationDay = new DateOnly(2025, 3, 17),
@@ -692,6 +696,7 @@ namespace DataAccessObjects.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Bệnh viện tư chuyên cung cấp dịch vụ y tế chất lượng cao.",
                             District = "Quận 10",
+                            ImgUrl = "",
                             IsDeleted = false,
                             Name = "Bệnh viện Đa khoa Vạn Hạnh",
                             OperationDay = new DateOnly(2025, 3, 17),
@@ -708,6 +713,7 @@ namespace DataAccessObjects.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Trung tâm y tế cung cấp dịch vụ chăm sóc sức khỏe cơ bản cho cộng đồng.",
                             District = "Quận 3",
+                            ImgUrl = "",
                             IsDeleted = false,
                             Name = "Trung tâm Y tế Quận 3",
                             OperationDay = new DateOnly(2025, 3, 17),
@@ -724,6 +730,7 @@ namespace DataAccessObjects.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Bệnh viện công lớn chuyên khoa về nội, ngoại, và các chuyên khoa khác.",
                             District = "Đống Đa",
+                            ImgUrl = "",
                             IsDeleted = false,
                             Name = "Bệnh viện Bạch Mai",
                             OperationDay = new DateOnly(2025, 3, 17),
@@ -740,6 +747,7 @@ namespace DataAccessObjects.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Bệnh viện tư quốc tế với các dịch vụ khám chữa bệnh tiên tiến và chuyên nghiệp.",
                             District = "Cầu Giấy",
+                            ImgUrl = "",
                             IsDeleted = false,
                             Name = "Bệnh viện Quốc tế Vinmec",
                             OperationDay = new DateOnly(2025, 3, 17),
@@ -756,6 +764,7 @@ namespace DataAccessObjects.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Trung tâm y tế cung cấp các dịch vụ chăm sóc sức khỏe cộng đồng và các dịch vụ phòng ngừa.",
                             District = "Quận 7",
+                            ImgUrl = "",
                             IsDeleted = false,
                             Name = "Trung tâm Y tế Quận 7",
                             OperationDay = new DateOnly(2025, 3, 17),

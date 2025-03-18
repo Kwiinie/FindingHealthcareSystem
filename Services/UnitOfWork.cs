@@ -17,12 +17,14 @@ namespace Services
         private readonly FindingHealthcareSystemContext _context;
         private readonly Dictionary<Type, object> _repositories;
         private readonly IFacilityRepository _facilityRepository;
+        private readonly IProfessionalRepository _professionalRepository;
 
-        public UnitOfWork(FindingHealthcareSystemContext context, IFacilityRepository facilityRepository)
+        public UnitOfWork(FindingHealthcareSystemContext context, IFacilityRepository facilityRepository, IProfessionalRepository professionalRepository)
         {
             _context = context;
             _repositories = new Dictionary<Type, object>();
             _facilityRepository = facilityRepository;
+            _professionalRepository = professionalRepository;
         }
 
 
@@ -39,6 +41,8 @@ namespace Services
         }
 
         public IFacilityRepository FacilityRepository => _facilityRepository;
+        public IProfessionalRepository ProfessionalRepository => _professionalRepository;
+
 
         public async Task<int> SaveChangesAsync()
         {

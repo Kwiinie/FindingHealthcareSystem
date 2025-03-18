@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using BusinessObjects.DTOs.Department;
 using Services.Interfaces;
+using BusinessObjects.DTOs.Professional;
 
 namespace Services.Services
 {
@@ -37,7 +38,7 @@ namespace Services.Services
             return _mapper.Map<List<FacilityDto>>(facilities);
         }
 
-        public async Task<IEnumerable<FacilityDto>> SearchFacilities(string? name, string? province, string? operationDay, string? district, string? city, bool isAdmin, int? typeId)
+        public async Task<IEnumerable<FacilityDto>> SearchFacilities(string? name, string? province, string? operationDay, string? district, string? ward, bool isAdmin, int? typeId)
         {
             var filters = new Dictionary<string, object?>();
 
@@ -45,7 +46,7 @@ namespace Services.Services
             if (!string.IsNullOrEmpty(province)) filters["Province"] = province;
             if (!string.IsNullOrEmpty(operationDay)) filters["OperationDay"] = operationDay;
             if (!string.IsNullOrEmpty(district)) filters["District"] = district;
-            if (!string.IsNullOrEmpty(city)) filters["City"] = city;
+            if (!string.IsNullOrEmpty(ward)) filters["Ward"] = ward;
             if (isAdmin == false) filters["Status"] = FacilityStatus.Active;
             if (typeId.HasValue) filters["TypeId"] = typeId;
 
@@ -160,7 +161,7 @@ namespace Services.Services
                 { "Facility operation day", facilityDto.OperationDay },
                 { "Facility province", facilityDto.Province },
                 { "Facility district", facilityDto.District },
-                { "Facility city", facilityDto.City },
+                { "Facility ward", facilityDto.Ward },
                 { "Facility address", facilityDto.Address }
             };
 
@@ -188,7 +189,7 @@ namespace Services.Services
                 OperationDay = facility.OperationDay,
                 Province = facility.Province,
                 District = facility.District,
-                City = facility.City,
+                Ward = facility.Ward,
                 Address = facility.Address,
                 Description = facility.Description,
                 Status = facility.Status,
@@ -211,6 +212,23 @@ namespace Services.Services
                     } : null
                 }).ToList()
             };
+        }
+
+        /// <summary>
+        /// SEARCHING FACILITY REPOSITORY BASED ON NAME, LOCATION 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="province"></param>
+        /// <param name="district"></param>
+        /// <param name="ward"></param>
+        /// <param name="department"></param>
+        /// <returns>LIST FACILITY WITH SERVICE INFO, DEPARTMENT NAME</returns>
+        public async Task<IEnumerable<SearchingFacilityDto>> SearchAsync(string? name, string? province, string? district, string? ward, string? department)
+        {
+            var facilities = await _unitOfWork.FacilityRepository.SearchAsync(name, province, district, ward, department);
+            var facilityDtos = _mapper.Map<IEnumerable<SearchingFacilityDto>>(facilities);
+
+            return facilityDtos;
         }
     }
 }

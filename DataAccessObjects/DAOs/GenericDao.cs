@@ -81,16 +81,30 @@ namespace DataAccessObjects.DAOs
                 }
             }
 
-            // Apply Filters for Facility and related entities
             foreach (var filter in filters)
             {
+                var parameter = Expression.Parameter(typeof(T), "entity");
                 var property = typeof(T).GetProperty(filter.Key);
+
                 if (property != null && filter.Value != null)
                 {
-                    query = query.Where(entity =>
-                        property.GetValue(entity) != null &&
-                        property.GetValue(entity)!.ToString()!.Contains(filter.Value!.ToString()!)
-                    );
+                    var propertyExpression = Expression.Property(parameter, property);
+                    var filterValue = Expression.Constant(filter.Value.ToString(), typeof(string));
+
+                    if (property.PropertyType == typeof(string))
+                    {
+                        var containsMethod = typeof(string).GetMethod("Contains", new[] { typeof(string) });
+                        var containsExpression = Expression.Call(propertyExpression, containsMethod, filterValue);
+
+                        var lambda = Expression.Lambda<Func<T, bool>>(containsExpression, parameter);
+                        query = query.Where(lambda);
+                    }
+                    else
+                    {
+                        var equalityExpression = Expression.Equal(propertyExpression, filterValue);
+                        var lambda = Expression.Lambda<Func<T, bool>>(equalityExpression, parameter);
+                        query = query.Where(lambda);
+                    }
                 }
             }
 

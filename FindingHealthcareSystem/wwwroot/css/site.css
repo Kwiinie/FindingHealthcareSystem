@@ -17,9 +17,33 @@
 
 body {
     font-family: 'Lexend Deca', sans-serif;
-    color: #9d9d9d;
+    color: var(--text-on-primary);
+    background-color: var(--secondary-color);
+}
+.text-primary {
+    color: var(--primary-color) !important;
 }
 
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--text-on-primary);
+}
+
+    .btn-primary:hover {
+        background-color: var(--primary-hover);
+        border-color: var(--primary-hover);
+    }
+
+.btn-outline-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+    .btn-outline-primary:hover {
+        background-color: var(--primary-color);
+        color: var(--text-on-primary);
+    }
 
 .nav-bg {
     background-image: url(../img/hader-bg.png);
