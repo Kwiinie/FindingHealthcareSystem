@@ -1,9 +1,72 @@
-﻿@page "{id}"
+﻿@page "/article/{id}"
 @model FindingHealthcareSystem.Pages.Article.DetailModel
 @{
 }
+
+<!--------------------------------------------------------------------------------------------------------!>
+<!--                               VIEW DETAIL OF ARTICLE (GUEST-PATIENT)                               --!>
+<!--------------------------------------------------------------------------------------------------------!>
+<link rel="stylesheet" href="~/css/detailArticle.css" />
 <div class="container mt-10">
-    <h1>
-        view detail of article (guest-patient role)
-    </h1>
+    <!-- Article Content Section -->
+        <div class="row">
+            <div class="col mx-auto">
+                <div class="article-content-container">
+
+                    <h1 class="article-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum in lacinia neque. Proin maximus justo vitae nisi rhoncus, eget maximus quam efficitur. Vivamus pulvinar gravida ipsum, eget porttitor sem</h1>
+                    <span class="article-category">Dinh Dưỡng</span>
+
+                    <!-- Featured Image -->
+                    <img src="~/img/DefaultNews.jpg" alt="Article featured image" class="article-featured-image">
+
+                    <!-- Article Content -->
+                    <div class="article-content">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum in lacinia neque. Proin maximus justo vitae nisi rhoncus, eget maximus quam efficitur. Vivamus pulvinar gravida ipsum, eget porttitor sem fermentum sit amet. Fusce auctor tincidunt tortor, non vestibulum lectus feugiat quis. Cras commodo condimentum convallis.</p>
+
+                        <p>Nullam vehicula libero at felis commodo, eget dignissim justo elementum. Etiam rhoncus vehicula urna vel tempor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Mauris vehicula tortor in metus scelerisque, vel aliquam purus ultricies. Suspendisse potenti. Nulla facilisi. Suspendisse tincidunt placerat mi, id consequat ipsum lobortis at.</p>
+
+                        <h2>The Rising Trend of AI Technologies</h2>
+
+                        <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut lacinia, nibh et scelerisque varius, nisl metus iaculis justo, vel tincidunt risus leo at eros. Proin facilisis vulputate neque, id pulvinar ante ultricies ac. Nulla facilisi. Praesent vulputate sapien nec quam vehicula, vel dictum orci porttitor.</p>
+
+                        <p>Mauris efficitur nisi vel risus faucibus, ut venenatis turpis varius. Fusce porttitor, eros id fringilla dapibus, nibh lacus vestibulum mi, et tincidunt turpis odio a augue. Suspendisse congue, risus in fringilla dictum, magna lacus ultrices metus, ut tincidunt ipsum orci ac lectus. Nulla malesuada leo vitae urna eleifend, in luctus metus sodales.</p>
+
+                        <blockquote class="p-4 my-4 border-start border-4 border-primary bg-light">
+                            <p class="mb-0">"Artificial intelligence is the future of humanity, but we must ensure that it evolves in a way that benefits everyone."</p>
+                            <footer class="blockquote-footer mt-2">Dr. Emily Chen, <cite title="Source Title">AI Ethics Institute</cite></footer>
+                        </blockquote>
+
+                        <p>Donec convallis magna in felis luctus, eget pellentesque sem iaculis. Praesent euismod elementum quam, sed rhoncus nisl cursus ac. Nullam eget vehicula sapien. Sed fermentum varius justo at imperdiet. Aliquam vitae mauris sed risus tincidunt tempor. Vivamus vel justo finibus, fermentum tellus in, congue nibh.</p>
+                    </div>
+
+                    <!-- Image Gallery -->
+                    <div class="article-gallery">
+                        <h3 class="gallery-title">Ảnh</h3>
+                        <div class="gallery-grid">
+                            <div class="gallery-item">
+                                <img src="~/img/DefaultNews.jpg" alt="Gallery image 1" class="gallery-image">
+                            </div>
+                            <div class="gallery-item">
+                                <img src="~/img/DefaultNews.jpg" alt="Gallery image 2" class="gallery-image">
+                            </div>
+                            <div class="gallery-item">
+                                <img src="~/img/DefaultNews.jpg" alt="Gallery image 3" class="gallery-image">
+                            </div>
+                            <div class="gallery-item">
+                                <img src="~/img/DefaultNews.jpg" alt="Gallery image 4" class="gallery-image">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <div class="container">
+        <div class="row">
+
+        </div>
+    </div>
+
 </div>
+
+
