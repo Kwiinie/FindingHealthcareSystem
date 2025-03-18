@@ -13,8 +13,8 @@ if (currentPage === "/") {
     document.getElementById('search-link').classList.add('active');
 } else if (currentPage === "/search") {
     document.getElementById('appointment-link').classList.add('active');
-} else if (currentPage === "/blog.html") {
-    document.getElementById('blog-link').classList.add('active');
+} else if (currentPage === "/article") {
+    document.getElementById('article-link').classList.add('active');
 }
 
 
