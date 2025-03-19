@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Repositories.Repositories;
+using BusinessObjects.Entities;
 
 namespace Services
 {
@@ -15,10 +16,15 @@ namespace Services
         private readonly FindingHealthcareSystemContext _context;
         private readonly Dictionary<Type, object> _repositories;
 
+        public IGenericRepository<Article> ArticleRepository { get; }
+        public IGenericRepository<Category> CategoryRepository { get; }
+
         public UnitOfWork(FindingHealthcareSystemContext context)
         {
             _context = context;
             _repositories = new Dictionary<Type, object>();
+            ArticleRepository = new GenericRepository<Article>(context);
+            CategoryRepository = new GenericRepository<Category>(context);
         }
 
         public IGenericRepository<T> GetRepository<T>() where T : class

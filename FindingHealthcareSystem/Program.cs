@@ -4,6 +4,9 @@ using DataAccessObjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Repositories.Interfaces;
+using Repositories.Repositories;
+using Services;
 
 
 namespace FindingHealthcareSystem

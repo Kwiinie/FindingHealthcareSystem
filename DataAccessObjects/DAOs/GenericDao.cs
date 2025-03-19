@@ -28,7 +28,7 @@ namespace DataAccessObjects.DAOs
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            return await _dbSet.ToListAsync();
+            return _dbSet != null ? await _dbSet.ToListAsync() : new List<T>();
         }
 
         public async Task<T> FindAsync(Expression<Func<T, bool>> predicate)

@@ -7,6 +7,7 @@ namespace FindingHealthcareSystem.Pages.Admin.Article
     {
         public void OnGet()
         {
+
         }
     }
 }

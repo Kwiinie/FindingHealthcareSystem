@@ -1,5 +1,7 @@
 ﻿using BusinessObjects.Commons;
+using DataAccessObjects;
 using DataAccessObjects.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -13,10 +15,12 @@ namespace Repositories.Repositories
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         private readonly IGenericDAO<T> _dao;
+        private FindingHealthcareSystemContext _context;
 
-        public GenericRepository(IGenericDAO<T> dao)
+        public GenericRepository(IGenericDAO<T> dao, FindingHealthcareSystemContext context)
         {
-            _dao = dao;
+            _dao = dao ?? throw new ArgumentNullException(nameof(dao));
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public async Task<T> GetByIdAsync(int id)
