@@ -1,5 +1,6 @@
 using BusinessObjects.DTOs.Facility;
 using BusinessObjects.DTOs.Professional;
+using BusinessObjects.DTOs.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Repositories.Interfaces;
@@ -26,7 +27,8 @@ namespace FindingHealthcareSystem.Pages.Patient.Appointment
         public int? ProviderId { get; set; }
         public string ProviderType { get; set; }
         public ProfessionalDto? professional { get; set; }
-        public FacilityDto? facility { get; set; }
+        public SearchingFacilityDto? facility { get; set; }
+        public List<ServiceDto> services { get; set; }
 
 
         public async Task OnGet()
@@ -46,11 +48,13 @@ namespace FindingHealthcareSystem.Pages.Patient.Appointment
                 if (ProviderType == "Professional")
                 {
                     professional = await _professionalService.GetById(providerId);
+                    services = professional.PrivateServices;
                     workingHours = professional?.WorkingHours;
                 }
                 else if (ProviderType == "Facility")
                 {
-                    facility = await _facilityService.GetById(providerId);
+                    facility = await _facilityService.GetFacilityById(providerId);
+                    services = facility.PublicServices;
                     workingHours = "7:00 - 16:00";  // Assuming a default time for facilities
                 }
 

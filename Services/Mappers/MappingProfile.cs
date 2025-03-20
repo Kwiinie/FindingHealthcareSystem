@@ -36,6 +36,7 @@ namespace Services.Mappers
             ///MAPPING PROFESSIONAL EXPERTISE, SPECIALTY, USER INFO, SERVICE INFO///
             ///////////////////////////////////////////////////////////////////////
             CreateMap<Professional, ProfessionalDto>()
+           .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
            .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.User.Fullname))
            .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.User.Email))
            .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.User.PhoneNumber))

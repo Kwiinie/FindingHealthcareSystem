@@ -25,6 +25,7 @@ namespace FindingHealthcareSystem
             ///                      DAOS                      ///
             /////////////////////////////////////////////////////
             services.AddScoped<IFacilityDao, FacilityDao>();
+            services.AddScoped<IProfessionalDao, ProfessionalDao>();
             services.AddScoped(typeof(IGenericDAO<>), typeof(GenericDAO<>));
 
 
