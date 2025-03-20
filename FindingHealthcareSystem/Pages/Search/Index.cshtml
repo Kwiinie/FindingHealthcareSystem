@@ -147,6 +147,12 @@
                                                 <div class="d-flex justify-content-end mt-auto">
                                                     <a href="/facility/@facility.Id" class="btn btn-outline-primary">Xem chi tiết</a>
                                                 </div>
+                                                <div class="d-flex justify-content-end mt-auto">
+                                                    <a href="/patient/appointment/create?providerId=@facility.Id&providerType=Facility"
+                                                       class="btn btn-primary">
+                                                        Đặt lịch
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -212,6 +218,12 @@
 
                                                 <div class="d-flex justify-content-end mt-auto">
                                                     <a href="/Professional/@professional.UserId" class="btn btn-outline-primary">Xem chi tiết</a>
+                                                </div>
+                                                <div class="d-flex justify-content-end mt-auto">
+                                                    <a href="/patient/appointment/create?providerId=@professional.UserId&providerType=Professional"
+                                                       class="btn btn-primary">
+                                                        Đặt lịch
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>

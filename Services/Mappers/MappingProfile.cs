@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using BusinessObjects.Dtos.User;
 using BusinessObjects.DTOs.Auth;
-using BusinessObjects.DTOs;
 using BusinessObjects.DTOs.Auth;
 using BusinessObjects.DTOs.Department;
 using BusinessObjects.DTOs.Facility;
@@ -13,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BusinessObjects.DTOs.Professional;
 using BusinessObjects.DTOs.Service;
+using BusinessObjects.DTOs.Appointment;
 
 namespace Services.Mappers
 {
@@ -64,6 +64,12 @@ namespace Services.Mappers
                 Description = ps.Description
             }).ToList()));
 
+
+            /////////////////////////////////////////////////////////////////////////
+            ///                     MAPPING APPOINTMENT PROFILE                  ///
+            ///////////////////////////////////////////////////////////////////////
+            CreateMap<Appointment, AppointmentDTO>().ReverseMap();
+            CreateMap<Appointment, CreateAppointmentDto>().ReverseMap();
 
         }
     }

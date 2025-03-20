@@ -13,6 +13,7 @@ namespace Services
 
         IFacilityRepository FacilityRepository { get; }
         IProfessionalRepository ProfessionalRepository { get; }
+        IAppointmentRepository AppointmentRepository { get; }
 
         Task<int> SaveChangesAsync();
     } 

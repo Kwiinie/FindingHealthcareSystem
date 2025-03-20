@@ -1,9 +1,193 @@
-﻿@page "patient/appointment/create"
+﻿@page "/patient/appointment/create"
 @model FindingHealthcareSystem.Pages.Patient.Appointment.CreateModel
 @{
 }
+<link rel="stylesheet" href="~/css/createAppointment.css" />
+@{
+    var providerId = Request.Query["providerId"];
+    var providerType = Request.Query["providerType"];
+}
 <div class="container mt-10">
-    <h1>
-        create appointment
-    </h1>
+    <div class="booking-header">
+        <h1 class="booking-title">Đặt lịch khám</h1>
+        <p class="booking-subtitle">Chọn ngày và giờ phù hợp với lịch trình của bạn</p>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body p-0">
+            <div class="wrapper">
+                <header>
+                    <p class="current-date">Tháng 3 2025</p>
+                    <div class="icons">
+                        <span id="prev" class="material-symbols-rounded">chevron_left</span>
+                        <span id="next" class="material-symbols-rounded">chevron_right</span>
+                    </div>
+                </header>
+                <div class="calendar">
+                    <ul class="weeks">
+                        <li>CN</li>
+                        <li>T2</li>
+                        <li>T3</li>
+                        <li>T4</li>
+                        <li>T5</li>
+                        <li>T6</li>
+                        <li>T7</li>
+                    </ul>
+                    <ul class="days">
+                        <!-- Days will be added by JavaScript -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Time Slots Column - Larger -->
+        <div class="col-7 mb-4">
+            <div class="time-slots-container mb-3">
+                <h2 class="section-title">Chọn giờ khám</h2>
+                <div class="row">
+                    @foreach (var slot in Model.TimeSlots)
+                    {
+                        <div class="col-lg-4 col-6 mb-3">
+                            <div class="time-slot">
+                                <div class="time-slot-text">@slot</div>
+                                <span class="badge-available">Còn trống</span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="service-card">
+                <h2 class="section-title">Chọn dịch vụ</h2>
+
+                <div class="service-options">
+                    <div class="service-item">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="service1" name="serviceOption" class="custom-control-input" checked>
+                            <label class="custom-control-label" for="service1">
+                                <div class="service-info">
+                                    <div class="service-name">Khám tổng quát</div>
+                                    <div class="service-description">Khám sức khỏe toàn diện bao gồm các chỉ số cơ bản</div>
+                                </div>
+                                <div class="service-price">500.000 VNĐ</div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="service-item">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="service2" name="serviceOption" class="custom-control-input">
+                            <label class="custom-control-label" for="service2">
+                                <div class="service-info">
+                                    <div class="service-name">Tư vấn dinh dưỡng</div>
+                                    <div class="service-description">Tư vấn và lập kế hoạch dinh dưỡng theo nhu cầu cá nhân</div>
+                                </div>
+                                <div class="service-price">350.000 VNĐ</div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="service-item">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="service3" name="serviceOption" class="custom-control-input">
+                            <label class="custom-control-label" for="service3">
+                                <div class="service-info">
+                                    <div class="service-name">Khám và tư vấn tim mạch</div>
+                                    <div class="service-description">Khám chuyên sâu về tim mạch bao gồm đo điện tâm đồ</div>
+                                </div>
+                                <div class="service-price">650.000 VNĐ</div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="service-item">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="service4" name="serviceOption" class="custom-control-input">
+                            <label class="custom-control-label" for="service4">
+                                <div class="service-info">
+                                    <div class="service-name">Xét nghiệm máu cơ bản</div>
+                                    <div class="service-description">Kiểm tra các chỉ số máu quan trọng và phân tích kết quả</div>
+                                </div>
+                                <div class="service-price">420.000 VNĐ</div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="service-item">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="service5" name="serviceOption" class="custom-control-input">
+                            <label class="custom-control-label" for="service5">
+                                <div class="service-info">
+                                    <div class="service-name">Khám và tư vấn da liễu</div>
+                                    <div class="service-description">Tư vấn và chăm sóc các vấn đề về da</div>
+                                </div>
+                                <div class="service-price">480.000 VNĐ</div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Appointment Summary Column - Smaller -->
+        <div class="col-5">
+            <div class="appointment-summary">
+                <h2 class="section-title">Thông tin lịch khám</h2>
+
+                <div class="doctor-info">
+                    <img src="@(providerType == "Facility" ? "~/img/DefaultFacility.jpg" : "~/img/DefaultProfessional.jpg")" alt="Doctor" class="doctor-avatar">
+                    <div class="doctor-details">
+                        <div class="doctor-name">
+                            @(providerType == "Facility" ? Model.facility.Name : Model.professional.FullName)
+                        </div>
+                        <div class="doctor-specialty">Chuyên khoa Nội tổng quát</div>
+                    </div>
+                </div>
+
+                <div class="summary-item">
+                    <div class="summary-label">Dịch vụ</div>
+                    <div class="summary-value">Khám tổng quát</div>
+                </div>
+
+                <div class="summary-item">
+                    <div class="summary-label">Ngày khám</div>
+                    <div class="summary-value">Thứ tư, 19/03/2025</div>
+                </div>
+
+                <div class="summary-item">
+                    <div class="summary-label">Giờ khám</div>
+                    <div class="summary-value">10:00 - 11:00</div>
+                </div>
+
+                <div class="summary-item">
+                    <div class="summary-label">Cơ sở y tế</div>
+                    <div class="summary-value">Phòng khám Đa khoa Sức Khỏe Việt</div>
+                </div>
+
+                <div class="summary-item">
+                    <div class="summary-label">Địa chỉ</div>
+                    <div class="summary-value">123 Nguyễn Văn Linh, Quận 7, TP.HCM</div>
+                </div>
+
+                <div class="appointment-footer">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div>
+                            <div class="summary-label">Tổng tiền</div>
+                            <div class="price">500.000 VNĐ</div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid">
+                        <button class="btn btn-primary">Xác nhận đặt lịch</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>
+
