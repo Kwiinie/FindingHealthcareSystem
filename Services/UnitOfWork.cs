@@ -21,10 +21,10 @@ namespace Services
 
         public UnitOfWork(FindingHealthcareSystemContext context)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
             _repositories = new Dictionary<Type, object>();
-            ArticleRepository = new GenericRepository<Article>(context);
-            CategoryRepository = new GenericRepository<Category>(context);
+            ArticleRepository = GetRepository<Article>();
+            CategoryRepository = GetRepository<Category>();
         }
 
         public IGenericRepository<T> GetRepository<T>() where T : class
