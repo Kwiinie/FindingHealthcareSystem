@@ -17,13 +17,15 @@ public partial class Facility : BaseEntity
 
     public string? District { get; set; }
 
-    public string? City { get; set; }
+    public string? Ward { get; set; }
 
     public string? Address { get; set; }
 
     public string? Description { get; set; }
 
     public FacilityStatus Status { get; set; }
+
+    public string? ImgUrl { get; set; }
 
     public virtual ICollection<FacilityDepartment> FacilityDepartments { get; set; } = new List<FacilityDepartment>();
 

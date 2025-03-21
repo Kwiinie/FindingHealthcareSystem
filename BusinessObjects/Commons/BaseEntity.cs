@@ -9,6 +9,7 @@ namespace BusinessObjects.Commons
 {
     public class BaseEntity
     {
+        //User automatically gets Id, CreatedAt, and UpdatedAt fields.
         public int Id { get; set; }
         public bool IsDeleted { get; set; }
         public DateTime CreatedAt { get; set; }

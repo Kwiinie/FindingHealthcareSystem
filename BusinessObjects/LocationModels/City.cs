@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BusinessObjects.LocationModels
 {
-    public class City
+    public class District
     {
         public string Name { get; set; }
         public string Code { get; set; }

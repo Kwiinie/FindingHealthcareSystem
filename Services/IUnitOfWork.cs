@@ -14,6 +14,9 @@ namespace Services
         IGenericRepository<Article> ArticleRepository { get; }
         IGenericRepository<Category> CategoryRepository { get; }
 
+        IFacilityRepository FacilityRepository { get; }
+        IProfessionalRepository ProfessionalRepository { get; }
+
         Task<int> SaveChangesAsync();
     } 
 }

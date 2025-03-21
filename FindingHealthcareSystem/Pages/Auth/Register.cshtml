@@ -1,0 +1,262 @@
+﻿@page
+@model FindingHealthcareSystem.Pages.Auth.RegisterModel
+@using BusinessObjects.Entities
+@using BusinessObjects.Enums
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h2 class="pt-5 text-center">Đăng Ký Tài Khoan</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<form method="post" class="container">
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label>Họ và Tên</label>
+            <input type="text" class="form-control" asp-for="Input.Fullname" required />
+        </div>
+        <div class="col-md-6">
+            <label>Email</label>
+            <input type="email" class="form-control" asp-for="Input.Email" required />
+        </div>
+        <div class="col-md-6">
+            <label>Số điện thoại</label>
+            <input type="text" class="form-control" asp-for="Input.PhoneNumber" required />
+            <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+
+        </div>
+        <div class="col-md-6">
+            <label>Mật khẩu</label>
+            <input type="password" class="form-control" asp-for="Input.Password" required />
+        </div>
+        <div class="col-md-6">
+            <label>Ngày sinh</label>
+            <input type="date" class="form-control" asp-for="Input.Birthday" id="birthday" required />
+            <small id="displayBirthday"></small>
+        </div>
+
+        <script>
+            // Lấy ngày hôm nay theo định dạng YYYY-MM-DD
+            const today = new Date().toISOString().split("T")[0];
+
+            // Gán giá trị max cho input date
+            const birthdayInput = document.getElementById("birthday");
+            birthdayInput.setAttribute("max", today);
+
+            // Hiển thị ngày theo định dạng dd/mm/yyyy khi chọn ngày
+            birthdayInput.addEventListener("change", function () {
+                const dateValue = this.value; // Lấy giá trị yyyy-mm-dd
+                if (dateValue) {
+                    const [year, month, day] = dateValue.split("-"); // Tách chuỗi thành từng phần
+                    document.getElementById("displayBirthday").innerText = `Ngày đã chọn: ${day}/${month}/${year}`;
+                } else {
+                    document.getElementById("displayBirthday").innerText = "";
+                }
+            });
+        </script>
+
+        <div class="col-md-6">
+            <label>Gender</label>
+            <select class="form-select" asp-for="Input.Gender" required>
+                <option value="Nam">Nam</option>
+                <option value="Nữ">Nữ</option>
+                <option value="Khác">Khác</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Address Section -->
+    <div class="border rounded p-3 mt-4">
+        <h4>Address</h4>
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label>Province</label>
+                <select class="form-select" id="provinceDropdown" asp-for="Input.Province" required>
+                    <option value="">Chọn Tỉnh</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label>Chọn Quận/Huyện</label>
+                <select class="form-select" id="districtDropdown" asp-for="Input.District" required disabled>
+                    <option value="">Chọn Thành Phố</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label>Chọn Xã</label>
+                <select class="form-select" id="wardDropdown" asp-for="Input.Ward" required disabled>
+                    <option value="">Chọn Quận/Huyện</option>
+                </select>
+            </div>
+            <div class="col-md-12">
+                <label>Địa chỉ chi tiết</label>
+                <input type="text" class="form-control" id="detailAddress" asp-for="Input.Address" required />
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mt-4">
+        <div class="col-md-6">
+            <label>Role</label>
+            <select class="form-select" asp-for="Input.Role" id="roleDropdown">
+                <option value="@((int)Role.Patient)">Bệnh nhân</option>
+                <option value="@((int)Role.Professional)">Bác sĩ</option>
+            </select>
+        </div>
+    </div>
+
+    <div id="doctorFields" class="border rounded p-3 mt-3" style="display: none;">
+        <h4>Doctor Information</h4>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label>Degree</label>
+                <input type="text" class="form-control" asp-for="Input.Degree" id="degree"  />
+            </div>
+            <div class="col-md-6">
+                <label>Experience (years)</label>
+                <input type="text" class="form-control" asp-for="Input.Experience" id="experience"  />
+            </div>
+            <div class="col-md-6">
+                <label>Specialty</label>
+                <select class="form-select" asp-for="Input.SpecialtyIds" multiple>
+                    @if (ViewData["Specialties"] is List<Specialty> specialties)
+                    {
+                        @foreach (var specialty in specialties)
+                        {
+                            <option value="@specialty.Id">@specialty.Description</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label>Expertise</label>
+                <select class="form-select" asp-for="Input.ExpertiseId" multiple>
+                    @if (ViewData["Expertises"] is List<Expertise> Expertises)
+                    {
+                        @foreach (var ex in Expertises)
+                        {
+                            <option value="@ex.Id">@ex.Description</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary mt-3 w-100">Đăng ký</button>
+</form>
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const roleDropdown = document.getElementById("roleDropdown");
+        const doctorFields = document.getElementById("doctorFields");
+
+        function toggleDoctorFields() {
+            if (roleDropdown.value === "@((int)Role.Professional)") {
+                doctorFields.style.display = "block";
+            } else {
+                doctorFields.style.display = "none";
+            }
+        }
+
+        // Run on page load (in case of validation errors)
+        toggleDoctorFields();
+
+        // Run when role changes
+        roleDropdown.addEventListener("change", toggleDoctorFields);
+    });
+</script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const provinceDropdown = document.getElementById("provinceDropdown");
+        const districtDropdown = document.getElementById("districtDropdown");
+        const wardDropdown = document.getElementById("wardDropdown");
+        const detailAddress = document.getElementById("detailAddress");
+
+        // Load Provinces
+        fetch("https://provinces.open-api.vn/api/?depth=1")
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(province => {
+                    const option = document.createElement("option");
+                    option.value = province.name;
+                    option.textContent = province.name;
+                    provinceDropdown.appendChild(option);
+                });
+            });
+
+        // Fetch Districts when Province changes
+        provinceDropdown.addEventListener("change", function () {
+            const provinceCode = this.value;
+            districtDropdown.innerHTML = '<option value="">Select District</option>';
+            wardDropdown.innerHTML = '<option value="">Select Ward</option>';
+            districtDropdown.disabled = !provinceCode;
+            wardDropdown.disabled = true;
+
+            if (provinceCode) {
+                fetch(`https://provinces.open-api.vn/api/p/${provinceCode}?depth=2`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.districts.forEach(district => {
+                            const option = document.createElement("option");
+                            option.value = district.name;
+                            option.textContent = district.name;
+                            districtDropdown.appendChild(option);
+                        });
+                    });
+            }
+            updateAddress();
+        });
+
+        // Fetch Wards when District changes
+        districtDropdown.addEventListener("change", function () {
+            const districtCode = this.value;
+            wardDropdown.innerHTML = '<option value="">Select Ward</option>';
+            wardDropdown.disabled = !districtCode;
+
+            if (districtCode) {
+                fetch(`https://provinces.open-api.vn/api/d/${districtCode}?depth=2`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.wards.forEach(ward => {
+                            const option = document.createElement("option");
+                            option.value = ward.name;
+                            option.textContent = ward.name;
+                            wardDropdown.appendChild(option);
+                        });
+                    });
+            }
+            updateAddress();
+        });
+
+        // Update Address when Ward changes
+        wardDropdown.addEventListener("change", updateAddress);
+
+        // function updateAddress() {
+        //     const provinceText = provinceDropdown.options[provinceDropdown.selectedIndex]?.text || "";
+        //     const districtText = districtDropdown.options[districtDropdown.selectedIndex]?.text || "";
+        //     const wardText = wardDropdown.options[wardDropdown.selectedIndex]?.text || "";
+
+        //     let address = `${wardText ? wardText + ", " : ""}${districtText ? districtText + ", " : ""}${provinceText}`;
+        //     if (address.trim()) {
+        //         detailAddress.value = address + ", ";
+        //         detailAddress.focus();
+        //     }
+        // }
+    });
+</script>

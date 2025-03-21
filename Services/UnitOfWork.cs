@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Repositories.Repositories;
 using BusinessObjects.Entities;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Services
 {
@@ -15,17 +16,23 @@ namespace Services
     {
         private readonly FindingHealthcareSystemContext _context;
         private readonly Dictionary<Type, object> _repositories;
+        private readonly IFacilityRepository _facilityRepository;
+        private readonly IProfessionalRepository _professionalRepository;
 
         public IGenericRepository<Article> ArticleRepository { get; }
         public IGenericRepository<Category> CategoryRepository { get; }
 
         public UnitOfWork(FindingHealthcareSystemContext context)
+        public UnitOfWork(FindingHealthcareSystemContext context, IFacilityRepository facilityRepository, IProfessionalRepository professionalRepository)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _repositories = new Dictionary<Type, object>();
             ArticleRepository = GetRepository<Article>();
             CategoryRepository = GetRepository<Category>();
+            _facilityRepository = facilityRepository;
+            _professionalRepository = professionalRepository;
         }
+
 
         public IGenericRepository<T> GetRepository<T>() where T : class
         {
@@ -38,6 +45,10 @@ namespace Services
 
             return (IGenericRepository<T>)_repositories[typeof(T)];
         }
+
+        public IFacilityRepository FacilityRepository => _facilityRepository;
+        public IProfessionalRepository ProfessionalRepository => _professionalRepository;
+
 
         public async Task<int> SaveChangesAsync()
         {

@@ -5,7 +5,18 @@
     Layout = "_LoginLayout";  
 }
 
+
+
 <div class="login-container">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
     <h2 class="fw-bolder text-black-50 mb-5">Đăng nhập vào FindingHealthcare</h2>
 
     @if (!string.IsNullOrEmpty(Model.ErrorMessage))

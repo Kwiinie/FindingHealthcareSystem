@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Repositories.Interfaces;
 using Repositories.Repositories;
-using Services;
+using Services.Interfaces;
+using Services.Services;
 
 
 namespace FindingHealthcareSystem

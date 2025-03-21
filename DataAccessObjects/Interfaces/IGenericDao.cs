@@ -26,6 +26,8 @@ namespace DataAccessObjects.Interfaces
             int pageSize,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
             string includeProperties = "");
+
+        IQueryable<T> GetFilteredQuery(Dictionary<string, object?> filters, List<string>? includes = null);
         Task AddAsync(T entity);
 
         //adding a list of entities
