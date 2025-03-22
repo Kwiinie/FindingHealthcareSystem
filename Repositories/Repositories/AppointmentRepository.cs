@@ -38,7 +38,6 @@ namespace Repositories.Repositories
             {       
                 { "ProviderType", providerType },
                 { "ProviderId", providerId },
-                { "Date", startOfDay }
             };
 
             var appointmentQuery = _dao.GetFilteredQuery(filters);

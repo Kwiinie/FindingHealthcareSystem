@@ -46,6 +46,7 @@ namespace Services.Mappers
            .ForMember(dest => dest.Specialties, opt => opt.MapFrom(src => src.ProfessionalSpecialties.Select(ps => ps.Specialty.Name).ToList()))
            .ForMember(dest => dest.PrivateServices, opt => opt.MapFrom(src => src.PrivateServices.Select(ps => new ServiceDto
            {
+               Id = ps.Id,
                Name = ps.Name,
                Price = ps.Price,
                Description = ps.Description
@@ -60,6 +61,7 @@ namespace Services.Mappers
             .ForMember(dest => dest.DepartmentNames, opt => opt.MapFrom(src => src.FacilityDepartments.Select(fd => fd.Department.Name).ToList())) 
             .ForMember(dest => dest.PublicServices, opt => opt.MapFrom(src => src.PublicServices.Select(ps => new ServiceDto
             {
+                Id = ps.Id,
                 Name = ps.Name,
                 Price = ps.Price,
                 Description = ps.Description

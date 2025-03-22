@@ -40,21 +40,17 @@ namespace FindingHealthcareSystem.Pages.Patient.Appointment
 
         public async Task<IActionResult> OnGetAsync(int? ProviderId, string ProviderType, string SelectedDate, string SelectedTimeSlot = null, int SelectedServiceId = 0)
         {
-            // Set the provider ID
             this.ProviderId = ProviderId;
             this.ProviderType = ProviderType;
 
-            // Parse the selected date if provided, otherwise use today
             if (!string.IsNullOrEmpty(SelectedDate) && DateTime.TryParse(SelectedDate, out DateTime parsedDate))
             {
                 this.SelectedDate = parsedDate;
             }
 
-            // Store selected time slot and service if provided
             this.SelectedTimeSlot = SelectedTimeSlot;
             this.SelectedServiceId = SelectedServiceId;
 
-            // Load provider details and services
             string workingHours = null;
             if (ProviderId.HasValue)
             {
@@ -133,27 +129,21 @@ namespace FindingHealthcareSystem.Pages.Patient.Appointment
         {
             List<string> slots = new List<string>();
 
-            // Skip Sunday (DayOfWeek == 0)
             if (selectedDate.DayOfWeek == DayOfWeek.Sunday)
                 return slots;
 
-            // Check if working hours are provided
             if (string.IsNullOrEmpty(workingHours))
                 return slots;
 
-            // Parse working hours
             string[] hours = workingHours.Split('-');
             if (hours.Length != 2)
                 return slots;
 
-            // Try to parse the hours with different formats to be more flexible
             TimeSpan startTime;
             TimeSpan endTime;
 
-            // First try h:mm format
             if (!TimeSpan.TryParseExact(hours[0].Trim(), "h\\:mm", CultureInfo.InvariantCulture, out startTime))
             {
-                // Then try standard time format
                 if (!TimeSpan.TryParse(hours[0].Trim(), out startTime))
                     return slots;
             }
@@ -187,12 +177,11 @@ namespace FindingHealthcareSystem.Pages.Patient.Appointment
         {
             List<string> bookedSlots = new List<string>();
 
-            // Get all appointments for the provider on the selected date
+            //FIND APPOINTMENT LIST BY DATE AND PROVIDER
             var appointments = await _appointmentService.GetAppointmentsByProviderAndDate(providerId, providerType, date);
 
             foreach (var appointment in appointments)
             {
-                // Format the appointment time into the same format as our time slots
                 var appointmentStart = appointment.Date;
                 var appointmentEnd = appointment.Date.AddHours(1);
 

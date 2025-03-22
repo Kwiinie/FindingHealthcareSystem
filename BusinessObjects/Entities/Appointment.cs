@@ -25,7 +25,7 @@ public partial class Appointment : BaseEntity
 
     public DateTime? Date { get; set; }
 
-    public virtual ICollection<MedicalRecord> MedicalRecords { get; set; } = new List<MedicalRecord>();
+    public virtual ICollection<MedicalRecord>? MedicalRecords { get; set; } = new List<MedicalRecord>();
 
     public virtual Patient? Patient { get; set; }
 

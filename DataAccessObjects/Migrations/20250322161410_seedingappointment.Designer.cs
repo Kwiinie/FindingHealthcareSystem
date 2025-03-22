@@ -4,6 +4,7 @@ using DataAccessObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessObjects.Migrations
 {
     [DbContext(typeof(FindingHealthcareSystemContext))]
-    partial class FindingHealthcareSystemContextModelSnapshot : ModelSnapshot
+    [Migration("20250322161410_seedingappointment")]
+    partial class seedingappointment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,7 +95,7 @@ namespace DataAccessObjects.Migrations
                         {
                             Id = 1,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Date = new DateTime(2025, 3, 31, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 3, 30, 10, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Khám bệnh tổng quát cho bệnh nhân",
                             IsDeleted = false,
                             PatientId = 1,
@@ -107,7 +110,7 @@ namespace DataAccessObjects.Migrations
                         {
                             Id = 2,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Date = new DateTime(2025, 3, 31, 14, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 3, 30, 14, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Điều trị bằng y học cổ truyền cho bệnh nhân",
                             IsDeleted = false,
                             PatientId = 2,
