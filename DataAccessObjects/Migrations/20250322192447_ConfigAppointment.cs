@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DataAccessObjects.Migrations
 {
     /// <inheritdoc />
-    public partial class SeedData : Migration
+    public partial class ConfigAppointment : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -349,6 +349,39 @@ namespace DataAccessObjects.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Reviews",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProviderId = table.Column<int>(type: "int", nullable: true),
+                    ProviderType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PatientId = table.Column<int>(type: "int", nullable: true),
+                    Rating = table.Column<int>(type: "int", nullable: true),
+                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reviews", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Review_Facility",
+                        column: x => x.ProviderId,
+                        principalTable: "Facilities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Reviews_Patients_PatientId",
+                        column: x => x.PatientId,
+                        principalTable: "Patients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PrivateServices",
                 columns: table => new
                 {
@@ -398,45 +431,6 @@ namespace DataAccessObjects.Migrations
                         name: "FK_ProfessionalSpecialties_Specialties_SpecialtyId",
                         column: x => x.SpecialtyId,
                         principalTable: "Specialties",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Reviews",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProviderId = table.Column<int>(type: "int", nullable: true),
-                    ProviderType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PatientId = table.Column<int>(type: "int", nullable: true),
-                    Rating = table.Column<int>(type: "int", nullable: true),
-                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Reviews", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Review_Facility",
-                        column: x => x.ProviderId,
-                        principalTable: "Facilities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Review_Professional",
-                        column: x => x.ProviderId,
-                        principalTable: "Professionals",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Reviews_Patients_PatientId",
-                        column: x => x.PatientId,
-                        principalTable: "Patients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -692,8 +686,8 @@ namespace DataAccessObjects.Migrations
                 columns: new[] { "Id", "Address", "Degree", "District", "Experience", "ExpertiseId", "ExpertiseId1", "Province", "RequestStatus", "UserId", "Ward", "WorkingHours" },
                 values: new object[,]
                 {
-                    { 1, "Số 10, Đường X", "Bác sĩ đa khoa", "Quận Ba Đình", "Có 10 năm kinh nghiệm trong lĩnh vực khám chữa bệnh", 1, null, "Thành phố Hà Nội", "Approved", 4, "Phường Cửa Đông", "Thứ 2 - Thứ 6, 8:00 - 17:00" },
-                    { 2, "Số 15, Đường Y", "Bác sĩ y học cổ truyền", "Quận 1", "Có 5 năm kinh nghiệm trong điều trị các bệnh lý bằng y học cổ truyền", 2, null, "Thành phố Hồ Chí Minh", "Pending", 5, "Phường Bến Nghé", "Thứ 2 - Thứ 7, 9:00 - 18:00" }
+                    { 1, "Số 10, Đường X", "Bác sĩ đa khoa", "Quận Ba Đình", "Có 10 năm kinh nghiệm trong lĩnh vực khám chữa bệnh", 1, null, "Thành phố Hà Nội", "Approved", 4, "Phường Cửa Đông", "8:00 - 17:00" },
+                    { 2, "Số 15, Đường Y", "Bác sĩ y học cổ truyền", "Quận 1", "Có 5 năm kinh nghiệm trong điều trị các bệnh lý bằng y học cổ truyền", 2, null, "Thành phố Hồ Chí Minh", "Pending", 5, "Phường Bến Nghé", "9:00 - 18:00" }
                 });
 
             migrationBuilder.InsertData(
@@ -756,6 +750,15 @@ namespace DataAccessObjects.Migrations
                     { 11, "Lấy cao răng, giúp làm sạch răng miệng và ngăn ngừa bệnh về nướu.", 3, "Lấy cao răng", 150000m },
                     { 12, "Cấy ghép răng implant cho những người mất răng.", 3, "Cấy ghép răng implant", 1000000m },
                     { 13, "Dịch vụ tẩy trắng răng giúp cải thiện màu sắc răng miệng.", 3, "Tẩy trắng răng", 500000m }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Appointments",
+                columns: new[] { "Id", "Date", "Description", "PatientId", "PaymentId", "ProviderId", "ProviderType", "ServiceId", "ServiceType", "Status" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2025, 3, 31, 10, 0, 0, 0, DateTimeKind.Unspecified), "Khám bệnh tổng quát cho bệnh nhân", 1, null, 1, "Professional", 1, "Private", "AwaitingPayment" },
+                    { 2, new DateTime(2025, 3, 31, 14, 0, 0, 0, DateTimeKind.Unspecified), "Điều trị bằng y học cổ truyền cho bệnh nhân", 2, null, 1, "Professional", 4, "Private", "AwaitingPayment" }
                 });
 
             migrationBuilder.CreateIndex(

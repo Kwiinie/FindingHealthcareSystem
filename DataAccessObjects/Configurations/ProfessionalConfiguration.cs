@@ -49,7 +49,7 @@ namespace DataAccessObjects.Configurations
                     Address = "Số 10, Đường X",
                     Degree = "Bác sĩ đa khoa",
                     Experience = "Có 10 năm kinh nghiệm trong lĩnh vực khám chữa bệnh",
-                    WorkingHours = "Thứ 2 - Thứ 6, 8:00 - 17:00",
+                    WorkingHours = "8:00 - 17:00",
                     RequestStatus = ProfessionalRequestStatus.Approved
                 },
             new Professional
@@ -63,7 +63,7 @@ namespace DataAccessObjects.Configurations
                 Address = "Số 15, Đường Y",
                 Degree = "Bác sĩ y học cổ truyền",
                 Experience = "Có 5 năm kinh nghiệm trong điều trị các bệnh lý bằng y học cổ truyền",
-                WorkingHours = "Thứ 2 - Thứ 7, 9:00 - 18:00",
+                WorkingHours = "9:00 - 18:00",
                 RequestStatus = ProfessionalRequestStatus.Pending
             }
                 );

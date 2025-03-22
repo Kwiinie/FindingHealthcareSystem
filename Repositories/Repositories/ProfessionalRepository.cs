@@ -1,5 +1,6 @@
 ﻿using BusinessObjects.Commons;
 using BusinessObjects.Entities;
+using DataAccessObjects.DAOs;
 using DataAccessObjects.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Repositories.Interfaces;
@@ -12,15 +13,30 @@ using System.Threading.Tasks;
 
 namespace Repositories.Repositories
 {
-    public class ProfessionalRepository : GenericRepository<Professional>, IProfessionalRepository
+    public class ProfessionalRepository : IProfessionalRepository
     {
-        private readonly IGenericDAO<Professional> _dao;
+        private readonly IProfessionalDao _professionalDao;
 
-        public ProfessionalRepository(IGenericDAO<Professional> dao) : base(dao)
+        public ProfessionalRepository(IGenericDAO<Professional> dao, IProfessionalDao professionalDao)
         {
-            _dao = dao;
+            _professionalDao = professionalDao;
         }
 
+        public async Task<Professional> GetByIdAsync(int id)
+        {
+            return await _professionalDao.GetByIdAsync(id);
+        }
+
+
+        /// <summary>
+        /// SEARCHING PROFESSIONAL BASED ON LOCATION AND NAME
+        /// </summary>
+        /// <param name="province"></param>
+        /// <param name="district"></param>
+        /// <param name="ward"></param>
+        /// <param name="specialty"></param>
+        /// <param name="professionalName"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<Professional>> SearchAsync( string? province = null,
                                                                   string? district = null,
                                                                   string? ward = null,
@@ -48,7 +64,7 @@ namespace Repositories.Repositories
                 filters.Add("User.Name", professionalName);
             }
 
-            var query = _dao.GetFilteredQuery(filters, includes: new List<string> {
+            var query = _professionalDao.GetFilteredQuery(filters, includes: new List<string> {
             "Expertise",
             "PrivateServices",
             "ProfessionalSpecialties",
