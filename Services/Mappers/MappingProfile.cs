@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using BusinessObjects.DTOs.Professional;
 using BusinessObjects.DTOs.Service;
 using BusinessObjects.DTOs.Appointment;
+using BusinessObjects.DTOs;
 
 namespace Services.Mappers
 {
@@ -31,6 +32,7 @@ namespace Services.Mappers
             CreateMap<Specialty, SpecialtyDto>().ReverseMap();
             CreateMap<PublicService, ServiceDto>().ReverseMap();
             CreateMap<PrivateService, ServiceDto>().ReverseMap();
+            CreateMap<Patient, PatientDTO>().ReverseMap();
 
             /////////////////////////////////////////////////////////////////////////
             ///MAPPING PROFESSIONAL EXPERTISE, SPECIALTY, USER INFO, SERVICE INFO///
@@ -72,6 +74,7 @@ namespace Services.Mappers
             ///                     MAPPING APPOINTMENT PROFILE                  ///
             ///////////////////////////////////////////////////////////////////////
             CreateMap<Appointment, AppointmentDTO>().ReverseMap();
+
             CreateMap<Appointment, CreateAppointmentDto>().ReverseMap();
 
         }

@@ -1,10 +1,13 @@
-﻿using BusinessObjects.DTOs.Appointment;
+﻿using BusinessObjects.Dtos.User;
+using BusinessObjects.DTOs.Appointment;
 using BusinessObjects.DTOs.Facility;
 using BusinessObjects.DTOs.Professional;
 using BusinessObjects.DTOs.Service;
 using BusinessObjects.Entities;
+using BusinessObjects.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
 using Repositories.Interfaces;
 using Services.Interfaces;
 using Services.Services;
@@ -33,6 +36,7 @@ namespace FindingHealthcareSystem.Pages.Patient.Appointment
         public string ProviderType { get; set; }
         public DateTime SelectedDate { get; set; } = DateTime.Today;
         public string SelectedTimeSlot { get; set; }
+        [BindProperty]
         public int SelectedServiceId { get; set; }
         public ProfessionalDto? professional { get; set; }
         public SearchingFacilityDto? facility { get; set; }
@@ -76,52 +80,62 @@ namespace FindingHealthcareSystem.Pages.Patient.Appointment
             return Page();
         }
 
-/*        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync()
         {
             // Get form values
             var providerId = int.Parse(Request.Form["ProviderId"]);
             var providerType = Request.Form["ProviderType"];
             var selectedDateStr = Request.Form["SelectedDate"];
             var selectedTimeSlot = Request.Form["SelectedTimeSlot"];
-            var selectedServiceId = int.Parse(Request.Form["SelectedServiceId"]);
+            var currentUserJson = HttpContext.Session.GetString("User");
+            GeneralUserDto currentUser = null;
 
-            // Parse the selected date
-            if (DateTime.TryParse(selectedDateStr, out DateTime selectedDate))
+            if (!string.IsNullOrEmpty(currentUserJson))
             {
-                // Parse the time from the selected time slot
-                var timeRange = selectedTimeSlot.Split('-')[0].Trim();
-                var timeParts = timeRange.Split(':');
-
-                if (timeParts.Length == 2 &&
-                    int.TryParse(timeParts[0], out int hours) &&
-                    int.TryParse(timeParts[1], out int minutes))
-                {
-                    // Create the appointment date by combining the selected date with the time
-                    var appointmentDateTime = selectedDate.Date.AddHours(hours).AddMinutes(minutes);
-
-                    // Create the appointment
-                    var appointment = new AppointmentDto
-                    {
-                        ProviderId = providerId,
-                        ProviderType = providerType,
-                        Date = appointmentDateTime,
-                        ServiceId = selectedServiceId,
-                        // Add other required properties like UserId, Status, etc.
-                    };
-
-                    // Save the appointment
-                    await _appointmentService.CreateAppointment(appointment);
-
-                    // Redirect to a confirmation page
-                    return RedirectToPage("Confirmation", new { id = appointment.Id });
-                }
+                currentUser = JsonConvert.DeserializeObject<GeneralUserDto>(currentUserJson);
             }
 
-            // If we got here, something went wrong. Redisplay the form with an error message.
-            ModelState.AddModelError("", "Có lỗi xảy ra khi đặt lịch. Vui lòng thử lại.");
-            return await OnGetAsync(providerId, providerType, selectedDateStr, selectedTimeSlot, selectedServiceId);
+            // Parse the selected date
+            if (!DateTime.TryParse(selectedDateStr, out DateTime selectedDate))
+            {
+                ModelState.AddModelError(string.Empty, "Invalid date selected.");
+                return Page();
+            }
+
+            var selectedTimeSlotString = selectedTimeSlot.ToString();
+            var timeSlotParts = selectedTimeSlotString.Split(new char[] { ' ', '-' }, StringSplitOptions.RemoveEmptyEntries);
+            if (timeSlotParts.Length != 2 || !TimeSpan.TryParse(timeSlotParts[0], out TimeSpan startTime) || !TimeSpan.TryParse(timeSlotParts[1], out TimeSpan endTime))
+            {
+                ModelState.AddModelError(string.Empty, "Invalid time slot format.");
+                return Page();
+            }
+
+            DateTime appointmentDateTime = selectedDate.Date.Add(startTime);
+
+            // Create the appointment DTO
+            var createAppointmentDto = new CreateAppointmentDto
+            {
+                Date = appointmentDateTime,
+                PatientId = currentUser.Id,
+                ProviderId = providerId,
+                ProviderType = Enum.Parse<ProviderType>(providerType),
+                ServiceId = SelectedServiceId,
+            };
+
+            var result = await _appointmentService.AddAsync(createAppointmentDto);
+
+            if (result.Success)
+            {
+                return Redirect("/Checkout");
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, result.ErrorMessage);
+                return Page();
+            }
         }
-*/
+
+
         /// <summary>
         /// THIS FOR GENERATING ALL TIME SLOTS BASED ON WORKING HOURS
         /// </summary>

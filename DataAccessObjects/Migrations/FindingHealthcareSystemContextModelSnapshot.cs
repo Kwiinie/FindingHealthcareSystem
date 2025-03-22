@@ -2122,33 +2122,41 @@ namespace DataAccessObjects.Migrations
                         .HasForeignKey("PaymentId")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("BusinessObjects.Entities.Facility", null)
+                    b.HasOne("BusinessObjects.Entities.Facility", "Facility")
                         .WithMany()
                         .HasForeignKey("ProviderId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("FK_Appointment_Facility");
 
-                    b.HasOne("BusinessObjects.Entities.Professional", null)
+                    b.HasOne("BusinessObjects.Entities.Professional", "Professional")
                         .WithMany()
                         .HasForeignKey("ProviderId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("FK_Appointment_Professional");
 
-                    b.HasOne("BusinessObjects.Entities.PrivateService", null)
+                    b.HasOne("BusinessObjects.Entities.PrivateService", "PrivateService")
                         .WithMany()
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("FK_Appointment_PrivateService");
 
-                    b.HasOne("BusinessObjects.Entities.PublicService", null)
+                    b.HasOne("BusinessObjects.Entities.PublicService", "PublicService")
                         .WithMany()
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("FK_Appointment_PublicService");
 
+                    b.Navigation("Facility");
+
                     b.Navigation("Patient");
 
                     b.Navigation("Payment");
+
+                    b.Navigation("PrivateService");
+
+                    b.Navigation("Professional");
+
+                    b.Navigation("PublicService");
                 });
 
             modelBuilder.Entity("BusinessObjects.Entities.Article", b =>
@@ -2306,12 +2314,6 @@ namespace DataAccessObjects.Migrations
                         .HasForeignKey("ProviderId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("FK_Review_Facility");
-
-                    b.HasOne("BusinessObjects.Entities.Professional", null)
-                        .WithMany()
-                        .HasForeignKey("ProviderId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("FK_Review_Professional");
 
                     b.Navigation("Patient");
                 });

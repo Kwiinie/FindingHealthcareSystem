@@ -30,4 +30,9 @@ public partial class Appointment : BaseEntity
     public virtual Patient? Patient { get; set; }
 
     public virtual Payment? Payment { get; set; }
+
+    public Professional? Professional { get; set; }
+    public Facility? Facility { get; set; }
+    public PrivateService? PrivateService { get; set; }
+    public PublicService? PublicService { get; set; }
 }

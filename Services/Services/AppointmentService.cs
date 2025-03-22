@@ -26,10 +26,23 @@ namespace Services.Services
             _appointmentRepository = appointmentRepository;
         }
 
+        /// <summary>
+        /// CREATE APPOINTMENT 
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         public async Task<Result<AppointmentDTO>> AddAsync(CreateAppointmentDto entity)
         {
             try
             {
+                var patientRepo = _unitOfWork.GetRepository<Patient>();
+
+                var patient = await patientRepo.GetByIdAsync(entity.PatientId);
+                if (patient == null)
+                {
+                    return Result<AppointmentDTO>.ErrorResult("Invalid Patient ID.");
+                }
+
                 if (entity.ProviderType == ProviderType.Professional)
                 {
                     var professional = await _unitOfWork.ProfessionalRepository.GetByIdAsync(entity.ProviderId.Value);
@@ -37,6 +50,8 @@ namespace Services.Services
                     {
                         return Result<AppointmentDTO>.ErrorResult("Invalid Professional ID.");
                     }
+                    entity.ProviderType = ProviderType.Professional;
+                    entity.ServiceType = ServiceType.Private;
                 }
                 else if (entity.ProviderType == ProviderType.Facility)
                 {
@@ -45,15 +60,21 @@ namespace Services.Services
                     {
                         return Result<AppointmentDTO>.ErrorResult("Invalid Facility ID.");
                     }
+                    entity.ProviderType = ProviderType.Facility;
+                    entity.ServiceType = ServiceType.Public;
                 }
                 else
                 {
                     return Result<AppointmentDTO>.ErrorResult("Invalid ProviderType.");
                 }
 
+                entity.Status = AppointmentStatus.AwaitingPayment;
                 var appointmentEntity = _mapper.Map<Appointment>(entity);
+                appointmentEntity.Patient = patient;
+
                 await _unitOfWork.AppointmentRepository.AddAsync(appointmentEntity);
                 await _unitOfWork.SaveChangesAsync();
+
                 var appointmentDTO = _mapper.Map<AppointmentDTO>(appointmentEntity);
                 return Result<AppointmentDTO>.SuccessResult(appointmentDTO);
             }
@@ -62,6 +83,7 @@ namespace Services.Services
                 return Result<AppointmentDTO>.ErrorResult($"An error occurred while creating the appointment: {ex.Message}");
             }
         }
+
 
         public async Task<List<AppointmentDTO>> GetAllAsync()
         {
