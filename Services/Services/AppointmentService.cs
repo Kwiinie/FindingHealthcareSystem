@@ -18,12 +18,12 @@ namespace Services.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly IGenericRepository<Appointment> _repo;
-        public AppointmentService(IUnitOfWork unitOfWork, IMapper mapper)
+        private readonly IAppointmentRepository _appointmentRepository;
+        public AppointmentService(IUnitOfWork unitOfWork, IMapper mapper, IAppointmentRepository appointmentRepository)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
-            _repo = unitOfWork.GetRepository<Appointment>();
+            _appointmentRepository = appointmentRepository;
         }
 
         public async Task<Result<AppointmentDTO>> AddAsync(CreateAppointmentDto entity)
@@ -66,6 +66,13 @@ namespace Services.Services
         public async Task<List<AppointmentDTO>> GetAllAsync()
         {
             var appointments = await _unitOfWork.AppointmentRepository.GetAllAsync();
+            return _mapper.Map<List<AppointmentDTO>>(appointments);
+        }
+
+        public async Task<List<AppointmentDTO>> GetAppointmentsByProviderAndDate(int providerId, string providerType, DateTime date)
+        {
+            ProviderType type = (ProviderType)Enum.Parse(typeof(ProviderType), providerType);
+            var appointments = await _appointmentRepository.GetAppointmentsByProviderAndDateAsync(type, providerId, date);
             return _mapper.Map<List<AppointmentDTO>>(appointments);
         }
     }

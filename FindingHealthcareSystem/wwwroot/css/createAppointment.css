@@ -151,9 +151,10 @@ header .icons span {
     transition: all 0.3s ease;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+    position: relative; /* Added for badge positioning */
 }
 
-    .time-slot:hover {
+    .time-slot:not(.disabled):hover {
         border-color: var(--primary-color);
         background-color: rgba(153, 210, 85, 0.1);
         transform: translateY(-2px);
@@ -166,9 +167,36 @@ header .icons span {
         box-shadow: 0 4px 8px rgba(153, 210, 85, 0.3);
     }
 
+    .time-slot.disabled {
+        background-color: rgba(0, 0, 0, 0.1);
+        cursor: not-allowed;
+    }
+
+        .time-slot.disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
 .time-slot-text {
     font-weight: 500;
     font-size: 0.95rem;
+}
+
+/* Additional styles for badge */
+.badge-available {
+    display: block;
+    font-size: 0.8rem;
+    margin-top: 5px;
+    color: #666;
+}
+
+.time-slot.disabled .badge-available {
+    color: #dc3545;
+}
+
+.time-slot.selected .badge-available {
+    color: var(--primary-color);
+    font-weight: bold;
 }
 
 /* Appointment Summary Styles */

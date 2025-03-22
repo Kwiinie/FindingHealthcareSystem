@@ -13,6 +13,13 @@
         <p class="booking-subtitle">Chọn ngày và giờ phù hợp với lịch trình của bạn</p>
     </div>
 
+    <!-- Hidden form for date selection -->
+    <form id="dateSelectionForm" method="get" asp-page="Create">
+        <input type="hidden" id="SelectedDateInput" name="SelectedDate" value="@Model.SelectedDate.ToString("yyyy-MM-dd")" />
+        <input type="hidden" name="ProviderId" value="@providerId" />
+        <input type="hidden" name="ProviderType" value="@providerType" />
+    </form>
+
     <div class="card mb-4">
         <div class="card-body p-0">
             <div class="wrapper">
@@ -41,115 +48,231 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-7 mb-4">
-            <!-- Time Slots Column -->
-            <div class="time-slots-container mb-3">
-                <h2 class="section-title">Chọn giờ khám</h2>
-                <div class="row">
-                    @foreach (var slot in Model.TimeSlots)
-                    {
-                        <div class="col-lg-4 col-6 mb-3">
-                            <div class="time-slot">
-                                <div class="time-slot-text">@slot</div>
-                                <span class="badge-available">Còn trống</span>
+    <!-- Form for appointment booking -->
+    <form method="post" id="appointmentForm">
+        <input type="hidden" name="SelectedDate" value="@Model.SelectedDate.ToString("yyyy-MM-dd")" />
+        <input type="hidden" name="ProviderId" value="@providerId" />
+        <input type="hidden" name="ProviderType" value="@providerType" />
+        <input type="hidden" id="SelectedTimeSlot" name="SelectedTimeSlot" value="" />
+        <input type="hidden" id="SelectedServiceId" name="SelectedServiceId" value="" />
+
+        <div class="row">
+            <div class="col-7 mb-4">
+                <!-- Time Slots Column -->
+                <div class="time-slots-container mb-3">
+                    <h2 class="section-title">Chọn giờ khám</h2>
+                    <div class="row">
+                        @if (Model.TimeSlots.Count == 0)
+                        {
+                            <div class="col-12">
+                                <div class="alert alert-info">Không có khung giờ khám vào ngày này.</div>
                             </div>
-                        </div>
-                    }
+                        }
+                        else
+                        {
+                            @foreach (var slot in Model.TimeSlots)
+                            {
+                                var isBooked = ViewData["BookedSlots"] is List<string> bookedSlots && bookedSlots.Contains(slot);
+                                var isSelected = slot == Model.SelectedTimeSlot;
+                                <div class="col-lg-4 col-6 mb-3">
+                                    <div class="time-slot @(isBooked ? "disabled" : "") @(isSelected ? "selected" : "")"
+                                         data-slot="@slot"
+                                    @if (!isBooked)
+                                    {
+                                        <text>onclick="selectTimeSlot('@slot')"</text>
+                                    }>
+                                                <div class="time-slot-text">@slot</div>
+                                                <span class="badge-available">@((isBooked) ? "Đã đặt" : "Còn trống")</span>
+                                            </div>
+                                </div>
+                            }
+                        }
+
+                    </div>
+
+                </div>
+
+
+                <!-- Service Column -->
+                <div class="service-card">
+                    <h2 class="section-title">Chọn dịch vụ</h2>
+
+                    <div class="service-options">
+                        @foreach (var service in Model.services)
+                        {
+                            <div class="service-item">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="service@service.Id" name="serviceOption" class="custom-control-input"
+                                           value="@service.Id" onclick="selectService(@service.Id)" />
+                                    <label class="custom-control-label" for="service@service.Id">
+                                        <div class="service-info">
+                                            <div class="service-name">@service.Name</div>
+                                            <div class="service-description">@service.Description</div>
+                                        </div>
+                                        <div class="service-price">@service.Price?.ToString("C0")</div>
+                                    </label>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
                 </div>
             </div>
 
 
-            <!-- Service Column -->
-            <div class="service-card">
-                <h2 class="section-title">Chọn dịch vụ</h2>
+            <!-- Appointment Summary Column -->
+            <div class="col-5">
+                <div class="appointment-summary">
+                    <h2 class="section-title">Thông tin lịch khám</h2>
 
-                <div class="service-options">
-                    @foreach (var service in Model.services)
-                    {
-                        <div class="service-item">
-                            <div class="custom-control custom-radio">
-                                <input type="radio" id="service@service.Name" name="serviceOption" class="custom-control-input" />
-                                <label class="custom-control-label" for="service@service.Name">
-                                    <div class="service-info">
-                                        <div class="service-name">@service.Name</div>
-                                        <div class="service-description">@service.Description</div>
-                                    </div>
-                                    <div class="service-price">@service.Price?.ToString("C0")</div>
-                                </label>
+                    <div class="doctor-info">
+                        @if (providerType == "Facility")
+                        {
+                            <img src="~/img/DefaultFacility.jpg" alt="Doctor" class="doctor-avatar">
+
+                        }
+                        else if (providerType == "Professional")
+                        {
+                            <img src="~/img/DefaultProfessional.jpg" alt="Doctor" class="doctor-avatar">
+
+                        }
+
+                        <div class="doctor-details">
+                            <div class="doctor-name">
+                                @(providerType == "Facility" ? Model.facility.Name : Model.professional.FullName)
                             </div>
                         </div>
-                    }
+                    </div>
 
+                    <div class="summary-item">
+                        <div class="summary-label">Dịch vụ</div>
+                        Copy<div class="summary-item">
+                            <div class="summary-label">Dịch vụ</div>
+                            <div class="summary-value" id="selectedServiceDisplay"></div>
+                        </div>
+                    </div>
+
+                    <div class="summary-item">
+                        <div class="summary-label">Ngày khám</div>
+                        <div class="summary-value" id="appointmentDate">
+                            @{
+                                var dayOfWeek = "";
+                                switch ((int)Model.SelectedDate.DayOfWeek)
+                                {
+                                    case 1: dayOfWeek = "Thứ hai"; break;
+                                    case 2: dayOfWeek = "Thứ ba"; break;
+                                    case 3: dayOfWeek = "Thứ tư"; break;
+                                    case 4: dayOfWeek = "Thứ năm"; break;
+                                    case 5: dayOfWeek = "Thứ sáu"; break;
+                                    case 6: dayOfWeek = "Thứ bảy"; break;
+                                    case 0: dayOfWeek = "Chủ nhật"; break;
+                                }
+                            }
+                            @dayOfWeek, @Model.SelectedDate.ToString("dd/MM/yyyy")
+                        </div>
+                    </div>
+
+                    <div class="summary-item">
+                        <div class="summary-label">Giờ khám</div>
+                        <div class="summary-value" id="appointmentTime">
+                            @(string.IsNullOrEmpty(Model.SelectedTimeSlot) ? "Chưa chọn" : Model.SelectedTimeSlot)
+                        </div>
+                    </div>
+
+                    <div class="summary-item">
+                        <div class="summary-label">Địa chỉ</div>
+                        @if (providerType == "Facility")
+                        {
+                            <div class="summary-value">@Model.facility.Address, @Model.facility.Ward, @Model.facility.District, @Model.facility.Province</div>
+
+                        }
+                        else if (providerType == "Professional")
+                        {
+                            <div class="summary-value">@Model.professional.Address, @Model.professional.Ward, @Model.professional.District, @Model.professional.Province</div>
+
+                        }
+                    </div>
+
+                    <div class="appointment-footer">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div>
+                                <div class="summary-label">Tổng tiền</div>
+                                <div class="price" id="servicePriceDisplay">Chưa chọn</div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary" id="submitButton"
+                            @(string.IsNullOrEmpty(Model.SelectedTimeSlot) || Model.SelectedServiceId == 0 ? "disabled" : "")>
+                                Xác nhận đặt lịch
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-
-        <!-- Appointment Summary Column -->
-        <div class="col-5">
-            <div class="appointment-summary">
-                <h2 class="section-title">Thông tin lịch khám</h2>
-
-                <div class="doctor-info">
-                    @if(providerType == "Facility")
-                    {
-                        <img src="~/img/DefaultFacility.jpg" alt="Doctor" class="doctor-avatar">
-
-                    }
-                    else if (providerType == "Professional")
-                    {
-                        <img src="~/img/DefaultProfessional.jpg" alt="Doctor" class="doctor-avatar">
-
-                    }
-
-                    <div class="doctor-details">
-                        <div class="doctor-name">
-                            @(providerType == "Facility" ? Model.facility.Name : Model.professional.FullName)
-                        </div>
-                    </div>
-                </div>
-
-                <div class="summary-item">
-                    <div class="summary-label">Dịch vụ</div>
-                    <div class="summary-value">Khám tổng quát</div>
-                </div>
-
-                <div class="summary-item">
-                    <div class="summary-label">Ngày khám</div>
-                    <div class="summary-value">Thứ tư, 19/03/2025</div>
-                </div>
-
-                <div class="summary-item">
-                    <div class="summary-label">Địa chỉ</div>
-                    @if (providerType == "Facility")
-                    {
-                        <div class="summary-value">@Model.facility.Address, @Model.facility.Ward, @Model.facility.District, @Model.facility.Province</div>
-
-                    }
-                    else if (providerType == "Professional")
-                    {
-                        <div class="summary-value">@Model.professional.Address, @Model.professional.Ward, @Model.professional.District, @Model.professional.Province</div>
-
-                    }
-                </div>
-
-                <div class="appointment-footer">
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <div>
-                            <div class="summary-label">Tổng tiền</div>
-                            <div class="price">500.000 VNĐ</div>
-                        </div>
-                    </div>
-
-                    <div class="d-grid">
-                        <button class="btn btn-primary">Xác nhận đặt lịch</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    </form>
 
 </div>
 
+<script src="~/js/createAppointment.js" asp-append-version="true"></script>
+
+
+<script>
+    // Function to handle time slot selection
+    function selectTimeSlot(slot) {
+        // Update the hidden input
+        document.getElementById('SelectedTimeSlot').value = slot;
+
+        // Update the display in the summary
+        document.getElementById('appointmentTime').innerText = slot;
+
+        // Remove selected class from all time slots
+        document.querySelectorAll('.time-slot').forEach(el => {
+            el.classList.remove('selected');
+        });
+
+        // Add selected class to the clicked time slot
+        document.querySelector(`.time-slot[data-slot="${slot}"]`).classList.add('selected');
+
+        // Enable submit button if both time and service are selected
+        validateForm();
+    }
+
+    // Function to handle service selection
+    function selectService(serviceId) {
+        // Update the hidden input
+        document.getElementById('SelectedServiceId').value = serviceId;
+
+        // Update the service name in the summary
+        const serviceName = document.querySelector(`label[for="service${serviceId}"] .service-name`).innerText;
+        document.querySelector('.summary-item:first-of-type .summary-value').innerText = serviceName;
+
+        // Update the price in the summary
+        const servicePrice = document.querySelector(`label[for="service${serviceId}"] .service-price`).innerText;
+        document.querySelector('.appointment-footer .price').innerText = servicePrice;
+
+        // Enable submit button if both time and service are selected
+        validateForm();
+    }
+
+    // Function to validate the form
+    function validateForm() {
+        const timeSlot = document.getElementById('SelectedTimeSlot').value;
+        const serviceId = document.getElementById('SelectedServiceId').value;
+
+        document.getElementById('submitButton').disabled = !(timeSlot && serviceId);
+    }
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', function () {
+        // Set the initial calendar month to match the selected date
+        currMonth = @Model.SelectedDate.Month - 1;
+        currYear = @Model.SelectedDate.Year;
+        selectedDate = new Date(@Model.SelectedDate.Year, @Model.SelectedDate.Month - 1, @Model.SelectedDate.Day);
+        renderCalendar();
+
+        // Initialize form validation
+        validateForm();
+    });
+</script>

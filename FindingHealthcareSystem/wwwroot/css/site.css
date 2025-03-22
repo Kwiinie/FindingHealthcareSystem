@@ -46,15 +46,33 @@ body {
     .btn-primary:focus {
         outline: none;
         box-shadow: none;
-        background-color: var(--primary-focus) !important; 
+        background-color: var(--primary-focus) !important;
         border-color: var(--primary-focus) !important;
     }
+
+    .btn-primary:disabled,
+    .btn-primary[disabled] {
+        background-color: #e0e0e0; /* Light gray background */
+        border-color: #e0e0e0; /* Light gray border */
+        color: #b0b0b0; /* Light gray text */
+        cursor: not-allowed; /* Disable the cursor */
+        opacity: 0.6; /* Reduced opacity */
+    }
+
+.btn-outline-primary:disabled,
+.btn-outline-primary[disabled] {
+    color: #e0e0e0; /* Light gray text */
+    border-color: #e0e0e0; /* Light gray border */
+    background-color: transparent;
+    cursor: not-allowed; /* Disable the cursor */
+    opacity: 0.6; /* Reduced opacity */
+}
 
 .btn-outline-primary {
     color: var(--primary-color);
     border-color: var(--primary-color);
     outline: none;
-    box-shadow: none; 
+    box-shadow: none;
 }
 
     .btn-outline-primary:hover {
@@ -90,7 +108,6 @@ body {
     font-weight: bold;
     width: 120px;
     margin-right: 200px;
-
 }
 
 .navbar {
@@ -102,29 +119,32 @@ body {
     align-items: center;
     transition: color 0.3s ease;
 }
+
 .navbar-brand:hover {
     color: #555;
 }
-    .navbar .create-account {
-        text-decoration: none;
-        font-weight: 600;
-        background-color: #92d35e;
-        border: none;
-        border-radius: 12px;
-        -webkit-transition: background-color 0.3sease;
-        transition: background-color 0.3sease;
-    }
+
+.navbar .create-account {
+    text-decoration: none;
+    font-weight: 600;
+    background-color: #92d35e;
+    border: none;
+    border-radius: 12px;
+    -webkit-transition: background-color 0.3sease;
+    transition: background-color 0.3sease;
+}
 
     .navbar .create-account a {
         margin-right: 0;
         color: white !important;
     }
 
-    .navbar li .nav-link {
-        display: inline-block;
-        color: #4b4b4b;
-        padding: 15px 30px !important;
-    }
+.navbar li .nav-link {
+    display: inline-block;
+    color: #4b4b4b;
+    padding: 15px 30px !important;
+}
+
 .nav-link {
     display: block;
     padding: .5rem 1rem;
@@ -132,6 +152,7 @@ body {
     text-decoration: none;
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
 }
+
 .navbar-nav .nav-link.active {
     font-weight: bold;
 }
@@ -153,14 +174,15 @@ body {
     position: relative;
     padding: 120px 0px 50px;
     display: flex;
-    justify-content: center; 
-    align-items: center; 
+    justify-content: center;
+    align-items: center;
 }
 
     .intro .intro-text {
         text-align: center;
         z-index: 5;
     }
+
         .intro .intro-text .check-out {
             margin-top: 50px;
             display: flex;
@@ -172,11 +194,11 @@ body {
             padding: 15px 20px 15px 40px;
             background-color: white;
             border-radius: 12px;
-            width: 55%; 
+            width: 55%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 15px; 
+            gap: 15px;
         }
 
             .intro .intro-text .form .medic-search {
@@ -219,7 +241,6 @@ body {
     background-color: #f9f9f9;
     border-radius: 5px;
     width: 50%;
-
 }
 
     .search-form .form-control,
@@ -274,7 +295,7 @@ button, input, optgroup, select, textarea {
     line-height: inherit;
 }
 
-        
+
 
 .green {
     color: #92d35e;
@@ -303,7 +324,7 @@ h1 {
     align-items: center;
     border: 2px solid #ddd;
     border-radius: 10%;
-    background-color: #F9FBF6; 
+    background-color: #F9FBF6;
 }
 
     .department-card .card-body {
@@ -312,6 +333,7 @@ h1 {
         justify-content: center;
         align-items: center;
     }
+
         .department-card .card-body .card-title {
             text-align: center;
             font-size: large;
@@ -321,34 +343,35 @@ h1 {
 
 .carousel-control-prev, .carousel-control-next {
     position: absolute;
-    top: 50%; 
-    transform: translateY(-50%); 
-    background-color: #92d35e; 
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #92d35e;
     border-radius: 50%;
-    width: 60px; 
-    height: 60px; 
+    width: 60px;
+    height: 60px;
     display: flex;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
-    color: white; 
-    border: none; 
-    z-index: 10; 
-}
+    color: white;
+    border: none;
+    z-index: 10;
 }
 
-    .carousel-control-prev i, .carousel-control-next i {
-        font-size: 30px;
-    }
+}
+
+.carousel-control-prev i, .carousel-control-next i {
+    font-size: 30px;
+}
 
 .carousel-control-prev, .carousel-control-next {
-    outline: none; 
+    outline: none;
 }
 
 #departmentCarousel {
-    position: relative; 
+    position: relative;
     display: flex;
-    justify-content: center; 
-    align-items: center; 
+    justify-content: center;
+    align-items: center;
     width: 100%;
 }
 
@@ -356,7 +379,7 @@ h1 {
     padding: 10px;
 }
 
-.mt-10{
+.mt-10 {
     margin-top: 7rem;
 }
 

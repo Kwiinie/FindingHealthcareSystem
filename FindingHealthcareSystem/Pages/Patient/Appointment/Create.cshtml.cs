@@ -1,10 +1,13 @@
+﻿using BusinessObjects.DTOs.Appointment;
 using BusinessObjects.DTOs.Facility;
 using BusinessObjects.DTOs.Professional;
 using BusinessObjects.DTOs.Service;
+using BusinessObjects.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Repositories.Interfaces;
 using Services.Interfaces;
+using Services.Services;
 using System.Globalization;
 
 namespace FindingHealthcareSystem.Pages.Patient.Appointment
@@ -13,11 +16,13 @@ namespace FindingHealthcareSystem.Pages.Patient.Appointment
     {
         private readonly IProfessionalService _professionalService;
         private readonly IFacilityService _facilityService;
+        private readonly IAppointmentService _appointmentService;
 
-        public CreateModel(IProfessionalService professionalService, IFacilityService facilityService)
+        public CreateModel(IProfessionalService professionalService, IFacilityService facilityService, IAppointmentService appointmentService)
         {
             _facilityService = facilityService;
             _professionalService = professionalService;
+            _appointmentService = appointmentService;
         }
 
         /// <summary>
@@ -26,65 +31,178 @@ namespace FindingHealthcareSystem.Pages.Patient.Appointment
         public List<string> TimeSlots { get; set; } = new List<string>();
         public int? ProviderId { get; set; }
         public string ProviderType { get; set; }
+        public DateTime SelectedDate { get; set; } = DateTime.Today;
+        public string SelectedTimeSlot { get; set; }
+        public int SelectedServiceId { get; set; }
         public ProfessionalDto? professional { get; set; }
         public SearchingFacilityDto? facility { get; set; }
-        public List<ServiceDto> services { get; set; }
+        public List<ServiceDto> services { get; set; } = new List<ServiceDto>();
 
-
-        public async Task OnGet()
+        public async Task<IActionResult> OnGetAsync(int? ProviderId, string ProviderType, string SelectedDate, string SelectedTimeSlot = null, int SelectedServiceId = 0)
         {
-            var providerIdString = Request.Query["ProviderId"].FirstOrDefault();
-            string workingHours = null;
+            // Set the provider ID
+            this.ProviderId = ProviderId;
+            this.ProviderType = ProviderType;
 
-            if (int.TryParse(providerIdString, out int providerId))
+            // Parse the selected date if provided, otherwise use today
+            if (!string.IsNullOrEmpty(SelectedDate) && DateTime.TryParse(SelectedDate, out DateTime parsedDate))
             {
-                ProviderId = providerId;
+                this.SelectedDate = parsedDate;
             }
 
-            ProviderType = Request.Query["ProviderType"].FirstOrDefault();
+            // Store selected time slot and service if provided
+            this.SelectedTimeSlot = SelectedTimeSlot;
+            this.SelectedServiceId = SelectedServiceId;
 
-            if (!string.IsNullOrEmpty(ProviderType))
+            // Load provider details and services
+            string workingHours = null;
+            if (ProviderId.HasValue)
             {
                 if (ProviderType == "Professional")
                 {
-                    professional = await _professionalService.GetById(providerId);
-                    services = professional.PrivateServices;
+                    professional = await _professionalService.GetById(ProviderId.Value);
+                    services = professional?.PrivateServices ?? new List<ServiceDto>();
                     workingHours = professional?.WorkingHours;
                 }
                 else if (ProviderType == "Facility")
                 {
-                    facility = await _facilityService.GetFacilityById(providerId);
-                    services = facility.PublicServices;
-                    workingHours = "7:00 - 16:00";  // Assuming a default time for facilities
+                    facility = await _facilityService.GetFacilityById(ProviderId.Value);
+                    services = facility?.PublicServices ?? new List<ServiceDto>();
+                    workingHours = "7:00 - 16:00"; // default working hours of facility
                 }
 
-                TimeSlots = GenerateTimeSlots(workingHours);
+                // Generate time slots and get booked slots
+                TimeSlots = GenerateTimeSlots(workingHours, this.SelectedDate);
+                var bookedSlots = await GetBookedSlots(ProviderId.Value, ProviderType, this.SelectedDate);
+                ViewData["BookedSlots"] = bookedSlots;
             }
+
+            return Page();
         }
 
+/*        public async Task<IActionResult> OnPostAsync()
+        {
+            // Get form values
+            var providerId = int.Parse(Request.Form["ProviderId"]);
+            var providerType = Request.Form["ProviderType"];
+            var selectedDateStr = Request.Form["SelectedDate"];
+            var selectedTimeSlot = Request.Form["SelectedTimeSlot"];
+            var selectedServiceId = int.Parse(Request.Form["SelectedServiceId"]);
 
-        private List<string> GenerateTimeSlots(string workingHours)
+            // Parse the selected date
+            if (DateTime.TryParse(selectedDateStr, out DateTime selectedDate))
+            {
+                // Parse the time from the selected time slot
+                var timeRange = selectedTimeSlot.Split('-')[0].Trim();
+                var timeParts = timeRange.Split(':');
+
+                if (timeParts.Length == 2 &&
+                    int.TryParse(timeParts[0], out int hours) &&
+                    int.TryParse(timeParts[1], out int minutes))
+                {
+                    // Create the appointment date by combining the selected date with the time
+                    var appointmentDateTime = selectedDate.Date.AddHours(hours).AddMinutes(minutes);
+
+                    // Create the appointment
+                    var appointment = new AppointmentDto
+                    {
+                        ProviderId = providerId,
+                        ProviderType = providerType,
+                        Date = appointmentDateTime,
+                        ServiceId = selectedServiceId,
+                        // Add other required properties like UserId, Status, etc.
+                    };
+
+                    // Save the appointment
+                    await _appointmentService.CreateAppointment(appointment);
+
+                    // Redirect to a confirmation page
+                    return RedirectToPage("Confirmation", new { id = appointment.Id });
+                }
+            }
+
+            // If we got here, something went wrong. Redisplay the form with an error message.
+            ModelState.AddModelError("", "Có lỗi xảy ra khi đặt lịch. Vui lòng thử lại.");
+            return await OnGetAsync(providerId, providerType, selectedDateStr, selectedTimeSlot, selectedServiceId);
+        }
+*/
+        /// <summary>
+        /// THIS FOR GENERATING ALL TIME SLOTS BASED ON WORKING HOURS
+        /// </summary>
+        private List<string> GenerateTimeSlots(string workingHours, DateTime selectedDate)
         {
             List<string> slots = new List<string>();
+
+            // Skip Sunday (DayOfWeek == 0)
+            if (selectedDate.DayOfWeek == DayOfWeek.Sunday)
+                return slots;
+
+            // Check if working hours are provided
             if (string.IsNullOrEmpty(workingHours))
                 return slots;
 
+            // Parse working hours
             string[] hours = workingHours.Split('-');
-            if (hours.Length != 2) return slots;
+            if (hours.Length != 2)
+                return slots;
 
-            TimeSpan startTime = TimeSpan.ParseExact(hours[0].Trim(), "h\\:mm", CultureInfo.InvariantCulture);
-            TimeSpan endTime = TimeSpan.ParseExact(hours[1].Trim(), "h\\:mm", CultureInfo.InvariantCulture);
+            // Try to parse the hours with different formats to be more flexible
+            TimeSpan startTime;
+            TimeSpan endTime;
 
+            // First try h:mm format
+            if (!TimeSpan.TryParseExact(hours[0].Trim(), "h\\:mm", CultureInfo.InvariantCulture, out startTime))
+            {
+                // Then try standard time format
+                if (!TimeSpan.TryParse(hours[0].Trim(), out startTime))
+                    return slots;
+            }
+
+            if (!TimeSpan.TryParseExact(hours[1].Trim(), "h\\:mm", CultureInfo.InvariantCulture, out endTime))
+            {
+                if (!TimeSpan.TryParse(hours[1].Trim(), out endTime))
+                    return slots;
+            }
+
+            // Generate one-hour slots
             while (startTime < endTime)
             {
                 TimeSpan nextSlot = startTime.Add(TimeSpan.FromHours(1));
                 if (nextSlot <= endTime)
                 {
-                    slots.Add($"{startTime:hh\\:mm} - {nextSlot:hh\\:mm}");
+                    string formattedStart = $"{startTime.Hours:D2}:{startTime.Minutes:D2}";
+                    string formattedEnd = $"{nextSlot.Hours:D2}:{nextSlot.Minutes:D2}";
+                    slots.Add($"{formattedStart} - {formattedEnd}");
                 }
                 startTime = nextSlot;
             }
+
             return slots;
         }
-    }
+
+        /// <summary>
+        ///  FINDING AVAILABLE SLOTS FOR BOOKING
+        /// </summary>
+        private async Task<List<string>> GetBookedSlots(int providerId, string providerType, DateTime date)
+        {
+            List<string> bookedSlots = new List<string>();
+
+            // Get all appointments for the provider on the selected date
+            var appointments = await _appointmentService.GetAppointmentsByProviderAndDate(providerId, providerType, date);
+
+            foreach (var appointment in appointments)
+            {
+                // Format the appointment time into the same format as our time slots
+                var appointmentStart = appointment.Date;
+                var appointmentEnd = appointment.Date.AddHours(1);
+
+                string formattedStart = $"{appointmentStart.Hour:D2}:{appointmentStart.Minute:D2}";
+                string formattedEnd = $"{appointmentEnd.Hour:D2}:{appointmentEnd.Minute:D2}";
+
+                bookedSlots.Add($"{formattedStart} - {formattedEnd}");
+            }
+
+            return bookedSlots;
+        }
+    };
 }
