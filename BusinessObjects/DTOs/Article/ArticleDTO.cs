@@ -14,6 +14,6 @@ namespace BusinessObjects.DTOs.Article
         public DateTime CreatedAt { get; set; }
         public string CategoryName { get; set; }
         public string CreatedBy { get; set; }
-        public List<string> ImageUrls { get; set; }
+/*        public List<string> ImageUrls { get; set; }*/
     }
 }

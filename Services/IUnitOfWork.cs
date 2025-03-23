@@ -12,6 +12,8 @@ namespace Services
     {
         IGenericRepository<T> GetRepository<T>() where T : class;
         IGenericRepository<Article> ArticleRepository { get; }
+
+        IGenericRepository<ArticleImage> ArticleImageRepository { get; } 
         IGenericRepository<Category> CategoryRepository { get; }
 
         IFacilityRepository FacilityRepository { get; }

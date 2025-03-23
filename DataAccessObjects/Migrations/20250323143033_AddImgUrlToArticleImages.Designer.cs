@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessObjects.Migrations
 {
     [DbContext(typeof(FindingHealthcareSystemContext))]
-    [Migration("20250318191906_SeedData")]
-    partial class SeedData
+    [Migration("20250323143033_AddImgUrlToArticleImages")]
+    partial class AddImgUrlToArticleImages
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

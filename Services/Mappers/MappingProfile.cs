@@ -32,8 +32,7 @@ namespace Services.Mappers
 
             CreateMap<Article, ArticleDTO>()
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name))
-                .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy.Fullname))
-                .ForMember(dest => dest.ImageUrls, opt => opt.MapFrom(src => src.ArticleImages.Select(img => img.ImgUrl).ToList()));
+                .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy.Fullname));
             CreateMap<Specialty, SpecialtyDto>().ReverseMap();
             CreateMap<PublicService, ServiceDto>().ReverseMap();
             CreateMap<PrivateService, ServiceDto>().ReverseMap();

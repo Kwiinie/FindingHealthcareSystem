@@ -23,6 +23,8 @@ public partial class FindingHealthcareSystemContext : DbContext
 
     public virtual DbSet<Article> Articles { get; set; }
 
+    public virtual DbSet<ArticleImage> ArticleImage { get; set; }  // Thêm dòng này
+
     public virtual DbSet<Attachment> Attachments { get; set; }
 
     public virtual DbSet<Category> Categories { get; set; }
