@@ -51,6 +51,7 @@ namespace FindingHealthcareSystem
             services.AddScoped<ISpecialtyService, SpecialtyService>();
             services.AddScoped<IProfessionalService, ProfessionalService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IPublicServiceLayer, PublicServiceLayer>();
 
 
             return services;

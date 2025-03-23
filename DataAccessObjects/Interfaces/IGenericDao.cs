@@ -11,6 +11,7 @@ namespace DataAccessObjects.Interfaces
     public interface IGenericDAO<T> where T : class
     {
         Task<T> GetByIdAsync(int id);
+        Task<IEnumerable<T>> GetListById(int id);
         Task<IEnumerable<T>> GetAllAsync();
 
         //filtering returns first entity

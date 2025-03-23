@@ -82,5 +82,13 @@ namespace Services.Services
             }
             return _mapper.Map<DepartmentDto>(department);
         }
+
+        public async Task<List<DepartmentDto>> GetDepartmentsByFacilityIdAsync(int facilityId)
+        {
+            var departmentRepo = _unitOfWork.GetRepository<Department>();
+            var departments = await departmentRepo.FindAllAsync(d => d.Id == facilityId);
+            return _mapper.Map<List<DepartmentDto>>(departments);
+        }
+
     }
 }

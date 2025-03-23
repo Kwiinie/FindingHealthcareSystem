@@ -26,6 +26,12 @@ namespace DataAccessObjects.DAOs
             return await _dbSet.FindAsync(id);
         }
 
+        public async Task<IEnumerable<T>> GetListById(int id)
+        {
+            return await _dbSet.Where(x => EF.Property<int>(x, "Id") == id).ToListAsync();
+        }
+
+
         public async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _dbSet.ToListAsync();

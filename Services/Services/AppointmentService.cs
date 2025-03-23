@@ -55,6 +55,11 @@ namespace Services.Services
             throw new NotImplementedException();
         }
 
+        public Task<IEnumerable<AppointmentDTO>> GetListById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<PaginatedList<AppointmentDTO>> GetPagedListAsync(Expression<Func<AppointmentDTO, bool>> filter, int pageIndex, int pageSize, Func<IQueryable<AppointmentDTO>, IOrderedQueryable<AppointmentDTO>> orderBy = null, string includeProperties = "")
         {
             throw new NotImplementedException();
