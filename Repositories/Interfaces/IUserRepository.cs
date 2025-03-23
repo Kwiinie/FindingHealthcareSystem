@@ -26,6 +26,7 @@ namespace Repositories.Interfaces
         Task<List<Expertise>> GetAllExpertises();
 
         Task RegisterUserAsync(RegisterUserDto userDto);
+        Task<bool> EmailExistsAsync(string email);
 
     }
 }

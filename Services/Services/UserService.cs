@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Repositories.Interfaces;
 using Services.Interfaces;
 using System.Linq.Expressions;
+using System.Text.RegularExpressions;
 
 namespace Services.Services
 {
@@ -123,6 +124,17 @@ namespace Services.Services
         {
             try
             {
+                // Validate phone number (must be exactly 10 digits)
+                if (string.IsNullOrEmpty(userDto.PhoneNumber) || !Regex.IsMatch(userDto.PhoneNumber, @"^\d{10}$"))
+                {
+                    throw new Exception("Phone number must be exactly 10 digits.");
+                }
+
+                // Kiểm tra email đã tồn tại chưa
+                if (await _userRepository.EmailExistsAsync(userDto.Email))
+                {
+                    throw new Exception("Email đã tồn tại. Vui lòng sử dụng email khác.");
+                }
                 await _userRepository.RegisterUserAsync(userDto);
 
             }
@@ -132,6 +144,13 @@ namespace Services.Services
             }
 
         }
+
+        // Kiểm tra email đã tồn tại chưa
+        //bool emailExists = await _context.Users.AnyAsync(p => p.Email == userDto.Email);
+        //if (emailExists)
+        //{
+        //    throw new Exception("Email đã tồn tại. Vui lòng sử dụng email khác.");
+        //}
 
         public async Task<List<Expertise>> GetAllExpertises()
         {

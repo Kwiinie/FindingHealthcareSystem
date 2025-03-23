@@ -92,7 +92,7 @@
                 </select>
             </div>
             <div class="col-md-4">
-                <label>Chọn Xã</label>
+                <label>Chọn Xã</label> 
                 <select class="form-select" id="wardDropdown" asp-for="Input.Ward" required disabled>
                     <option value="">Chọn Quận/Huyện</option>
                 </select>
@@ -112,6 +112,12 @@
                 <option value="@((int)Role.Professional)">Bác sĩ</option>
             </select>
         </div>
+    </div>
+
+    <div class="col-md-6">
+        <label>Ghi chú</label>
+        <input type="text" class="form-control" asp-for="Input.Note" id="note" value="Nhập ghi chú về bạn(optional)"  />
+        <small id="displayNote"></small>
     </div>
 
     <div id="doctorFields" class="border rounded p-3 mt-3" style="display: none;">
@@ -157,6 +163,24 @@
     <button type="submit" class="btn btn-primary mt-3 w-100">Đăng ký</button>
 </form>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let roleDropdown = document.getElementById("roleDropdown");
+        let noteField = document.getElementById("note").parentElement; // Get parent div to hide it
+
+        function toggleNoteField() {
+            if (roleDropdown.value == "@((int)Role.Patient)") {
+                noteField.style.display = "block";
+            } else {
+                noteField.style.display = "none";
+            }
+        }
+
+        roleDropdown.addEventListener("change", toggleNoteField);
+        toggleNoteField(); // Run on page load to set initial state
+    });
+</script>
+
 
 
 <script>
@@ -182,7 +206,7 @@
 
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+     document.addEventListener("DOMContentLoaded", function () {
         const provinceDropdown = document.getElementById("provinceDropdown");
         const districtDropdown = document.getElementById("districtDropdown");
         const wardDropdown = document.getElementById("wardDropdown");
@@ -194,7 +218,7 @@
             .then(data => {
                 data.forEach(province => {
                     const option = document.createElement("option");
-                    option.value = province.name;
+                    option.value = province.name; // Use name instead of code
                     option.textContent = province.name;
                     provinceDropdown.appendChild(option);
                 });
@@ -202,22 +226,25 @@
 
         // Fetch Districts when Province changes
         provinceDropdown.addEventListener("change", function () {
-            const provinceCode = this.value;
-            districtDropdown.innerHTML = '<option value="">Select District</option>';
-            wardDropdown.innerHTML = '<option value="">Select Ward</option>';
-            districtDropdown.disabled = !provinceCode;
+            const provinceName = this.value;
+            districtDropdown.innerHTML = '<option value="">Chọn Quận/Huyện</option>';
+            wardDropdown.innerHTML = '<option value="">Chọn Xã</option>';
+            districtDropdown.disabled = !provinceName;
             wardDropdown.disabled = true;
 
-            if (provinceCode) {
-                fetch(`https://provinces.open-api.vn/api/p/${provinceCode}?depth=2`)
+            if (provinceName) {
+                fetch(`https://provinces.open-api.vn/api/?depth=2`)
                     .then(response => response.json())
                     .then(data => {
-                        data.districts.forEach(district => {
-                            const option = document.createElement("option");
-                            option.value = district.name;
-                            option.textContent = district.name;
-                            districtDropdown.appendChild(option);
-                        });
+                        const selectedProvince = data.find(p => p.name === provinceName);
+                        if (selectedProvince) {
+                            selectedProvince.districts.forEach(district => {
+                                const option = document.createElement("option");
+                                option.value = district.name; // Use name instead of code
+                                option.textContent = district.name;
+                                districtDropdown.appendChild(option);
+                            });
+                        }
                     });
             }
             updateAddress();
@@ -225,19 +252,24 @@
 
         // Fetch Wards when District changes
         districtDropdown.addEventListener("change", function () {
-            const districtCode = this.value;
-            wardDropdown.innerHTML = '<option value="">Select Ward</option>';
-            wardDropdown.disabled = !districtCode;
+            const districtName = this.value;
+            wardDropdown.innerHTML = '<option value="">Chọn Xã</option>';
+            wardDropdown.disabled = !districtName;
 
-            if (districtCode) {
-                fetch(`https://provinces.open-api.vn/api/d/${districtCode}?depth=2`)
+            if (districtName) {
+                fetch(`https://provinces.open-api.vn/api/?depth=3`)
                     .then(response => response.json())
                     .then(data => {
-                        data.wards.forEach(ward => {
-                            const option = document.createElement("option");
-                            option.value = ward.name;
-                            option.textContent = ward.name;
-                            wardDropdown.appendChild(option);
+                        data.forEach(province => {
+                            const selectedDistrict = province.districts.find(d => d.name === districtName);
+                            if (selectedDistrict) {
+                                selectedDistrict.wards.forEach(ward => {
+                                    const option = document.createElement("option");
+                                    option.value = ward.name; // Use name instead of code
+                                    option.textContent = ward.name;
+                                    wardDropdown.appendChild(option);
+                                });
+                            }
                         });
                     });
             }
@@ -245,12 +277,12 @@
         });
 
         // Update Address when Ward changes
-        wardDropdown.addEventListener("change", updateAddress);
+      //  wardDropdown.addEventListener("change", updateAddress);
 
         // function updateAddress() {
-        //     const provinceText = provinceDropdown.options[provinceDropdown.selectedIndex]?.text || "";
-        //     const districtText = districtDropdown.options[districtDropdown.selectedIndex]?.text || "";
-        //     const wardText = wardDropdown.options[wardDropdown.selectedIndex]?.text || "";
+        //     const provinceText = provinceDropdown.value;
+        //     const districtText = districtDropdown.value;
+        //     const wardText = wardDropdown.value;
 
         //     let address = `${wardText ? wardText + ", " : ""}${districtText ? districtText + ", " : ""}${provinceText}`;
         //     if (address.trim()) {
@@ -259,4 +291,5 @@
         //     }
         // }
     });
+
 </script>

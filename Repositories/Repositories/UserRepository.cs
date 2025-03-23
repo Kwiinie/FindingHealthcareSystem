@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Repositories.Repositories
@@ -68,64 +69,107 @@ namespace Repositories.Repositories
 
         public async Task RegisterUserAsync(RegisterUserDto userDto)
         {
-
-
-            // Kiểm tra email đã tồn tại chưa
-            bool emailExists = await _context.Users.AnyAsync(p => p.Email == userDto.Email);
-
-            if (emailExists)
+            try
             {
-                throw new Exception("Email đã tồn tại. Vui lòng sử dụng email khác.");
-            }
-
-            var user = new User
-            {
-                Fullname = userDto.Fullname,
-                Email = userDto.Email,
-                PhoneNumber = userDto.PhoneNumber,
-                Password = userDto.Password,
-                Role = userDto.Role,
-                Status = UserStatus.Active,
-                Birthday = userDto.Birthday,
-                Gender = userDto.Gender
-            };
-
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            if (userDto.Role == Role.Professional)
-            {
-                var professional = new Professional
+                // Validate phone number (must be exactly 10 digits)
+                if (string.IsNullOrEmpty(userDto.PhoneNumber) || !Regex.IsMatch(userDto.PhoneNumber, @"^\d{10}$"))
                 {
-                    UserId = user.Id,
-                    Province = userDto.Province,
-                    Ward = userDto.Ward,
-                    District=userDto.District,
-                    Address = userDto.Address,
-                    WorkingHours=userDto.WorkingHours,
-                    Degree = userDto.Degree,
-                    ExpertiseId = userDto.ExpertiseId,
-                    Experience = userDto.Experience,
-                    RequestStatus = ProfessionalRequestStatus.Pending
-                };
-                _context.Professionals.Add(professional);
-                await _context.SaveChangesAsync();
-
-                foreach (var specialtyId in userDto.SpecialtyIds)
-                {
-                    _context.ProfessionalSpecialties.Add(new ProfessionalSpecialty
-                    {
-                        ProfessionalId = professional.Id,
-                        SpecialtyId = specialtyId
-                    });
+                    throw new Exception("Phone number must be exactly 10 digits.");
                 }
+
+                // Kiểm tra email đã tồn tại chưa
+                bool emailExists = await _context.Users.AnyAsync(p => p.Email == userDto.Email);
+                if (emailExists)
+                {
+                    throw new Exception("Email đã tồn tại. Vui lòng sử dụng email khác.");
+                }
+
+                var user = new User
+                {
+                    Fullname = userDto.Fullname,
+                    Email = userDto.Email,
+                    PhoneNumber = userDto.PhoneNumber,
+                    Password = userDto.Password, // Lưu ý: Cần mã hóa mật khẩu
+                    Role = userDto.Role,
+                    ImgUrl = userDto.ImgUrl,
+                    Status = UserStatus.Active,
+                    Birthday = userDto.Birthday,
+                    Gender = userDto.Gender
+                };
+
+                _context.Users.Add(user);
                 await _context.SaveChangesAsync();
+
+
+
+                if (userDto.Role == Role.Professional)
+                {
+                    var professional = new Professional
+                    {
+                        UserId = user.Id,
+                        Province = userDto.Province,
+                        Ward = userDto.Ward,
+                        District = userDto.District,
+                        Address = userDto.Address,
+                        WorkingHours = userDto.WorkingHours,
+                        Degree = userDto.Degree,
+                        ExpertiseId = userDto.ExpertiseId,
+                        Experience = userDto.Experience,
+                        RequestStatus = ProfessionalRequestStatus.Pending
+                    };
+
+                    _context.Professionals.Add(professional);
+                    await _context.SaveChangesAsync();
+
+                    foreach (var specialtyId in userDto.SpecialtyIds)
+                    {
+                        _context.ProfessionalSpecialties.Add(new ProfessionalSpecialty
+                        {
+                            ProfessionalId = professional.Id,
+                            SpecialtyId = specialtyId
+                        });
+                    }
+                    await _context.SaveChangesAsync();
+
+                }
+
+
+                if (userDto.Role == Role.Patient)
+                {
+                    string note = userDto.Note;
+                    if (note == null) note = "N/A";
+                    var patient = new Patient
+                    {
+                        Note = note,
+                        UserId = user.Id
+                    };
+
+                    _context.Patients.Add(patient);
+                    await _context.SaveChangesAsync();
+
+                   
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log error
+                Console.WriteLine($"Error in RegisterUserAsync: {ex.Message}");
+
+                // Re-throw exception for controller to handle
+                throw new Exception("An error occurred while registering the user.", ex);
             }
         }
 
         public async Task<List<Expertise>> GetAllExpertises()
         {
             return await _context.Expertises.ToListAsync();
+        }
+
+
+
+        public async Task<bool> EmailExistsAsync(string email)
+        {
+            return await _context.Users.AnyAsync(u => u.Email == email);
         }
     }
 }

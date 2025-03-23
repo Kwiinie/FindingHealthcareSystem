@@ -80,8 +80,7 @@ namespace FindingHealthcareSystem.Pages.Auth
         {
             try
             {
-                if (!ModelState.IsValid)
-                    return Page();
+                
 
                 var userDto = new RegisterUserDto
                 {
@@ -90,9 +89,11 @@ namespace FindingHealthcareSystem.Pages.Auth
                     PhoneNumber = Input.PhoneNumber,
                     Password = HashPassword(Input.Password),
                     Role = Input.Role,
+                    Note=Input.Note,
                     Birthday = Input.Birthday,
                     Gender = Input.Gender,
                     Province = Input.Province,
+                    ImgUrl= "https://img.icons8.com/nolan/512w/user-default.png",
                     Ward = Input.Ward,
                     District = Input.District,
                     WorkingHours = Input.WorkingHours,
@@ -111,6 +112,9 @@ namespace FindingHealthcareSystem.Pages.Auth
             catch (Exception ex)
             {
                 TempData["ErrorMessage"] = ex.Message;
+                // 🚀 GỌI LẠI OnGetAsync() để nạp lại dữ liệu dropdown trước khi quay lại trang
+                await OnGetAsync();
+
                 return Page(); // Quay lại trang hiện tại và hiển thị thông báo lỗi
             }
         }
@@ -133,6 +137,8 @@ namespace FindingHealthcareSystem.Pages.Auth
     }
     public class RegisterViewModel
     {
+        public string Note { get; set; }
+
         public string Fullname { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
@@ -140,6 +146,8 @@ namespace FindingHealthcareSystem.Pages.Auth
         public Role Role { get; set; }
         public DateOnly? Birthday { get; set; }
         public string Gender { get; set; }
+        public string? ImgUrl { get; set; }
+
         public string? Province { get; set; }
         public string? District { get; set; }
         public string? WorkingHours { get; set; } /// giờ làm vieecjj khoảng thời gian 
