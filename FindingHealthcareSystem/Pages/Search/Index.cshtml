@@ -145,7 +145,7 @@
                                                 }
 
                                                 <div class="d-flex justify-content-end mt-auto">
-                                                    <a href="/facility/@facility.Id" class="btn btn-outline-primary">Xem chi tiết</a>
+                                                    <a asp-page="/facility/Detail" asp-route-facilityId="@facility.Id" class="btn btn-outline-primary">Xem chi tiết</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -203,7 +203,7 @@
                                                             }
                                                         </div>
                                                     </div>
-                                                }
+                                                }fz
 
                                                 @if (!string.IsNullOrEmpty(professional.Experience))
                                                 {

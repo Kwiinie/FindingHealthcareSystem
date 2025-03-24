@@ -65,16 +65,16 @@ namespace FindingHealthcareSystem.Pages.Facility
         //    Services = await _publicServiceLayer.GetServicesByFacilityId(FacilityId) ?? new List<ServiceDto>();
         //    return Page();
         //}
-        public async Task<IActionResult> OnGetAsync()
+        public async Task OnGetAsync()
         {
             Facility = await _facilityService.GetById(FacilityId);
             if (Facility == null)
             {
                 throw new Exception("Facility not found");
             }
-            Departments = await _departmentService.GetDepartmentsByFacilityIdAsync(FacilityId) ?? new List<DepartmentDto>();
+            Departments = await _departmentService.GetAllDepartments();
             Services = await _publicServiceLayer.GetServicesByFacilityId(FacilityId) ?? new List<ServiceDto>();
-            return Page();
+
         }
 
         public async Task<IActionResult> OnGetAllDepartmentsAsync()

@@ -127,8 +127,9 @@ namespace Services.Services
 
         public async Task<FacilityDto> GetById(int id)
         {
-            var facRepo = _unitOfWork.GetRepository<Facility>();
-            var facility = await facRepo.GetByIdAsync(id);
+            if (id == null) throw new Exception("Id is not found");
+            var facRepo = _unitOfWork.FacilityRepository;
+            var facility = await facRepo.GetByIdWithRelationsAsync(id);
             if (facility == null)
             {
                 throw new Exception("Facility not found");
