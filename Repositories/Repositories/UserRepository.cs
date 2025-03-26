@@ -56,10 +56,17 @@ namespace Repositories.Repositories
             return await _context.Specialties.ToListAsync();
         }
 
-        public async Task<User?> GetByIdAsync(int id)
-        {
-            return await _context.Users.FindAsync(id);
-        }
+
+public async Task<User?> GetByIdAsync(int id)
+    {
+        return await _context.Users
+            .Include(u => u.Patient)        // Nếu cần lấy Patient
+            .Include(u => u.Professional)   // Nếu cần lấy Professional
+            .FirstOrDefaultAsync(u => u.Id == id);
+    }
+
+    
+
 
         public async Task UpdateAsync(User user)
         {
@@ -170,6 +177,76 @@ namespace Repositories.Repositories
         public async Task<bool> EmailExistsAsync(string email)
         {
             return await _context.Users.AnyAsync(u => u.Email == email);
+        }
+
+      
+
+        public async Task UpdateProfessionalAsync(Professional professional)
+        {
+            var existingProfessional = await _context.Professionals
+                .FirstOrDefaultAsync(p => p.Id == professional.Id);
+
+            if (existingProfessional == null)
+            {
+                throw new ArgumentException("Professional not found");
+            }
+
+            // Cập nhật các thuộc tính của existingProfessional với giá trị từ professional
+            existingProfessional.Province = professional.Province;
+            existingProfessional.District = professional.District;
+            existingProfessional.Ward = professional.Ward;
+            existingProfessional.Address = professional.Address;
+            existingProfessional.Degree = professional.Degree;
+            existingProfessional.Experience = professional.Experience;
+            existingProfessional.WorkingHours = professional.WorkingHours;
+
+            // Lưu thay đổi vào cơ sở dữ liệu
+            _context.Professionals.Update(existingProfessional);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdatePatientAsync(Patient patient)
+        {
+            var existingProfessional = await _context.Patients
+                          .FirstOrDefaultAsync(p => p.Id == patient.Id);
+
+            if (existingProfessional == null)
+            {
+                throw new ArgumentException("Patient not found");
+            }
+
+            // Cập nhật các thuộc tính của existingProfessional với giá trị từ professional
+            existingProfessional.Note = patient.Note;
+           
+
+            // Lưu thay đổi vào cơ sở dữ liệu
+            _context.Patients.Update(existingProfessional);
+            await _context.SaveChangesAsync();
+        }
+        public async Task<Professional> GetProfessionalById(int userId)
+        {
+            return await _context.Professionals
+                .Include(p => p.User)
+                .Include(p => p.Expertise)
+                .Include(p => p.ProfessionalSpecialties)
+                .ThenInclude(ps => ps.Specialty)
+                .FirstOrDefaultAsync(p => p.UserId == userId);
+        }
+
+        public async Task<Patient> GetByPatientId(int userId)
+        {
+            return await _context.Patients
+                .Include(p => p.User)
+                
+                .FirstOrDefaultAsync(p => p.UserId == userId);
+        }
+
+        public async Task<Patient> GetPatientById(int userId)
+        {
+            return await _context.Patients
+                           .Include(p => p.User)
+
+                           .FirstOrDefaultAsync(p => p.UserId == userId);
         }
     }
 }

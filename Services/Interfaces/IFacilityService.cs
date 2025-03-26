@@ -11,6 +11,8 @@ namespace Services.Interfaces
         Task<FacilityDto> Create(FacilityDto facilityDto);
         Task<FacilityDto> Update(int id, FacilityDto facilityDto);
         Task<FacilityDto> GetById(int id);
+        Task<SearchingFacilityDto> GetFacilityById(int id);
+
         Task<FacilityDto> DeleteAsync(int id);
 
         Task<IEnumerable<SearchingFacilityDto>> SearchAsync(string? name = null,

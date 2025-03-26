@@ -22,11 +22,16 @@ namespace Repositories.Interfaces
 
         Task<List<Specialty>> GetAllSpecialtiesAsync();
         Task<List<FacilityDepartment>> GetAllHospitalsAsync();
+        Task<Professional> GetProfessionalById(int userId);
+        Task<Patient> GetPatientById(int userId);
 
         Task<List<Expertise>> GetAllExpertises();
 
         Task RegisterUserAsync(RegisterUserDto userDto);
         Task<bool> EmailExistsAsync(string email);
+        Task UpdateProfessionalAsync(Professional professional);
+        Task UpdatePatientAsync(Patient patient);
+
 
     }
 }

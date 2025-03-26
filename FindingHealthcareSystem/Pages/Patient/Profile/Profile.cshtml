@@ -1,7 +1,178 @@
-﻿@page "patient/profile"
+﻿@page "/patient/profile/{id}"
 @model FindingHealthcareSystem.Pages.Patient.Profile.ProfileModel
 @{
 }
+
+<link rel="stylesheet" href="~/css/patientProfile.css" />
+
 <div class="container mt-10">
-    <h1>profile of patient</h1>
+    <div class="row justify-content-center">
+        <div class="col">
+
+
+
+            <!-- Profile Section -->
+            <div class="profile-card">
+                            @if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+                <div class="profile-header">
+                    <!-- AUTHORIZATION REQUIRED !! -->
+                    <button class="btn btn-primary edit-button" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                        <i class="fas fa-edit"></i> Chỉnh sửa hồ sơ
+                    </button>
+
+                    <div class="row">
+                        <div class="col-md-3 text-center">
+                              @* <img src="~/img/@Model.CurrentUser.User.ImgUrl" alt="Patient Photo" class="profile-img"> *@
+                               <img src="https://img.icons8.com/nolan/512w/user-default.png" alt="Patient Photo" class="profile-img">
+
+                        </div>
+                        <div class="col-md-9">
+                            <h2 id="fullName">@Model.CurrentUser.User.Fullname</h2>
+                            <div class="personal-info">
+                                <i class="fas fa-venus-mars info-icon"></i>
+                                <span id="gender">@Model.CurrentUser.User.Gender</span>
+                            </div>
+                            <div class="personal-info">
+                                <i class="fas fa-birthday-cake info-icon"></i>
+                                <span id="birthday">@Model.CurrentUser.User.Birthday</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-info">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <div class="info-label">Thông tin liên hệ</div>
+                                <div class="contact-info">
+                                    <i class="fas fa-envelope contact-icon"></i>
+                                    <span id="email">@Model.CurrentUser.User.Email</span>
+                                </div>
+                                <div class="contact-info">
+                                    <i class="fas fa-phone contact-icon"></i>
+                                    <span id="phoneNumber">@Model.CurrentUser.User.PhoneNumber</span>
+                                </div>
+                            </div>
+
+                          
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <div class="info-label">Ghi chú y tế</div>
+                            <p id="medicalNote">@Model.CurrentUser.Note</p>
+                            </div>
+
+                            <div class="mb-4">
+                                <div class="info-label">Lịch sử khám bệnh</div>
+                                <div class="d-grid gap-2 d-md-block">
+                                    <a href="#" class="btn btn-outline-primary btn-sm"><i class="fas fa-calendar-alt"></i> Xem lịch hẹn</a>
+                                    <a href="#" class="btn btn-outline-primary btn-sm ms-md-2"><i class="fas fa-file-medical"></i> Xem hồ sơ bệnh án</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upcoming Appointments Section -->
+            <div class="profile-card">
+                <div class="profile-header">
+                    <h4 class="mb-0">Lịch hẹn sắp tới</h4>
+                </div>
+                <div class="profile-info">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Ngày</th>
+                                    <th>Giờ</th>
+                                    <th>Bác sĩ/Cơ sở y tế</th>
+                                    <th>Dịch vụ</th>
+                                    <th>Trạng thái</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>25/03/2025</td>
+                                    <td>09:30</td>
+                                    <td>BS. Trần Văn B</td>
+                                    <td>Tim mạch</td>
+                                    <td><span class="badge bg-warning text-dark">Chờ xác nhận</span></td>
+                                    <td><button class="btn btn-outline-primary btn-sm">Chi tiết</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Profile Modal -->
+<!-- Modal chỉnh sửa hồ sơ -->
+!-- Edit Profile Modal -->
+<!-- Modal chỉnh sửa hồ sơ -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProfileModalLabel">Chỉnh sửa hồ sơ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-page-handler="EditProfile">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label asp-for="UpdatedUser.User.Fullname" class="form-label">Họ và tên</label>
+                            <input asp-for="UpdatedUser.User.Fullname" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="UpdatedUser.User.Email" class="form-label">Email</label>
+                            <input asp-for="UpdatedUser.User.Email" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label asp-for="UpdatedUser.User.PhoneNumber" class="form-label">Số điện thoại</label>
+                            <input asp-for="UpdatedUser.User.PhoneNumber" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="UpdatedUser.User.Birthday" class="form-label">Ngày sinh</label>
+                            <input asp-for="UpdatedUser.User.Birthday" class="form-control" type="date" />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label asp-for="UpdatedUser.User.Gender" class="form-label">Giới tính</label>
+                            <select asp-for="UpdatedUser.User.Gender" class="form-select">
+                                 <option value="Nam" selected="@(Model.UpdatedUser.User.Gender == "Nam" ? "selected" : null)">Nam</option>
+                                <option value="Nữ" selected="@(Model.UpdatedUser.User.Gender == "Nữ" ? "selected" : null)">Nữ</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="UpdatedUser.Note" for="editMedicalNote" class="form-label">Ghi chú y tế</label>
+                        <textarea asp-for="UpdatedUser.Note" class="form-control" id="editMedicalNote" rows="3">Note cua patien</textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessObjects.DTOs
+namespace BusinessObjects.DTOs.Appointment
 {
     public class AppointmentDTO
     {
@@ -14,10 +14,10 @@ namespace BusinessObjects.DTOs
         public DateTime Date { get; set; }
         public PatientDTO Patient { get; set; }
         public int? ProviderId { get; set; }
-        public ProviderType ProviderType { get; set; } 
+        public ProviderType ProviderType { get; set; }
         public int? ServiceId { get; set; }
-        public ServiceType ServiceType { get; set; } 
-        public AppointmentStatus Status { get; set; } 
+        public ServiceType ServiceType { get; set; }
+        public AppointmentStatus Status { get; set; }
         public int? PaymentId { get; set; }
         public string Description { get; set; }
     }
