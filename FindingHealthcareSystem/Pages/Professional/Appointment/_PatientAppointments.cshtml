@@ -1,7 +1,7 @@
 ﻿@using BusinessObjects.DTOs
 @using BusinessObjects.Enums
 @model Pages.Professional.Appointment.IndexModel
-
+<link href="~/css/professional.css" rel="stylesheet" />
 @{
     string[] dayOfWeeks = new string[6] { "T2", "T3", "T4", "T5", "T6", "T7" };
     List<DateTime> days = new List<DateTime>();
@@ -27,7 +27,7 @@
     {
         return status switch
         {
-            AppointmentStatus.Pending => @"   
+            AppointmentStatus.Pending => @"
     border-left-width: 8px;
     border-left-color:yellow;
     border-left-style: solid;
@@ -37,7 +37,7 @@
     border-left-color:red;
     border-left-style: solid;
     background-color: #ff000085;",
-            AppointmentStatus.Completed => @" 
+            AppointmentStatus.Completed => @"
     border-left-width: 8px;
     border-left-color:green;
     border-left-style: solid;
@@ -64,8 +64,8 @@
         </div>
     </div>
     <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered align-middle text-center" style="table-layout:fixed; border-collapse: collapse; word-wrap: break-word;">
+        <div class="cardTable">
+            <table class="table patientAppointmentTable table-bordered align-middle text-center ">
                 <thead class="table-light">
                     <tr>
                         <th scope="col" style="width: 10%; text-align:center;">Thời gian</th>
@@ -83,32 +83,34 @@
                     </tr>
                 </thead>
                 <tbody>
-
                     @foreach (var slot in slots)
                     {
                         <tr>
                             <td scope="col" class="p-2">@slot</td>
                             @foreach (var day in days)
                             {
-                                <td style="width:100%;">
-                                    @foreach (var appointment in Model.Appointments.Where(x => x.Date.Date == day.Date && x.Date.TimeOfDay == TimeSpan.Parse(slot)))
+                                <td>
+                                    @if (Model.Appointments != null)
                                     {
-                                        <div class="card" style="@(GetCellStyle(appointment.Status))">
-                                            <div class="card-body">
-                                                <div class="d-flex justify-content-start">
-                                                    <span class="me-1">Tên: </span>
-                                                    <span>@(appointment.Patient?.User != null ? appointment.Patient?.User.Fullname : "Nguyễn văn A")</span>
-                                                </div>
-                                                <div class="d-flex justify-content-start">
-                                                    <span class="me-1">Tuổi: </span>
-                                                    <span>@(appointment.Patient != null ? appointment.Patient?.Age : "30 tuổi")</span>
-                                                </div>
-                                                <div class="d-flex justify-content-start">
-                                                    <span class="me-1" style="white-space: nowrap;">Tình trạng: </span>
-                                                    <span class="card-text">@appointment.ProviderType.ToString()</span>
+                                        @foreach (var appointment in Model.Appointments.Where(x => x.Date.Date == day.Date && x.Date.TimeOfDay == TimeSpan.Parse(slot)))
+                                        {
+                                            <div class="card" style="@(GetCellStyle(appointment.Status))">
+                                                <div class="card-body">
+                                                    <div class="d-flex justify-content-start">
+                                                        <span class="me-1">Tên: </span>
+                                                        <span>@(appointment.Patient?.User != null ? appointment.Patient?.User.Fullname : "Nguyễn văn A")</span>
+                                                    </div>
+                                                    <div class="d-flex justify-content-start">
+                                                        <span class="me-1">Tuổi: </span>
+                                                        <span>@(appointment.Patient != null ? appointment.Patient?.Age : "30 tuổi")</span>
+                                                    </div>
+                                                    <div class="d-flex justify-content-start">
+                                                        <span class="me-1" style="white-space: nowrap;">Tình trạng: </span>
+                                                        <span class="card-text">@appointment.ProviderType.ToString()</span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        }
                                     }
                                 </td>
                             }

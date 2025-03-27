@@ -1,0 +1,21 @@
+﻿
+.cardTable {
+    border: 1px thin;
+    border-radius: 10px;
+}
+
+.patientAppointmentTable {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+    .patientAppointmentTable th, td {
+        flex-shrink: 0;
+    }
+
+    .patientAppointmentTable th:first-child {
+        border-top-left-radius: 10px;
+    }

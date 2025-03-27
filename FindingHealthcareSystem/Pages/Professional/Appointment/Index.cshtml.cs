@@ -1,7 +1,10 @@
-using BusinessObjects.DTOs;
+using BusinessObjects.Dtos.User;
+using BusinessObjects.DTOs.Appointment;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
 using Services.Interfaces;
 
 namespace FindingHealthcareSystem.Pages.Professional.Appointment
@@ -15,12 +18,38 @@ namespace FindingHealthcareSystem.Pages.Professional.Appointment
         {
             _appointmentService = appointmentService;
         }
-        public async Task OnGet()
+        public async Task<IActionResult> OnGet()
         {
-            Monday = DateTime.Today;
-            Appointments = (await _appointmentService.GetAllAsync()).ToList();
+            try
+            {
+                string? text;
+                GeneralUserDto? acc;
+                CheckRole(out text, out acc);
+                if (string.IsNullOrEmpty(text) || acc == null || acc.Role != "Professional")
+                {
+                    return RedirectToPage("/Index");
+                }
+                Monday = DateTime.Today;
+                Appointments = (await _appointmentService.GetAllAsync()).ToList();
+                return Page();
 
+            }
+            catch (Exception)
+            {
+                return RedirectToPage("/Index");
+            }
         }
+
+        private void CheckRole(out string? text, out GeneralUserDto? acc)
+        {
+            text = HttpContext.Session.GetString("User");
+            acc = null;
+            if (!string.IsNullOrEmpty(text))
+            {
+                acc = JsonConvert.DeserializeObject<GeneralUserDto>(text);
+            }
+        }
+
         public async Task<IActionResult> OnGetNextWeek(DateTime monday, int next)
         {
             try

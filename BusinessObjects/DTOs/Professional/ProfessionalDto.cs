@@ -10,6 +10,7 @@ namespace BusinessObjects.DTOs.Professional
 {
     public class ProfessionalDto
     {
+        public int Id { get; set; }
         public int? UserId { get; set; }
         public int? ExpertiseId { get; set; }
         public string? Province { get; set; }
