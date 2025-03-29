@@ -171,5 +171,10 @@ namespace DataAccessObjects.DAOs
         {
             _dbSet.RemoveRange(entities);
         }
+
+        public IQueryable<T> Query()
+        {
+            return _dbSet.AsQueryable();
+        }
     }
 }

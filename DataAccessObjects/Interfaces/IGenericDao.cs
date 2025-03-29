@@ -1,4 +1,5 @@
 ﻿using BusinessObjects.Commons;
+using BusinessObjects.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +35,7 @@ namespace DataAccessObjects.Interfaces
         Task AddRangeAsync(IEnumerable<T> entities);
         void Update(T entity);
         void Remove(T entity);
+        IQueryable<T> Query();
 
         //delete a list of entities
         void RemoveRange(IEnumerable<T> entities);

@@ -1,21 +1,191 @@
-﻿
+﻿body {
+    color: #37474F;
+    background-color: #F1F8E9;
+}
+
 .cardTable {
-    border: 1px thin;
+    border: 1px solid #ddd;
     border-radius: 10px;
+    padding: 0;
+}
+
+.patientAppointment-container {
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.patientAppointment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 20px;
 }
 
 .patientAppointmentTable {
-    border-collapse: collapse;
-    border-spacing: 0;
-    border: 1px solid #ddd;
+    border: 1px;
     border-radius: 10px;
     overflow: hidden;
-    word-wrap: break-word;
+    width: 100%;
+    table-layout: fixed;
 }
-    .patientAppointmentTable th, td {
-        flex-shrink: 0;
+
+    .patientAppointmentTable thead {
+        text-align: center;
+        background-color: #F3F7EF;
+        border-bottom: 1px solid;
+        border-color: lightgray;
+        font-weight: bold;
     }
 
-    .patientAppointmentTable th:first-child {
-        border-top-left-radius: 10px;
+    .patientAppointmentTable tr {
+        border-bottom: 1px;
+        border-color: lightgray;
+        border-style: solid;
     }
+
+        .patientAppointmentTable tr:last-child {
+            border-bottom: 0px;
+        }
+
+    .patientAppointmentTable th {
+        text-align: center;
+        border-right: 1px solid;
+        border-color: lightgray;
+        padding: 10px;
+    }
+
+        .patientAppointmentTable th:last-child {
+            border-right: 0px;
+        }
+
+    .patientAppointmentTable td {
+        text-align: center;
+        border-right: 1px;
+        border-color: lightgray;
+        border-style: solid;
+        color: #333333;
+    }
+
+        .patientAppointmentTable td:last-child {
+            border-right: 0px;
+        }
+
+        .patientAppointmentTable td:first-child {
+            font-weight: bold;
+        }
+
+
+
+.appointment-card {
+    display: flex;
+    width: 90%;
+    height: 90%;
+    max-height: 130px;
+    padding: 10px;
+    background-color: white;
+    border: 1px solid;
+    border-color: lightgray;
+    box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.05);
+    margin: 5%;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.appointment-cardbody {
+    display: flex;
+    flex-direction: column;
+    width: -webkit-fill-available;
+    height: -webkit-fill-available;
+    justify-content: center;
+    text-align: left;
+    text-overflow: ellipsis;
+}
+
+.appointment-status {
+    font-size: x-small;
+    padding: 1px;
+    border-radius: 5px;
+    text-align: center;
+    color: white;
+}
+
+.patient-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom:20px;
+}
+
+.patient-name {
+    font-weight: bold;
+}
+
+.patient-avatar {
+    background-color: lightgray;
+    border-radius: 50px;
+    padding: 30px;
+}
+
+.patient-details {
+    display: flex;
+    gap: 20px;
+}
+
+.modal-edit-status {
+    border-radius: 50px;
+    padding: 1px 10px;
+}
+
+.edit-body{
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.edit-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid;
+    border-color: rgb(0, 0, 0, 0.1);
+    margin-top: 10px;
+}
+
+.section-title {
+    font-weight: 600;
+    font-size: 20px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid;
+    border-color: rgb(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+}
+
+.note-section {
+    margin-top: 10px;
+}
+.notes-content {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 12px;
+    color: #495057;
+    max-height: 150px;
+    overflow-y: auto;
+    line-height: 1.5;
+    border-left: 3px solid #6c757d;
+}
+
+.modal-container {
+    background-color: white;
+    width: 450px;
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}

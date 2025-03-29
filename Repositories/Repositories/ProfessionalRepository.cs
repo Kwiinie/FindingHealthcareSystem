@@ -27,6 +27,8 @@ namespace Repositories.Repositories
             return await _professionalDao.GetByIdAsync(id);
         }
 
+        
+
 
         /// <summary>
         /// SEARCHING PROFESSIONAL BASED ON LOCATION AND NAME
