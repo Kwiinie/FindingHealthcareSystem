@@ -95,19 +95,54 @@ namespace DataAccessObjects.DAOs
                 if (property != null && filter.Value != null)
                 {
                     var propertyExpression = Expression.Property(parameter, property);
-                    var filterValue = Expression.Constant(filter.Value.ToString(), typeof(string));
 
+                    // Handle different property types
+                    Expression filterValue;
                     if (property.PropertyType == typeof(string))
                     {
+                        // For strings, use the "Contains" method
+                        filterValue = Expression.Constant(filter.Value.ToString(), typeof(string));
                         var containsMethod = typeof(string).GetMethod("Contains", new[] { typeof(string) });
                         var containsExpression = Expression.Call(propertyExpression, containsMethod, filterValue);
 
                         var lambda = Expression.Lambda<Func<T, bool>>(containsExpression, parameter);
                         query = query.Where(lambda);
                     }
+                    else if (property.PropertyType.IsEnum)
+                    {
+                        // For enums, parse the value and compare
+                        var enumType = property.PropertyType;
+                        var enumValue = Enum.Parse(enumType, filter.Value.ToString());
+                        filterValue = Expression.Constant(enumValue, enumType);
+                        var enumExpression = Expression.Equal(propertyExpression, filterValue);
+
+                        var lambda = Expression.Lambda<Func<T, bool>>(enumExpression, parameter);
+                        query = query.Where(lambda);
+                    }
+                    else if (property.PropertyType == typeof(int))
+                    {
+                        // For integers, handle it as an int comparison
+                        filterValue = Expression.Constant(Convert.ToInt32(filter.Value), typeof(int));
+                        var equalityExpression = Expression.Equal(propertyExpression, filterValue);
+
+                        var lambda = Expression.Lambda<Func<T, bool>>(equalityExpression, parameter);
+                        query = query.Where(lambda);
+                    }
+                    else if (property.PropertyType == typeof(DateTime))
+                    {
+                        // For DateTime, handle it as a DateTime comparison
+                        filterValue = Expression.Constant(Convert.ToDateTime(filter.Value), typeof(DateTime));
+                        var equalityExpression = Expression.Equal(propertyExpression, filterValue);
+
+                        var lambda = Expression.Lambda<Func<T, bool>>(equalityExpression, parameter);
+                        query = query.Where(lambda);
+                    }
                     else
                     {
+                        // For other types, handle it as a default equality comparison
+                        filterValue = Expression.Constant(filter.Value, property.PropertyType);
                         var equalityExpression = Expression.Equal(propertyExpression, filterValue);
+
                         var lambda = Expression.Lambda<Func<T, bool>>(equalityExpression, parameter);
                         query = query.Where(lambda);
                     }
@@ -116,6 +151,7 @@ namespace DataAccessObjects.DAOs
 
             return query;
         }
+
 
         public async Task AddAsync(T entity)
         {

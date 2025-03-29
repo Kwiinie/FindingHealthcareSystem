@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using BusinessObjects.Commons;
-using BusinessObjects.DTOs;
+using BusinessObjects.DTOs.Appointment;
 using BusinessObjects.Entities;
+using BusinessObjects.Enums;
 using Repositories.Interfaces;
 using Services.Interfaces;
 using System;
@@ -17,72 +18,84 @@ namespace Services.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly IGenericRepository<Appointment> _repo;
-        public AppointmentService(IUnitOfWork unitOfWork, IMapper mapper)
+        private readonly IAppointmentRepository _appointmentRepository;
+        public AppointmentService(IUnitOfWork unitOfWork, IMapper mapper, IAppointmentRepository appointmentRepository)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
-            _repo = unitOfWork.GetRepository<Appointment>();
+            _appointmentRepository = appointmentRepository;
         }
 
-        public Task AddAsync(AppointmentDTO entity)
+        /// <summary>
+        /// CREATE APPOINTMENT 
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public async Task<Result<AppointmentDTO>> AddAsync(CreateAppointmentDto entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var patientRepo = _unitOfWork.GetRepository<Patient>();
+
+                var patient = await patientRepo.GetByIdAsync(entity.PatientId);
+                if (patient == null)
+                {
+                    return Result<AppointmentDTO>.ErrorResult("Invalid Patient ID.");
+                }
+
+                if (entity.ProviderType == ProviderType.Professional)
+                {
+                    var professional = await _unitOfWork.ProfessionalRepository.GetByIdAsync(entity.ProviderId.Value);
+                    if (professional == null)
+                    {
+                        return Result<AppointmentDTO>.ErrorResult("Invalid Professional ID.");
+                    }
+                    entity.ProviderType = ProviderType.Professional;
+                    entity.ServiceType = ServiceType.Private;
+                }
+                else if (entity.ProviderType == ProviderType.Facility)
+                {
+                    var facility = await _unitOfWork.FacilityRepository.GetByIdWithRelationsAsync(entity.ProviderId.Value);
+                    if (facility == null)
+                    {
+                        return Result<AppointmentDTO>.ErrorResult("Invalid Facility ID.");
+                    }
+                    entity.ProviderType = ProviderType.Facility;
+                    entity.ServiceType = ServiceType.Public;
+                }
+                else
+                {
+                    return Result<AppointmentDTO>.ErrorResult("Invalid ProviderType.");
+                }
+
+                entity.Status = AppointmentStatus.AwaitingPayment;
+                var appointmentEntity = _mapper.Map<Appointment>(entity);
+                appointmentEntity.Patient = patient;
+
+                await _unitOfWork.AppointmentRepository.AddAsync(appointmentEntity);
+                await _unitOfWork.SaveChangesAsync();
+
+                var appointmentDTO = _mapper.Map<AppointmentDTO>(appointmentEntity);
+                return Result<AppointmentDTO>.SuccessResult(appointmentDTO);
+            }
+            catch (Exception ex)
+            {
+                return Result<AppointmentDTO>.ErrorResult($"An error occurred while creating the appointment: {ex.Message}");
+            }
         }
 
-        public Task AddRangeAsync(IEnumerable<AppointmentDTO> entities)
+
+        public async Task<List<AppointmentDTO>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var appointments = await _unitOfWork.AppointmentRepository.GetAllAsync();
+            return _mapper.Map<List<AppointmentDTO>>(appointments);
         }
 
-        public Task<IEnumerable<AppointmentDTO>> FindAllAsync(Expression<Func<AppointmentDTO, bool>> predicate)
+        public async Task<List<AppointmentDTO>> GetAppointmentsByProviderAndDate(int providerId, string providerType, DateTime date)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<AppointmentDTO> FindAsync(Expression<Func<AppointmentDTO, bool>> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<IEnumerable<AppointmentDTO>> GetAllAsync()
-        {
-            return _mapper.Map<IEnumerable<AppointmentDTO>>(await _repo.GetAllAsync());
-        }
-
-        public Task<AppointmentDTO> GetByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<AppointmentDTO>> GetListById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<PaginatedList<AppointmentDTO>> GetPagedListAsync(Expression<Func<AppointmentDTO, bool>> filter, int pageIndex, int pageSize, Func<IQueryable<AppointmentDTO>, IOrderedQueryable<AppointmentDTO>> orderBy = null, string includeProperties = "")
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Remove(AppointmentDTO entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveRange(IEnumerable<AppointmentDTO> entities)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<AppointmentDTO>> SearchAsync(Dictionary<string, object?> filters, List<string>? includes = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(AppointmentDTO entity)
-        {
-            throw new NotImplementedException();
+            ProviderType type = (ProviderType)Enum.Parse(typeof(ProviderType), providerType);
+            var appointments = await _appointmentRepository.GetAppointmentsByProviderAndDateAsync(type, providerId, date);
+            return _mapper.Map<List<AppointmentDTO>>(appointments);
         }
     }
 }

@@ -62,7 +62,7 @@
                                     <!option value="@specialty.Name" @(specialty.Name == Model.Specialty ? "selected" : "")>@specialty.Name</!option>
                                 }
                             </select>
-                        </div>
+                        </div> 
 
                         <!-- Department Selection (Facility-specific) -->
                         <div class="col-md-6 provider-specific facility-specific d-none">
@@ -145,7 +145,13 @@
                                                 }
 
                                                 <div class="d-flex justify-content-end mt-auto">
-                                                    <a asp-page="/facility/Detail" asp-route-facilityId="@facility.Id" class="btn btn-outline-primary">Xem chi tiết</a>
+                                                    <a href="/facility/@facility.Id" class="btn btn-outline-primary w-25">Xem chi tiết</a>
+                                                </div>
+                                                <div class="d-flex justify-content-end mt-1">
+                                                    <a href="/patient/appointment/create?providerId=@facility.Id&providerType=Facility"
+                                                       class="btn btn-primary w-25">
+                                                        Đặt lịch
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -203,7 +209,7 @@
                                                             }
                                                         </div>
                                                     </div>
-                                                }fz
+                                                }
 
                                                 @if (!string.IsNullOrEmpty(professional.Experience))
                                                 {
@@ -211,7 +217,13 @@
                                                 }
 
                                                 <div class="d-flex justify-content-end mt-auto">
-                                                    <a href="/Professional/@professional.UserId" class="btn btn-outline-primary">Xem chi tiết</a>
+                                                    <a href="/Professional/@professional.Id" class="btn btn-outline-primary w-25">Xem chi tiết</a>
+                                                </div>
+                                                <div class="d-flex justify-content-end mt-1">
+                                                    <a href="/patient/appointment/create?providerId=@professional.Id&providerType=Professional"
+                                                       class="btn btn-primary w-25">
+                                                        Đặt lịch
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>

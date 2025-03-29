@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Repositories.Interfaces
 {
-    public interface IProfessionalRepository : IGenericRepository<Professional>
+    public interface IProfessionalRepository 
     {
         //this for filter pro by spec/location
         public Task<IEnumerable<Professional>> SearchAsync( string? province = null,
@@ -16,5 +16,7 @@ namespace Repositories.Interfaces
                                                             string? ward = null,
                                                             string? specialty = null,
                                                             string? professionalName = null);
+
+        public Task<Professional> GetByIdAsync (int id);
     }
 }

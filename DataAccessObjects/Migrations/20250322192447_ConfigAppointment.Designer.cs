@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessObjects.Migrations
 {
     [DbContext(typeof(FindingHealthcareSystemContext))]
-    [Migration("20250318191906_SeedData")]
-    partial class SeedData
+    [Migration("20250322192447_ConfigAppointment")]
+    partial class ConfigAppointment
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -89,6 +89,38 @@ namespace DataAccessObjects.Migrations
                     b.HasIndex("ServiceId");
 
                     b.ToTable("Appointments");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 3, 31, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám bệnh tổng quát cho bệnh nhân",
+                            IsDeleted = false,
+                            PatientId = 1,
+                            ProviderId = 1,
+                            ProviderType = "Professional",
+                            ServiceId = 1,
+                            ServiceType = "Private",
+                            Status = "AwaitingPayment",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 3, 31, 14, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Điều trị bằng y học cổ truyền cho bệnh nhân",
+                            IsDeleted = false,
+                            PatientId = 2,
+                            ProviderId = 1,
+                            ProviderType = "Professional",
+                            ServiceId = 4,
+                            ServiceType = "Private",
+                            Status = "AwaitingPayment",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("BusinessObjects.Entities.Article", b =>
@@ -1450,7 +1482,7 @@ namespace DataAccessObjects.Migrations
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 4,
                             Ward = "Phường Cửa Đông",
-                            WorkingHours = "Thứ 2 - Thứ 6, 8:00 - 17:00"
+                            WorkingHours = "8:00 - 17:00"
                         },
                         new
                         {
@@ -1467,7 +1499,7 @@ namespace DataAccessObjects.Migrations
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 5,
                             Ward = "Phường Bến Nghé",
-                            WorkingHours = "Thứ 2 - Thứ 7, 9:00 - 18:00"
+                            WorkingHours = "9:00 - 18:00"
                         });
                 });
 
@@ -2093,33 +2125,41 @@ namespace DataAccessObjects.Migrations
                         .HasForeignKey("PaymentId")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("BusinessObjects.Entities.Facility", null)
+                    b.HasOne("BusinessObjects.Entities.Facility", "Facility")
                         .WithMany()
                         .HasForeignKey("ProviderId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("FK_Appointment_Facility");
 
-                    b.HasOne("BusinessObjects.Entities.Professional", null)
+                    b.HasOne("BusinessObjects.Entities.Professional", "Professional")
                         .WithMany()
                         .HasForeignKey("ProviderId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("FK_Appointment_Professional");
 
-                    b.HasOne("BusinessObjects.Entities.PrivateService", null)
+                    b.HasOne("BusinessObjects.Entities.PrivateService", "PrivateService")
                         .WithMany()
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("FK_Appointment_PrivateService");
 
-                    b.HasOne("BusinessObjects.Entities.PublicService", null)
+                    b.HasOne("BusinessObjects.Entities.PublicService", "PublicService")
                         .WithMany()
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("FK_Appointment_PublicService");
 
+                    b.Navigation("Facility");
+
                     b.Navigation("Patient");
 
                     b.Navigation("Payment");
+
+                    b.Navigation("PrivateService");
+
+                    b.Navigation("Professional");
+
+                    b.Navigation("PublicService");
                 });
 
             modelBuilder.Entity("BusinessObjects.Entities.Article", b =>
@@ -2277,12 +2317,6 @@ namespace DataAccessObjects.Migrations
                         .HasForeignKey("ProviderId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("FK_Review_Facility");
-
-                    b.HasOne("BusinessObjects.Entities.Professional", null)
-                        .WithMany()
-                        .HasForeignKey("ProviderId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("FK_Review_Professional");
 
                     b.Navigation("Patient");
                 });

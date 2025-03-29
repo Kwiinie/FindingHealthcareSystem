@@ -9,7 +9,6 @@ namespace BusinessObjects.Enums
     public enum ServiceType
     {
         Public,
-        Service,
         Private
     }
 }

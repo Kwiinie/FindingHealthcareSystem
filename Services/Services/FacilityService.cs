@@ -231,5 +231,15 @@ namespace Services.Services
 
             return facilityDtos;
         }
+
+        public async Task<SearchingFacilityDto> GetFacilityById(int id)
+        {
+            var facility = await _unitOfWork.FacilityRepository.GetByIdWithRelationsAsync(id);
+            if (facility == null)
+            {
+                throw new Exception("Facility not found");
+            }
+            return _mapper.Map<SearchingFacilityDto>(facility);
+        }
     }
 }
