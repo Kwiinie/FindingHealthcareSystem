@@ -13,12 +13,14 @@ namespace FindingHealthcareSystem.Pages.Facility
         private readonly IFacilityService _facilityService;
         private readonly IDepartmentService _departmentService;
         private readonly IPublicServiceLayer _publicServiceLayer;
+        private readonly IFacilityTypeService _facilityTypeService;
 
-        public DetailModel(IFacilityService facilityService, IDepartmentService departmentService, IPublicServiceLayer publicServiceLayer)
+        public DetailModel(IFacilityService facilityService, IDepartmentService departmentService, IPublicServiceLayer publicServiceLayer, IFacilityTypeService facilityTypeService)
         {
             _facilityService = facilityService;
             _departmentService = departmentService;
             _publicServiceLayer = publicServiceLayer;
+            _facilityTypeService = facilityTypeService;
         }
 
         [BindProperty(SupportsGet = true)]
@@ -35,6 +37,9 @@ namespace FindingHealthcareSystem.Pages.Facility
 
         [BindProperty]
         public List<DepartmentDto> Departments { get; set; }
+
+        [BindProperty]
+        public List<FacilityTypeDto> FacilityTypes { get; set; }
 
         [BindProperty]
         public List<ServiceDto> Services { get; set; }
@@ -74,7 +79,7 @@ namespace FindingHealthcareSystem.Pages.Facility
             }
             Departments = await _departmentService.GetAllDepartments();
             Services = await _publicServiceLayer.GetServicesByFacilityId(FacilityId) ?? new List<ServiceDto>();
-
+            FacilityTypes = await _facilityTypeService.GetAllActiveFacilityTypes();
         }
 
         public async Task<IActionResult> OnGetAllDepartmentsAsync()

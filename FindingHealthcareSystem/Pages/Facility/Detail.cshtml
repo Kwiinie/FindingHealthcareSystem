@@ -149,7 +149,7 @@
                 <form id="editFacilityForm" method="post" asp-page-handler="EditFacility">
                     @Html.AntiForgeryToken()
                     <input type="hidden" name="FacilityId" value="@Model.FacilityId" />
-                    
+
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="editFacilityName" class="form-label">Tên cơ sở y tế</label>
@@ -257,7 +257,7 @@
                 <form id="addServiceForm" method="post" asp-page-handler="AddService">
                     @Html.AntiForgeryToken()
                     <input type="hidden" name="FacilityId" value="@Model.FacilityId" />
-                    
+
                     <div class="mb-3">
                         <label for="serviceName" class="form-label">Tên dịch vụ</label>
                         <input type="text" class="form-control" id="serviceName" name="Service.Name" required>
@@ -336,24 +336,24 @@
             document.getElementById('saveFacilityChanges').addEventListener('click', function() {
                 document.getElementById('editFacilityForm').submit();
             });
-            
+
             // Delete Facility
             document.getElementById('deleteFacility').addEventListener('click', function() {
                 if (confirm('Bạn có chắc chắn muốn xóa cơ sở y tế này không?')) {
                     document.getElementById('deleteFacilityForm').submit();
                 }
             });
-            
+
             // Add Service Form Submission
             document.getElementById('addServiceButton').addEventListener('click', function() {
                 document.getElementById('addServiceForm').submit();
             });
-            
+
             // Edit Service Form Submission
             document.getElementById('saveServiceChanges').addEventListener('click', function() {
                 document.getElementById('editServiceForm').submit();
             });
-            
+
             // Delete Service
             document.getElementById('deleteService').addEventListener('click', function() {
                 if (confirm('Bạn có chắc chắn muốn xóa dịch vụ này không?')) {
@@ -361,7 +361,7 @@
                     document.getElementById('deleteServiceForm').submit();
                 }
             });
-            
+
             // Service Card Click Handler (for editing)
             document.querySelectorAll('.service-card').forEach(card => {
                 card.addEventListener('click', function() {
@@ -369,18 +369,18 @@
                     const serviceName = this.getAttribute('data-service-name');
                     const servicePrice = this.getAttribute('data-service-price');
                     const serviceDescription = this.getAttribute('data-service-description');
-                    
+
                     // Fill in the edit form
                     document.getElementById('editServiceId').value = serviceId;
                     document.getElementById('editServiceName').value = serviceName;
                     document.getElementById('editServicePrice').value = servicePrice;
                     document.getElementById('editServiceDescription').value = serviceDescription;
-                    
+
                     // Open the modal
                     new bootstrap.Modal(document.getElementById('editServiceModal')).show();
                 });
             });
-            
+
             // Load reviews
             loadReviews();
         });
@@ -389,24 +389,24 @@
         function loadReviews() {
             const facilityId = @Model.FacilityId;
             const ratingFilter = document.querySelector('input[name="ratingFilter"]:checked').id;
-            
+
             // Add rating filter event listeners
             document.querySelectorAll('input[name="ratingFilter"]').forEach(radio => {
                 radio.addEventListener('change', loadReviews);
             });
-            
+
             // Fetch reviews based on facility ID and filters
             fetch(`/api/reviews?facilityId=${facilityId}&filter=${ratingFilter}`)
                 .then(response => response.json())
                 .then(reviews => {
                     const container = document.getElementById('reviewsContainer');
                     container.innerHTML = '';
-                    
+
                     if (reviews.length === 0) {
                         container.innerHTML = '<p class="text-center my-4">Chưa có đánh giá nào.</p>';
                         return;
                     }
-                    
+
                     reviews.forEach(review => {
                         const reviewElement = document.createElement('div');
                         reviewElement.className = 'review-card';
@@ -760,7 +760,7 @@
                     <div class="row">
                         <div class="col-md-3 text-center">
                             <img src="@(string.IsNullOrEmpty(@Model.Facility.ImgUrl) ? "~/img/defaultFacility.jpg" : @Model.Facility.ImgUrl)"
-                                 alt="@Model.Facility.Name" class="profile-img">
+                            alt="@Model.Facility.Name" class="profile-img">
                         </div>
                         <div class="col-md-9">
                             <h2 id="facilityName">@Model.Facility.Name</h2>
@@ -841,15 +841,15 @@
                                     <div class="card service-card">
                                         <div class="card-body">
                                             <h5 class="card-title">@service.Name</h5>
-                                            <h6 class="card-subtitle mb-2 text-muted">@service.Price + "VND"</h6>
+                                            <h6 class="card-subtitle mb-2 text-muted">@service.Price VND</h6>
                                             <p class="card-text">@service.Description</p>
                                             <button class="btn btn-sm btn-outline-primary edit-service-btn"
-                                                    data-id="@service.Id"
-                                                    data-name="@service.Name"
-                                                    data-price="@service.Price"
-                                                    data-description="@service.Description"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#editServiceModal">
+                                            data-id="@service.Id"
+                                            data-name="@service.Name"
+                                            data-price="@service.Price"
+                                            data-description="@service.Description"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#editServiceModal">
                                                 <i class="fas fa-edit"></i> Chỉnh sửa
                                             </button>
                                         </div>
@@ -924,9 +924,14 @@
                         <div class="col-md-6">
                             <label asp-for="@Model.Facility.TypeId" class="form-label">Loại cơ sở y tế</label>
                             <select class="form-select" asp-for="@Model.Facility.TypeId" id="editFacilityType">
-                                <option value="1">Bệnh viện</option>
-                                <option value="2">Phòng khám</option>
-                                <option value="3">Trung tâm y tế</option>
+                                @if (Model.FacilityTypes != null)
+                                {
+                                    @foreach (var types in Model.FacilityTypes)
+                                    {
+                                        bool isSelected = Model.FacilityTypes.Any(t => t.Id == types.Id);
+                                        <option value="@types.Id" selected="@isSelected">@types.Name</option>
+                                    }
+                                }
                             </select>
                         </div>
                     </div>
