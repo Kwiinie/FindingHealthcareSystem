@@ -8,19 +8,325 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DataAccessObjects.Migrations
 {
     /// <inheritdoc />
-<<<<<<<< HEAD:DataAccessObjects/Migrations/20250323142649_FixCategoriesTable.cs
-    public partial class FixCategoriesTable : Migration
-========
-    public partial class ConfigAppointment : Migration
->>>>>>>> main:DataAccessObjects/Migrations/20250322192447_ConfigAppointment.cs
+    public partial class newDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
-                name: "ArticleImages",
+                name: "Departments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Departments", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Expertises",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Expertises", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FacilityTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FacilityTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Payments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PaymentMethod = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TransactionId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PaymentStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    PaymentDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payments", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Specialties",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Specialties", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Fullname = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Birthday = table.Column<DateOnly>(type: "date", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImgUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Facilities",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TypeId = table.Column<int>(type: "int", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OperationDay = table.Column<DateOnly>(type: "date", nullable: true),
+                    Province = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    District = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Ward = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImgUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Facilities", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Facilities_FacilityTypes_TypeId",
+                        column: x => x.TypeId,
+                        principalTable: "FacilityTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Articles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CategoryId = table.Column<int>(type: "int", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETUTCDATE()"),
+                    CreatedById = table.Column<int>(type: "int", nullable: true),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Articles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Articles_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
+                    table.ForeignKey(
+                        name: "FK_Articles_Users_CreatedById",
+                        column: x => x.CreatedById,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Patients",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    Note = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Patients", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Patients_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Professionals",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    ExpertiseId = table.Column<int>(type: "int", nullable: true),
+                    Province = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    District = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Ward = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Degree = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Experience = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WorkingHours = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RequestStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ExpertiseId1 = table.Column<int>(type: "int", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Professionals", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Professionals_Expertises_ExpertiseId",
+                        column: x => x.ExpertiseId,
+                        principalTable: "Expertises",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
+                    table.ForeignKey(
+                        name: "FK_Professionals_Expertises_ExpertiseId1",
+                        column: x => x.ExpertiseId1,
+                        principalTable: "Expertises",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Professionals_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FacilityDepartments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FacilityId = table.Column<int>(type: "int", nullable: true),
+                    DepartmentId = table.Column<int>(type: "int", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FacilityDepartments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FacilityDepartments_Departments_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "Departments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FacilityDepartments_Facilities_FacilityId",
+                        column: x => x.FacilityId,
+                        principalTable: "Facilities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PublicServices",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FacilityId = table.Column<int>(type: "int", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PublicServices", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PublicServices_Facilities_FacilityId",
+                        column: x => x.FacilityId,
+                        principalTable: "Facilities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ArticleImage",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -33,18 +339,15 @@ namespace DataAccessObjects.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ArticleImages", x => x.Id);
+                    table.PrimaryKey("PK_ArticleImage", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ArticleImages_Articles_ArticleId",
+                        name: "FK_ArticleImage_Articles_ArticleId",
                         column: x => x.ArticleId,
                         principalTable: "Articles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
-<<<<<<<< HEAD:DataAccessObjects/Migrations/20250323142649_FixCategoriesTable.cs
-
-========
             migrationBuilder.CreateTable(
                 name: "Reviews",
                 columns: table => new
@@ -238,7 +541,6 @@ namespace DataAccessObjects.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
->>>>>>>> main:DataAccessObjects/Migrations/20250322192447_ConfigAppointment.cs
 
             migrationBuilder.InsertData(
                 table: "Categories",
@@ -480,8 +782,8 @@ namespace DataAccessObjects.Migrations
                 column: "ServiceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ArticleImages_ArticleId",
-                table: "ArticleImages",
+                name: "IX_ArticleImage_ArticleId",
+                table: "ArticleImage",
                 column: "ArticleId");
 
             migrationBuilder.CreateIndex(
@@ -578,7 +880,7 @@ namespace DataAccessObjects.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ArticleImages");
+                name: "ArticleImage");
 
             migrationBuilder.DropTable(
                 name: "Attachments");

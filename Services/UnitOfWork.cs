@@ -24,7 +24,7 @@ namespace Services
         public IGenericRepository<Article> ArticleRepository { get; }
         public IGenericRepository<Category> CategoryRepository { get; }
 
-        public UnitOfWork(FindingHealthcareSystemContext context, IFacilityRepository facilityRepository, IProfessionalRepository professionalRepository)
+
         public UnitOfWork(FindingHealthcareSystemContext context, IFacilityRepository facilityRepository, 
                             IProfessionalRepository professionalRepository, IAppointmentRepository appointmentRepository)
         {
