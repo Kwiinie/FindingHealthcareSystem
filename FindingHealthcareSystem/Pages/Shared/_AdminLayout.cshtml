@@ -9,7 +9,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/css/adminLayout.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chart.js/3.9.1/chart.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 
 
 </head>
@@ -265,8 +268,10 @@
                                             }
                                         </li>
                                         <li>
-                                            <form method="post" asp-page-handler="Logout" id="logoutForm">
-                                                <button type="submit" class="dropdown-item"><i class="bi bi-box-arrow-right me-2"></i>Đăng xuất</button>
+                                            <form method="post" asp-page="/Auth/Logout" asp-page-handler="Logout" id="logoutForm">
+                                                <button type="submit" class="dropdown-item">
+                                                    <i class="bi bi-box-arrow-right me-2"></i>Đăng xuất
+                                                </button>
                                             </form>
                                         </li>
                                     </ul>
@@ -294,6 +299,7 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
+
 
 </html>
 
