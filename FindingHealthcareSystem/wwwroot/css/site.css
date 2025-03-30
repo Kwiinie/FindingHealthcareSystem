@@ -8,17 +8,23 @@
 
 :root {
     --primary-color: #99d255;
-    --secondary-color: #f3f6ee;
+    --secondary-color: #fbfff5;
     --primary-hover: #8bc249;
     --text-on-primary: #333333;
     --primary-active: #7da73d;
     --primary-focus: #99d255;
+    --sidebar-width: 300px;
+    --sidebar-collapsed-width: 70px;
+    --navbar-height: 80px;
 }
 
 body {
     font-family: 'Lexend Deca', sans-serif;
     color: var(--text-on-primary);
     background-color: var(--secondary-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .text-primary {
@@ -113,11 +119,12 @@ body {
 .navbar {
     display: flex;
     background-color: transparent;
-    z-index: 1000;
+    z-index: 1010;
     margin: 0 auto;
     padding: 20px 0;
     align-items: center;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, margin-left 0.3s ease;
+    height: var(--navbar-height);
 }
 
 .navbar-brand:hover {
@@ -156,8 +163,6 @@ body {
 .navbar-nav .nav-link.active {
     font-weight: bold;
 }
-
-
 
 
 .intro {
