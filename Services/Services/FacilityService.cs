@@ -96,7 +96,7 @@ namespace Services.Services
 
         public async Task<FacilityDto> Update(int id, FacilityDto facilityDto)
         {
-            //validation
+            // Validation
             var facRepo = _unitOfWork.GetRepository<Facility>();
             var facility = await facRepo.GetByIdAsync(id);
             if (facility == null)
@@ -105,30 +105,32 @@ namespace Services.Services
             }
             ValidateFacilityDto(facilityDto);
 
-            //set value and save for Facility
-            _mapper.Map<Facility>(facilityDto);
+            // Cập nhật giá trị từ DTO vào entity hiện tại (giữ nguyên giá trị không thay đổi)
+            _mapper.Map(facilityDto, facility);
             facility.UpdatedAt = DateTime.UtcNow.AddHours(7);
+
             facRepo.Update(facility);
             await _unitOfWork.SaveChangesAsync();
 
-            //set value and save for FacilityDepartment
+            // Cập nhật bảng FacilityDepartment nếu có thay đổi
             var facRepo2 = _unitOfWork.FacilityRepository;
-            if (facilityDto.DepartmentIds.Count > 0)
+            if (facilityDto.DepartmentIds?.Count > 0)
             {
                 await facRepo2.UpdateFacilityDepartmentsAsync(facility.Id, facilityDto.DepartmentIds);
                 await _unitOfWork.SaveChangesAsync();
             }
 
-            //get and response for Facility
             var facilityWithRelations = await facRepo2.GetByIdWithRelationsAsync(facility.Id);
 
             return MapToFacilityResponseDto(facilityWithRelations);
         }
 
+
         public async Task<FacilityDto> GetById(int id)
         {
-            var facRepo = _unitOfWork.GetRepository<Facility>();
-            var facility = await facRepo.GetByIdAsync(id);
+            if (id == null) throw new Exception("Id is not found");
+            var facRepo = _unitOfWork.FacilityRepository;
+            var facility = await facRepo.GetByIdWithRelationsAsync(id);
             if (facility == null)
             {
                 throw new Exception("Facility not found");

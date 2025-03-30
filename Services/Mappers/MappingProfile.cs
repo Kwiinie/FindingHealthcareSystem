@@ -69,6 +69,17 @@ namespace Services.Mappers
                 Description = ps.Description
             }).ToList()));
 
+            // Mapping từ Facility -> FacilityDto
+            CreateMap<Facility, FacilityDto>()
+                .ForMember(dest => dest.FacilityDepartments,
+                           opt => opt.MapFrom(src => src.FacilityDepartments));
+
+            // Mapping từ FacilityDepartment -> FacilityDepartmentDto
+            CreateMap<FacilityDepartment, FacilityDepartmentDto>()
+                .ForMember(dest => dest.DepartmentId, opt => opt.MapFrom(src => src.Department.Id))
+                .ForMember(dest => dest.Department, opt => opt.MapFrom(src => src.Department));
+
+
 
             /////////////////////////////////////////////////////////////////////////
             ///                     MAPPING APPOINTMENT PROFILE                  ///

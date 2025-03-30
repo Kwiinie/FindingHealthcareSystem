@@ -26,6 +26,11 @@ namespace Repositories.Repositories
             return await _dao.GetByIdAsync(id);
         }
 
+        public async Task<IEnumerable<T>> GetListById(int id)
+        {
+            return await _dao.GetListById(id);
+        }   
+
         public async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _dao.GetAllAsync();

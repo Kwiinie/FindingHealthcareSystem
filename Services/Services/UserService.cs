@@ -144,6 +144,7 @@ namespace Services.Services
 
         public async Task RegisterUserAsync(RegisterUserDto userDto)
         {
+            var date = userDto.Birthday;
             try
             {
                 // Validate phone number (must be exactly 10 digits)

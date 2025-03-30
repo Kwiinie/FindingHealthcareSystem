@@ -1,9 +1,23 @@
-﻿@page "admin/facility/{id}"
+﻿@page "/admin/facility/detail/{id:int}"
 @model FindingHealthcareSystem.Pages.Admin.Facility.DetailModel
 @{
+    ViewData["Title"] = "Facility Details";
 }
-<div class="container mt-10">
-    <h1>
-        facility detail
-    </h1>
+
+<div class="container mt-4">
+    <h1>Facility Details</h1>
+    <div class="mb-3">
+        <label class="form-label">Name</label>
+        <p class="form-control-plaintext">@Model.Facility.Name</p>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Type</label>
+        <p class="form-control-plaintext">@Model.Facility.Type?.Name</p>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Address</label>
+        <p class="form-control-plaintext">@Model.Facility.Address</p>
+    </div>
+    <a asp-page="Edit" asp-route-id="@Model.Facility.Id" class="btn btn-warning">Edit</a>
+    <a asp-page="Index" class="btn btn-secondary">Back to List</a>
 </div>

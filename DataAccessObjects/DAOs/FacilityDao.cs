@@ -24,7 +24,7 @@ namespace DataAccessObjects.DAOs
                 .Include(f => f.Type)
                 .Include(f => f.PublicServices)
                 .Include(f => f.FacilityDepartments)
-                .ThenInclude(fd => fd.Department)
+                    .ThenInclude(fd => fd.Department)
                 .FirstOrDefaultAsync(f => f.Id == id);
         }
 

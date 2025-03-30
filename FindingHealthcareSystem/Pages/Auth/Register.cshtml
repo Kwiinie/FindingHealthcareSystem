@@ -150,7 +150,7 @@
 
     <div class="col-md-6">
         <label>Ghi chú</label>
-        <input type="text" class="form-control" asp-for="Input.Note" id="note" value=" Nhập bệnh nền, bệnh lý cần lưu ý (nếu có)" />
+        <input type="text" class="form-control" asp-for="Input.Note" id="note" placeholder=" Nhập bệnh nền, bệnh lý cần lưu ý (nếu có)" />
         <small id="displayNote"></small>
     </div>
 
@@ -197,18 +197,10 @@
                     <input type="time" class="form-control" id="startTime">
                 </div>
                 <div class="col-sm-3 col-lg-5">
-                    <input type="time" class="form-control" id="endTime" readonly> <!-- Make readonly to prevent manual changes -->
+                    <input type="time" class="form-control" id="endTime">
                 </div>
             </div>
-            @* <div class="row"> *@
 
-            @*     <div class="col-sm-6 col-lg-5 mb-3 mb-sm-0"> *@
-            @*         <input type="time" class="form-control" id="startTime"> *@
-            @*     </div> *@
-            @*     <div class="col-sm-6 col-lg-5"> *@
-            @*         <input type="time" class="form-control" id="endTime" readonly> <!-- Make readonly to prevent manual changes --> *@
-            @*     </div> *@
-            @* </div> *@
             <input type="hidden" asp-for="Input.WorkingHours" id="workingHours">
 
             <script>
@@ -217,24 +209,20 @@
                     const endTimeInput = document.getElementById("endTime");
                     const workingHoursInput = document.getElementById("workingHours");
 
-                    function calculateEndTime(startTime) {
-                        let [hours, minutes] = startTime.split(":").map(Number);
-                        hours = (hours + 8) % 24; // Ensure it's in 24-hour format
-                        return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
-                    }
-
                     function updateWorkingHours() {
                         const startTime = startTimeInput.value;
-                        if (startTime) {
-                            const endTime = calculateEndTime(startTime);
-                            endTimeInput.value = endTime;
+                        const endTime = endTimeInput.value;
+
+                        if (startTime && endTime) {
                             workingHoursInput.value = `${startTime} - ${endTime}`;
                         }
                     }
 
                     startTimeInput.addEventListener("change", updateWorkingHours);
+                    endTimeInput.addEventListener("change", updateWorkingHours);
                 });
             </script>
+
 
 
         </div>
