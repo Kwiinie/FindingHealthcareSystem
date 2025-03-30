@@ -16,5 +16,7 @@ namespace Services.Interfaces
                                                             string? ward = null,
                                                             string? specialty = null,
                                                             string? professionalName = null);
+
+        Task<ProfessionalDto> GetById (int id);
     }
 }

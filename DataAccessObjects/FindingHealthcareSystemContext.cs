@@ -138,18 +138,19 @@ public partial class FindingHealthcareSystemContext : DbContext
         .HasConversion<string>();
         //config polymorphic relationship
         modelBuilder.Entity<Appointment>()
-            .HasOne<PrivateService>()
+            .HasOne(a => a.PrivateService)
             .WithMany()
             .HasForeignKey(a => a.ServiceId)
             .HasConstraintName("FK_Appointment_PrivateService")
             .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<Appointment>()
-            .HasOne<PublicService>()
+            .HasOne(a => a.PublicService)
             .WithMany()
             .HasForeignKey(a => a.ServiceId)
             .HasConstraintName("FK_Appointment_PublicService")
             .OnDelete(DeleteBehavior.Restrict);
+
 
         modelBuilder.Entity<Appointment>()
             .HasOne<Professional>()
@@ -159,17 +160,17 @@ public partial class FindingHealthcareSystemContext : DbContext
             .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<Appointment>()
-            .HasOne<Facility>()
+            .HasOne(a => a.Professional)
+            .WithMany()
+            .HasForeignKey(a => a.ProviderId)
+            .HasConstraintName("FK_Appointment_Professional")
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Appointment>()
+            .HasOne(a => a.Facility)
             .WithMany()
             .HasForeignKey(a => a.ProviderId)
             .HasConstraintName("FK_Appointment_Facility")
-            .OnDelete(DeleteBehavior.Restrict);
-
-        modelBuilder.Entity<Review>()
-            .HasOne<Professional>()
-            .WithMany()
-            .HasForeignKey(a => a.ProviderId)
-            .HasConstraintName("FK_Review_Professional")
             .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<Review>()

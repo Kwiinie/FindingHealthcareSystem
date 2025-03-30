@@ -21,6 +21,18 @@ namespace Services.Services
         }
 
 
+        /// <summary>
+        /// GET PROFESSIONAL BY ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<ProfessionalDto> GetById(int id)
+        {
+            var professional = await _unitOfWork.ProfessionalRepository.GetByIdAsync(id);
+            return _mapper.Map<ProfessionalDto>(professional);
+        }
+
+
 
         /// <summary>
         /// SEARCHING PROFESSIONALS BASED ON LOCATION, SPECIALTY AND NAME
