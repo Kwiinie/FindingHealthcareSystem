@@ -37,7 +37,7 @@ namespace FindingHealthcareSystem
             services.AddScoped<IProfessionalRepository, ProfessionalRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
-
+            
 
             ////////////////////////////////////////////////
             ///                 SERVICES                ///
@@ -51,6 +51,7 @@ namespace FindingHealthcareSystem
             services.AddHttpContextAccessor();
             services.AddTransient<ILocationService, LocationService>();
             services.AddScoped<IArticleService, ArticleService>();
+            services.AddScoped<ICategoryService, CategoryService>();
             services.AddTransient<ILocationService, LocationService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddHttpContextAccessor();

@@ -15,6 +15,7 @@ using BusinessObjects.DTOs.Professional;
 using BusinessObjects.DTOs.Service;
 using BusinessObjects.DTOs.Appointment;
 using BusinessObjects.DTOs;
+using BusinessObjects.DTOs.Category;
 
 namespace Services.Mappers
 {
@@ -34,6 +35,7 @@ namespace Services.Mappers
             CreateMap<Article, ArticleDTO>()
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name))
                 .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy.Fullname));
+            CreateMap<Category, CategoryDTO>().ReverseMap();
             CreateMap<Specialty, SpecialtyDto>().ReverseMap();
             CreateMap<PublicService, ServiceDto>().ReverseMap();
             CreateMap<PrivateService, ServiceDto>().ReverseMap();

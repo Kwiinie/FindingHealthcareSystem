@@ -1,4 +1,8 @@
-﻿using Services.Interfaces;
+﻿using AutoMapper;
+using BusinessObjects.DTOs.Article;
+using BusinessObjects.DTOs.Category;
+using BusinessObjects.Entities;
+using Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +13,52 @@ namespace Services.Services
 {
     public class CategoryService : ICategoryService
     {
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
+        public CategoryService(IUnitOfWork unitOfWork, IMapper mapper)
+        {
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
+        }
+        public async Task AddCategoryAsync(CategoryDTO categoryDTO)
+        {
+            if (categoryDTO == null) throw new ArgumentNullException(nameof(categoryDTO));
+            User user = null;
+
+
+            var category = _mapper.Map<Category>(categoryDTO);
+
+            await _unitOfWork.CategoryRepository.AddAsync(category);
+            await _unitOfWork.SaveChangesAsync();
+        }
+
+        public Task DeleteCategoryAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<CategoryDTO>> GetAllCategoriesAsync()
+        {
+            var result = await _unitOfWork.CategoryRepository.GetAllAsync();
+            if(result != null)
+            {
+                return _mapper.Map<IEnumerable<CategoryDTO>>(result);
+            }
+            else
+            {
+                return new List<CategoryDTO>();
+            }
+        }
+
+        public Task<CategoryDTO> GetCategoryByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateCategoryAsync(CategoryDTO categoryDTO)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

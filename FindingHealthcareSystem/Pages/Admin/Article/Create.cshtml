@@ -21,17 +21,17 @@
                             <input type="text" class="form-control" id="articleTitle" placeholder="Nhập tiêu đề" asp-for="Article.Title">
                         </div>
                     </div>
-@*                     <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="articleCategory" class="form-label">Thể loại</label>
-                            <select class="form-select" id="articleCategory" asp-for="Article.CategoryId">
-                                <option value="">Chọn thể loại</option>
-                                <option value="1">Dinh dưỡng</option>
-                                <option value="2">Sức khỏe người lớn tuổi</option>
-                                <option value="3">Mẹ và bé</option>
-                            </select>
-                        </div>
-                    </div> *@
+                     <div class="col-md-4">
+                         <div class="form-group">
+                             <label for="articleCategory" class="form-label">Thể loại</label>
+                             <select class="form-select" id="articleCategory" asp-for="Article.CategoryId">
+                                @foreach (var article in Model.Articles)
+                                {
+                                    <option value="@article.CategoryId">@article.CategoryName</option>
+                                }
+                             </select>
+                         </div>
+                     </div>
                 </div>
 
                 <div class="form-group">
@@ -42,7 +42,7 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+@*                 <div class="form-group">
                     <label class="form-label">Hình ảnh</label>
                     <div class="image-upload-area" id="imageUpload">
                         <div class="image-upload-icon">
@@ -56,7 +56,7 @@
                     <div class="image-preview-container" id="imagePreview">
                         <!-- Ảnh preview sẽ hiển thị ở đây -->
                     </div>
-                </div>
+                </div> *@
 
                 <div class="action-buttons">
                     <div class="btn-group">

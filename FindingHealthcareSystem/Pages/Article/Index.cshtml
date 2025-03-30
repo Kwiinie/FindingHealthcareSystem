@@ -2,6 +2,7 @@
 @model FindingHealthcareSystem.Pages.Article.IndexModel
 @{
     ViewData["Title"] = "Articles";
+
 }
 <link rel="stylesheet" href="/css/article.css" />
 
@@ -33,15 +34,16 @@
                                         <span class="article-category">@article.CategoryName</span>
                                         <span class="article-date">@article.CreatedAt</span>
                                     </div>
-                                    <a href="Article/Detail" class="btn btn-primary mt-3">Xem chi tiết</a>
+                                <a asp-page="/Article/Detail" asp-route-id="@article.Id" class="btn btn-primary mt-3">Xem chi tiết</a>
+
                                 </div>
                             </div> 
                     }
                 }
-@*                 else
+                else
                 {
                     <p class="text-center">Không có bài viết nào.</p>
-                } *@
+                }
             </div>
         </div>
     </div>

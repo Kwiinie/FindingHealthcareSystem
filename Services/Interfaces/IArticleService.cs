@@ -9,7 +9,7 @@ namespace Services.Interfaces
 {
     public interface IArticleService
     {
-        Task<List<ArticleDTO>> GetAllArticlesAsync();
+        Task<IEnumerable<ArticleDTO>> GetAllArticlesAsync();
         Task<ArticleDTO> GetArticleByIdAsync(int id);
         Task UpdateArticleAsync(ArticleDTO articleDTO);
         Task AddArticleAsync(ArticleDTO articleDTO);

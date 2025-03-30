@@ -13,6 +13,7 @@ namespace BusinessObjects.DTOs.Article
         public string Content { get; set; }
         public DateTime CreatedAt { get; set; }
         public string CategoryName { get; set; }
+        public int? CategoryId { get; set; }
         public string CreatedBy { get; set; }
 /*        public List<string> ImageUrls { get; set; }*/
     }

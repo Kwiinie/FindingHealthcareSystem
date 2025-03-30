@@ -24,7 +24,11 @@ namespace Services.Services
 
         public async Task AddArticleAsync(ArticleDTO articleDto)
         {
+            if (articleDto == null) throw new ArgumentNullException(nameof(articleDto));
+            User user = null;
+
             var article = _mapper.Map<Article>(articleDto);
+            
             await _unitOfWork.ArticleRepository.AddAsync(article);
             await _unitOfWork.SaveChangesAsync();
         }
@@ -40,12 +44,12 @@ namespace Services.Services
             }
         }
 
-        public async Task<List<ArticleDTO>> GetAllArticlesAsync()
+        public async Task<IEnumerable<ArticleDTO>> GetAllArticlesAsync()
         {
             var result = await _unitOfWork.ArticleRepository.GetAllAsync();
             if(result != null)
             {
-                return _mapper.Map<List<ArticleDTO>>(result);
+                return _mapper.Map<IEnumerable<ArticleDTO>>(result);
             }
             else
             {
