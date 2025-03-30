@@ -322,3 +322,161 @@
     .sidebar.collapsed .icon-circle i {
         font-size: 1.2rem;
     }
+
+.page-content {
+    padding: 20px;
+}
+
+.card {
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    border: none;
+}
+
+.card-header {
+    background-color: #fff;
+    border-bottom: 1px solid #f5f5f5;
+    padding: 20px;
+    border-radius: 15px 15px 0 0 !important;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+    .table th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        padding: 15px;
+        color: #555;
+    }
+
+    .table td {
+        padding: 15px;
+        vertical-align: middle;
+    }
+
+    .table tr {
+        border-bottom: 1px solid #f5f5f5;
+    }
+
+        .table tr:hover {
+            background-color: #f8fcf5;
+        }
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.patient-status {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.status-active {
+    background-color: #e6f7d9;
+    color: #2e7d32;
+}
+
+.status-inactive {
+    background-color: #fbe9e7;
+    color: #c62828;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-icon {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    color: #666;
+    transition: all 0.3s;
+}
+
+    .btn-icon:hover {
+        background-color: #f1f1f1;
+    }
+
+.btn-view {
+    color: #0288d1;
+}
+
+.btn-edit {
+    color: #ffa000;
+}
+
+.btn-delete {
+    color: #d32f2f;
+}
+
+.search-container {
+    position: relative;
+    max-width: 300px;
+}
+
+    .search-container input {
+        padding-left: 40px;
+        border-radius: 20px;
+        border: 1px solid #eee;
+    }
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+}
+
+.pagination {
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.page-link {
+    color: var(--text-on-primary);
+    border: 1px solid #eee;
+    margin: 0 5px;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+    .page-link:hover, .page-link:focus {
+        background-color: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+    }
+
+.page-item.active .page-link {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.dropdown-menu {
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}

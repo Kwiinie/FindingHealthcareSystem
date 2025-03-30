@@ -16,6 +16,11 @@
     --sidebar-width: 300px;
     --sidebar-collapsed-width: 70px;
     --navbar-height: 80px;
+    --danger-color: #ff4d4d;
+    --danger-hover: #ff3333;
+    --danger-active: #e60000;
+    --danger-focus: #ff4d4d;
+    --text-on-danger: #ffffff;
 }
 
 body {
@@ -98,6 +103,78 @@ body {
         color: var(--text-on-primary) !important;
         background-color: var(--primary-focus) !important;
         border-color: var(--primary-focus) !important;
+    }
+
+.btn-danger {
+    background-color: var(--danger-color);
+    border-color: var(--danger-color);
+    color: var(--text-on-danger);
+    outline: none;
+    box-shadow: none;
+}
+
+    .btn-danger:hover {
+        background-color: var(--danger-hover);
+        border-color: var(--danger-hover);
+    }
+
+    .btn-danger:active {
+        background-color: var(--danger-active) !important;
+        border-color: var(--danger-active) !important;
+    }
+
+    .btn-danger:focus {
+        outline: none;
+        box-shadow: none;
+        background-color: var(--danger-focus) !important;
+        border-color: var(--danger-focus) !important;
+    }
+
+    .btn-danger:disabled,
+    .btn-danger[disabled] {
+        background-color: #e0e0e0;
+        border-color: #e0e0e0;
+        color: #b0b0b0;
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
+
+/* Outline danger button */
+.btn-outline-danger {
+    color: var(--danger-color);
+    border-color: var(--danger-color);
+    background-color: transparent;
+    outline: none;
+    box-shadow: none;
+}
+
+    .btn-outline-danger:hover {
+        background-color: var(--danger-color);
+        border-color: var(--danger-color);
+        color: var(--text-on-danger);
+    }
+
+    .btn-outline-danger:active {
+        background-color: var(--danger-active) !important;
+        color: var(--text-on-danger) !important;
+        border-color: var(--danger-active) !important;
+    }
+
+    .btn-outline-danger:focus {
+        outline: none;
+        box-shadow: none;
+        color: var(--text-on-danger) !important;
+        background-color: var(--danger-focus) !important;
+        border-color: var(--danger-focus) !important;
+    }
+
+    .btn-outline-danger:disabled,
+    .btn-outline-danger[disabled] {
+        color: #e0e0e0;
+        border-color: #e0e0e0;
+        background-color: transparent;
+        cursor: not-allowed;
+        opacity: 0.6;
     }
 
 

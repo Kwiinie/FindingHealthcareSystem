@@ -143,135 +143,94 @@ async function loadWards() {
 ///                      SIDEBAR SECTIONS                       ///
 //////////////////////////////////////////////////////////////////
 document.addEventListener('DOMContentLoaded', function () {
-    // Toggle sidebar expand/collapse
-    document.getElementById('toggleSidebar').addEventListener('click', function () {
-        const sidebar = document.getElementById('sidebar');
-        const mainContent = document.getElementById('mainContent');
-
-        sidebar.classList.toggle('collapsed');
-        mainContent.classList.toggle('expanded');
-    });
-
-    // Expand/collapse submenus
     const submenuToggles = document.querySelectorAll('.sidebar-link[data-bs-toggle="collapse"]');
-    submenuToggles.forEach(function (toggle) {
-        toggle.addEventListener('click', function () {
-            // Toggle active class on the parent menu item
-            this.classList.toggle('active');
-        });
-    });
-
-    // Handle active state for submenu items
     const submenuLinks = document.querySelectorAll('.sidebar-submenu .sidebar-link');
-    submenuLinks.forEach(function (link) {
-        link.addEventListener('click', function () {
-            // Remove active class from all submenu links
-            submenuLinks.forEach(l => l.classList.remove('active'));
 
-            // Add active class to clicked link
-            this.classList.add('active');
+    function clearSidebarState() {
+        document.querySelectorAll('.sidebar-link').forEach(link => link.classList.remove('active'));
+        document.querySelectorAll('.collapse').forEach(c => c.classList.remove('show'));
+    }
 
-            // Add active class to parent menu
-            const parentCollapse = this.closest('.collapse');
-            if (parentCollapse) {
-                const parentToggle = document.querySelector(`[href="#${parentCollapse.id}"]`);
-                if (parentToggle) {
-                    parentToggle.classList.add('active');
-                }
-            }
-        });
-    });
-});
+    function saveSidebarState(activeSubHref, parentHref) {
+        sessionStorage.setItem('activeSubLink', activeSubHref);
+        sessionStorage.setItem('activeParentLink', parentHref);
+    }
 
-    // Set active menu item based on current URL
-    function setActiveMenuItem() {
+    function setActiveBasedOnUrl() {
         const currentPath = window.location.pathname;
 
-        // Remove active class from all links
-        document.querySelectorAll('.sidebar-link').forEach(link => {
-            link.classList.remove('active');
-        });
-
-        // Find the link that matches the current path
         let activeLink = document.querySelector(`.sidebar-link[href="${currentPath}"]`);
-
-        // If no exact match, try to find a link whose href is included in the current path
         if (!activeLink) {
-            document.querySelectorAll('.sidebar-link').forEach(link => {
+            // Try partial match
+            document.querySelectorAll('.sidebar-link[href]').forEach(link => {
                 const href = link.getAttribute('href');
-                if (href !== '#' && href !== '/' && currentPath.includes(href)) {
+                if (href && href !== "#" && currentPath.includes(href)) {
                     activeLink = link;
                 }
             });
         }
 
-        // If we found an active link
         if (activeLink) {
             activeLink.classList.add('active');
 
-            // If it's in a submenu, open the parent menu
             const parentCollapse = activeLink.closest('.collapse');
             if (parentCollapse) {
-                // Show the collapse
-                const bsCollapse = new bootstrap.Collapse(parentCollapse, {
-                    toggle: false
-                });
+                const bsCollapse = new bootstrap.Collapse(parentCollapse, { toggle: false });
                 bsCollapse.show();
 
-                // Add active class to the parent menu toggle
-                const parentToggle = document.querySelector(`[href="#${parentCollapse.id}"]`);
+                const parentToggle = document.querySelector(`.sidebar-link[href="#${parentCollapse.id}"]`);
                 if (parentToggle) {
                     parentToggle.classList.add('active');
+                    saveSidebarState(activeLink.getAttribute('href'), `#${parentCollapse.id}`);
                 }
+            } else {
+                saveSidebarState(activeLink.getAttribute('href'), '');
             }
         }
     }
 
-    setActiveMenuItem();
+    // Restore from session (for hard refresh)
+    function restoreSidebarState() {
+        const subHref = sessionStorage.getItem('activeSubLink');
+        const parentHref = sessionStorage.getItem('activeParentLink');
 
-    function updateTooltips() {
-        const sidebar = document.getElementById('sidebar');
-        const tooltipTriggerList = [].slice.call(document.querySelectorAll('.sidebar-link'));
+        if (subHref) {
+            const activeLink = document.querySelector(`.sidebar-link[href="${subHref}"]`);
+            const parentToggle = document.querySelector(`.sidebar-link[href="${parentHref}"]`);
+            const parentCollapse = activeLink?.closest('.collapse');
 
-        if (sidebar.classList.contains('collapsed')) {
-            tooltipTriggerList.forEach(function (tooltipTriggerEl) {
-                const text = tooltipTriggerEl.querySelector('.sidebar-text');
-                if (text) {
-                    tooltipTriggerEl.setAttribute('data-bs-toggle', 'tooltip');
-                    tooltipTriggerEl.setAttribute('data-bs-placement', 'right');
-                    tooltipTriggerEl.setAttribute('title', text.textContent.trim());
-
-                    new bootstrap.Tooltip(tooltipTriggerEl);
-                }
-            });
-        } else {
-            tooltipTriggerList.forEach(function (tooltipTriggerEl) {
-                tooltipTriggerEl.removeAttribute('data-bs-toggle');
-                tooltipTriggerEl.removeAttribute('title');
-
-                const tooltip = bootstrap.Tooltip.getInstance(tooltipTriggerEl);
-                if (tooltip) {
-                    tooltip.dispose();
-                }
-            });
+            if (activeLink) activeLink.classList.add('active');
+            if (parentToggle) parentToggle.classList.add('active');
+            if (parentCollapse) {
+                const bsCollapse = new bootstrap.Collapse(parentCollapse, { toggle: false });
+                bsCollapse.show();
+            }
         }
     }
 
-    updateTooltips();
-    document.getElementById('toggleSidebar').addEventListener('click', function () {
-        setTimeout(updateTooltips, 300);
-    });
+    // Click handling (optional override if needed)
+    submenuLinks.forEach(link => {
+        link.addEventListener('click', function () {
+            clearSidebarState();
 
-    window.addEventListener('resize', function () {
-        if (window.innerWidth < 992) {
-            const sidebar = document.getElementById('sidebar');
-            if (!sidebar.classList.contains('collapsed')) {
-                sidebar.classList.add('collapsed');
-                document.getElementById('mainContent').classList.add('expanded');
+            this.classList.add('active');
+
+            const parentCollapse = this.closest('.collapse');
+            if (parentCollapse) {
+                const bsCollapse = new bootstrap.Collapse(parentCollapse, { toggle: false });
+                bsCollapse.show();
+
+                const parentToggle = document.querySelector(`.sidebar-link[href="#${parentCollapse.id}"]`);
+                if (parentToggle) parentToggle.classList.add('active');
+
+                saveSidebarState(this.getAttribute('href'), `#${parentCollapse.id}`);
+            } else {
+                saveSidebarState(this.getAttribute('href'), '');
             }
-        }
-
-        updateTooltips();
+        });
     });
+
+    // Run logic
+    clearSidebarState();
+    setActiveBasedOnUrl();
 });
-

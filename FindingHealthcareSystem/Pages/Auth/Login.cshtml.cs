@@ -39,7 +39,7 @@ namespace FindingHealthcareSystem.Pages.Auth
 
                     if(result.Data.Role == "Admin")
                     {
-                        return Redirect("/Admin/Dashboard");
+                        return Redirect("/admin/dashboard");
                     }
 
                     return Redirect("/");
