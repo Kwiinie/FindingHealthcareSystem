@@ -1,4 +1,422 @@
-﻿@* @page "{FacilityId:int}"
+﻿@page "/facility/{FacilityId}"
+@model FindingHealthcareSystem.Pages.Facility.DetailModel
+@{
+    // var facility = Model.Facility;
+}
+<div class="container mt-10">
+    <div class="row justify-content-center">
+        <div class="col">
+            <!-- Facility Profile Section -->
+            <div class="profile-card">
+                <div class="profile-header">
+                    <!-- AUTHORIZATION REQUIRED !! -->
+                    <button class="btn btn-primary edit-button" data-bs-toggle="modal" data-bs-target="#editFacilityModal">
+                        <i class="fas fa-edit"></i> Chỉnh sửa thông tin
+                    </button>
+
+                    <div class="row">
+                        <div class="col-md-3 text-center">
+                            <img src="@(string.IsNullOrEmpty(@Model.Facility.ImgUrl) ? "~/img/defaultFacility.jpg" : @Model.Facility.ImgUrl)"
+                                 alt="Facility Photo" class="profile-img">
+                        </div>
+                        <div class="col-md-9">
+                            <h2 id="facilityName">@Model.Facility.Name</h2>
+                            <h5 class="text-primary" id="facilityTypeName">@* @Model.Facility?.Type?.Name *@</h5>
+                            <div class="mt-3">
+                                <div id="departments">
+                                    @if (Model.Facility.FacilityDepartments != null)
+                                    {
+                                        foreach (var department in Model.Facility.FacilityDepartments)
+                                        {
+                                            <span class="expertise-badge">@department.Department.Name</span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <p>No departments available.</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-info">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <div class="info-label">Trạng thái</div>
+                                <div class="status-info">
+                                    @{
+                                        string statusClass = @Model.Facility.Status == BusinessObjects.Enums.FacilityStatus.Active ? "bg-success" : @Model.Facility.Status == BusinessObjects.Enums.FacilityStatus.Inactive ? "bg-warning" : "bg-danger";
+                                        string statusText = @Model.Facility.Status == BusinessObjects.Enums.FacilityStatus.Active ? "Đang hoạt động" : @Model.Facility.Status == BusinessObjects.Enums.FacilityStatus.Inactive ? "Tạm ngưng" : "Đóng cửa";
+                                    }
+                                    <span id="facilityStatus" class="badge @statusClass">@statusText</span>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <div class="info-label">Địa chỉ</div>
+                                <p>
+                                    <i class="fas fa-map-marker-alt location-icon"></i>
+                                    <span id="address">@Model.Facility.Address, @Model.Facility.Ward, @Model.Facility.District, @Model.Facility.Province</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <div class="info-label">Ngày thành lập</div>
+                                <p id="operationDay">@Model.Facility.OperationDay</p>
+                            </div>
+
+                            <div class="mb-4">
+                                <div class="info-label">Mô tả</div>
+                                <p id="description">@Model.Facility.Description</p>
+                            </div>
+
+                            @* <div class="mb-4">
+                                <div class="info-label">Giờ làm việc</div>
+                                <p id="workingHours">@facility.</p>
+                            </div> *@
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services Section -->
+            <div class="profile-card">
+                <div class="profile-info">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="section-title">Dịch vụ</h3>
+
+                        <!-- AUTHORIZATION REQUIRED !! -->
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addServiceModal">
+                            <i class="fas fa-plus"></i> Thêm dịch vụ
+                        </button>
+                    </div>
+
+                    <div id="servicesContainer" class="row">
+                        @if (Model.Services != null && Model.Services.Any())
+                        {
+                            @foreach (var service in Model.Services)
+                            {
+                                <div class="col-md-4 mb-4">
+                                    <div class="card service-card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">@service.Name</h5>
+                                            <h6 class="card-subtitle mb-2 text-muted">@service.Price + "VND"</h6>
+                                            <p class="card-text">@service.Description</p>
+                                            <button class="btn btn-sm btn-outline-primary edit-service-btn"
+                                                    data-id="@service.Id"
+                                                    data-name="@service.Name"
+                                                    data-price="@service.Price"
+                                                    data-description="@service.Description"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#editServiceModal">
+                                                <i class="fas fa-edit"></i> Chỉnh sửa
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="col-12 text-center mt-3">
+                                <p>Chưa có dịch vụ nào được thêm.</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reviews Section -->
+            <div class="profile-card">
+                <div class="profile-info">
+                    <h3 class="section-title">Đánh giá</h3>
+
+                    <div class="filter-menu">
+                        <div class="row">
+                            <div class="col text-end">
+                                <div class="btn-group" role="group">
+                                    <input type="radio" class="btn-check" name="ratingFilter" id="allRatings" autocomplete="off" checked>
+                                    <label class="btn btn-outline-primary btn-sm" for="allRatings">All</label>
+
+                                    <input type="radio" class="btn-check" name="ratingFilter" id="rating5" autocomplete="off">
+                                    <label class="btn btn-outline-primary btn-sm" for="rating5">5★</label>
+
+                                    <input type="radio" class="btn-check" name="ratingFilter" id="rating4" autocomplete="off">
+                                    <label class="btn btn-outline-primary btn-sm" for="rating4">4★</label>
+
+                                    <input type="radio" class="btn-check" name="ratingFilter" id="rating3" autocomplete="off">
+                                    <label class="btn btn-outline-primary btn-sm" for="rating3">3★</label>
+
+                                    <input type="radio" class="btn-check" name="ratingFilter" id="rating2" autocomplete="off">
+                                    <label class="btn btn-outline-primary btn-sm" for="rating2">2★ & 1★</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="reviewsContainer">
+                        <!-- Reviews will be loaded dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Facility Modal -->
+<div class="modal fade" id="editFacilityModal" tabindex="-1" aria-labelledby="editFacilityModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editFacilityModalLabel">Chỉnh sửa thông tin cơ sở y tế</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="editFacilityForm" method="post" asp-page-handler="EditFacility" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <input type="hidden" asp-for="FacilityId" value="@Model.FacilityId" />
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label asp-for="@Model.Facility.Name" class="form-label">Tên cơ sở y tế</label>
+                            <input type="text" class="form-control" asp-for="@Model.Facility.Name" id="editFacilityName">
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="@Model.Facility.TypeId" class="form-label">Loại cơ sở y tế</label>
+                            <select class="form-select" asp-for="@Model.Facility.TypeId" id="editFacilityType">
+                                <option value="1">Bệnh viện</option>
+                                <option value="2">Phòng khám</option>
+                                <option value="3">Trung tâm y tế</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editDepartments" class="form-label">Khoa phòng</label>
+                        <select class="form-select" id="editDepartments" multiple>
+                            @if (Model.Departments != null)
+                            {
+                                @foreach (var department in Model.Departments)
+                                {
+                                    bool isSelected = Model.Departments.Any(d => d.Id == department.Id);
+                                    <option value="@department.Id" selected="@isSelected">@department.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label asp-for="@Model.Facility.Province" class="form-label">Tỉnh/thành phố</label>
+                            <select class="form-select" asp-for="@Model.Facility.Province" id="editProvince">
+                                <option value="Hà Nội">Hà Nội</option>
+                                <option value="TP. Hồ Chí Minh">TP. Hồ Chí Minh</option>
+                                <option value="Đà Nẵng">Đà Nẵng</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="@Model.Facility.District" class="form-label">Quận/huyện</label>
+                            <select class="form-select" asp-for="@Model.Facility.District" id="editDistrict">
+                                <option value="Quận 1">Quận 1</option>
+                                <option value="Quận 2">Quận 2</option>
+                                <option value="Quận 3">Quận 3</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="@Model.Facility.Ward" class="form-label">Phường/xã</label>
+                            <select class="form-select" asp-for="@Model.Facility.Ward" id="editWard">
+                                <option value="Phường A">Phường A</option>
+                                <option value="Phường B">Phường B</option>
+                                <option value="Phường C">Phường C</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label asp-for="@Model.Facility.Address" class="form-label">Địa chỉ chi tiết</label>
+                        <input type="text" class="form-control" asp-for="@Model.Facility.Address" id="editDetailAddress">
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label asp-for="@Model.Facility.OperationDay" class="form-label">Ngày thành lập</label>
+                            <input type="date" class="form-control" asp-for="@Model.Facility.OperationDay" id="editOperationDay">
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="@Model.Facility.Status" class="form-label">Trạng thái</label>
+                            <select class="form-select" asp-for="@Model.Facility.Status" id="editStatus">
+                                <option value="Active">Đang hoạt động</option>
+                                <option value="Inactive">Tạm ngưng</option>
+                                <option value="Closed">Đóng cửa</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="@Model.Facility.Description" class="form-label">Mô tả</label>
+                        <textarea class="form-control" asp-for="@Model.Facility.Description" id="editDescription" rows="3"></textarea>
+                    </div>
+
+                    @* <div class="mb-3">
+                        <label asp-for="Facility.WorkingHours" class="form-label">Giờ làm việc</label>
+                        <input type="text" class="form-control" asp-for="Facility.WorkingHours" id="editWorkingHours">
+                    </div> *@
+
+                    <div class="mb-3">
+                        <label for="facilityImage" class="form-label">Ảnh cơ sở y tế</label>
+                        <input type="file" class="form-control" id="facilityImage" name="facilityImage">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Add Service Modal -->
+<div class="modal fade" id="addServiceModal" tabindex="-1" aria-labelledby="addServiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addServiceModalLabel">Thêm dịch vụ mới</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="addServiceForm" method="post" asp-page-handler="AddService">
+                <div class="modal-body">
+                    <input type="hidden" asp-for="FacilityId" value="@Model.FacilityId" />
+
+                    <div class="mb-3">
+                        <label asp-for="Service.Name" class="form-label">Tên dịch vụ</label>
+                        <input type="text" class="form-control" asp-for="Service.Name" id="serviceName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Service.Price" class="form-label">Giá (VNĐ)</label>
+                        <input type="number" class="form-control" asp-for="Service.Price" id="servicePrice" required>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Service.Description" class="form-label">Mô tả</label>
+                        <textarea class="form-control" asp-for="Service.Description" id="serviceDescription" rows="3" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-primary">Thêm dịch vụ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Service Modal -->
+<div class="modal fade" id="editServiceModal" tabindex="-1" aria-labelledby="editServiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editServiceModalLabel">Chỉnh sửa dịch vụ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="editServiceForm" method="post">
+                <div class="modal-body">
+                    <input type="hidden" asp-for="FacilityId" value="@Model.FacilityId" />
+                    <input type="hidden" asp-for="ServiceId" id="editServiceId">
+
+                    <div class="mb-3">
+                        <label asp-for="Service.Name" class="form-label">Tên dịch vụ</label>
+                        <input type="text" class="form-control" asp-for="Service.Name" id="editServiceName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Service.Price" class="form-label">Giá (VNĐ)</label>
+                        <input type="number" class="form-control" asp-for="Service.Price" id="editServicePrice" required>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Service.Description" class="form-label">Mô tả</label>
+                        <textarea class="form-control" asp-for="Service.Description" id="editServiceDescription" rows="3" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger me-auto" formmethod="post" asp-page-handler="DeleteService">Xóa dịch vụ</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-primary" formmethod="post" asp-page-handler="EditService">Lưu thay đổi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Populate edit service modal when opened
+            $('.edit-service-btn').click(function() {
+                const id = $(this).data('id');
+                const name = $(this).data('name');
+                const price = $(this).data('price');
+                const description = $(this).data('description');
+
+                $('#editServiceId').val(id);
+                $('#editServiceName').val(name);
+                $('#editServicePrice').val(price);
+                $('#editServiceDescription').val(description);
+            });
+
+            // Initialize select2 for multiple selection
+            $('#editDepartments').select2({
+                placeholder: "Select departments",
+                allowClear: true
+            });
+
+            // Cascading dropdowns for location
+            $('#editProvince').change(function() {
+                // Logic to populate district dropdown based on selected province
+                updateDistrictDropdown();
+            });
+
+            $('#editDistrict').change(function() {
+                // Logic to populate ward dropdown based on selected district
+                updateWardDropdown();
+            });
+
+            function updateDistrictDropdown() {
+                // This would be replaced with actual AJAX call to get districts
+                console.log("Updating districts for province: " + $('#editProvince').val());
+            }
+
+            function updateWardDropdown() {
+                // This would be replaced with actual AJAX call to get wards
+                console.log("Updating wards for district: " + $('#editDistrict').val());
+            }
+
+            // Rating filter logic
+            $('input[name="ratingFilter"]').change(function() {
+                // Logic to filter reviews based on rating
+                filterReviews($(this).attr('id'));
+            });
+
+            function filterReviews(filterType) {
+                // This would be replaced with actual filtering logic
+                console.log("Filtering reviews by: " + filterType);
+            }
+
+            // Load reviews (this would be replaced with actual AJAX call)
+            loadReviews();
+
+            function loadReviews() {
+                // Example of how reviews could be loaded
+                console.log("Loading reviews for facility ID: " + @Model.FacilityId);
+            }
+        });
+    </script>
+}
+
+@* @page "{FacilityId:int}"
 @model FindingHealthcareSystem.Pages.Facility.DetailModel
 @{
     ViewData["Title"] = "Facility Details";
@@ -446,7 +864,6 @@
         }
     </script>
 }  *@
-
 @* @page "/facility/{id}"
 @model FindingHealthcareSystem.Pages.Facility.DetailModel
 @{
@@ -740,418 +1157,4 @@
         </div>
     </div>
 </div> *@
-
-@page 
-@model FindingHealthcareSystem.Pages.Facility.DetailModel
-@{
-    // var facility = Model.Facility;
-}
-<div class="container mt-10">
-    <div class="row justify-content-center">
-        <div class="col">
-            <!-- Facility Profile Section -->
-            <div class="profile-card">
-                <div class="profile-header">
-                    <!-- AUTHORIZATION REQUIRED !! -->
-                    <button class="btn btn-primary edit-button" data-bs-toggle="modal" data-bs-target="#editFacilityModal">
-                        <i class="fas fa-edit"></i> Chỉnh sửa thông tin
-                    </button>
-
-                    <div class="row">
-                        <div class="col-md-3 text-center">
-                            <img src="@(string.IsNullOrEmpty(@Model.Facility.ImgUrl) ? "~/img/defaultFacility.jpg" : @Model.Facility.ImgUrl)"
-                            alt="@Model.Facility.Name" class="profile-img">
-                        </div>
-                        <div class="col-md-9">
-                            <h2 id="facilityName">@Model.Facility.Name</h2>
-                            <h5 class="text-primary" id="facilityTypeName">@* @Model.Facility?.Type?.Name *@</h5>
-                            <div class="mt-3">
-                                <div id="departments">
-                                    @foreach (var department in Model.Facility.FacilityDepartments)
-                                    {
-                                        <span class="expertise-badge">@department</span>
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="profile-info">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-4">
-                                <div class="info-label">Trạng thái</div>
-                                <div class="status-info">
-                                    @{
-                                        string statusClass = @Model.Facility.Status == BusinessObjects.Enums.FacilityStatus.Active ? "bg-success" : @Model.Facility.Status == BusinessObjects.Enums.FacilityStatus.Inactive ? "bg-warning" : "bg-danger";
-                                        string statusText = @Model.Facility.Status == BusinessObjects.Enums.FacilityStatus.Active ? "Đang hoạt động" : @Model.Facility.Status == BusinessObjects.Enums.FacilityStatus.Inactive ? "Tạm ngưng" : "Đóng cửa";
-                                    }
-                                    <span id="facilityStatus" class="badge @statusClass">@statusText</span>
-                                </div>
-                            </div>
-
-                            <div class="mb-4">
-                                <div class="info-label">Địa chỉ</div>
-                                <p>
-                                    <i class="fas fa-map-marker-alt location-icon"></i>
-                                    <span id="address">@Model.Facility.Address, @Model.Facility.Ward, @Model.Facility.District, @Model.Facility.Province</span>
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="mb-4">
-                                <div class="info-label">Ngày thành lập</div>
-                                <p id="operationDay">@Model.Facility.OperationDay</p>
-                            </div>
-
-                            <div class="mb-4">
-                                <div class="info-label">Mô tả</div>
-                                <p id="description">@Model.Facility.Description</p>
-                            </div>
-
-                            @* <div class="mb-4">
-                                <div class="info-label">Giờ làm việc</div>
-                                <p id="workingHours">@facility.</p>
-                            </div> *@
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Services Section -->
-            <div class="profile-card">
-                <div class="profile-info">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h3 class="section-title">Dịch vụ</h3>
-
-                        <!-- AUTHORIZATION REQUIRED !! -->
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addServiceModal">
-                            <i class="fas fa-plus"></i> Thêm dịch vụ
-                        </button>
-                    </div>
-
-                    <div id="servicesContainer" class="row">
-                        @if (Model.Services != null && Model.Services.Any())
-                        {
-                            @foreach (var service in Model.Services)
-                            {
-                                <div class="col-md-4 mb-4">
-                                    <div class="card service-card">
-                                        <div class="card-body">
-                                            <h5 class="card-title">@service.Name</h5>
-                                            <h6 class="card-subtitle mb-2 text-muted">@service.Price VND</h6>
-                                            <p class="card-text">@service.Description</p>
-                                            <button class="btn btn-sm btn-outline-primary edit-service-btn"
-                                            data-id="@service.Id"
-                                            data-name="@service.Name"
-                                            data-price="@service.Price"
-                                            data-description="@service.Description"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#editServiceModal">
-                                                <i class="fas fa-edit"></i> Chỉnh sửa
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-                        }
-                        else
-                        {
-                            <div class="col-12 text-center mt-3">
-                                <p>Chưa có dịch vụ nào được thêm.</p>
-                            </div>
-                        }
-                    </div>
-                </div>
-            </div>
-
-            <!-- Reviews Section -->
-            <div class="profile-card">
-                <div class="profile-info">
-                    <h3 class="section-title">Đánh giá</h3>
-
-                    <div class="filter-menu">
-                        <div class="row">
-                            <div class="col text-end">
-                                <div class="btn-group" role="group">
-                                    <input type="radio" class="btn-check" name="ratingFilter" id="allRatings" autocomplete="off" checked>
-                                    <label class="btn btn-outline-primary btn-sm" for="allRatings">All</label>
-
-                                    <input type="radio" class="btn-check" name="ratingFilter" id="rating5" autocomplete="off">
-                                    <label class="btn btn-outline-primary btn-sm" for="rating5">5★</label>
-
-                                    <input type="radio" class="btn-check" name="ratingFilter" id="rating4" autocomplete="off">
-                                    <label class="btn btn-outline-primary btn-sm" for="rating4">4★</label>
-
-                                    <input type="radio" class="btn-check" name="ratingFilter" id="rating3" autocomplete="off">
-                                    <label class="btn btn-outline-primary btn-sm" for="rating3">3★</label>
-
-                                    <input type="radio" class="btn-check" name="ratingFilter" id="rating2" autocomplete="off">
-                                    <label class="btn btn-outline-primary btn-sm" for="rating2">2★ & 1★</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="reviewsContainer">
-                        <!-- Reviews will be loaded dynamically -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Edit Facility Modal -->
-<div class="modal fade" id="editFacilityModal" tabindex="-1" aria-labelledby="editFacilityModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editFacilityModalLabel">Chỉnh sửa thông tin cơ sở y tế</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form id="editFacilityForm" method="post" asp-page-handler="EditFacility" enctype="multipart/form-data">
-                <div class="modal-body">
-                    <input type="hidden" asp-for="FacilityId" value="@Model.FacilityId" />
-
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label asp-for="@Model.Facility.Name" class="form-label">Tên cơ sở y tế</label>
-                            <input type="text" class="form-control" asp-for="@Model.Facility.Name" id="editFacilityName">
-                        </div>
-                        <div class="col-md-6">
-                            <label asp-for="@Model.Facility.TypeId" class="form-label">Loại cơ sở y tế</label>
-                            <select class="form-select" asp-for="@Model.Facility.TypeId" id="editFacilityType">
-                                @if (Model.FacilityTypes != null)
-                                {
-                                    @foreach (var types in Model.FacilityTypes)
-                                    {
-                                        bool isSelected = Model.FacilityTypes.Any(t => t.Id == types.Id);
-                                        <option value="@types.Id" selected="@isSelected">@types.Name</option>
-                                    }
-                                }
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="editDepartments" class="form-label">Khoa phòng</label>
-                        <select class="form-select" id="editDepartments" multiple>
-                            @if (Model.Departments != null)
-                            {
-                                @foreach (var department in Model.Departments)
-                                {
-                                    bool isSelected = Model.Departments.Any(d => d.Id == department.Id);
-                                    <option value="@department.Id" selected="@isSelected">@department.Name</option>
-                                }
-                            }
-                        </select>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-md-4">
-                            <label asp-for="@Model.Facility.Province" class="form-label">Tỉnh/thành phố</label>
-                            <select class="form-select" asp-for="@Model.Facility.Province" id="editProvince">
-                                <option value="1">Hà Nội</option>
-                                <option value="2">TP. Hồ Chí Minh</option>
-                                <option value="3">Đà Nẵng</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label asp-for="@Model.Facility.District" class="form-label">Quận/huyện</label>
-                            <select class="form-select" asp-for="@Model.Facility.District" id="editDistrict">
-                                <option value="1">Quận 1</option>
-                                <option value="2">Quận 2</option>
-                                <option value="3">Quận 3</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label asp-for="@Model.Facility.Ward" class="form-label">Phường/xã</label>
-                            <select class="form-select" asp-for="@Model.Facility.Ward" id="editWard">
-                                <option value="1">Phường A</option>
-                                <option value="2">Phường B</option>
-                                <option value="3">Phường C</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label asp-for="@Model.Facility.Address" class="form-label">Địa chỉ chi tiết</label>
-                        <input type="text" class="form-control" asp-for="@Model.Facility.Address" id="editDetailAddress">
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label asp-for="@Model.Facility.OperationDay" class="form-label">Ngày thành lập</label>
-                            <input type="date" class="form-control" asp-for="@Model.Facility.OperationDay" id="editOperationDay">
-                        </div>
-                        <div class="col-md-6">
-                            <label asp-for="@Model.Facility.Status" class="form-label">Trạng thái</label>
-                            <select class="form-select" asp-for="@Model.Facility.Status" id="editStatus">
-                                <option value="1">Đang hoạt động</option>
-                                <option value="2">Tạm ngưng</option>
-                                <option value="3">Đóng cửa</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label asp-for="@Model.Facility.Description" class="form-label">Mô tả</label>
-                        <textarea class="form-control" asp-for="@Model.Facility.Description" id="editDescription" rows="3"></textarea>
-                    </div>
-
-                    @* <div class="mb-3">
-                        <label asp-for="Facility.WorkingHours" class="form-label">Giờ làm việc</label>
-                        <input type="text" class="form-control" asp-for="Facility.WorkingHours" id="editWorkingHours">
-                    </div> *@
-
-                    <div class="mb-3">
-                        <label for="facilityImage" class="form-label">Ảnh cơ sở y tế</label>
-                        <input type="file" class="form-control" id="facilityImage" name="facilityImage">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Add Service Modal -->
-<div class="modal fade" id="addServiceModal" tabindex="-1" aria-labelledby="addServiceModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addServiceModalLabel">Thêm dịch vụ mới</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form id="addServiceForm" method="post" asp-page-handler="AddService">
-                <div class="modal-body">
-                    <input type="hidden" asp-for="FacilityId" value="@Model.FacilityId" />
-
-                    <div class="mb-3">
-                        <label asp-for="Service.Name" class="form-label">Tên dịch vụ</label>
-                        <input type="text" class="form-control" asp-for="Service.Name" id="serviceName" required>
-                    </div>
-                    <div class="mb-3">
-                        <label asp-for="Service.Price" class="form-label">Giá (VNĐ)</label>
-                        <input type="number" class="form-control" asp-for="Service.Price" id="servicePrice" required>
-                    </div>
-                    <div class="mb-3">
-                        <label asp-for="Service.Description" class="form-label">Mô tả</label>
-                        <textarea class="form-control" asp-for="Service.Description" id="serviceDescription" rows="3" required></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-primary">Thêm dịch vụ</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Edit Service Modal -->
-<div class="modal fade" id="editServiceModal" tabindex="-1" aria-labelledby="editServiceModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editServiceModalLabel">Chỉnh sửa dịch vụ</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form id="editServiceForm" method="post">
-                <div class="modal-body">
-                    <input type="hidden" asp-for="FacilityId" value="@Model.FacilityId" />
-                    <input type="hidden" asp-for="ServiceId" id="editServiceId">
-
-                    <div class="mb-3">
-                        <label asp-for="Service.Name" class="form-label">Tên dịch vụ</label>
-                        <input type="text" class="form-control" asp-for="Service.Name" id="editServiceName" required>
-                    </div>
-                    <div class="mb-3">
-                        <label asp-for="Service.Price" class="form-label">Giá (VNĐ)</label>
-                        <input type="number" class="form-control" asp-for="Service.Price" id="editServicePrice" required>
-                    </div>
-                    <div class="mb-3">
-                        <label asp-for="Service.Description" class="form-label">Mô tả</label>
-                        <textarea class="form-control" asp-for="Service.Description" id="editServiceDescription" rows="3" required></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-danger me-auto" formmethod="post" asp-page-handler="DeleteService">Xóa dịch vụ</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-primary" formmethod="post" asp-page-handler="EditService">Lưu thay đổi</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-@section Scripts {
-    <script>
-        $(document).ready(function() {
-            // Populate edit service modal when opened
-            $('.edit-service-btn').click(function() {
-                const id = $(this).data('id');
-                const name = $(this).data('name');
-                const price = $(this).data('price');
-                const description = $(this).data('description');
-
-                $('#editServiceId').val(id);
-                $('#editServiceName').val(name);
-                $('#editServicePrice').val(price);
-                $('#editServiceDescription').val(description);
-            });
-
-            // Initialize select2 for multiple selection
-            $('#editDepartments').select2({
-                placeholder: "Select departments",
-                allowClear: true
-            });
-
-            // Cascading dropdowns for location
-            $('#editProvince').change(function() {
-                // Logic to populate district dropdown based on selected province
-                updateDistrictDropdown();
-            });
-
-            $('#editDistrict').change(function() {
-                // Logic to populate ward dropdown based on selected district
-                updateWardDropdown();
-            });
-
-            function updateDistrictDropdown() {
-                // This would be replaced with actual AJAX call to get districts
-                console.log("Updating districts for province: " + $('#editProvince').val());
-            }
-
-            function updateWardDropdown() {
-                // This would be replaced with actual AJAX call to get wards
-                console.log("Updating wards for district: " + $('#editDistrict').val());
-            }
-
-            // Rating filter logic
-            $('input[name="ratingFilter"]').change(function() {
-                // Logic to filter reviews based on rating
-                filterReviews($(this).attr('id'));
-            });
-
-            function filterReviews(filterType) {
-                // This would be replaced with actual filtering logic
-                console.log("Filtering reviews by: " + filterType);
-            }
-
-            // Load reviews (this would be replaced with actual AJAX call)
-            loadReviews();
-
-            function loadReviews() {
-                // Example of how reviews could be loaded
-                console.log("Loading reviews for facility ID: " + @Model.FacilityId);
-            }
-        });
-    </script>
-}
+@* ---------------------- *@

@@ -108,7 +108,7 @@ namespace FindingHealthcareSystem.Pages.Facility
             }
 
             await _facilityService.Update(FacilityId, Facility);
-            return RedirectToPage("/Facility/Detail", new { id = FacilityId });
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAddServiceAsync()
