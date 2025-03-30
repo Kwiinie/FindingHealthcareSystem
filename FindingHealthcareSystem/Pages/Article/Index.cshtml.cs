@@ -14,10 +14,11 @@ namespace FindingHealthcareSystem.Pages.Article
             _articleService = articleService;
         }
 
-        public List<ArticleDTO> Articles { get; set; } = new List<ArticleDTO>();
-        public async void OnGet()
+        public List<ArticleDTO> Articles { get; set; } = new();
+        public async Task OnGetAsync()
         {
             Articles = (await _articleService.GetAllArticlesAsync()).ToList();
+            
         }
     }
 }

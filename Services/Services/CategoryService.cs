@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Services.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace Services.Services
 {
-    internal class CategoryService
+    public class CategoryService : ICategoryService
     {
+
     }
 }

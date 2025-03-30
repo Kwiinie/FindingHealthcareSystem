@@ -10,10 +10,13 @@ namespace FindingHealthcareSystem.Pages.Admin.Article
     {
         private readonly IArticleService _articleService;
         private readonly ICloudinaryService _cloudinaryService;
-        public CreateModel(IArticleService articleService, ICloudinaryService cloudinaryService)
+        private readonly ICategoryService _categoryService;
+        public CreateModel(IArticleService articleService, ICloudinaryService cloudinaryService,ICategoryService categoryService)
         {
             _articleService = articleService;
             _cloudinaryService = cloudinaryService;
+            _categoryService = categoryService;
+
         }
 
         [BindProperty]

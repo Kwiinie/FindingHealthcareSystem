@@ -40,10 +40,17 @@ namespace Services.Services
             }
         }
 
-        public async Task<IEnumerable<ArticleDTO>> GetAllArticlesAsync()
+        public async Task<List<ArticleDTO>> GetAllArticlesAsync()
         {
             var result = await _unitOfWork.ArticleRepository.GetAllAsync();
-            return _mapper.Map<IEnumerable<ArticleDTO>>(result);
+            if(result != null)
+            {
+                return _mapper.Map<List<ArticleDTO>>(result);
+            }
+            else
+            {
+                return new List<ArticleDTO>();
+            }
         }
 
         public async Task<ArticleDTO> GetArticleByIdAsync(int id)
