@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Repositories.Interfaces;
 using Services.Interfaces;
 using System.Linq.Expressions;
+using System.Text.RegularExpressions;
 
 namespace Services.Services
 {
@@ -66,6 +67,13 @@ namespace Services.Services
             return user == null ? null : _mapper.Map<GeneralUserDto>(user);
         }
 
+        public async Task<User> GetUserByIdNew(int userId)
+        {
+            var userRepo = _unitOfWork.GetRepository<User>();
+            var user = await userRepo.GetByIdAsync(userId);
+            return user;
+        }
+
         private static Expression<Func<User, object>> GetSortProperty(string sortBy)
         {
             return sortBy.ToLower() switch
@@ -87,16 +95,31 @@ namespace Services.Services
 
         public async Task UpdateUserAsync(GeneralUserDto userDto)
         {
-            var userRepo = _unitOfWork.GetRepository<User>();
-            var user = await userRepo.GetByIdAsync(userDto.Id);
-            if (user == null)
+            try
             {
-                throw new KeyNotFoundException("User not found.");
-            }
-            _mapper.Map(userDto, user); // Update properties from DTO
+                // Validate phone number (must be exactly 10 digits)
+                if (string.IsNullOrEmpty(userDto.PhoneNumber) || !Regex.IsMatch(userDto.PhoneNumber, @"^\d{10}$"))
+                {
+                    throw new Exception("Phone number must be exactly 10 digits.");
+                }
 
-            userRepo.Update(user); // No need to await since it's void
-            await _unitOfWork.SaveChangesAsync(); // Ensure changes are persisted
+              
+                var userRepo = _unitOfWork.GetRepository<User>();
+                var user = await userRepo.GetByIdAsync(userDto.Id);
+                if (user == null)
+                {
+                    throw new KeyNotFoundException("User not found.");
+                }
+                _mapper.Map(userDto, user); // Update properties from DTO
+
+                userRepo.Update(user); // No need to await since it's void
+                await _unitOfWork.SaveChangesAsync(); // Ensure changes are persisted
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+          
         }
 
         public async Task DeleteUserAsync(int id)
@@ -123,6 +146,17 @@ namespace Services.Services
         {
             try
             {
+                // Validate phone number (must be exactly 10 digits)
+                if (string.IsNullOrEmpty(userDto.PhoneNumber) || !Regex.IsMatch(userDto.PhoneNumber, @"^\d{10}$"))
+                {
+                    throw new Exception("Phone number must be exactly 10 digits.");
+                }
+
+                // Kiểm tra email đã tồn tại chưa
+                if (await _userRepository.EmailExistsAsync(userDto.Email))
+                {
+                    throw new Exception("Email đã tồn tại. Vui lòng sử dụng email khác.");
+                }
                 await _userRepository.RegisterUserAsync(userDto);
 
             }
@@ -133,9 +167,39 @@ namespace Services.Services
 
         }
 
+        // Kiểm tra email đã tồn tại chưa
+        //bool emailExists = await _context.Users.AnyAsync(p => p.Email == userDto.Email);
+        //if (emailExists)
+        //{
+        //    throw new Exception("Email đã tồn tại. Vui lòng sử dụng email khác.");
+        //}
+
         public async Task<List<Expertise>> GetAllExpertises()
         {
             return await _userRepository.GetAllExpertises();
+        }
+
+        public async Task<Professional> GetProfessionalById(int userId)
+        {
+            return await _userRepository.GetProfessionalById(userId);
+
+
+        }
+
+        public async Task UpdateProfessionalAsync(Professional professional)
+        {
+
+            await _userRepository.UpdateProfessionalAsync(professional);
+        }
+
+        public async Task UpdatePatientAsync(Patient patient)
+        {
+            await _userRepository.UpdatePatientAsync(patient);
+        }
+
+        public async Task<Patient> GetPatientById(int userId)
+        {
+            return await _userRepository.GetPatientById(userId);
         }
     }
 }

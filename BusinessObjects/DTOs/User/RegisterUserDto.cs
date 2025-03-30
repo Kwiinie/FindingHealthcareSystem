@@ -13,8 +13,8 @@ namespace BusinessObjects.DTOs.User
         public string Fullname { get; set; }
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Phone number is required")]
-        [RegularExpression(@"^\d{10}$", ErrorMessage = "Phone number must be exactly 10 digits")]       public string PhoneNumber { get; set; }
+       
+        public string PhoneNumber { get; set; }
         public string Password { get; set; }
         public Role Role { get; set; }
         public DateOnly? Birthday { get; set; }
@@ -22,6 +22,8 @@ namespace BusinessObjects.DTOs.User
         public string? Province { get; set; }
         public int? ExpertiseId { get; set; }
 
+        public string? ImgUrl { get; set; }
+        public string Note { get; set; }
 
         public string? District { get; set; }
         public string? WorkingHours { get; set; } /// giờ làm vieecjj khoảng thời gian 

@@ -3,6 +3,17 @@
 @{
     // var facility = Model.Facility;
 }
+@using Newtonsoft.Json
+@using BusinessObjects.Dtos.User
+@{
+    var currentUserJson = HttpContext.Session.GetString("User");
+    GeneralUserDto currentUser = null;
+
+    if (!string.IsNullOrEmpty(currentUserJson))
+    {
+        currentUser = JsonConvert.DeserializeObject<GeneralUserDto>(currentUserJson);
+    }
+}
 <div class="container mt-10">
     <div class="row justify-content-center">
         <div class="col">
@@ -10,9 +21,12 @@
             <div class="profile-card">
                 <div class="profile-header">
                     <!-- AUTHORIZATION REQUIRED !! -->
-                    <button class="btn btn-primary edit-button" data-bs-toggle="modal" data-bs-target="#editFacilityModal">
-                        <i class="fas fa-edit"></i> Chỉnh sửa thông tin
-                    </button>
+                    @if (currentUser != null && currentUser.Role == "Admin")
+                    {
+                        <button class="btn btn-primary edit-button" data-bs-toggle="modal" data-bs-target="#editFacilityModal">
+                            <i class="fas fa-edit"></i> Chỉnh sửa thông tin
+                        </button>
+                    }
 
                     <div class="row">
                         <div class="col-md-3 text-center">
@@ -90,10 +104,13 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <h3 class="section-title">Dịch vụ</h3>
 
-                        <!-- AUTHORIZATION REQUIRED !! -->
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addServiceModal">
-                            <i class="fas fa-plus"></i> Thêm dịch vụ
-                        </button>
+                        <!-- AUTHORIZATION REQUIRED !! -->                        
+                        @if (currentUser != null && currentUser.Role == "Admin")
+                        {
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addServiceModal">
+                                <i class="fas fa-plus"></i> Thêm dịch vụ
+                            </button>
+                        }
                     </div>
 
                     <div id="servicesContainer" class="row">
@@ -106,16 +123,19 @@
                                         <div class="card-body">
                                             <h5 class="card-title">@service.Name</h5>
                                             <h6 class="card-subtitle mb-2 text-muted">@service.Price + "VND"</h6>
-                                            <p class="card-text">@service.Description</p>
-                                            <button class="btn btn-sm btn-outline-primary edit-service-btn"
-                                                    data-id="@service.Id"
-                                                    data-name="@service.Name"
-                                                    data-price="@service.Price"
-                                                    data-description="@service.Description"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#editServiceModal">
-                                                <i class="fas fa-edit"></i> Chỉnh sửa
-                                            </button>
+                                            <p class="card-text">@service.Description</p>                                            
+                                            @if (currentUser != null && currentUser.Role == "Admin")
+                                            {
+                                               <button class="btn btn-sm btn-outline-primary edit-service-btn"
+                                                         data-id="@service.Id"
+                                                         data-name="@service.Name"
+                                                         data-price="@service.Price"
+                                                         data-description="@service.Description"
+                                                         data-bs-toggle="modal"
+                                                         data-bs-target="#editServiceModal">
+                                                    <i class="fas fa-edit"></i> Chỉnh sửa
+                                                </button>
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -353,6 +373,142 @@
 
 @section Scripts {
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize select2 for multiple selection
+            $('#editDepartments').select2({
+                placeholder: "Select departments",
+                allowClear: true
+            });
+
+            // Cascading dropdowns for location
+            $('#editProvince').change(function() {
+                updateDistrictDropdown();
+            });
+
+            $('#editDistrict').change(function() {
+                updateWardDropdown();
+            });
+
+            function updateDistrictDropdown() {
+                const provinceCode = $('#editProvince').val();
+                const districtDropdown = $('#editDistrict');
+                const wardDropdown = $('#editWard');
+
+                districtDropdown.empty().append('<option value="">Chọn quận/huyện</option>');
+                wardDropdown.empty().append('<option value="">Chọn phường/xã</option>').prop('disabled', true);
+
+                if (!provinceCode) {
+                    districtDropdown.prop('disabled', true);
+                    return;
+                }
+
+                districtDropdown.prop('disabled', false);
+
+                $.ajax({
+                    url: `?handler=Districts&provinceCode=${provinceCode}`,
+                    method: 'GET',
+                    success: function(districts) {
+                        districts.forEach(district => {
+                            districtDropdown.append(new Option(district.name, district.code));
+                        });
+                    },
+                    error: function() {
+                        console.error('Failed to load districts');
+                    }
+                });
+            }
+
+            function updateWardDropdown() {
+                const districtCode = $('#editDistrict').val();
+                const wardDropdown = $('#editWard');
+
+                wardDropdown.empty().append('<option value="">Chọn phường/xã</option>');
+
+                if (!districtCode) {
+                    wardDropdown.prop('disabled', true);
+                    return;
+                }
+
+                wardDropdown.prop('disabled', false);
+
+                $.ajax({
+                    url: `?handler=Wards&districtCode=${districtCode}`,
+                    method: 'GET',
+                    success: function(wards) {
+                        wards.forEach(ward => {
+                            wardDropdown.append(new Option(ward.name, ward.code));
+                        });
+                    },
+                    error: function() {
+                        console.error('Failed to load wards');
+                    }
+                });
+            }
+
+            // Rating filter logic
+            $('input[name="ratingFilter"]').change(function() {
+                filterReviews($(this).attr('id'));
+            });
+
+            function filterReviews(filterType) {
+                console.log("Filtering reviews by: " + filterType);
+            }
+
+            // Load reviews (this would be replaced with actual AJAX call)
+            loadReviews();
+
+            function loadReviews() {
+                console.log("Loading reviews for facility ID: " + @Model.FacilityId);
+            }
+
+            // Edit Facility Form Submission
+            $('#saveFacilityChanges').click(function() {
+                $('#editFacilityForm').submit();
+            });
+
+            // Delete Facility
+            $('#deleteFacility').click(function() {
+                if (confirm('Bạn có chắc chắn muốn xóa cơ sở y tế này không?')) {
+                    $('#deleteFacilityForm').submit();
+                }
+            });
+
+            // Add Service Form Submission
+            $('#addServiceButton').click(function() {
+                $('#addServiceForm').submit();
+            });
+
+            // Edit Service Form Submission
+            $('#saveServiceChanges').click(function() {
+                $('#editServiceForm').submit();
+            });
+
+            // Delete Service
+            $('#deleteService').click(function() {
+                if (confirm('Bạn có chắc chắn muốn xóa dịch vụ này không?')) {
+                    $('#deleteServiceId').val($('#editServiceId').val());
+                    $('#deleteServiceForm').submit();
+                }
+            });
+
+            // Service Card Click Handler (for editing)
+            $('.service-card').click(function() {
+                const serviceId = $(this).data('service-id');
+                const serviceName = $(this).data('service-name');
+                const servicePrice = $(this).data('service-price');
+                const serviceDescription = $(this).data('service-description');
+
+                // Fill in the edit form
+                $('#editServiceId').val(serviceId);
+                $('#editServiceName').val(serviceName);
+                $('#editServicePrice').val(servicePrice);
+                $('#editServiceDescription').val(serviceDescription);
+
+                // Open the modal
+                new bootstrap.Modal(document.getElementById('editServiceModal')).show();
+            });
+        });
+
         $(document).ready(function() {
             // Populate edit service modal when opened
             $('.edit-service-btn').click(function() {
@@ -412,9 +568,114 @@
                 // Example of how reviews could be loaded
                 console.log("Loading reviews for facility ID: " + @Model.FacilityId);
             }
+
+            // Edit Facility Form Submission
+            $('#saveFacilityChanges').click(function() {
+                $('#editFacilityForm').submit();
+            });
+
+            // Delete Facility
+            $('#deleteFacility').click(function() {
+                if (confirm('Bạn có chắc chắn muốn xóa cơ sở y tế này không?')) {
+                    $('#deleteFacilityForm').submit();
+                }
+            });
+
+            // Add Service Form Submission
+            $('#addServiceButton').click(function() {
+                $('#addServiceForm').submit();
+            });
+
+            // Edit Service Form Submission
+            $('#saveServiceChanges').click(function() {
+                $('#editServiceForm').submit();
+            });
+
+            // Delete Service
+            $('#deleteService').click(function() {
+                if (confirm('Bạn có chắc chắn muốn xóa dịch vụ này không?')) {
+                    $('#deleteServiceId').val($('#editServiceId').val());
+                    $('#deleteServiceForm').submit();
+                }
+            });
+
+            // Service Card Click Handler (for editing)
+            $('.service-card').click(function() {
+                const serviceId = $(this).data('service-id');
+                const serviceName = $(this).data('service-name');
+                const servicePrice = $(this).data('service-price');
+                const serviceDescription = $(this).data('service-description');
+
+                // Fill in the edit form
+                $('#editServiceId').val(serviceId);
+                $('#editServiceName').val(serviceName);
+                $('#editServicePrice').val(servicePrice);
+                $('#editServiceDescription').val(serviceDescription);
+
+                // Open the modal
+                new bootstrap.Modal(document.getElementById('editServiceModal')).show();
+            });
         });
+
+        // Function to load reviews
+        function loadReviews() {
+            const facilityId = @Model.FacilityId;
+            const ratingFilter = $('input[name="ratingFilter"]:checked').attr('id');
+
+            // Add rating filter event listeners
+            $('input[name="ratingFilter"]').change(loadReviews);
+
+            // Fetch reviews based on facility ID and filters
+            fetch(`/api/reviews?facilityId=${facilityId}&filter=${ratingFilter}`)
+                .then(response => response.json())
+                .then(reviews => {
+                    const container = $('#reviewsContainer');
+                    container.empty();
+
+                    if (reviews.length === 0) {
+                        container.html('<p class="text-center my-4">Chưa có đánh giá nào.</p>');
+                        return;
+                    }
+
+                    reviews.forEach(review => {
+                        const reviewElement = $(`
+                            <div class="review-card">
+                                <div class="review-header">
+                                    <div>
+                                        <h5 class="mb-0">${review.userName}</h5>
+                                        <small class="text-muted">${new Date(review.date).toLocaleDateString()}</small>
+                                    </div>
+                                    <div class="star-rating">
+                                        ${generateStarRating(review.rating)}
+                                    </div>
+                                </div>
+                                <p class="review-content">${review.content}</p>
+                            </div>
+                        `);
+                        container.append(reviewElement);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading reviews:', error);
+                    $('#reviewsContainer').html('<p class="text-center text-danger my-4">Lỗi khi tải đánh giá. Vui lòng thử lại sau.</p>');
+                });
+        }
+
+        // Helper function to generate star rating HTML
+        function generateStarRating(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= rating) {
+                    stars += '<i class="fas fa-star text-warning"></i>';
+                } else {
+                    stars += '<i class="far fa-star text-warning"></i>';
+                }
+            }
+            return stars;
+        }
     </script>
 }
+
 
 @* @page "{FacilityId:int}"
 @model FindingHealthcareSystem.Pages.Facility.DetailModel

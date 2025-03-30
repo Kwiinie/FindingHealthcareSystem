@@ -37,11 +37,10 @@ namespace FindingHealthcareSystem.Pages.Auth
 
                     var accountJson = JsonConvert.SerializeObject(result.Data);
                     HttpContext.Session.SetString("User", accountJson);
-
-                    if (result.Data.Role == Role.Admin.ToString())
-                    {
-                        return RedirectToPage("/Admin/Dashboard");
-                    }
+                    //if (result.Data.Role == Role.Admin.ToString())
+                    //{
+                    //    return RedirectToPage("/Admin/Dashboard");
+                    //}
                     return Redirect("/");
                 }
                 else
