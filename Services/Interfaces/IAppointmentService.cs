@@ -16,7 +16,11 @@ namespace Services.Interfaces
     public interface IAppointmentService
     {
         Task<Result<AppointmentDTO>> AddAsync(CreateAppointmentDto entity);
+        Task<bool> ChangeAppointmentStatus(int id, AppointmentStatus rejected);
+        Task<int> CountAppointmentByStatus(int id, string v);
+        Task<List<AppointmentDTO>> GetAllAppoinmentByDate(int id, DateTime monday, DateTime dateTime);
         Task<List<AppointmentDTO>> GetAllAsync();
         Task<List<AppointmentDTO>> GetAppointmentsByProviderAndDate(int providerId, string providerType, DateTime date);
+
     }
 }

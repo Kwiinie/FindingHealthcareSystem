@@ -12,8 +12,13 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessObjects.Migrations
 {
     [DbContext(typeof(FindingHealthcareSystemContext))]
+<<<<<<<< HEAD:DataAccessObjects/Migrations/20250330085910_newDB.Designer.cs
     [Migration("20250330085910_newDB")]
     partial class newDB
+========
+    [Migration("20250324005316_dbnew")]
+    partial class dbnew
+>>>>>>>> doctor:DataAccessObjects/Migrations/20250324005316_dbnew.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

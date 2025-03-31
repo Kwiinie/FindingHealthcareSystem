@@ -1,4 +1,5 @@
 ﻿using BusinessObjects.Dtos.User;
+using BusinessObjects.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,22 +10,17 @@ namespace BusinessObjects.DTOs
 {
     public class PatientDTO
     {
-        public int Id { get; set; }
-        public string Note { get; set; }
-        public GeneralUserDto User { get; set; }
 
-        public int Age
-        {
-            get
-            {
-                DateTime today = DateTime.Now;
-                int age = today.Year - User.Birthday.Year;
-                if (User.Birthday.Year > today.Year)
-                {
-                    age--;
-                }
-                return age;
-            }
-        }
+        public int UserId { get; set; }
+
+        public string Note { get; set; }
+
+        //public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
+
+        //public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
+
+        public GeneralUserDto? User { get; set; }
+
+
     }
 }

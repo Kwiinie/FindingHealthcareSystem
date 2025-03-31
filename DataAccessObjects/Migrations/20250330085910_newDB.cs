@@ -8,7 +8,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DataAccessObjects.Migrations
 {
     /// <inheritdoc />
+<<<<<<<< HEAD:DataAccessObjects/Migrations/20250330085910_newDB.cs
     public partial class newDB : Migration
+========
+    public partial class dbnew : Migration
+>>>>>>>> doctor:DataAccessObjects/Migrations/20250324005316_dbnew.cs
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

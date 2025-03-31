@@ -64,7 +64,6 @@ namespace FindingHealthcareSystem
             services.AddScoped<IPublicServiceLayer, PublicServiceLayer>();
             services.AddScoped<IAppointmentService, AppointmentService>();
 
-
             return services;
         }
     }
