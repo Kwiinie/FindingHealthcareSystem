@@ -34,7 +34,21 @@ namespace DataAccessObjects.DAOs
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            return await _dbSet.ToListAsync();
+            if (_dbSet == null)
+            {
+                return Enumerable.Empty<T>(); // Trả về danh sách rỗng thay vì null
+            }
+
+            try
+            {
+                return await _dbSet.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                // Log lỗi nếu cần
+                Console.WriteLine($"Lỗi khi lấy danh sách: {ex.Message}");
+                return Enumerable.Empty<T>(); // Trả về danh sách rỗng khi có lỗi
+            }
         }
 
         public async Task<T> FindAsync(Expression<Func<T, bool>> predicate)

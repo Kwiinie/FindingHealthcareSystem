@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessObjects.Migrations
 {
     [DbContext(typeof(FindingHealthcareSystemContext))]
-    [Migration("20250322192447_ConfigAppointment")]
-    partial class ConfigAppointment
+    [Migration("20250330085910_newDB")]
+    partial class newDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

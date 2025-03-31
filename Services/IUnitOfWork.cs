@@ -1,4 +1,5 @@
-﻿using Repositories.Interfaces;
+﻿using BusinessObjects.Entities;
+using Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,10 @@ namespace Services
     public interface IUnitOfWork : IDisposable
     {
         IGenericRepository<T> GetRepository<T>() where T : class;
+        IGenericRepository<Article> ArticleRepository { get; }
+
+        IGenericRepository<ArticleImage> ArticleImageRepository { get; } 
+        IGenericRepository<Category> CategoryRepository { get; }
 
         IFacilityRepository FacilityRepository { get; }
         IProfessionalRepository ProfessionalRepository { get; }

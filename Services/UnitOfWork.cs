@@ -20,11 +20,19 @@ namespace Services
         private readonly IProfessionalRepository _professionalRepository;
         private readonly IAppointmentRepository _appointmentRepository;
 
+        public IGenericRepository<ArticleImage> ArticleImageRepository { get; set; }
+        public IGenericRepository<Article> ArticleRepository { get; }
+        public IGenericRepository<Category> CategoryRepository { get; }
+
+
         public UnitOfWork(FindingHealthcareSystemContext context, IFacilityRepository facilityRepository, 
                             IProfessionalRepository professionalRepository, IAppointmentRepository appointmentRepository)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
             _repositories = new Dictionary<Type, object>();
+            ArticleRepository = GetRepository<Article>();
+            CategoryRepository = GetRepository<Category>();
+            ArticleImageRepository = GetRepository<ArticleImage>();
             _facilityRepository = facilityRepository;
             _professionalRepository = professionalRepository;
             _appointmentRepository = appointmentRepository;
