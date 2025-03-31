@@ -163,9 +163,12 @@
                                     }
                                 </li>
                                 <li>
-                                    <form method="post" asp-page-handler="Logout" id="logoutForm">
-                                        <button type="submit" class="dropdown-item"><i class="bi bi-box-arrow-right me-2"></i>Đăng xuất</button>
+                                    <form method="post" asp-page="/Auth/Logout" asp-page-handler="Logout" id="logoutForm">
+                                        <button type="submit" class="dropdown-item">
+                                            <i class="bi bi-box-arrow-right me-2"></i>Đăng xuất
+                                        </button>
                                     </form>
+
                                 </li>
                             </ul>
                         </li>
