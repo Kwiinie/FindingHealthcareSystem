@@ -10,6 +10,7 @@ using DataAccessObjects.Interfaces;
 using DataAccessObjects.DAOs;
 using Services;
 using BusinessObjects.Entities;
+using Services.Helpers;
 
 namespace FindingHealthcareSystem
 {
@@ -54,6 +55,9 @@ namespace FindingHealthcareSystem
             services.AddScoped<IProfessionalService, ProfessionalService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAppointmentService, AppointmentService>();
+            services.AddScoped<IPaymentService, PaymentService>();
+            services.AddSingleton<VNPayHelper>();
+
 
 
             return services;

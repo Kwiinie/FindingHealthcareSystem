@@ -55,6 +55,8 @@
         <input type="hidden" name="ProviderType" value="@providerType" />
         <input type="hidden" id="SelectedTimeSlot" name="SelectedTimeSlot" value="" />
         <input type="hidden" id="selectedServiceId" name="SelectedServiceId" value="" />
+        <input type="hidden" id="SelectedServicePrice" name="SelectedServicePrice" value="" />
+
         <div class="row">
             <div class="col-7 mb-4">
                 <!-- Time Slots Column -->
@@ -194,6 +196,7 @@
                             <div>
                                 <div class="summary-label">Tổng tiền</div>
                                 <div class="price" id="servicePriceDisplay">Chưa chọn</div>
+                                <small class="text-muted">Thanh toán 50% phí dịch vụ để giữ chỗ</small>
                             </div>
                         </div>
 
@@ -237,9 +240,11 @@
 
         if (selectedService) {
             document.getElementById('selectedServiceDisplay').innerText = `${selectedService.name}`;
-            document.getElementById('servicePriceDisplay').innerText = selectedService.price?.toLocaleString();
-
+            const depositAmount = selectedService.price * 0.5;
+            document.getElementById('servicePriceDisplay').innerText = depositAmount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
             document.getElementById('selectedServiceId').value = serviceId;
+            document.getElementById('SelectedServicePrice').value = depositAmount;
+
         }
 
         validateForm();

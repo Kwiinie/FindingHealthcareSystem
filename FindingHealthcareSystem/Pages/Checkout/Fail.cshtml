@@ -1,4 +1,46 @@
-﻿@page
+﻿@page "/checkout/fail"
 @model FindingHealthcareSystem.Pages.Checkout.FailModel
 @{
 }
+<link rel="stylesheet" href="~/css/Checkout.css"></link>
+<div class="container">
+    <div class="failure-container">
+        <span class="badge-payment">Thanh toán thất bại</span>
+
+        <div class="failure-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </div>
+
+        <h1 class="failure-title">Đặt lịch không thành công</h1>
+        <p class="failure-message">
+            Rất tiếc, giao dịch của bạn không thể hoàn tất do gặp sự cố. Vui lòng kiểm tra thông tin và thử lại.
+        </p>
+
+        <div class="error-details">
+            <div class="error-code">Mã lỗi: PAYMENT-3542</div>
+            <div class="error-message">Giao dịch bị từ chối bởi ngân hàng phát hành thẻ.</div>
+        </div>
+
+        <div class="possible-solutions">
+            <h3 class="solutions-title">Giải pháp có thể thử:</h3>
+            <ul class="solutions-list">
+                <li>Kiểm tra thông tin thẻ (số thẻ, ngày hết hạn, mã CVV)</li>
+                <li>Đảm bảo thẻ của bạn còn hiệu lực và có đủ số dư</li>
+                <li>Thử phương thức thanh toán khác</li>
+                <li>Liên hệ ngân hàng để kiểm tra trạng thái thẻ của bạn</li>
+            </ul>
+        </div>
+
+        <div class="btn-group">
+            <a href="checkout.html" class="btn btn-primary">Thử lại</a>
+            <a href="payment-methods.html" class="btn btn-outline-primary ms-2">Đổi phương thức thanh toán</a>
+        </div>
+
+        <p class="contact-support">
+            Cần trợ giúp? <a href="contact.html">Liên hệ hỗ trợ</a> hoặc gọi <a href="tel:+842839432111">028 3943 2111</a>
+        </p>
+    </div>
+</div>

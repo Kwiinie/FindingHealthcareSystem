@@ -37,7 +37,7 @@ namespace Services.Services
             {
                 var patientRepo = _unitOfWork.GetRepository<Patient>();
 
-                var patient = await patientRepo.GetByIdAsync(entity.PatientId);
+                var patient = await patientRepo.FindAsync(p => p.UserId == entity.PatientId);
                 if (patient == null)
                 {
                     return Result<AppointmentDTO>.ErrorResult("Invalid Patient ID.");
@@ -69,6 +69,7 @@ namespace Services.Services
                 }
 
                 entity.Status = AppointmentStatus.AwaitingPayment;
+                entity.PatientId = patient.Id;
                 var appointmentEntity = _mapper.Map<Appointment>(entity);
                 appointmentEntity.Patient = patient;
 
