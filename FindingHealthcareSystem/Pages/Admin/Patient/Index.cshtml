@@ -6,7 +6,7 @@
 <div class="container mt-10">
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="mb-0">Quản Lý Bệnh Nhân</h2>
+            <h2>Quản Lý Bệnh Nhân</h2>
         </div>
 
         <div class="card mb-4">
@@ -19,12 +19,9 @@
                         </div>
                     </div>
                     <div class="col-md-8 d-flex justify-content-md-end mt-3 mt-md-0">
-                        <div class="btn-group me-2">
-                            <button type="button" class="btn btn-outline-secondary">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
                                 <i class="fas fa-filter me-2"></i>Lọc
-                            </button>
-                            <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="visually-hidden">Toggle Dropdown</span>
                             </button>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">Trạng thái</a></li>
@@ -35,123 +32,62 @@
                     </div>
                 </div>
 
-                <div class="table-container">
-                    <table class="table">
-                        <thead>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Avatar</th>
+                            <th>Họ tên</th>
+                            <th>Số điện thoại</th>
+                            <th>Email</th>
+                            <th>Giới tính</th>
+                            <th>Ngày sinh</th>
+                            <th>Trạng thái</th>
+                            <th>Ghi chú</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var patient in Model.Patients)
+                        {
                             <tr>
-                                <th style="width: 5%">ID</th>
-                                <th style="width: 5%">Avatar</th>
-                                <th style="width: 13%">Họ tên</th>
-                                <th style="width: 10%">Số điện thoại</th>
-                                <th style="width: 15%">Email</th>
-                                <th style="width: 5%">Giới tính</th>
-                                <th style="width: 10%">Ngày sinh</th>
-                                <th style="width: 17%">Trạng thái</th>
-                                <th style="width: 10%">Ghi chú</th>
-                                <th style="width: 10%"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>BN001</td>
-                                <td><img src="/img/defaultAvatar.jpg" alt="Avatar" class="avatar"></td>
-                                <td>Nguyễn Văn A</td>
-                                <td>0901234567</td>
-                                <td>nguyenvana@email.com</td>
-                                <td>Nam</td>
-                                <td>10/05/1985</td>
-                                <td><span class="patient-status status-active">Hoạt động</span></td>
-                                <td>Bệnh nhân tim mạch</td>
+                                <td>@patient.Id</td>
+                                <td>
+                                    <img src="@patient.User.ImgUrl" alt="Avatar" class="avatar" style="width: 50px; height: 50px; border-radius: 50%;">
+                                </td>
+                                <td>@patient.User.Fullname</td>
+                                <td>@patient.User.PhoneNumber</td>
+                                <td>@patient.User.Email</td>
+                                <td>@patient.User.Gender</td>
+                                <td>@patient.User.Birthday.ToString("dd/MM/yyyy")</td>
+                                <td>
+                                    <span class="patient-status @(patient.User.Status == "Active" ? "status-active" : "status-inactive")">
+                                        @(patient.User.Status == "Active" ? "Hoạt động" : "Không hoạt động")
+                                    </span>
+                                </td>
+                                <td>@patient.Note</td>
                                 <td>
                                     <button type="submit" class="btn btn-danger btn-sm">
                                         <i class="bi bi-slash-circle"></i> Chặn
                                     </button>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>BN002</td>
-                                <td><img src="/img/defaultAvatar.jpg" alt="Avatar" class="avatar"></td>
-                                <td>Trần Thị B</td>
-                                <td>0912345678</td>
-                                <td>tranthib@email.com</td>
-                                <td>Nữ</td>
-                                <td>22/11/1990</td>
-                                <td><span class="patient-status status-active">Hoạt động</span></td>
-                                <td>Khám định kỳ</td>
-                                <td>
-                                    <button type="submit" class="btn btn-danger btn-sm">
-                                        <i class="bi bi-slash-circle"></i> Chặn
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>BN003</td>
-                                <td><img src="/img/defaultAvatar.jpg" alt="Avatar" class="avatar"></td>
-                                <td>Lê Văn C</td>
-                                <td>0923456789</td>
-                                <td>levanc@email.com</td>
-                                <td>Nam</td>
-                                <td>04/07/1978</td>
-                                <td><span class="patient-status status-inactive">Không hoạt động</span></td>
-                                <td>Bệnh nhân tiểu đường</td>
-                                <td>
-                                    <button type="submit" class="btn btn-danger btn-sm">
-                                        <i class="bi bi-slash-circle"></i> Chặn
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>BN004</td>
-                                <td><img src="/img/defaultAvatar.jpg" alt="Avatar" class="avatar"></td>
-                                <td>Phạm Thị D</td>
-                                <td>0934567890</td>
-                                <td>phamthid@email.com</td>
-                                <td>Nữ</td>
-                                <td>15/03/1995</td>
-                                <td><span class="patient-status status-active">Hoạt động</span></td>
-                                <td>Khám tổng quát</td>
-                                <td>
-                                    <button type="submit" class="btn btn-danger btn-sm">
-                                        <i class="bi bi-slash-circle"></i> Chặn
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>BN005</td>
-                                <td><img src="/img/defaultAvatar.jpg" alt="Avatar" class="avatar"></td>
-                                <td>Hoàng Văn E</td>
-                                <td>0945678901</td>
-                                <td>hoangvane@email.com</td>
-                                <td>Nam</td>
-                                <td>20/08/1987</td>
-                                <td><span class="patient-status status-active">Hoạt động</span></td>
-                                <td>Theo dõi huyết áp</td>
-                                <td>
-                                    <button type="submit" class="btn btn-danger btn-sm">
-                                        <i class="bi bi-slash-circle"></i> Chặn
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                        }
+                    </tbody>
+                </table>
 
                 <div class="d-flex justify-content-between align-items-center mt-4">
-                    <div>Hiển thị 1-5 của 48 bệnh nhân</div>
-                    <nav aria-label="Page navigation">
+                    <div>Hiển thị từ @Model.Patients.Count() bệnh nhân</div>
+                    <nav>
                         <ul class="pagination">
                             <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
+                                <a class="page-link" href="#">&laquo;</a>
                             </li>
                             <li class="page-item active"><a class="page-link" href="#">1</a></li>
                             <li class="page-item"><a class="page-link" href="#">2</a></li>
                             <li class="page-item"><a class="page-link" href="#">3</a></li>
                             <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
+                                <a class="page-link" href="#">&raquo;</a>
                             </li>
                         </ul>
                     </nav>
@@ -160,3 +96,5 @@
         </div>
     </div>
 </div>
+
+

@@ -1,5 +1,6 @@
 ﻿using BusinessObjects.Commons;
 using BusinessObjects.Dtos.User;
+using BusinessObjects.DTOs;
 using BusinessObjects.DTOs.User;
 using BusinessObjects.Entities;
 using System;
@@ -38,6 +39,7 @@ namespace Services.Interfaces
         Task UpdateProfessionalAsync(Professional professional);
         Task UpdatePatientAsync(Patient patient);
         Task<Patient> GetPatientById(int userId);
+        Task<IEnumerable<PatientDTO>> GetAllPatientAsync();
 
 
     }

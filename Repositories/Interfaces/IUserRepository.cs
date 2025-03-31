@@ -33,6 +33,7 @@ namespace Repositories.Interfaces
         Task UpdateProfessionalAsync(Professional professional);
         Task UpdatePatientAsync(Patient patient);
         Task<IEnumerable<Professional>> FindAllWithProfessionalAsync(Expression<Func<Professional, bool>> predicate);
+        Task<IEnumerable<Patient>> FindAllWithPatientAsync();
 
     }
 }

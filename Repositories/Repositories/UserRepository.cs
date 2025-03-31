@@ -234,14 +234,6 @@ public async Task<User?> GetByIdAsync(int id)
                 .FirstOrDefaultAsync(p => p.UserId == userId);
         }
 
-        public async Task<Patient> GetByPatientId(int userId)
-        {
-            return await _context.Patients
-                .Include(p => p.User)
-                
-                .FirstOrDefaultAsync(p => p.UserId == userId);
-        }
-
         public async Task<Patient> GetPatientById(int userId)
         {
             return await _context.Patients
@@ -258,6 +250,13 @@ public async Task<User?> GetByIdAsync(int id)
                 .Include(p => p.ProfessionalSpecialties)
                 .ThenInclude(ps => ps.Specialty)
                 .Where(predicate)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Patient>> FindAllWithPatientAsync()
+        {
+            return await _context.Patients
+                           .Include(p => p.User)
                 .ToListAsync();
         }
     }

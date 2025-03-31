@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BusinessObjects.Commons;
 using BusinessObjects.Dtos.User;
+using BusinessObjects.DTOs;
 using BusinessObjects.DTOs.Professional;
 using BusinessObjects.Entities;
 using BusinessObjects.Enums;
@@ -85,9 +86,7 @@ namespace Services.Services
                 return new List<ProfessionalDto>();
             }
             return _mapper.Map<IEnumerable<ProfessionalDto>>(professionals);
-        }
-
-
+        }       
 
     }
 }
