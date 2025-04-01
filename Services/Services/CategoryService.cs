@@ -2,6 +2,7 @@
 using BusinessObjects.DTOs.Article;
 using BusinessObjects.DTOs.Category;
 using BusinessObjects.Entities;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -51,9 +52,14 @@ namespace Services.Services
             }
         }
 
-        public Task<CategoryDTO> GetCategoryByIdAsync(int id)
+        public async Task<CategoryDTO> GetCategoryByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var result = await _unitOfWork.CategoryRepository.GetByIdAsync(id);
+            if(result == null)
+            {
+                return null;
+            }
+            return _mapper.Map<CategoryDTO>(result);
         }
 
         public async Task UpdateCategoryAsync(CategoryDTO categoryDTO)
