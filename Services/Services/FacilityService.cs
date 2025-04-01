@@ -62,11 +62,13 @@ namespace Services.Services
             //validation
 
             //set value and save for Facility
-            facilityDto.Status = FacilityStatus.Inactive;
+       //     facilityDto.Status = FacilityStatus.Inactive;
             var facRepo = _unitOfWork.GetRepository<Facility>();
             var facility = _mapper.Map<Facility>(facilityDto);
+
             facility.CreatedAt = DateTime.UtcNow.AddHours(7);
             facility.IsDeleted = false;
+            facility.TypeId = facilityDto.TypeId;
             await facRepo.AddAsync(facility);
             await _unitOfWork.SaveChangesAsync();
 
@@ -78,6 +80,7 @@ namespace Services.Services
                 var facilityDepartments = facilityDto.DepartmentIds.Select(deptId => new FacilityDepartment
                 {
                     FacilityId = facility.Id,
+                    
                     DepartmentId = deptId,
                     CreatedAt = DateTime.UtcNow.AddHours(7),
                     IsDeleted = false
@@ -119,6 +122,7 @@ namespace Services.Services
             {
                 facility.IsDeleted = true;
             }
+
             facRepo.Update(facility);
 
           

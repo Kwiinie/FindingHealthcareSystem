@@ -1,4 +1,5 @@
 ﻿using BusinessObjects.DTOs.Professional;
+using BusinessObjects.DTOs.Service;
 using BusinessObjects.Entities;
 using FindingHealthcareSystem.Helpers;
 using Microsoft.AspNetCore.Mvc;
@@ -27,9 +28,22 @@ namespace FindingHealthcareSystem.Pages.Professional
         public ProfessionalDto professional { get; set; }
         [BindProperty(SupportsGet = true)]
         public int Id { get; set; }
+
+        [BindProperty]
+        public List<ServiceDto> Services { get; set; }
+        [BindProperty]
+        public ServiceDto Service { get; set; }
+
+
+        [BindProperty(SupportsGet = true)]
+        public int FacilityId { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int ServiceId { get; set; }
         public async Task<IActionResult> OnGet()
         {
             var userJson = HttpContext.Session.GetString("User");
+
             if (string.IsNullOrEmpty(userJson))
             {
                 return RedirectToPage("/Login"); // Chưa đăng nhập -> Quay về Login
@@ -38,6 +52,9 @@ namespace FindingHealthcareSystem.Pages.Professional
             // Chỉ lấy ID từ JSON
             var userObject = JsonConvert.DeserializeObject<dynamic>(userJson);
             int userId = userObject.Id; // Lấy UserId từ Session
+            FacilityId = userId;
+
+
 
             // Truy vấn thông tin User từ Database
             var user = await _userService.GetUserByIdNew(userId);
@@ -52,6 +69,10 @@ namespace FindingHealthcareSystem.Pages.Professional
             {
                 return RedirectToPage("/Login"); // Nếu Professional không tồn tại, quay về Login
             }
+          
+            var professional = await _userService.GetProfessionalById(userId);
+            if (professional == null) return NotFound();
+            Services = await _professionalService.GetServicesByProId(professional.Id) ?? new List<ServiceDto>();
 
             // Khởi tạo UpdatedUser với thông tin từ cả hai bảng
             UpdatedUser = new BusinessObjects.Entities.Professional
@@ -130,6 +151,68 @@ namespace FindingHealthcareSystem.Pages.Professional
                 return Page();
             }
            
+        }
+
+        public async Task<IActionResult> OnPostAddService()
+        {
+            var userJson = HttpContext.Session.GetString("User");
+            if (string.IsNullOrEmpty(userJson))
+            {
+                return Unauthorized();
+            }
+            var userObject = JsonConvert.DeserializeObject<dynamic>(userJson);
+            int userId = userObject.Id;
+            var professional = await _userService.GetProfessionalById(userId);
+            if (professional == null) return NotFound();
+            var Name = Service.Name;
+            var Price = Service.Price;
+            var Description = Service.Description;
+
+            await _professionalService.Create(professional.Id, Service);
+
+            return RedirectToPage("/Professional/Detail", new { FacilityId });
+        }
+
+        // Cập nhật dịch vụ
+        public async Task<IActionResult> OnPostEditServiceAsync()
+        {
+
+
+            var existingService = await _professionalService.GetPrivateServiceById(ServiceId);
+            if (existingService == null)
+            {
+                return NotFound();
+            }
+            var userJson = HttpContext.Session.GetString("User");
+            if (string.IsNullOrEmpty(userJson))
+            {
+                return Unauthorized();
+            }
+            var userObject = JsonConvert.DeserializeObject<dynamic>(userJson);
+            int userId = userObject.Id;
+            var professional = await _userService.GetProfessionalById(userId);
+            if (professional == null) return NotFound();
+
+            existingService.Name = Service.Name;
+            existingService.Price = Service.Price;
+            existingService.Description = Service.Description;
+
+            await _professionalService.Update(professional.Id, ServiceId, existingService);
+            return RedirectToPage(); // Hoặc thay bằng trang bạn muốn quay về
+        }
+
+        // Xóa dịch vụ
+        public async Task<IActionResult> OnPostDeleteServiceAsync()
+        {
+            var existingService = await _professionalService.GetPrivateServiceById(ServiceId);
+            if (existingService == null)
+            {
+                return NotFound();
+            }
+
+            await _professionalService.Delete(ServiceId);
+
+            return RedirectToPage(); // Hoặc thay bằng trang bạn muốn quay về
         }
     }
 }

@@ -28,7 +28,7 @@ namespace DataAccessObjects.DAOs
                .Include(f => f.PrivateServices)
                .Include(f => f.ProfessionalSpecialties)
                .ThenInclude(f => f.Specialty)
-               .FirstOrDefaultAsync(f => f.Id == id);
+               .FirstOrDefaultAsync(f => f.UserId == id);
         }
 
         public async Task<PaginatedList<Professional>> GetAllProfessionalsPagedAsync(
