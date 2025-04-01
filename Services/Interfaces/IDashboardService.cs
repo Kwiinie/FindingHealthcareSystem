@@ -15,6 +15,8 @@ namespace Services.Interfaces
         Task<int> CountPaymentsAsync();
         Task<List<AppointmentStatusDistributionDto>> GetAppointmentStatusDistributionAsync();
         Task<List<MonthlyPaymentDto>> GetMonthlyPaymentStatsAsync();
-
+        Task<List<MonthlyAppointmentDto>> GetMonthlyAppointmentStatsAsync();
+        Task<List<PaymentByProviderTypeDto>> GetPaymentByProviderTypeAsync();
+        Task<List<ProvinceDistributionDto>> GetHealthcareDistributionByProvinceAsync();
     }
 }

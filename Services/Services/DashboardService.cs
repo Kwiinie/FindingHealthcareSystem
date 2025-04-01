@@ -77,9 +77,88 @@ namespace Services.Services
                 .Select(g => new MonthlyPaymentDto
                 {
                     Month = g.Key.Month,
-                    Total = g.Sum(p => p.Price.Value) / 1_000m // Convert to million VND
+                    Total = g.Sum(p => p.Price.Value) 
                 })
                 .ToList();
+
+            return result;
+        }
+
+        public async Task<List<MonthlyAppointmentDto>> GetMonthlyAppointmentStatsAsync()
+        {
+            var appointments = await _unitOfWork.AppointmentRepository.GetAllAsync();
+
+            var result = appointments
+                .Where(a => a.Date.HasValue &&
+                      (a.Status == AppointmentStatus.Confirmed || a.Status == AppointmentStatus.Completed))
+                .GroupBy(a => a.Date.Value.Month)
+                .OrderBy(g => g.Key)
+                .Select(g => new MonthlyAppointmentDto
+                {
+                    Month = g.Key,
+                    Count = g.Count()
+                })
+                .ToList();
+
+            return result;
+        }
+
+        public async Task<List<PaymentByProviderTypeDto>> GetPaymentByProviderTypeAsync()
+        {
+            var appointments = await _unitOfWork.AppointmentRepository
+        .FindAllAsync(a => a.Payment != null &&
+                           a.Payment.PaymentStatus == PaymentStatus.Completed);
+
+            var result = appointments
+                .GroupBy(a => a.ProviderType)
+                .Select(g => new PaymentByProviderTypeDto
+                {
+                    Label = g.Key switch
+                    {
+                        ProviderType.Facility => "Cơ sở y tế",
+                        ProviderType.Professional => "Chuyên gia y tế",
+                        _ => "Khác"
+                    },
+                    Total = g.Sum(a => a.Payment.Price.Value)
+                })
+                .ToList();
+
+            return result;
+        }
+
+        public async Task<List<ProvinceDistributionDto>> GetHealthcareDistributionByProvinceAsync()
+        {
+            var facilities = await _unitOfWork.GetRepository<Facility>().GetAllAsync();
+            var professionals = await _unitOfWork.GetRepository<Professional>().GetAllAsync();
+
+            // Normalize: remove "Tỉnh"/"Thành phố", trim + ToLowerInvariant
+            string Normalize(string provinceName)
+            {
+                return provinceName
+                    .Replace("Tỉnh", "", StringComparison.OrdinalIgnoreCase)
+                    .Replace("Thành phố", "", StringComparison.OrdinalIgnoreCase)
+                    .Trim()
+                    .ToLowerInvariant();
+            }
+
+            var facilityGroup = facilities
+                .GroupBy(f => Normalize(f.Province))
+                .ToDictionary(g => g.Key, g => g.Count());
+
+            var professionalGroup = professionals
+                .GroupBy(p => Normalize(p.Province))
+                .ToDictionary(g => g.Key, g => g.Count());
+
+            var allProvinces = facilityGroup.Keys
+                .Union(professionalGroup.Keys)
+                .Distinct();
+
+            var result = allProvinces.Select(provinceKey => new ProvinceDistributionDto
+            {
+                Province = provinceKey,
+                FacilityCount = facilityGroup.ContainsKey(provinceKey) ? facilityGroup[provinceKey] : 0,
+                ProfessionalCount = professionalGroup.ContainsKey(provinceKey) ? professionalGroup[provinceKey] : 0
+            }).ToList();
 
             return result;
         }

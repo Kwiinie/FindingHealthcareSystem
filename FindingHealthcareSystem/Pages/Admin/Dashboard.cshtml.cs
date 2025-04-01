@@ -15,6 +15,11 @@ namespace FindingHealthcareSystem.Pages.Admin
         public int TotalPayments { get; set; }
         public string AppointmentStatusChartJson { get; set; } = "[]";//PIE CHART
         public string MonthlyPaymentChartJson { get; set; } = "[]"; //BAR CHART
+        public string MonthlyAppointmentChartJson { get; set; } = "[]"; //LINE CHART
+        public string RevenueByProviderChartJson { get; set; } = "[]"; //DOUGHNUT CHART
+        public string ProvinceDistributionJson { get; set; } //MAP
+
+
 
 
 
@@ -42,6 +47,26 @@ namespace FindingHealthcareSystem.Pages.Admin
             //BAR CHART
             var monthlyPayments = await _dashboardService.GetMonthlyPaymentStatsAsync();
             MonthlyPaymentChartJson = JsonSerializer.Serialize(monthlyPayments, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
+
+            //LINE CHART
+            var monthlyAppointments = await _dashboardService.GetMonthlyAppointmentStatsAsync();
+            MonthlyAppointmentChartJson = JsonSerializer.Serialize(monthlyAppointments, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
+
+            //DOUGHNUT CHART
+            var byProviderType = await _dashboardService.GetPaymentByProviderTypeAsync();
+            RevenueByProviderChartJson = JsonSerializer.Serialize(byProviderType, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
+
+            var provinceDistribution = await _dashboardService.GetHealthcareDistributionByProvinceAsync();
+            ProvinceDistributionJson = JsonSerializer.Serialize(provinceDistribution, new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });

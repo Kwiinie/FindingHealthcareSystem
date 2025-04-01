@@ -77,7 +77,7 @@
             <!-- Pie Chart -->
             <div class="col-lg-6">
                 <div class="dashboard-card">
-                    <h5 class="card-title mb-3">Phân bố trạng thái lịch khám</h5>
+                    <h5 class="card-title mb-3">Phân Bố Trạng Thái Lịch Khám</h5>
                     <div class="chart-container">
                         <canvas id="pieChart"></canvas>
                     </div>
@@ -108,7 +108,7 @@
             <!-- Payment by Service Type -->
             <div class="col-lg-6">
                 <div class="dashboard-card">
-                    <h5 class="card-title mb-3">Tổng Thanh Toán Theo Loại Dịch Vụ</h5>
+                    <h5 class="card-title mb-3">Tổng Doanh Thu Theo Cơ Sở/Chuyên Gia Y Tế</h5>
                     <div class="chart-container">
                         <canvas id="paymentByServiceChart"></canvas>
                     </div>
@@ -134,6 +134,10 @@
 
     const appointmentStatusData = @Html.Raw(Model.AppointmentStatusChartJson);
     const monthlyPaymentData = @Html.Raw(Model.MonthlyPaymentChartJson);
-    console.log("Data: ", monthlyPaymentData)
+    const monthlyAppointmentData = @Html.Raw(Model.MonthlyAppointmentChartJson);
+    const revenueByProviderData = @Html.Raw(Model.RevenueByProviderChartJson);
+
+    const provinceData = @Html.Raw(Model.ProvinceDistributionJson);
+
 
 </script>
