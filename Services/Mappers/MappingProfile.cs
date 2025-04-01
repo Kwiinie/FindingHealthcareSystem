@@ -48,7 +48,7 @@ namespace Services.Mappers
                         ? src.Appointments.First().Id
                         : (int?)null
             ));
-
+            CreateMap<Expertise, ExpertiseDTO>().ReverseMap();
 
 
 
