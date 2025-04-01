@@ -11,7 +11,7 @@ namespace BusinessObjects.DTOs
 {
     public class PatientDTO
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public int UserId { get; set; }
 
         public string Note { get; set; }
@@ -19,6 +19,7 @@ namespace BusinessObjects.DTOs
         [NotMapped]
         public GeneralUserDto? User { get; set; }
 
-
+        public DateTime? CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
     }
 }

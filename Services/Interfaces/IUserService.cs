@@ -1,5 +1,6 @@
 ﻿using BusinessObjects.Commons;
 using BusinessObjects.Dtos.User;
+using BusinessObjects.DTOs;
 using BusinessObjects.DTOs.User;
 using BusinessObjects.Entities;
 using System;
@@ -25,6 +26,8 @@ namespace Services.Interfaces
         Task AddUserAsync(GeneralUserDto userDto);
         Task UpdateUserAsync(GeneralUserDto userDto);
         Task DeleteUserAsync(int id);
+        Task<User> GetUserByIdNew(int userId);
+        Task<Professional> GetProfessionalById(int userId);
 
         Task<List<Specialty>> GetAllSpecialtiesAsync();
         Task<List<FacilityDepartment>> GetAllHospitalsAsync();
@@ -33,6 +36,10 @@ namespace Services.Interfaces
 
         Task RegisterUserAsync(RegisterUserDto userDto);
 
+        Task UpdateProfessionalAsync(Professional professional);
+        Task UpdatePatientAsync(Patient patient);
+        Task<Patient> GetPatientById(int userId);
+        Task<IEnumerable<PatientDTO>> GetAllPatientAsync();
 
 
     }

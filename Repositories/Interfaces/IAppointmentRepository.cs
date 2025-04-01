@@ -17,5 +17,6 @@ namespace Repositories.Interfaces
         Task<int> CountAppointmentByStatus(int id, string status);
         Task<Appointment> GetAppointment(int id);
         IQueryable<Appointment> Query();
+        Task<IEnumerable<Appointment>> GetMyAppointment(int patientId);
     }
 }

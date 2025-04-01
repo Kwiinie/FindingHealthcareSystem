@@ -68,7 +68,7 @@
                         <a class="nav-link" href="/search" id="search-link">Tìm kiếm</a>
                     </li>
                     <li class="nav-card-item">
-                        <a class="nav-link" href="/article" id="article-link">Bài viết</a>
+                        <a class="nav-link" href="/Article/Index" id="article-link">Bài viết</a>
                     </li>
                     @if (currentUser != null && currentUser.Role.Equals("Professional"))
                     {
@@ -169,9 +169,12 @@
                                     }
                                 </li>
                                 <li>
-                                    <form method="post" asp-page-handler="Logout" id="logoutForm">
-                                        <button type="submit" class="dropdown-item"><i class="bi bi-box-arrow-right me-2"></i>Đăng xuất</button>
+                                    <form method="post" asp-page="/Auth/Logout" asp-page-handler="Logout" id="logoutForm">
+                                        <button type="submit" class="dropdown-item">
+                                            <i class="bi bi-box-arrow-right me-2"></i>Đăng xuất
+                                        </button>
                                     </form>
+
                                 </li>
                             </ul>
                         </li>

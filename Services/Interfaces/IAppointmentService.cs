@@ -25,5 +25,7 @@ namespace Services.Interfaces
         Task<AppointmentDTO> GetAsync(int id);
         Task<List<AppointmentDTO>> GetPagenagingAppointments(int pagee, int v);
         Task<List<string>> GetSlotsExistedByDate(DateTime date, List<string> slots);
+        Task<List<MyAppointmentDto>> GetMyAppointment(int userId);
+        Task<MyAppointmentDto?> GetMySpecificAppointment(int appointmentId);
     }
 }

@@ -38,7 +38,7 @@ namespace Services.Services
             {
                 var patientRepo = _unitOfWork.GetRepository<Patient>();
 
-                var patient = await patientRepo.GetByIdAsync(entity.PatientId);
+                var patient = await patientRepo.FindAsync(p => p.UserId == entity.PatientId);
                 if (patient == null)
                 {
                     return Result<AppointmentDTO>.ErrorResult("Invalid Patient ID.");
@@ -70,6 +70,7 @@ namespace Services.Services
                 }
 
                 entity.Status = AppointmentStatus.AwaitingPayment;
+                entity.PatientId = patient.Id;
                 var appointmentEntity = _mapper.Map<Appointment>(entity);
                 appointmentEntity.Patient = patient;
 
@@ -172,5 +173,23 @@ namespace Services.Services
 
             return slotsExisted;
         }
+
+        public async Task<List<MyAppointmentDto>> GetMyAppointment(int userId)
+        {
+            var patientRepo = _unitOfWork.GetRepository<Patient>();
+
+            var patient = await patientRepo.FindAsync(p => p.UserId == userId);
+            var appointments = await _unitOfWork.AppointmentRepository.GetMyAppointment(patient.Id);
+            return _mapper.Map<List<MyAppointmentDto>>(appointments);
+        }
+
+        public async Task<MyAppointmentDto?> GetMySpecificAppointment(int appointmentId)
+        {
+            var appointment = await _unitOfWork.AppointmentRepository
+                .FindAsync(a => a.Id == appointmentId, "Facility,Professional,PrivateService,PublicService,Payment"); 
+
+            return _mapper.Map<MyAppointmentDto>(appointment);
+        }
+
     }
 }

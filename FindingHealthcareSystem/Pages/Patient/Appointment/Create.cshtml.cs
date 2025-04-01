@@ -1,6 +1,7 @@
 ﻿using BusinessObjects.Dtos.User;
 using BusinessObjects.DTOs.Appointment;
 using BusinessObjects.DTOs.Facility;
+using BusinessObjects.DTOs.Payment;
 using BusinessObjects.DTOs.Professional;
 using BusinessObjects.DTOs.Service;
 using BusinessObjects.Entities;
@@ -20,12 +21,14 @@ namespace FindingHealthcareSystem.Pages.Patient.Appointment
         private readonly IProfessionalService _professionalService;
         private readonly IFacilityService _facilityService;
         private readonly IAppointmentService _appointmentService;
+        private readonly IPaymentService _paymentService;
 
-        public CreateModel(IProfessionalService professionalService, IFacilityService facilityService, IAppointmentService appointmentService)
+        public CreateModel(IProfessionalService professionalService, IFacilityService facilityService, IAppointmentService appointmentService, IPaymentService paymentService)
         {
             _facilityService = facilityService;
             _professionalService = professionalService;
             _appointmentService = appointmentService;
+            _paymentService = paymentService;
         }
 
         /// <summary>
@@ -68,10 +71,9 @@ namespace FindingHealthcareSystem.Pages.Patient.Appointment
                 {
                     facility = await _facilityService.GetFacilityById(ProviderId.Value);
                     services = facility?.PublicServices ?? new List<ServiceDto>();
-                    workingHours = "7:00 - 16:00"; // default working hours of facility
+                    workingHours = "7:00 - 16:00"; 
                 }
 
-                // Generate time slots and get booked slots
                 TimeSlots = GenerateTimeSlots(workingHours, this.SelectedDate);
                 var bookedSlots = await GetBookedSlots(ProviderId.Value, ProviderType, this.SelectedDate);
                 ViewData["BookedSlots"] = bookedSlots;
@@ -82,11 +84,17 @@ namespace FindingHealthcareSystem.Pages.Patient.Appointment
 
         public async Task<IActionResult> OnPostAsync()
         {
-            // Get form values
             var providerId = int.Parse(Request.Form["ProviderId"]);
             var providerType = Request.Form["ProviderType"];
             var selectedDateStr = Request.Form["SelectedDate"];
             var selectedTimeSlot = Request.Form["SelectedTimeSlot"];
+            var priceStr = Request.Form["SelectedServicePrice"];
+            if (!decimal.TryParse(priceStr, out var depositAmount))
+            {
+                ModelState.AddModelError(string.Empty, "Giá dịch vụ không hợp lệ.");
+                return Page();
+            }
+
             var currentUserJson = HttpContext.Session.GetString("User");
             GeneralUserDto currentUser = null;
 
@@ -95,7 +103,6 @@ namespace FindingHealthcareSystem.Pages.Patient.Appointment
                 currentUser = JsonConvert.DeserializeObject<GeneralUserDto>(currentUserJson);
             }
 
-            // Parse the selected date
             if (!DateTime.TryParse(selectedDateStr, out DateTime selectedDate))
             {
                 ModelState.AddModelError(string.Empty, "Invalid date selected.");
@@ -112,7 +119,6 @@ namespace FindingHealthcareSystem.Pages.Patient.Appointment
 
             DateTime appointmentDateTime = selectedDate.Date.Add(startTime);
 
-            // Create the appointment DTO
             var createAppointmentDto = new CreateAppointmentDto
             {
                 Date = appointmentDateTime,
@@ -124,9 +130,21 @@ namespace FindingHealthcareSystem.Pages.Patient.Appointment
 
             var result = await _appointmentService.AddAsync(createAppointmentDto);
 
+
+            
+
             if (result.Success)
             {
-                return Redirect("/Checkout");
+
+                var paymentRequest = new PaymentRequestDto
+                {
+                    AppointmentId = result.Data.Id,
+                    Amount = (float)depositAmount
+                };
+
+                string paymentUrl = await _paymentService.CreatePaymentAsync(paymentRequest, HttpContext);
+                return Redirect(paymentUrl);
+
             }
             else
             {

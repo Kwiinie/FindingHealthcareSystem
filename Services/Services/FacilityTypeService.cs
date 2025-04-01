@@ -32,6 +32,18 @@ namespace Services.Services
             return _mapper.Map<List<FacilityTypeDto>>(facilities);
         }
 
+        public async Task<List<FacilityTypeDto>> GetAllActiveFacilityTypes()
+        {
+            var facRepo = _unitOfWork.GetRepository<FacilityType>();
+            var facilities = await facRepo.GetAllAsync();
+            if (facilities == null || !facilities.Any())
+            {
+                return new List<FacilityTypeDto>();
+            }
+            var result = facilities.Where( fac => fac.IsDeleted = true ).ToList();
+            return _mapper.Map<List<FacilityTypeDto>>(result);
+        }
+
         public async Task<FacilityTypeDto> Create (FacilityTypeDto facilityTypeDto)
         {
             if (string.IsNullOrEmpty(facilityTypeDto.Name))

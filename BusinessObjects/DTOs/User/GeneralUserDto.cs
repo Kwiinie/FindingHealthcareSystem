@@ -12,9 +12,10 @@ namespace BusinessObjects.Dtos.User
         public string Fullname { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
+        public string Gender { get; set; }
+
         public string Role { get; set; }
         public string Status { get; set; }
-        public string Gender { get; set; }
         public DateOnly Birthday { get; set; }
         public string ImgUrl { get; set; }
     }
