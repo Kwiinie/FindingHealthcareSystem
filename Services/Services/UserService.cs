@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BusinessObjects.Commons;
 using BusinessObjects.Dtos.User;
+using BusinessObjects.DTOs;
 using BusinessObjects.DTOs.User;
 using BusinessObjects.Entities;
 using BusinessObjects.Enums;
@@ -201,6 +202,16 @@ namespace Services.Services
         public async Task<Patient> GetPatientById(int userId)
         {
             return await _userRepository.GetPatientById(userId);
+        }
+
+        public async Task<IEnumerable<PatientDTO>> GetAllPatientAsync()
+        {
+            var patients = await _unitOfWork.UserRepository.FindAllWithPatientAsync();
+            if (patients == null)
+            {
+                return new List<PatientDTO>();
+            }
+            return _mapper.Map<IEnumerable<PatientDTO>>(patients);
         }
     }
 }

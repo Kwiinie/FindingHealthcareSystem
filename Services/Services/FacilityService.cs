@@ -60,7 +60,6 @@ namespace Services.Services
         public async Task<FacilityDto> Create(FacilityDto facilityDto)
         {
             //validation
-            ValidateFacilityDto(facilityDto);
 
             //set value and save for Facility
             facilityDto.Status = FacilityStatus.Inactive;

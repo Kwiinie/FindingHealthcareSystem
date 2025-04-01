@@ -1,0 +1,100 @@
+﻿@page "/admin/patient"
+@model FindingHealthcareSystem.Pages.Admin.Patient.IndexModel
+@{
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+<div class="container mt-10">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Quản Lý Bệnh Nhân</h2>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <div class="search-container">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" class="form-control" placeholder="Tìm kiếm bệnh nhân...">
+                        </div>
+                    </div>
+                    <div class="col-md-8 d-flex justify-content-md-end mt-3 mt-md-0">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                                <i class="fas fa-filter me-2"></i>Lọc
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Trạng thái</a></li>
+                                <li><a class="dropdown-item" href="#">Giới tính</a></li>
+                                <li><a class="dropdown-item" href="#">Ngày sinh</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Avatar</th>
+                            <th>Họ tên</th>
+                            <th>Số điện thoại</th>
+                            <th>Email</th>
+                            <th>Giới tính</th>
+                            <th>Ngày sinh</th>
+                            <th>Trạng thái</th>
+                            <th>Ghi chú</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var patient in Model.Patients)
+                        {
+                            <tr>
+                                <td>@patient.Id</td>
+                                <td>
+                                    <img src="@patient.User.ImgUrl" alt="Avatar" class="avatar" style="width: 50px; height: 50px; border-radius: 50%;">
+                                </td>
+                                <td>@patient.User.Fullname</td>
+                                <td>@patient.User.PhoneNumber</td>
+                                <td>@patient.User.Email</td>
+                                <td>@patient.User.Gender</td>
+                                <td>@patient.User.Birthday.ToString("dd/MM/yyyy")</td>
+                                <td>
+                                    <span class="patient-status @(patient.User.Status == "Active" ? "status-active" : "status-inactive")">
+                                        @(patient.User.Status == "Active" ? "Hoạt động" : "Không hoạt động")
+                                    </span>
+                                </td>
+                                <td>@patient.Note</td>
+                                <td>
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="bi bi-slash-circle"></i> Chặn
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <div>Hiển thị từ @Model.Patients.Count() bệnh nhân</div>
+                    <nav>
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link" href="#">&laquo;</a>
+                            </li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">&raquo;</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

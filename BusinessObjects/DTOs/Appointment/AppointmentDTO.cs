@@ -20,5 +20,19 @@ namespace BusinessObjects.DTOs.Appointment
         public AppointmentStatus Status { get; set; }
         public int? PaymentId { get; set; }
         public string Description { get; set; }
+
+        public int Age
+        {
+            get
+            {
+                DateTime today = DateTime.Now;
+                int age = today.Year - Patient.User.Birthday.Year;
+                if (Patient.User.Birthday.Year > today.Year)
+                {
+                    age--;
+                }
+                return age;
+            }
+        }
     }
 }

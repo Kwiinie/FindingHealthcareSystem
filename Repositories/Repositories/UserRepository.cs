@@ -7,6 +7,7 @@ using Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -233,20 +234,30 @@ public async Task<User?> GetByIdAsync(int id)
                 .FirstOrDefaultAsync(p => p.UserId == userId);
         }
 
-        public async Task<Patient> GetByPatientId(int userId)
-        {
-            return await _context.Patients
-                .Include(p => p.User)
-                
-                .FirstOrDefaultAsync(p => p.UserId == userId);
-        }
-
         public async Task<Patient> GetPatientById(int userId)
         {
             return await _context.Patients
                            .Include(p => p.User)
 
                            .FirstOrDefaultAsync(p => p.UserId == userId);
+        }
+
+        public async Task<IEnumerable<Professional>> FindAllWithProfessionalAsync(Expression<Func<Professional, bool>> predicate)
+        {
+            return await _context.Professionals
+                .Include(p => p.User)
+                .Include(p => p.Expertise)
+                .Include(p => p.ProfessionalSpecialties)
+                .ThenInclude(ps => ps.Specialty)
+                .Where(predicate)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Patient>> FindAllWithPatientAsync()
+        {
+            return await _context.Patients
+                           .Include(p => p.User)
+                .ToListAsync();
         }
     }
 }

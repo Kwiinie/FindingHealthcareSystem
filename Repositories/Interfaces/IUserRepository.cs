@@ -3,6 +3,7 @@ using BusinessObjects.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,7 +32,8 @@ namespace Repositories.Interfaces
         Task<bool> EmailExistsAsync(string email);
         Task UpdateProfessionalAsync(Professional professional);
         Task UpdatePatientAsync(Patient patient);
-
+        Task<IEnumerable<Professional>> FindAllWithProfessionalAsync(Expression<Func<Professional, bool>> predicate);
+        Task<IEnumerable<Patient>> FindAllWithPatientAsync();
 
     }
 }

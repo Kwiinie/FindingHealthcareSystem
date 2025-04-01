@@ -14,7 +14,7 @@
                         </div>
                         <div>
                             <h6 class="card-title text-muted mb-1">Lịch hẹn hôm nay</h6>
-                            <h2 class="mb-0">8</h2>
+                            <h2 class="mb-0" id="totalMyAppointment" >@Model.TotalMyAppointment</h2>
                         </div>
                     </div>
                 </div>
@@ -28,7 +28,7 @@
                         </div>
                         <div>
                             <h6 class="card-title text-muted mb-1">Tổng bệnh nhân</h6>
-                            <h2 class="mb-0">142</h2>
+                            <h2 class="mb-0" id="totalPatient">@Model.TotalPatient</h2>
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                         </div>
                         <div>
                             <h6 class="card-title text-muted mb-1">Đang chờ</h6>
-                            <h2 class="mb-0">3</h2>
+                            <h2 class="mb-0" id="totalWaitAppointment">@Model.TotalWaitAppointment</h2>
                         </div>
                     </div>
                 </div>
@@ -56,17 +56,19 @@
                         </div>
                         <div>
                             <h6 class="card-title text-muted mb-1">Hoàn thành</h6>
-                            <h2 class="mb-0">5</h2>
+                            <h2 class="mb-0" id="totalCompleteAppointment">@Model.TotalCompleteAppointment</h2>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Today's Appointments -->
-        @await Html.PartialAsync("_PatientAppointments", Model);
+        <div id="patientAppointments">
+            @await Html.PartialAsync("_PatientAppointments", Model)
+        </div>
 
-        <!-- Recent Patients -->
-        @await Html.PartialAsync("_PatientRecords");
+        <div id="patientRecords">
+            @await Html.PartialAsync("_PatientRecords")
+        </div>
     </div>
 </div>
