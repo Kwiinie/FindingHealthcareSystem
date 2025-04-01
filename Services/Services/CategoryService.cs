@@ -56,9 +56,16 @@ namespace Services.Services
             throw new NotImplementedException();
         }
 
-        public Task UpdateCategoryAsync(CategoryDTO categoryDTO)
+        public async Task UpdateCategoryAsync(CategoryDTO categoryDTO)
         {
-            throw new NotImplementedException();
+            if (categoryDTO == null) throw new ArgumentNullException(nameof(categoryDTO));
+            User user = null;
+
+
+            var category = _mapper.Map<Category>(categoryDTO);
+
+            _unitOfWork.CategoryRepository.Update(category);
+            await _unitOfWork.SaveChangesAsync();
         }
     }
 }
