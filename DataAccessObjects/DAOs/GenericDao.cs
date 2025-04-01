@@ -216,5 +216,30 @@ namespace DataAccessObjects.DAOs
         {
             return _dbSet.AsQueryable();
         }
+
+        public async Task<int> CountAsync(Expression<Func<T, bool>>? predicate = null)
+        {
+            IQueryable<T> query = _dbSet;
+
+            var isDeletedProp = typeof(T).GetProperty("IsDeleted");
+            if (isDeletedProp != null && isDeletedProp.PropertyType == typeof(bool))
+            {
+                var param = Expression.Parameter(typeof(T), "x");
+                var prop = Expression.Property(param, "IsDeleted");
+                var condition = Expression.Equal(prop, Expression.Constant(false));
+                var lambda = Expression.Lambda<Func<T, bool>>(condition, param);
+
+                query = query.Where(lambda);
+            }
+
+            if (predicate != null)
+            {
+                query = query.Where(predicate);
+            }
+
+            return await query.CountAsync();
+        }
+
+
     }
 }

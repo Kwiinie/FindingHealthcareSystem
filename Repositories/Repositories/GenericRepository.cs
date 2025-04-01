@@ -91,5 +91,12 @@ namespace Repositories.Repositories
             _dao.RemoveRange(entities);
         }
 
+        public async Task<int> CountAsync(Expression<Func<T, bool>>? predicate = null)
+        {
+            return await _dao.CountAsync(predicate);
+        }
+
+
+
     }
 }

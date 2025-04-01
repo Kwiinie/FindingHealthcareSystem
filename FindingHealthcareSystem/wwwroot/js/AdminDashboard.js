@@ -1,25 +1,20 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
     console.log("Tài liệu đã được tải xong");
 
-    // Đảm bảo tất cả các thư viện được tải
     Promise.all([
         loadScript('https://cdnjs.cloudflare.com/ajax/libs/chart.js/3.9.1/chart.min.js'),
         loadScript('https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js'),
         loadCSS('https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css')
     ]).then(() => {
         console.log("Tất cả thư viện đã được tải");
-        // Khởi tạo các biểu đồ
         initCharts();
-
-        // Khởi tạo bản đồ
-        initVietnamMap();
+        initVietnamMap(); 
     }).catch(error => {
         console.error("Không thể tải thư viện:", error);
         showErrorMessage("Không thể tải thư viện cần thiết. Vui lòng làm mới trang hoặc kiểm tra kết nối internet.");
     });
 });
 
-// Hàm để tải script động
 function loadScript(url) {
     return new Promise((resolve, reject) => {
         if (document.querySelector(`script[src="${url}"]`)) {
@@ -35,11 +30,10 @@ function loadScript(url) {
     });
 }
 
-// Hàm để tải CSS động
 function loadCSS(url) {
     return new Promise((resolve, reject) => {
         if (document.querySelector(`link[href="${url}"]`)) {
-            resolve(); // CSS đã được tải
+            resolve(); 
             return;
         }
 
@@ -63,12 +57,11 @@ function showErrorMessage(message) {
 // Khởi tạo tất cả các biểu đồ
 function initCharts() {
     try {
-        // Dữ liệu chung
         const months = ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
             'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
 
         // Khởi tạo từng biểu đồ
-        initPieChart();
+        initPieChart(appointmentStatusData);
         initMonthlyPaymentChart(months);
         initMonthlyAppointmentChart(months);
         initPaymentByServiceChart();
@@ -78,27 +71,21 @@ function initCharts() {
     }
 }
 
-// Biểu đồ tròn - Phân bố cơ sở y tế & chuyên gia
-function initPieChart() {
+//PIE CHART
+function initPieChart(statusData) {
     const pieCtx = document.getElementById('pieChart');
-    if (!pieCtx) {
-        console.error("Không tìm thấy phần tử #pieChart");
-        return;
-    }
+    if (!pieCtx) return;
+
+    const labels = statusData.map(s => s.label);
+    const data = statusData.map(s => s.count);
 
     new Chart(pieCtx, {
         type: 'pie',
         data: {
-            labels: ['Bệnh viện công', 'Phòng khám tư', 'Trung tâm y tế', 'Bác sĩ đa khoa', 'Bác sĩ chuyên khoa'],
+            labels: labels,
             datasets: [{
-                data: [120, 78, 50, 580, 774],
-                backgroundColor: [
-                    '#99d255',
-                    '#7da73d',
-                    '#8bc249',
-                    '#b5e285',
-                    '#d2eab7'
-                ],
+                data: data,
+                backgroundColor: ['#99d255', '#7da73d', '#8bc249', '#f1c40f', '#e67e22', '#e74c3c', '#b5e285', '#d2eab7'],
                 borderColor: '#fff',
                 borderWidth: 2
             }]
@@ -113,8 +100,8 @@ function initPieChart() {
             }
         }
     });
-    console.log("Biểu đồ tròn đã được khởi tạo");
 }
+
 
 // Biểu đồ cột - Thanh toán hàng tháng
 function initMonthlyPaymentChart(months) {
@@ -124,13 +111,24 @@ function initMonthlyPaymentChart(months) {
         return;
     }
 
+    const monthlyTotals = Array(12).fill(0);
+
+    if (Array.isArray(monthlyPaymentData)) {
+        monthlyPaymentData.forEach(item => {
+            const index = item.month - 1;
+            if (index >= 0 && index < 12) {
+                monthlyTotals[index] = item.total;
+            }
+        });
+    }
+
     new Chart(paymentCtx, {
         type: 'bar',
         data: {
             labels: months,
             datasets: [{
-                label: 'Tổng Thanh Toán (Triệu VNĐ)',
-                data: [120, 190, 210, 250, 220, 280, 310, 330, 320, 350, 380, 400],
+                label: 'Tổng Thanh Toán (VND)',
+                data: monthlyTotals,
                 backgroundColor: '#99d255',
                 borderColor: '#7da73d',
                 borderWidth: 1
@@ -146,6 +144,7 @@ function initMonthlyPaymentChart(months) {
             }
         }
     });
+
     console.log("Biểu đồ thanh toán hàng tháng đã được khởi tạo");
 }
 
@@ -157,13 +156,24 @@ function initMonthlyAppointmentChart(months) {
         return;
     }
 
+    const monthlyCounts = Array(12).fill(0);
+
+    if (Array.isArray(monthlyAppointmentData)) {
+        monthlyAppointmentData.forEach(item => {
+            const index = item.month - 1;
+            if (index >= 0 && index < 12) {
+                monthlyCounts[index] = item.count;
+            }
+        });
+    }
+
     new Chart(appointmentCtx, {
         type: 'line',
         data: {
             labels: months,
             datasets: [{
                 label: 'Số Lượng Cuộc Hẹn',
-                data: [240, 310, 330, 380, 400, 450, 480, 500, 520, 550, 580, 600],
+                data: monthlyCounts,
                 backgroundColor: 'rgba(153, 210, 85, 0.2)',
                 borderColor: '#99d255',
                 borderWidth: 2,
@@ -181,10 +191,11 @@ function initMonthlyAppointmentChart(months) {
             }
         }
     });
+
     console.log("Biểu đồ lịch hẹn hàng tháng đã được khởi tạo");
 }
 
-// Biểu đồ tròn - Tổng thanh toán theo loại dịch vụ
+
 function initPaymentByServiceChart() {
     const serviceCtx = document.getElementById('paymentByServiceChart');
     if (!serviceCtx) {
@@ -192,16 +203,16 @@ function initPaymentByServiceChart() {
         return;
     }
 
+    const labels = revenueByProviderData.map(item => item.label);
+    const data = revenueByProviderData.map(item => item.total);
+
     new Chart(serviceCtx, {
         type: 'doughnut',
         data: {
-            labels: ['Dịch vụ công', 'Dịch vụ tư'],
+            labels,
             datasets: [{
-                data: [35, 65],
-                backgroundColor: [
-                    '#99d255',
-                    '#7da73d'
-                ],
+                data: data,
+                backgroundColor: ['#99d255', '#7da73d'],
                 borderColor: '#fff',
                 borderWidth: 2
             }]
@@ -212,86 +223,966 @@ function initPaymentByServiceChart() {
             plugins: {
                 legend: {
                     position: 'bottom',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            return `${context.label}: ${context.parsed.toLocaleString('vi-VN')} VND`;
+                        }
+                    }
                 }
             }
         }
     });
-    console.log("Biểu đồ thanh toán theo loại dịch vụ đã được khởi tạo");
+
+    console.log("Biểu đồ doanh thu theo loại nhà cung cấp đã được khởi tạo");
 }
 
-// Dữ liệu GeoJSON cho các tỉnh thành Việt Nam
-const vietnamProvinces = {
-    "type": "FeatureCollection",
-    "features": [
-        {
-            "type": "Feature",
-            "properties": { "name": "Hà Nội", "facilities": 45, "doctors": 280 },
-            "geometry": { "type": "Point", "coordinates": [105.8412, 21.0245] }
-        },
-        {
-            "type": "Feature",
-            "properties": { "name": "TP Hồ Chí Minh", "facilities": 56, "doctors": 350 },
-            "geometry": { "type": "Point", "coordinates": [106.6297, 10.8231] }
-        },
-        {
-            "type": "Feature",
-            "properties": { "name": "Đà Nẵng", "facilities": 22, "doctors": 130 },
-            "geometry": { "type": "Point", "coordinates": [108.2022, 16.0544] }
-        },
-        {
-            "type": "Feature",
-            "properties": { "name": "Hải Phòng", "facilities": 18, "doctors": 95 },
-            "geometry": { "type": "Point", "coordinates": [106.6881, 20.8449] }
-        },
-        {
-            "type": "Feature",
-            "properties": { "name": "Cần Thơ", "facilities": 15, "doctors": 78 },
-            "geometry": { "type": "Point", "coordinates": [105.7716, 10.0341] }
-        },
-        {
-            "type": "Feature",
-            "properties": { "name": "Nha Trang", "facilities": 14, "doctors": 72 },
-            "geometry": { "type": "Point", "coordinates": [109.1967, 12.2388] }
-        },
-        {
-            "type": "Feature",
-            "properties": { "name": "Huế", "facilities": 12, "doctors": 65 },
-            "geometry": { "type": "Point", "coordinates": [107.5907, 16.4637] }
-        },
-        {
-            "type": "Feature",
-            "properties": { "name": "Thái Nguyên", "facilities": 8, "doctors": 42 },
-            "geometry": { "type": "Point", "coordinates": [105.8482, 21.5942] }
-        },
-        {
-            "type": "Feature",
-            "properties": { "name": "Quảng Ninh", "facilities": 10, "doctors": 52 },
-            "geometry": { "type": "Point", "coordinates": [107.9650, 21.0064] }
-        },
-        {
-            "type": "Feature",
-            "properties": { "name": "Nghệ An", "facilities": 9, "doctors": 45 },
-            "geometry": { "type": "Point", "coordinates": [105.6694, 19.2340] }
-        },
-        {
-            "type": "Feature",
-            "properties": { "name": "Bình Dương", "facilities": 12, "doctors": 62 },
-            "geometry": { "type": "Point", "coordinates": [106.6776, 11.3254] }
-        },
-        {
-            "type": "Feature",
-            "properties": { "name": "Long An", "facilities": 7, "doctors": 38 },
-            "geometry": { "type": "Point", "coordinates": [106.4040, 10.6956] }
-        },
-        {
-            "type": "Feature",
-            "properties": { "name": "Lâm Đồng", "facilities": 8, "doctors": 45 },
-            "geometry": { "type": "Point", "coordinates": [108.1430, 11.5753] }
-        }
-    ]
-};
 
-// Khởi tạo bản đồ Việt Nam với Leaflet
+const vietnamProvinces = {
+    
+    "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Hà Nội",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        105.8542,
+                        21.0285
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Hồ Chí Minh",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        106.6602,
+                        10.7626
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Đà Nẵng",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        108.2062,
+                        16.0471
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Hải Phòng",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        106.6881,
+                        20.8449
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Cần Thơ",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        105.722,
+                        10.0341
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "An Giang",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        105.1259,
+                        10.5216
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Bà Rịa - Vũng Tàu",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        107.2428,
+                        10.5417
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Bắc Giang",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        106.1975,
+                        21.281
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Bắc Kạn",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        105.8348,
+                        22.146
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Bạc Liêu",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        105.7278,
+                        9.2941
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Bắc Ninh",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        106.0763,
+                        21.1861
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Bến Tre",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        106.3759,
+                        10.2415
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Bình Định",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        109.2193,
+                        13.782
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Bình Dương",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        106.6578,
+                        11.3254
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Bình Phước",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        106.9046,
+                        11.754
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Bình Thuận",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        108.0721,
+                        11.0904
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Cà Mau",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        105.15,
+                        9.1765
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Cao Bằng",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        106.257,
+                        22.6657
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Đắk Lắk",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        108.2378,
+                        12.71
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Đắk Nông",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        107.6098,
+                        12.2646
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Điện Biên",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        103.023,
+                        21.3974
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Đồng Nai",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        106.8245,
+                        10.9453
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Đồng Tháp",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        105.6219,
+                        10.457
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Gia Lai",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        108.1098,
+                        13.8079
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Hà Giang",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        104.9836,
+                        22.8233
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Hà Nam",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        105.9229,
+                        20.5411
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Hà Tĩnh",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        105.8875,
+                        18.3559
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Hậu Giang",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        105.6419,
+                        9.7579
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Hoà Bình",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        105.3376,
+                        20.8526
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Hưng Yên",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        106.0511,
+                        20.646
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Khánh Hòa",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        109.0526,
+                        12.2585
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Kiên Giang",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        105.08,
+                        10.0125
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Kon Tum",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        107.9883,
+                        14.3498
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Lai Châu",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        103.4702,
+                        22.3862
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Lâm Đồng",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        108.4583,
+                        11.9404
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Lạng Sơn",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        106.7615,
+                        21.8537
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Lào Cai",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        103.9706,
+                        22.4851
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Long An",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        106.4137,
+                        10.5354
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Nam Định",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        106.1621,
+                        20.4388
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Nghệ An",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        104.92,
+                        19.2342
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Ninh Bình",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        105.9745,
+                        20.2505
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Ninh Thuận",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        108.9916,
+                        11.6739
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Phú Thọ",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        105.4012,
+                        21.3227
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Phú Yên",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        109.0929,
+                        13.0882
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Quảng Bình",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        106.6223,
+                        17.4689
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Quảng Nam",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        108.0191,
+                        15.5394
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Quảng Ngãi",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        108.8044,
+                        15.1214
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Quảng Ninh",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        107.2925,
+                        21.0064
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Quảng Trị",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        107.189,
+                        16.7503
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Sóc Trăng",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        105.9739,
+                        9.602
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Sơn La",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        103.9188,
+                        21.325
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Tây Ninh",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        106.098,
+                        11.3114
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Thái Bình",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        106.3366,
+                        20.4463
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Thái Nguyên",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        105.8482,
+                        21.5942
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Thanh Hóa",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        105.7852,
+                        19.8067
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Thừa Thiên Huế",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        107.5907,
+                        16.4637
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Tiền Giang",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        106.3421,
+                        10.4494
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Trà Vinh",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        106.2993,
+                        9.8127
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Tuyên Quang",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        105.214,
+                        21.8231
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Vĩnh Long",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        105.956,
+                        10.25
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Vĩnh Phúc",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        105.6049,
+                        21.3089
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "name": "Yên Bái",
+                    "facilities": 0,
+                    "doctors": 0
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        104.8702,
+                        21.7051
+                    ]
+                }
+            }
+        ]
+}
+
+function normalizeProvince(name) {
+    return name
+        .replace(/^tỉnh|thành phố/gi, "")
+        .trim()
+        .toLowerCase();
+}
+
 function initVietnamMap() {
     const mapElement = document.getElementById('vietnam-map');
     if (!mapElement) {
@@ -301,7 +1192,6 @@ function initVietnamMap() {
 
     console.log("Bắt đầu khởi tạo bản đồ");
 
-    // Thêm CSS cho bản đồ nếu chưa có
     if (!document.getElementById('map-styles')) {
         const style = document.createElement('style');
         style.id = 'map-styles';
@@ -316,7 +1206,6 @@ function initVietnamMap() {
             .info {
                 padding: 6px 8px;
                 font: 14px/16px 'Lexend Deca', Arial, Helvetica, sans-serif;
-                background: white;
                 background: rgba(255, 255, 255, 0.8);
                 box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
                 border-radius: 5px;
@@ -336,32 +1225,37 @@ function initVietnamMap() {
         document.head.appendChild(style);
     }
 
-    // Đảm bảo chiều cao của bản đồ
     mapElement.style.height = '500px';
 
-    // Khởi tạo bản đồ Leaflet
     const vietnamMap = L.map('vietnam-map').setView([16.0544, 108.2022], 6);
 
-    // Thêm lớp bản đồ OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        attribution: '&copy; OpenStreetMap contributors'
     }).addTo(vietnamMap);
 
-    // Hàm lấy màu dựa trên số lượng cơ sở y tế
-    function getColor(d) {
-        return d > 50 ? '#006400' :
-            d > 30 ? '#1a8d1a' :
-                d > 20 ? '#35b635' :
-                    d > 10 ? '#51de51' :
-                        d > 5 ? '#8aea8a' :
-                            '#c6f6c6';
+    if (typeof provinceData !== 'undefined') {
+        vietnamProvinces.features.forEach(feature => {
+            const geoProvinceKey = normalizeProvince(feature.properties.name);
+            const matched = provinceData.find(p => normalizeProvince(p.province) === geoProvinceKey);
+
+            feature.properties.facilities = matched?.facilityCount || 0;
+            feature.properties.doctors = matched?.professionalCount || 0;
+        });
     }
 
-    // Hàm định kiểu cho marker
+    function getColor(d) {
+        return d > 50 ? '#004000' : 
+            d > 30 ? '#006400' :     
+                d > 20 ? '#008000' :   
+                    d > 10 ? '#228B22' :   
+                        d > 5 ? '#3CB371' :    
+                            '#2E8B57';       
+    }
+
     function style(feature) {
         return {
-            radius: Math.sqrt(feature.properties.facilities) * 2,
+            radius: Math.sqrt(feature.properties.facilities) * 5,
             fillColor: getColor(feature.properties.facilities),
             color: "#fff",
             weight: 1,
@@ -370,27 +1264,22 @@ function initVietnamMap() {
         };
     }
 
-    // Hàm thêm tương tác cho marker
     function onEachFeature(feature, layer) {
+        const { name, facilities, doctors } = feature.properties;
         layer.bindPopup(
-            "<b>" + feature.properties.name + "</b><br>" +
-            "Cơ sở y tế: " + feature.properties.facilities + "<br>" +
-            "Chuyên gia y tế: " + feature.properties.doctors
+            `<b>${name}</b><br>` +
+            `Cơ sở y tế: ${facilities}<br>` +
+            `Chuyên gia y tế: ${doctors}`
         );
     }
 
-    // Thêm dữ liệu GeoJSON vào bản đồ
     L.geoJSON(vietnamProvinces, {
-        pointToLayer: function (feature, latlng) {
-            return L.circleMarker(latlng, style(feature));
-        },
-        onEachFeature: onEachFeature
+        pointToLayer: (feature, latlng) => L.circleMarker(latlng, style(feature)),
+        onEachFeature
     }).addTo(vietnamMap);
 
-    // Thêm chú thích (legend)
     const legend = L.control({ position: 'bottomright' });
-
-    legend.onAdd = function (map) {
+    legend.onAdd = function () {
         const div = L.DomUtil.create('div', 'info legend');
         const grades = [0, 5, 10, 20, 30, 50];
         const labels = [];
@@ -400,21 +1289,20 @@ function initVietnamMap() {
             const to = grades[i + 1];
 
             labels.push(
-                '<i style="background:' + getColor(from + 1) + '"></i> ' +
-                from + (to ? '&ndash;' + to : '+') + ' cơ sở y tế'
+                `<i style="background:${getColor(from + 1)}"></i> ` +
+                from + (to ? `&ndash;${to}` : '+') + ' cơ sở/chuyên gia y tế'
             );
         }
 
-        div.innerHTML = '<h4>Số lượng cơ sở y tế</h4>' + labels.join('<br>');
+        div.innerHTML = '<h4>Số lượng cơ sở/chuyên gia y tế</h4>' + labels.join('<br>');
         return div;
     };
-
     legend.addTo(vietnamMap);
 
-    // Tự động điều chỉnh bản đồ sau khi tải xong
-    setTimeout(function () {
+    setTimeout(() => {
         vietnamMap.invalidateSize();
     }, 200);
 
     console.log("Bản đồ đã được khởi tạo thành công");
 }
+

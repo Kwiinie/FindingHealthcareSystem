@@ -17,6 +17,7 @@
 
 
 </head>
+
 <body>
     @using Newtonsoft.Json
     @using BusinessObjects.Dtos.User;
@@ -301,6 +302,7 @@
             @RenderBody()
         </main>
     </div>
+    @RenderSection("Scripts", required: false)
 
 </body>
 
