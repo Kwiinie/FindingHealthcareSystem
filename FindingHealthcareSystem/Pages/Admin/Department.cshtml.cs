@@ -14,6 +14,8 @@ namespace FindingHealthcareSystem.Pages.Admin
             _departmentService = departmentService;
         }
 
+        [BindProperty]
+        public DepartmentDto Department { get; set; } = new DepartmentDto();
         public List<DepartmentDto> Departments { get; set; }
 
         public async Task OnGetAsync()
@@ -39,7 +41,13 @@ namespace FindingHealthcareSystem.Pages.Admin
                 return Page();
             }
 
-            await _departmentService.Update(department.Id, department);
+            await _departmentService.Update((int)department.Id, department);
+            return RedirectToPage();
+        }
+
+        public async Task<IActionResult> OnPostDeleteAsync(int id)
+        {
+            await _departmentService.Delete(id);
             return RedirectToPage();
         }
     }
