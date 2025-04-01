@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessObjects.Migrations
 {
     [DbContext(typeof(FindingHealthcareSystemContext))]
-    [Migration("20250330085910_newDB")]
-    partial class newDB
+    [Migration("20250401134032_UpdateModel")]
+    partial class UpdateModel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -150,9 +150,6 @@ namespace DataAccessObjects.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
@@ -178,7 +175,6 @@ namespace DataAccessObjects.Migrations
                             CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedById = 1,
                             IsDeleted = false,
-                            Status = false,
                             Title = "5 Lợi Ích Của Việc Kiểm Tra Sức Khỏe Định Kỳ",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -190,7 +186,6 @@ namespace DataAccessObjects.Migrations
                             CreatedAt = new DateTime(2025, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedById = 1,
                             IsDeleted = false,
-                            Status = false,
                             Title = "Tầm Quan Trọng Của Việc Tiêm Chủng Định Kỳ",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -202,7 +197,6 @@ namespace DataAccessObjects.Migrations
                             CreatedAt = new DateTime(2025, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedById = 1,
                             IsDeleted = false,
-                            Status = false,
                             Title = "Chế Độ Ăn Uống Cân Bằng Cho Sức Khỏe",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -214,7 +208,6 @@ namespace DataAccessObjects.Migrations
                             CreatedAt = new DateTime(2025, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedById = 1,
                             IsDeleted = false,
-                            Status = false,
                             Title = "Thực Phẩm Giúp Cải Thiện Hệ Tiêu Hóa",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -226,7 +219,6 @@ namespace DataAccessObjects.Migrations
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedById = 1,
                             IsDeleted = false,
-                            Status = false,
                             Title = "Cách Phòng Ngừa Bệnh Tim Mạch",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -238,7 +230,6 @@ namespace DataAccessObjects.Migrations
                             CreatedAt = new DateTime(2025, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedById = 1,
                             IsDeleted = false,
-                            Status = false,
                             Title = "Những Dấu Hiệu Cảnh Báo Ung Thư Phổi",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
