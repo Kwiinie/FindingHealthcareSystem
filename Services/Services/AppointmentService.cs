@@ -3,6 +3,7 @@ using BusinessObjects.Commons;
 using BusinessObjects.DTOs.Appointment;
 using BusinessObjects.Entities;
 using BusinessObjects.Enums;
+using Microsoft.EntityFrameworkCore;
 using Repositories.Interfaces;
 using Services.Interfaces;
 using System;
@@ -84,6 +85,21 @@ namespace Services.Services
             }
         }
 
+        public async Task<bool> AddAsync(AppointmentDTO createAppointmentDto)
+        {
+            try
+            {
+                var entity = _mapper.Map<Appointment>(createAppointmentDto);
+                await _unitOfWork.AppointmentRepository.AddAsync(entity);
+                await _unitOfWork.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         public async Task<bool> ChangeAppointmentStatus(int id, AppointmentStatus rejected)
         {
             try
@@ -127,6 +143,34 @@ namespace Services.Services
             ProviderType type = (ProviderType)Enum.Parse(typeof(ProviderType), providerType);
             var appointments = await _appointmentRepository.GetAppointmentsByProviderAndDateAsync(type, providerId, date);
             return _mapper.Map<List<AppointmentDTO>>(appointments);
+        }
+
+        public async Task<AppointmentDTO> GetAsync(int id)
+        {
+            var appointment = await _unitOfWork.AppointmentRepository.GetAppointment(id);
+            return _mapper.Map<AppointmentDTO>(appointment);
+        }
+
+        public async Task<List<AppointmentDTO>> GetPagenagingAppointments(int pagee, int size)
+        {
+            var list = (await _unitOfWork.AppointmentRepository.Query().Include(x => x.Patient).Include(x => x.Patient.User).ToListAsync())
+                .OrderByDescending(x => x.Date).Skip((pagee - 1) * size).Take(size).ToList();
+            return _mapper.Map<List<AppointmentDTO>>(list);
+        }
+
+        public async Task<List<string>> GetSlotsExistedByDate(DateTime date, List<string> slots)
+        {
+            var slotsInDay = await _appointmentRepository
+                .Query()
+                .Where(x => x.Date.HasValue && x.Date.Value.Day == date.Day && x.Date.Value.Month == date.Month && x.Date.Value.Year == date.Year)
+                .ToListAsync();
+
+            var slotsExisted = slotsInDay
+                .Select(x => x.Date.Value.ToString("HH:mm"))
+                .Where(slot => slots.Contains(slot))
+                .ToList();
+
+            return slotsExisted;
         }
     }
 }
