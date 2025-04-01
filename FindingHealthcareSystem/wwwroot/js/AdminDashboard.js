@@ -68,7 +68,7 @@ function initCharts() {
             'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
 
         // Khởi tạo từng biểu đồ
-        initPieChart();
+        initPieChart(appointmentStatusData);
         initMonthlyPaymentChart(months);
         initMonthlyAppointmentChart(months);
         initPaymentByServiceChart();
@@ -78,27 +78,21 @@ function initCharts() {
     }
 }
 
-// Biểu đồ tròn - Phân bố cơ sở y tế & chuyên gia
-function initPieChart() {
+//PIE CHART
+function initPieChart(statusData) {
     const pieCtx = document.getElementById('pieChart');
-    if (!pieCtx) {
-        console.error("Không tìm thấy phần tử #pieChart");
-        return;
-    }
+    if (!pieCtx) return;
+
+    const labels = statusData.map(s => s.label);
+    const data = statusData.map(s => s.count);
 
     new Chart(pieCtx, {
         type: 'pie',
         data: {
-            labels: ['Bệnh viện công', 'Phòng khám tư', 'Trung tâm y tế', 'Bác sĩ đa khoa', 'Bác sĩ chuyên khoa'],
+            labels: labels,
             datasets: [{
-                data: [120, 78, 50, 580, 774],
-                backgroundColor: [
-                    '#99d255',
-                    '#7da73d',
-                    '#8bc249',
-                    '#b5e285',
-                    '#d2eab7'
-                ],
+                data: data,
+                backgroundColor: ['#99d255', '#7da73d', '#8bc249', '#f1c40f', '#e67e22', '#e74c3c', '#b5e285', '#d2eab7'],
                 borderColor: '#fff',
                 borderWidth: 2
             }]
@@ -113,8 +107,8 @@ function initPieChart() {
             }
         }
     });
-    console.log("Biểu đồ tròn đã được khởi tạo");
 }
+
 
 // Biểu đồ cột - Thanh toán hàng tháng
 function initMonthlyPaymentChart(months) {
@@ -124,13 +118,25 @@ function initMonthlyPaymentChart(months) {
         return;
     }
 
+    // Tạo mảng 12 phần tử mặc định = 0
+    const monthlyTotals = Array(12).fill(0);
+
+    if (Array.isArray(monthlyPaymentData)) {
+        monthlyPaymentData.forEach(item => {
+            const index = item.month - 1;
+            if (index >= 0 && index < 12) {
+                monthlyTotals[index] = item.total;
+            }
+        });
+    }
+
     new Chart(paymentCtx, {
         type: 'bar',
         data: {
             labels: months,
             datasets: [{
-                label: 'Tổng Thanh Toán (Triệu VNĐ)',
-                data: [120, 190, 210, 250, 220, 280, 310, 330, 320, 350, 380, 400],
+                label: 'Tổng Thanh Toán (Trăm VNĐ)',
+                data: monthlyTotals,
                 backgroundColor: '#99d255',
                 borderColor: '#7da73d',
                 borderWidth: 1
@@ -146,6 +152,7 @@ function initMonthlyPaymentChart(months) {
             }
         }
     });
+
     console.log("Biểu đồ thanh toán hàng tháng đã được khởi tạo");
 }
 
