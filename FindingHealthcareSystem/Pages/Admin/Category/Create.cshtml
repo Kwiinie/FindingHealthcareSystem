@@ -1,9 +1,21 @@
 ﻿@page "admin/category/create"
 @model FindingHealthcareSystem.Pages.Admin.Category.CreateModel
 @{
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
 }
-<div class="container mt-10">
-    <h1>
-        create cate
-    </h1>
+<div class="container mt-5">
+    <h1 class="text-center">Tạo mới thể loại</h1>
+    <form method="post">
+        <div class="mb-3">
+            <label for="Name" class="form-label">Tên thể loại</label>
+            <input type="text" class="form-control" id="Name" name="Name" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="Description" class="form-label">Mô tả</label>
+            <textarea class="form-control" id="Description" name="Description" rows="3" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Tạo mới</button>
+    </form>
 </div>

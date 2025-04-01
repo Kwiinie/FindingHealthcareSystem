@@ -15,16 +15,23 @@ namespace Repositories.Repositories
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         private readonly IGenericDAO<T> _dao;
+        
 
         public GenericRepository(IGenericDAO<T> dao)
         {
-            _dao = dao;
+            _dao = dao ?? throw new ArgumentNullException(nameof(dao));
+            
         }
 
         public async Task<T> GetByIdAsync(int id)
         {
             return await _dao.GetByIdAsync(id);
         }
+
+        public async Task<IEnumerable<T>> GetListById(int id)
+        {
+            return await _dao.GetListById(id);
+        }   
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {

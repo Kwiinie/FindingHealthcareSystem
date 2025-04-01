@@ -1,13 +1,17 @@
-using BusinessObjects;
+﻿using BusinessObjects;
+using BusinessObjects.Commons;
 using BusinessObjects.Entities;
 using DataAccessObjects;
+using FindingHealthcareSystem.Hubs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Repositories.Interfaces;
 using Repositories.Repositories;
+using Services;
 using Services.Interfaces;
 using Services.Services;
+using Services.Setups;
 
 
 namespace FindingHealthcareSystem
@@ -24,11 +28,18 @@ namespace FindingHealthcareSystem
             builder.Services.AddDbContext<FindingHealthcareSystemContext>(o =>
             o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
             builder.Services.AddApplicationService();
+            builder.Services.AddSignalR();
             builder.Services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30); 
                 options.Cookie.HttpOnly = true;
             });
+
+            // Bind cấu hình từ appsettings.json
+            builder.Services.Configure<CloudinarySettings>(
+                builder.Configuration.GetSection("CloudinarySettings"));
+
+/*            builder.Services.AddSingleton<CloudinaryService>();*/
 
             var app = builder.Build();
 
@@ -39,7 +50,7 @@ namespace FindingHealthcareSystem
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            app.MapHub<UpdateHub>("/updateHub");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -48,8 +59,8 @@ namespace FindingHealthcareSystem
             app.UseSession();
 
             app.UseAuthorization();
-
             app.MapRazorPages();
+
 
             app.Run();
         }

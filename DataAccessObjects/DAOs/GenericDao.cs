@@ -26,9 +26,29 @@ namespace DataAccessObjects.DAOs
             return await _dbSet.FindAsync(id);
         }
 
+        public async Task<IEnumerable<T>> GetListById(int id)
+        {
+            return await _dbSet.Where(x => EF.Property<int>(x, "Id") == id).ToListAsync();
+        }
+
+
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            return await _dbSet.ToListAsync();
+            if (_dbSet == null)
+            {
+                return Enumerable.Empty<T>(); // Trả về danh sách rỗng thay vì null
+            }
+
+            try
+            {
+                return await _dbSet.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                // Log lỗi nếu cần
+                Console.WriteLine($"Lỗi khi lấy danh sách: {ex.Message}");
+                return Enumerable.Empty<T>(); // Trả về danh sách rỗng khi có lỗi
+            }
         }
 
         public async Task<T> FindAsync(Expression<Func<T, bool>> predicate, string includeProperties = "")
@@ -190,6 +210,11 @@ namespace DataAccessObjects.DAOs
         public void RemoveRange(IEnumerable<T> entities)
         {
             _dbSet.RemoveRange(entities);
+        }
+
+        public IQueryable<T> Query()
+        {
+            return _dbSet.AsQueryable();
         }
     }
 }

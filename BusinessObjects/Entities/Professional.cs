@@ -34,5 +34,12 @@ public partial class Professional : BaseEntity
     public virtual ICollection<ProfessionalSpecialty> ProfessionalSpecialties { get; set; } = new List<ProfessionalSpecialty>();
 
     public virtual User? User { get; set; }
+
+    // Thêm các thuộc tính từ User
+    public string? Fullname => User?.Fullname;
+    public string? Email => User?.Email;
+    public string? PhoneNumber => User?.PhoneNumber;
+    public string? Gender => User?.Gender;
+    public DateOnly? Birthday => User?.Birthday;
 }
 

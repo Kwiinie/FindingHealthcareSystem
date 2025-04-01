@@ -1,9 +1,102 @@
-﻿@page "admin/department"
-@model FindingHealthcareSystem.Pages.Admin.DepartmentModel
+﻿@page "/admin/department"
+@model FindingHealthcareSystem.Pages.Admin.DepartmentsModel
 @{
+    ViewData["Title"] = "Departments";
 }
-<div class="container mt-10">
-    <h1>
-        List departments (create-edit as a popup)
-    </h1>
+
+<div class="container mt-4">
+    <h1>Departments</h1>
+    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createDepartmentModal">Create New Department</button>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var department in Model.Departments)
+            {
+                <tr>
+                    <td>@department.Name</td>
+                    <td>@department.Description</td>
+                    <td>
+                        <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editDepartmentModal" data-id="@department.Id" data-name="@department.Name" data-description="@department.Description">Edit</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
+
+<!-- Create Department Modal -->
+<div class="modal fade" id="createDepartmentModal" tabindex="-1" aria-labelledby="createDepartmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createDepartmentModalLabel">Create Department</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="createDepartmentForm" method="post" asp-page-handler="Create">
+                    <div class="mb-3">
+                        <label for="createName" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="createName" name="Name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="createDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="createDescription" name="Description" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Department Modal -->
+<div class="modal fade" id="editDepartmentModal" tabindex="-1" aria-labelledby="editDepartmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editDepartmentModalLabel">Edit Department</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editDepartmentForm" method="post" asp-page-handler="Edit">
+                    <input type="hidden" id="editId" name="Id">
+                    <div class="mb-3">
+                        <label for="editName" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="editName" name="Name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="editDescription" name="Description" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var editDepartmentModal = document.getElementById('editDepartmentModal');
+        editDepartmentModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var id = button.getAttribute('data-id');
+            var name = button.getAttribute('data-name');
+            var description = button.getAttribute('data-description');
+
+            var modalIdInput = editDepartmentModal.querySelector('#editId');
+            var modalNameInput = editDepartmentModal.querySelector('#editName');
+            var modalDescriptionInput = editDepartmentModal.querySelector('#editDescription');
+
+            modalIdInput.value = id;
+            modalNameInput.value = name;
+            modalDescriptionInput.value = description;
+        });
+    </script>
+}

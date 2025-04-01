@@ -85,12 +85,43 @@ namespace Services.Services
             }
         }
 
+        public async Task<bool> ChangeAppointmentStatus(int id, AppointmentStatus rejected)
+        {
+            try
+            {
+                var appointment = await _unitOfWork.AppointmentRepository.GetByIdAsync(id);
+                if (appointment == null)
+                {
+                    return false;
+                }
+                appointment.Status = rejected;
+                _unitOfWork.AppointmentRepository.Update(appointment);
+                await _unitOfWork.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<int> CountAppointmentByStatus(int id, string status)
+        {
+            return await _unitOfWork.AppointmentRepository.CountAppointmentByStatus(id, status);
+        }
+
+        public async Task<List<AppointmentDTO>> GetAllAppoinmentByDate(int id, DateTime startDate, DateTime endDate)
+        {
+            var appointments = await _unitOfWork.AppointmentRepository.GetAllAppoinmentByDate(id, startDate, endDate);
+            return _mapper.Map<List<AppointmentDTO>>(appointments);
+        }
 
         public async Task<List<AppointmentDTO>> GetAllAsync()
         {
             var appointments = await _unitOfWork.AppointmentRepository.GetAllAsync();
             return _mapper.Map<List<AppointmentDTO>>(appointments);
         }
+
 
         public async Task<List<AppointmentDTO>> GetAppointmentsByProviderAndDate(int providerId, string providerType, DateTime date)
         {

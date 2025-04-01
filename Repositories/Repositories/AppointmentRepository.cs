@@ -66,6 +66,22 @@ namespace Repositories.Repositories
             );
         }
 
+        public async Task<IEnumerable<Appointment>> GetAllAppoinmentByDate(int id, DateTime startDate, DateTime endDate)
+        {
+            return await _dao.Query().Include(a => a.Patient).Include(a => a.Patient.User).Include(a => a.Professional)
+                .Where(a => a.Date >= startDate && a.Date <= endDate && a.Professional.UserId == id && a.ProviderId == a.Professional.Id)
+                .ToListAsync();
+        }
+
+        public async Task<int> CountAppointmentByStatus(int id, string status)
+        {
+            var query = _dao.Query().Include(x => x.Professional);
+            if (string.IsNullOrEmpty(status))
+            {
+                return await query.Where(a => a.Professional.UserId == id && a.ProviderId == a.Professional.Id).CountAsync();
+            }
+            return await _dao.Query().Where(a => a.Professional.UserId == id && a.ProviderId == a.Professional.Id && a.Status.ToString().Equals(status)).CountAsync();
+        }
 
     }
 }

@@ -28,7 +28,7 @@ namespace BusinessObjects.DTOs.Professional
         public string? PhoneNumber { get; set; }
         public string? ImgUrl { get; set; }
         public string? Gender { get; set; }
-
+        public string Status { get; set; }
         public string? ExpertiseName { get; set; } 
         public List<string> Specialties { get; set; } = new List<string>(); 
 

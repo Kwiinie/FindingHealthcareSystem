@@ -4,11 +4,25 @@
 }
 
 <link rel="stylesheet" href="~/css/patientProfile.css" />
+
 <div class="container mt-10">
     <div class="row justify-content-center">
         <div class="col">
+
+
+
             <!-- Profile Section -->
             <div class="profile-card">
+                            @if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
                 <div class="profile-header">
                     <!-- AUTHORIZATION REQUIRED !! -->
                     <button class="btn btn-primary edit-button" data-bs-toggle="modal" data-bs-target="#editProfileModal">
@@ -17,19 +31,20 @@
 
                     <div class="row">
                         <div class="col-md-3 text-center">
-                            <img src="~/img/defaultAvatar.jpg" alt="Patient Photo" class="profile-img">
+                              @* <img src="~/img/@Model.CurrentUser.User.ImgUrl" alt="Patient Photo" class="profile-img"> *@
+                               <img src="https://img.icons8.com/nolan/512w/user-default.png" alt="Patient Photo" class="profile-img">
+
                         </div>
                         <div class="col-md-9">
-                            <h2 id="fullName">NGUYỄN VĂN A</h2>
+                            <h2 id="fullName">@Model.CurrentUser.User.Fullname</h2>
                             <div class="personal-info">
                                 <i class="fas fa-venus-mars info-icon"></i>
-                                <span id="gender">Nam</span>
+                                <span id="gender">@Model.CurrentUser.User.Gender</span>
                             </div>
                             <div class="personal-info">
                                 <i class="fas fa-birthday-cake info-icon"></i>
-                                <span id="birthday">15/08/1985</span>
+                                <span id="birthday">@Model.CurrentUser.User.Birthday</span>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -41,29 +56,21 @@
                                 <div class="info-label">Thông tin liên hệ</div>
                                 <div class="contact-info">
                                     <i class="fas fa-envelope contact-icon"></i>
-                                    <span id="email">nguyenvana@gmail.com</span>
+                                    <span id="email">@Model.CurrentUser.User.Email</span>
                                 </div>
                                 <div class="contact-info">
                                     <i class="fas fa-phone contact-icon"></i>
-                                    <span id="phoneNumber">0987654321</span>
+                                    <span id="phoneNumber">@Model.CurrentUser.User.PhoneNumber</span>
                                 </div>
                             </div>
 
-                            <div class="mb-4">
-                                <div class="info-label">Địa chỉ</div>
-                                <p>
-                                    <i class="fas fa-map-marker-alt location-icon"></i>
-                                    <span id="address">patient.address, patient.ward, patient.district, patient.province</span>
-                                </p>
-                            </div>
-
-                            
+                          
                         </div>
 
                         <div class="col-md-6">
                             <div class="mb-4">
                                 <div class="info-label">Ghi chú y tế</div>
-                                <p id="medicalNote">Bệnh nhân bị tăng huyết áp độ 1, cần kiểm soát huyết áp định kỳ. Dị ứng với hải sản, đặc biệt là tôm và cua. Có tiền sử gia đình về bệnh tim mạch.</p>
+                            <p id="medicalNote">@Model.CurrentUser.Note</p>
                             </div>
 
                             <div class="mb-4">
@@ -115,6 +122,9 @@
 </div>
 
 <!-- Edit Profile Modal -->
+<!-- Modal chỉnh sửa hồ sơ -->
+!-- Edit Profile Modal -->
+<!-- Modal chỉnh sửa hồ sơ -->
 <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -123,46 +133,45 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form method="post" asp-page-handler="EditProfile">
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label for="editFullName" class="form-label">Họ và tên</label>
-                            <input type="text" class="form-control" id="editFullName" value="NGUYỄN VĂN A">
+                            <label asp-for="UpdatedUser.User.Fullname" class="form-label">Họ và tên</label>
+                            <input asp-for="UpdatedUser.User.Fullname" class="form-control" />
                         </div>
                         <div class="col-md-6">
-                            <label for="editEmail" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="editEmail" value="nguyenvana@gmail.com">
+                            <label asp-for="UpdatedUser.User.Email" class="form-label">Email</label>
+                            <input asp-for="UpdatedUser.User.Email" class="form-control" />
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label for="editPhone" class="form-label">Số điện thoại</label>
-                            <input type="tel" class="form-control" id="editPhone" value="0987654321">
+                            <label asp-for="UpdatedUser.User.PhoneNumber" class="form-label">Số điện thoại</label>
+                            <input asp-for="UpdatedUser.User.PhoneNumber" class="form-control" />
                         </div>
                         <div class="col-md-6">
-                            <label for="editBirthday" class="form-label">Ngày sinh</label>
-                            <input type="date" class="form-control" id="editBirthday" value="1985-08-15">
+                            <label asp-for="UpdatedUser.User.Birthday" class="form-label">Ngày sinh</label>
+                            <input asp-for="UpdatedUser.User.Birthday" class="form-control" type="date" />
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label for="editGender" class="form-label">Giới tính</label>
-                            <select class="form-select" id="editGender">
-                                <option value="" selected>Nam</option>
-                                <option value="">Nữ</option>
+                            <label asp-for="UpdatedUser.User.Gender" class="form-label">Giới tính</label>
+                            <select asp-for="UpdatedUser.User.Gender" class="form-select">
+                                 <option value="Nam" selected="@(Model.UpdatedUser.User.Gender == "Nam" ? "selected" : null)">Nam</option>
+                                <option value="Nữ" selected="@(Model.UpdatedUser.User.Gender == "Nữ" ? "selected" : null)">Nữ</option>
                             </select>
                         </div>
                     </div>
-                   
                     <div class="mb-3">
-                        <label for="editMedicalNote" class="form-label">Ghi chú y tế</label>
-                        <textarea class="form-control" id="editMedicalNote" rows="3">Bệnh nhân bị tăng huyết áp độ 1, cần kiểm soát huyết áp định kỳ. Dị ứng với hải sản, đặc biệt là tôm và cua. Có tiền sử gia đình về bệnh tim mạch.</textarea>
+                        <label asp-for="UpdatedUser.Note" for="editMedicalNote" class="form-label">Ghi chú y tế</label>
+                        <textarea asp-for="UpdatedUser.Note" class="form-control" id="editMedicalNote" rows="3">Note cua patien</textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                <button type="button" class="btn btn-primary">Lưu thay đổi</button>
             </div>
         </div>
     </div>
