@@ -28,6 +28,7 @@ namespace FindingHealthcareSystem
             builder.Services.AddDbContext<FindingHealthcareSystemContext>(o =>
             o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
             builder.Services.AddApplicationService();
+            builder.Services.AddMemoryCache();
             builder.Services.AddSignalR();
             builder.Services.AddSession(options =>
             {
