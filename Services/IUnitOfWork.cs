@@ -15,6 +15,7 @@ namespace Services
 
         IGenericRepository<ArticleImage> ArticleImageRepository { get; } 
         IGenericRepository<Category> CategoryRepository { get; }
+        IGenericRepository<PublicService> PublicServiceRepository { get; }
 
         IFacilityRepository FacilityRepository { get; }
         IProfessionalRepository ProfessionalRepository { get; }

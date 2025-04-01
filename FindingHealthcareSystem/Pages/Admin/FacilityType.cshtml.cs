@@ -14,33 +14,11 @@ namespace FindingHealthcareSystem.Pages.Admin
             _facilityTypeService = facilityTypeService;
         }
 
-        public List<FacilityTypeDto> Facilities { get; set; }
+        public List<FacilityTypeDto> FacilityTypes { get; set; }
 
-        public async Task OnGetAsync()
+        public async Task OnGet()
         {
-            Facilities = await _facilityTypeService.GetAllFacilityTypes();
-        }
-
-        public async Task<IActionResult> OnPostCreateAsync(FacilityTypeDto facilityType)
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            await _facilityTypeService.Create(facilityType);
-            return RedirectToPage();
-        }
-
-        public async Task<IActionResult> OnPostEditAsync(FacilityTypeDto facilityType)
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            await _facilityTypeService.Update(facilityType.Id, facilityType);
-            return RedirectToPage();
+            FacilityTypes = await _facilityTypeService.GetAllFacilityTypes();
         }
     }
 }

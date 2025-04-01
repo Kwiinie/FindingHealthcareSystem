@@ -1,5 +1,6 @@
 ﻿using BusinessObjects.DTOs.Facility;
 using BusinessObjects.DTOs.Professional;
+using BusinessObjects.DTOs.Service;
 using BusinessObjects.Entities;
 
 namespace Services.Interfaces

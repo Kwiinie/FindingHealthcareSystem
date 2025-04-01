@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using BusinessObjects.DTOs.Department;
 using Services.Interfaces;
 using BusinessObjects.DTOs.Professional;
+using BusinessObjects.DTOs.Service;
 
 namespace Services.Services
 {

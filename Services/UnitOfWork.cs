@@ -24,6 +24,7 @@ namespace Services
         public IGenericRepository<ArticleImage> ArticleImageRepository { get; set; }
         public IGenericRepository<Article> ArticleRepository { get; }
         public IGenericRepository<Category> CategoryRepository { get; }
+        public IGenericRepository<PublicService> PublicServiceRepository { get; }
 
 
         public UnitOfWork(FindingHealthcareSystemContext context, IFacilityRepository facilityRepository, 
@@ -34,6 +35,7 @@ namespace Services
             ArticleRepository = GetRepository<Article>();
             CategoryRepository = GetRepository<Category>();
             ArticleImageRepository = GetRepository<ArticleImage>();
+            PublicServiceRepository = GetRepository<PublicService>();
             _facilityRepository = facilityRepository;
             _professionalRepository = professionalRepository;
             _appointmentRepository = appointmentRepository;

@@ -1,4 +1,5 @@
 using BusinessObjects.DTOs.Facility;
+using BusinessObjects.DTOs.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Services.Interfaces;
@@ -7,18 +8,18 @@ namespace FindingHealthcareSystem.Pages.Admin.Facility.Service
 {
     public class IndexModel : PageModel
     {
-        private readonly IFacilityTypeService _facilityTypeService;
+        private readonly IPublicServiceLayer _publicService;
 
-        public IndexModel(IFacilityTypeService facilityTypeService)
+        public IndexModel(IPublicServiceLayer publicService)
         {
-            _facilityTypeService = facilityTypeService;
+            _publicService = publicService;
         }
 
-        public IEnumerable<FacilityTypeDto> FacilityTypes { get; set; }
+        public IEnumerable<ServiceDto> Services { get; set; }
 
         public async Task OnGet()
         {
-            FacilityTypes = await _facilityTypeService.GetAllFacilityTypes();
+            Services = await _publicService.GetAllFacilities();
         }
 
     }
