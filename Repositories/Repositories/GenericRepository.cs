@@ -15,10 +15,12 @@ namespace Repositories.Repositories
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         private readonly IGenericDAO<T> _dao;
+        
 
         public GenericRepository(IGenericDAO<T> dao)
         {
-            _dao = dao;
+            _dao = dao ?? throw new ArgumentNullException(nameof(dao));
+            
         }
 
         public async Task<T> GetByIdAsync(int id)
@@ -26,19 +28,26 @@ namespace Repositories.Repositories
             return await _dao.GetByIdAsync(id);
         }
 
+        public async Task<IEnumerable<T>> GetListById(int id)
+        {
+            return await _dao.GetListById(id);
+        }   
+
         public async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _dao.GetAllAsync();
         }
 
-        public async Task<T> FindAsync(Expression<Func<T, bool>> predicate)
+        public async Task<T> FindAsync(Expression<Func<T, bool>> predicate, string includeProperties = "")
         {
             return await _dao.FindAsync(predicate);
         }
 
-        public async Task<IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> predicate)
+        public async Task<IEnumerable<T>> FindAllAsync(
+                                    Expression<Func<T, bool>> predicate,
+                                    string includeProperties = "")
         {
-            return await _dao.FindAllAsync(predicate);
+            return await _dao.FindAllAsync(predicate, includeProperties);
         }
 
         public async Task<PaginatedList<T>> GetPagedListAsync(
@@ -81,5 +90,6 @@ namespace Repositories.Repositories
         {
             _dao.RemoveRange(entities);
         }
+
     }
 }

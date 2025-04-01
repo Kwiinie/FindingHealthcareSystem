@@ -27,6 +27,8 @@ namespace Repositories.Repositories
             return await _professionalDao.GetByIdAsync(id);
         }
 
+        
+
 
         /// <summary>
         /// SEARCHING PROFESSIONAL BASED ON LOCATION AND NAME
@@ -91,5 +93,15 @@ namespace Repositories.Repositories
 
             return await query.ToListAsync();
         }
+
+        public async Task<PaginatedList<Professional>> GetAllProfessionalsPagedAsync(
+            Expression<Func<Professional, bool>> filter,
+            int pageIndex,
+            int pageSize,
+            Func<IQueryable<Professional>, IOrderedQueryable<Professional>> orderBy = null)
+        {
+            return await _professionalDao.GetAllProfessionalsPagedAsync(filter, pageIndex, pageSize, orderBy);
+        }
+
     }
 }

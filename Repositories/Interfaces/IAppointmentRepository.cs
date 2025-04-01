@@ -13,5 +13,8 @@ namespace Repositories.Interfaces
         Task<IEnumerable<Appointment>> GetAppointmentsByProviderAndDateAsync(ProviderType providerType,
                                                                                            int providerId,
                                                                                            DateTime date);
+        Task<IEnumerable<Appointment>> GetAllAppoinmentByDate(int id, DateTime startDate, DateTime endDate);
+        Task<int> CountAppointmentByStatus(int id, string status);
+        Task<IEnumerable<Appointment>> GetMyAppointment(int patientId);
     }
 }

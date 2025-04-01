@@ -15,5 +15,6 @@ namespace Services.Interfaces
         Task<FacilityTypeDto> Update(int id, FacilityTypeDto facilityDto);
         Task<FacilityTypeDto> GetById(int id);
         Task<FacilityTypeDto> DeleteAsync(int id);
+        Task<List<FacilityTypeDto>> GetAllActiveFacilityTypes();
     }
 }

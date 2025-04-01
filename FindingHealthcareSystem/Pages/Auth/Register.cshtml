@@ -40,37 +40,71 @@
             <input type="password" class="form-control" asp-for="Input.Password" required />
         </div>
         <div class="col-md-6">
-            <label>Ngày sinh</label>
-            <input type="date" class="form-control" asp-for="Input.Birthday" id="birthday" required />
-            <small id="displayBirthday"></small>
+            <label>Ngày sinh (Bạn phải từ 18 tuổi trở lên)</label>
+            <input type="date" class="form-control" id="birthdayInput" required>
+            <input type="hidden" asp-for="Input.Birthday" id="formattedBirthday">
+            <small id="displayBirthday" class="text-muted"></small>
+            <small id="errorBirthday" class="text-danger"></small>
         </div>
 
         <script>
-            // Lấy ngày hôm nay theo định dạng YYYY-MM-DD
-            const today = new Date().toISOString().split("T")[0];
+            document.addEventListener("DOMContentLoaded", function () {
+                const birthdayInput = document.getElementById("birthdayInput");
+                const formattedBirthdayInput = document.getElementById("formattedBirthday");
+                const displayBirthday = document.getElementById("displayBirthday");
+                const errorBirthday = document.getElementById("errorBirthday");
 
-            // Gán giá trị max cho input date
-            const birthdayInput = document.getElementById("birthday");
-            birthdayInput.setAttribute("max", today);
+                const today = new Date();
+                const maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate()).toISOString().split("T")[0];
+                birthdayInput.setAttribute("max", maxDate);
 
-            // Hiển thị ngày theo định dạng dd/mm/yyyy khi chọn ngày
-            birthdayInput.addEventListener("change", function () {
-                const dateValue = this.value; // Lấy giá trị yyyy-mm-dd
-                if (dateValue) {
-                    const [year, month, day] = dateValue.split("-"); // Tách chuỗi thành từng phần
-                    document.getElementById("displayBirthday").innerText = `Ngày đã chọn: ${day}/${month}/${year}`;
-                } else {
-                    document.getElementById("displayBirthday").innerText = "";
+                function validateBirthday() {
+                    const dateValue = birthdayInput.value; // yyyy-mm-dd
+                    if (dateValue) {
+                        const [year, month, day] = dateValue.split("-");
+                        const formattedDate = `${day}/${month}/${year}`;
+                        displayBirthday.innerText = `Ngày đã chọn: ${formattedDate}`;
+                        formattedBirthdayInput.value = formattedDate;
+
+                        // Kiểm tra tuổi
+                        const birthDate = new Date(dateValue);
+                        const age = today.getFullYear() - birthDate.getFullYear();
+                        const monthDiff = today.getMonth() - birthDate.getMonth();
+                        const dayDiff = today.getDate() - birthDate.getDate();
+
+                        if (age < 18 || (age === 18 && monthDiff < 0) || (age === 18 && monthDiff === 0 && dayDiff < 0)) {
+                            errorBirthday.innerText = "Bạn phải từ 18 tuổi trở lên.";
+                            birthdayInput.value = ""; // Clear invalid input
+                            formattedBirthdayInput.value = "";
+                            return false;
+                        } else {
+                            errorBirthday.innerText = "";
+                            return true;
+                        }
+                    } else {
+                        displayBirthday.innerText = "";
+                        formattedBirthdayInput.value = "";
+                        errorBirthday.innerText = "Vui lòng chọn ngày sinh.";
+                        return false;
+                    }
                 }
+
+                // Kiểm tra nếu đã có giá trị từ trước (tránh mất dữ liệu sau khi tải lại trang)
+                if (birthdayInput.value) {
+                    validateBirthday();
+                }
+
+                birthdayInput.addEventListener("change", validateBirthday);
             });
         </script>
 
+
+
         <div class="col-md-6">
-            <label>Gender</label>
+            <label>Giới tính của bạn</label>
             <select class="form-select" asp-for="Input.Gender" required>
                 <option value="Nam">Nam</option>
                 <option value="Nữ">Nữ</option>
-                <option value="Khác">Khác</option>
             </select>
         </div>
     </div>
@@ -92,7 +126,7 @@
                 </select>
             </div>
             <div class="col-md-4">
-                <label>Chọn Xã</label>
+                <label>Chọn Xã</label> 
                 <select class="form-select" id="wardDropdown" asp-for="Input.Ward" required disabled>
                     <option value="">Chọn Quận/Huyện</option>
                 </select>
@@ -114,48 +148,107 @@
         </div>
     </div>
 
+    <div class="col-md-6">
+        <label>Ghi chú</label>
+        <input type="text" class="form-control" asp-for="Input.Note" id="note" placeholder=" Nhập bệnh nền, bệnh lý cần lưu ý (nếu có)" />
+        <small id="displayNote"></small>
+    </div>
+
     <div id="doctorFields" class="border rounded p-3 mt-3" style="display: none;">
-        <h4>Doctor Information</h4>
+        <h4>Nhập thông tin bác sỹ</h4>
         <div class="row g-3">
             <div class="col-md-6">
-                <label>Degree</label>
+                <label>Bằng Cấp</label>
                 <input type="text" class="form-control" asp-for="Input.Degree" id="degree"  />
             </div>
             <div class="col-md-6">
-                <label>Experience (years)</label>
-                <input type="text" class="form-control" asp-for="Input.Experience" id="experience"  />
+                <label>Kinh nghiệm (năm)</label>
+                <input type="number" class="form-control" asp-for="Input.Experience" id="experience"  />
             </div>
             <div class="col-md-6">
-                <label>Specialty</label>
+                <label>Chuyên khoa</label>
                 <select class="form-select" asp-for="Input.SpecialtyIds" multiple>
                     @if (ViewData["Specialties"] is List<Specialty> specialties)
                     {
                         @foreach (var specialty in specialties)
                         {
-                            <option value="@specialty.Id">@specialty.Description</option>
+                            <option value="@specialty.Id">@specialty.Name</option>
                         }
                     }
                 </select>
             </div>
 
             <div class="col-md-6">
-                <label>Expertise</label>
+                <label>Chuyên môn</label>
                 <select class="form-select" asp-for="Input.ExpertiseId" multiple>
                     @if (ViewData["Expertises"] is List<Expertise> Expertises)
                     {
                         @foreach (var ex in Expertises)
                         {
-                            <option value="@ex.Id">@ex.Description</option>
+                            <option value="@ex.Id">@ex.Name</option>
                         }
                     }
                 </select>
             </div>
+
+            <div class="col-md-6">
+                <label>Chọn khung giờ làm việc mong muốn (AM : sáng , PM : chiều )</label>
+                <div class="col-sm-3 col-lg-5 mb-3 mb-sm-0">
+                    <input type="time" class="form-control" id="startTime">
+                </div>
+                <div class="col-sm-3 col-lg-5">
+                    <input type="time" class="form-control" id="endTime">
+                </div>
+            </div>
+
+            <input type="hidden" asp-for="Input.WorkingHours" id="workingHours">
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const startTimeInput = document.getElementById("startTime");
+                    const endTimeInput = document.getElementById("endTime");
+                    const workingHoursInput = document.getElementById("workingHours");
+
+                    function updateWorkingHours() {
+                        const startTime = startTimeInput.value;
+                        const endTime = endTimeInput.value;
+
+                        if (startTime && endTime) {
+                            workingHoursInput.value = `${startTime} - ${endTime}`;
+                        }
+                    }
+
+                    startTimeInput.addEventListener("change", updateWorkingHours);
+                    endTimeInput.addEventListener("change", updateWorkingHours);
+                });
+            </script>
+
+
+
         </div>
     </div>
 
 
     <button type="submit" class="btn btn-primary mt-3 w-100">Đăng ký</button>
 </form>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let roleDropdown = document.getElementById("roleDropdown");
+        let noteField = document.getElementById("note").parentElement; // Get parent div to hide it
+
+        function toggleNoteField() {
+            if (roleDropdown.value == "@((int)Role.Patient)") {
+                noteField.style.display = "block";
+            } else {
+                noteField.style.display = "none";
+            }
+        }
+
+        roleDropdown.addEventListener("change", toggleNoteField);
+        toggleNoteField(); // Run on page load to set initial state
+    });
+</script>
 
 
 
@@ -182,7 +275,7 @@
 
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+     document.addEventListener("DOMContentLoaded", function () {
         const provinceDropdown = document.getElementById("provinceDropdown");
         const districtDropdown = document.getElementById("districtDropdown");
         const wardDropdown = document.getElementById("wardDropdown");
@@ -194,7 +287,7 @@
             .then(data => {
                 data.forEach(province => {
                     const option = document.createElement("option");
-                    option.value = province.name;
+                    option.value = province.name; // Use name instead of code
                     option.textContent = province.name;
                     provinceDropdown.appendChild(option);
                 });
@@ -202,22 +295,25 @@
 
         // Fetch Districts when Province changes
         provinceDropdown.addEventListener("change", function () {
-            const provinceCode = this.value;
-            districtDropdown.innerHTML = '<option value="">Select District</option>';
-            wardDropdown.innerHTML = '<option value="">Select Ward</option>';
-            districtDropdown.disabled = !provinceCode;
+            const provinceName = this.value;
+            districtDropdown.innerHTML = '<option value="">Chọn Quận/Huyện</option>';
+            wardDropdown.innerHTML = '<option value="">Chọn Xã</option>';
+            districtDropdown.disabled = !provinceName;
             wardDropdown.disabled = true;
 
-            if (provinceCode) {
-                fetch(`https://provinces.open-api.vn/api/p/${provinceCode}?depth=2`)
+            if (provinceName) {
+                fetch(`https://provinces.open-api.vn/api/?depth=2`)
                     .then(response => response.json())
                     .then(data => {
-                        data.districts.forEach(district => {
-                            const option = document.createElement("option");
-                            option.value = district.name;
-                            option.textContent = district.name;
-                            districtDropdown.appendChild(option);
-                        });
+                        const selectedProvince = data.find(p => p.name === provinceName);
+                        if (selectedProvince) {
+                            selectedProvince.districts.forEach(district => {
+                                const option = document.createElement("option");
+                                option.value = district.name; // Use name instead of code
+                                option.textContent = district.name;
+                                districtDropdown.appendChild(option);
+                            });
+                        }
                     });
             }
             updateAddress();
@@ -225,19 +321,24 @@
 
         // Fetch Wards when District changes
         districtDropdown.addEventListener("change", function () {
-            const districtCode = this.value;
-            wardDropdown.innerHTML = '<option value="">Select Ward</option>';
-            wardDropdown.disabled = !districtCode;
+            const districtName = this.value;
+            wardDropdown.innerHTML = '<option value="">Chọn Xã</option>';
+            wardDropdown.disabled = !districtName;
 
-            if (districtCode) {
-                fetch(`https://provinces.open-api.vn/api/d/${districtCode}?depth=2`)
+            if (districtName) {
+                fetch(`https://provinces.open-api.vn/api/?depth=3`)
                     .then(response => response.json())
                     .then(data => {
-                        data.wards.forEach(ward => {
-                            const option = document.createElement("option");
-                            option.value = ward.name;
-                            option.textContent = ward.name;
-                            wardDropdown.appendChild(option);
+                        data.forEach(province => {
+                            const selectedDistrict = province.districts.find(d => d.name === districtName);
+                            if (selectedDistrict) {
+                                selectedDistrict.wards.forEach(ward => {
+                                    const option = document.createElement("option");
+                                    option.value = ward.name; // Use name instead of code
+                                    option.textContent = ward.name;
+                                    wardDropdown.appendChild(option);
+                                });
+                            }
                         });
                     });
             }
@@ -245,12 +346,12 @@
         });
 
         // Update Address when Ward changes
-        wardDropdown.addEventListener("change", updateAddress);
+      //  wardDropdown.addEventListener("change", updateAddress);
 
         // function updateAddress() {
-        //     const provinceText = provinceDropdown.options[provinceDropdown.selectedIndex]?.text || "";
-        //     const districtText = districtDropdown.options[districtDropdown.selectedIndex]?.text || "";
-        //     const wardText = wardDropdown.options[wardDropdown.selectedIndex]?.text || "";
+        //     const provinceText = provinceDropdown.value;
+        //     const districtText = districtDropdown.value;
+        //     const wardText = wardDropdown.value;
 
         //     let address = `${wardText ? wardText + ", " : ""}${districtText ? districtText + ", " : ""}${provinceText}`;
         //     if (address.trim()) {
@@ -259,4 +360,5 @@
         //     }
         // }
     });
+
 </script>

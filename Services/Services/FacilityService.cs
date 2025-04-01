@@ -60,7 +60,6 @@ namespace Services.Services
         public async Task<FacilityDto> Create(FacilityDto facilityDto)
         {
             //validation
-            ValidateFacilityDto(facilityDto);
 
             //set value and save for Facility
             facilityDto.Status = FacilityStatus.Inactive;
@@ -96,39 +95,57 @@ namespace Services.Services
 
         public async Task<FacilityDto> Update(int id, FacilityDto facilityDto)
         {
-            //validation
+            // Validation
             var facRepo = _unitOfWork.GetRepository<Facility>();
             var facility = await facRepo.GetByIdAsync(id);
             if (facility == null)
             {
                 throw new Exception("Facility not found");
             }
-            ValidateFacilityDto(facilityDto);
 
-            //set value and save for Facility
-            _mapper.Map<Facility>(facilityDto);
+            // Chỉ cập nhật nếu facilityDto có giá trị mới
+            facility.TypeId = facilityDto.TypeId ?? facility.TypeId;
+            facility.Name = !string.IsNullOrWhiteSpace(facilityDto.Name) ? facilityDto.Name : facility.Name;
+            facility.OperationDay = facilityDto.OperationDay ?? facility.OperationDay;
+            facility.Province = !string.IsNullOrWhiteSpace(facilityDto.Province) ? facilityDto.Province : facility.Province;
+            facility.District = !string.IsNullOrWhiteSpace(facilityDto.District) ? facilityDto.District : facility.District;
+            facility.Ward = !string.IsNullOrWhiteSpace(facilityDto.Ward) ? facilityDto.Ward : facility.Ward;
+            facility.Address = !string.IsNullOrWhiteSpace(facilityDto.Address) ? facilityDto.Address : facility.Address;
+            facility.Description = !string.IsNullOrWhiteSpace(facilityDto.Description) ? facilityDto.Description : facility.Description;
+            facility.Status = facilityDto.Status ; // Kiểm tra nếu Status là enum
+            facility.ImgUrl = !string.IsNullOrWhiteSpace(facilityDto.ImgUrl) ? facilityDto.ImgUrl : facility.ImgUrl;
             facility.UpdatedAt = DateTime.UtcNow.AddHours(7);
+            if (facilityDto.Status == FacilityStatus.Inactive)  // nếu inactive thì isdelete =true
+            {
+                facility.IsDeleted = true;
+            }
             facRepo.Update(facility);
+
+          
+
+
             await _unitOfWork.SaveChangesAsync();
 
-            //set value and save for FacilityDepartment
+            // Cập nhật bảng FacilityDepartment nếu có thay đổi
             var facRepo2 = _unitOfWork.FacilityRepository;
-            if (facilityDto.DepartmentIds.Count > 0)
+            if (facilityDto.DepartmentIds?.Count > 0)
             {
                 await facRepo2.UpdateFacilityDepartmentsAsync(facility.Id, facilityDto.DepartmentIds);
                 await _unitOfWork.SaveChangesAsync();
             }
 
-            //get and response for Facility
             var facilityWithRelations = await facRepo2.GetByIdWithRelationsAsync(facility.Id);
 
             return MapToFacilityResponseDto(facilityWithRelations);
         }
 
+
+
         public async Task<FacilityDto> GetById(int id)
         {
-            var facRepo = _unitOfWork.GetRepository<Facility>();
-            var facility = await facRepo.GetByIdAsync(id);
+            if (id == null) throw new Exception("Id is not found");
+            var facRepo = _unitOfWork.FacilityRepository;
+            var facility = await facRepo.GetByIdWithRelationsAsync(id);
             if (facility == null)
             {
                 throw new Exception("Facility not found");

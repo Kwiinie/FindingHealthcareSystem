@@ -10,10 +10,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BusinessObjects.DTOs.Article;
 using BusinessObjects.DTOs.Professional;
 using BusinessObjects.DTOs.Service;
 using BusinessObjects.DTOs.Appointment;
 using BusinessObjects.DTOs;
+using BusinessObjects.DTOs.Category;
+using BusinessObjects.Enums;
+using BusinessObjects.DTOs.Payment;
 
 namespace Services.Mappers
 {
@@ -29,10 +33,26 @@ namespace Services.Mappers
             CreateMap<User, LoginDto>().ReverseMap();
             CreateMap<Appointment, AppointmentDTO>().ReverseMap();
             CreateMap<User, LoginDto>().ReverseMap();
+
+            CreateMap<Article, ArticleDTO>()
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name))
+                .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy.Fullname));
+            CreateMap<Category, CategoryDTO>().ReverseMap();
             CreateMap<Specialty, SpecialtyDto>().ReverseMap();
             CreateMap<PublicService, ServiceDto>().ReverseMap();
             CreateMap<PrivateService, ServiceDto>().ReverseMap();
             CreateMap<Patient, PatientDTO>().ReverseMap();
+            CreateMap<Payment, PaymentDto>()
+            .ForMember(dest => dest.AppointmentId, opt => opt.MapFrom(src =>
+                        src.Appointments != null && src.Appointments.Any()
+                        ? src.Appointments.First().Id
+                        : (int?)null
+            ));
+
+
+
+
+
 
             /////////////////////////////////////////////////////////////////////////
             ///MAPPING PROFESSIONAL EXPERTISE, SPECIALTY, USER INFO, SERVICE INFO///
@@ -59,8 +79,8 @@ namespace Services.Mappers
             ///MAPPING FACILITY WITH TYPE, DEPARTMENT NAME, SERVICE INFO///
             //////////////////////////////////////////////////////////////
             CreateMap<Facility, SearchingFacilityDto>()
-            .ForMember(dest => dest.FacilityTypeName, opt => opt.MapFrom(src => src.Type.Name)) 
-            .ForMember(dest => dest.DepartmentNames, opt => opt.MapFrom(src => src.FacilityDepartments.Select(fd => fd.Department.Name).ToList())) 
+            .ForMember(dest => dest.FacilityTypeName, opt => opt.MapFrom(src => src.Type.Name))
+            .ForMember(dest => dest.DepartmentNames, opt => opt.MapFrom(src => src.FacilityDepartments.Select(fd => fd.Department.Name).ToList()))
             .ForMember(dest => dest.PublicServices, opt => opt.MapFrom(src => src.PublicServices.Select(ps => new ServiceDto
             {
                 Id = ps.Id,
@@ -69,6 +89,17 @@ namespace Services.Mappers
                 Description = ps.Description
             }).ToList()));
 
+            // Mapping từ Facility -> FacilityDto
+            CreateMap<Facility, FacilityDto>()
+                .ForMember(dest => dest.FacilityDepartments,
+                           opt => opt.MapFrom(src => src.FacilityDepartments));
+
+            // Mapping từ FacilityDepartment -> FacilityDepartmentDto
+            CreateMap<FacilityDepartment, FacilityDepartmentDto>()
+                .ForMember(dest => dest.DepartmentId, opt => opt.MapFrom(src => src.Department.Id))
+                .ForMember(dest => dest.Department, opt => opt.MapFrom(src => src.Department));
+
+
 
             /////////////////////////////////////////////////////////////////////////
             ///                     MAPPING APPOINTMENT PROFILE                  ///
@@ -76,6 +107,23 @@ namespace Services.Mappers
             CreateMap<Appointment, AppointmentDTO>().ReverseMap();
 
             CreateMap<Appointment, CreateAppointmentDto>().ReverseMap();
+
+            CreateMap<Appointment, MyAppointmentDto>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date ?? DateTime.MinValue))
+                .ForMember(dest => dest.ProviderId, opt => opt.MapFrom(src => src.ProviderId))
+                .ForMember(dest => dest.ProviderType, opt => opt.MapFrom(src => src.ProviderType))
+                .ForMember(dest => dest.Service, opt => opt.MapFrom(src =>
+                            src.ServiceType == ServiceType.Private
+                            ? (object)src.PrivateService
+                            : src.PublicService
+                ))
+                .ForMember(dest => dest.Professional, opt => opt.MapFrom(src => src.Professional))
+                .ForMember(dest => dest.Facility, opt => opt.MapFrom(src => src.Facility))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+                .ForMember(dest => dest.TransactionId, opt => opt.MapFrom(src => src.Payment != null ? src.Payment.TransactionId : null))
+                .ForMember(dest => dest.Payment, opt => opt.MapFrom(src => src.Payment))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description));
 
         }
     }

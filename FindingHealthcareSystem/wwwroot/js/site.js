@@ -139,4 +139,98 @@ async function loadWards() {
 }
 
 
+////////////////////////////////////////////////////////////////////
+///                      SIDEBAR SECTIONS                       ///
+//////////////////////////////////////////////////////////////////
+document.addEventListener('DOMContentLoaded', function () {
+    const submenuToggles = document.querySelectorAll('.sidebar-link[data-bs-toggle="collapse"]');
+    const submenuLinks = document.querySelectorAll('.sidebar-submenu .sidebar-link');
 
+    function clearSidebarState() {
+        document.querySelectorAll('.sidebar-link').forEach(link => link.classList.remove('active'));
+        document.querySelectorAll('.collapse').forEach(c => c.classList.remove('show'));
+    }
+
+    function saveSidebarState(activeSubHref, parentHref) {
+        sessionStorage.setItem('activeSubLink', activeSubHref);
+        sessionStorage.setItem('activeParentLink', parentHref);
+    }
+
+    function setActiveBasedOnUrl() {
+        const currentPath = window.location.pathname;
+
+        let activeLink = document.querySelector(`.sidebar-link[href="${currentPath}"]`);
+        if (!activeLink) {
+            // Try partial match
+            document.querySelectorAll('.sidebar-link[href]').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && href !== "#" && currentPath.includes(href)) {
+                    activeLink = link;
+                }
+            });
+        }
+
+        if (activeLink) {
+            activeLink.classList.add('active');
+
+            const parentCollapse = activeLink.closest('.collapse');
+            if (parentCollapse) {
+                const bsCollapse = new bootstrap.Collapse(parentCollapse, { toggle: false });
+                bsCollapse.show();
+
+                const parentToggle = document.querySelector(`.sidebar-link[href="#${parentCollapse.id}"]`);
+                if (parentToggle) {
+                    parentToggle.classList.add('active');
+                    saveSidebarState(activeLink.getAttribute('href'), `#${parentCollapse.id}`);
+                }
+            } else {
+                saveSidebarState(activeLink.getAttribute('href'), '');
+            }
+        }
+    }
+
+    // Restore from session (for hard refresh)
+    function restoreSidebarState() {
+        const subHref = sessionStorage.getItem('activeSubLink');
+        const parentHref = sessionStorage.getItem('activeParentLink');
+
+        if (subHref) {
+            const activeLink = document.querySelector(`.sidebar-link[href="${subHref}"]`);
+            const parentToggle = document.querySelector(`.sidebar-link[href="${parentHref}"]`);
+            const parentCollapse = activeLink?.closest('.collapse');
+
+            if (activeLink) activeLink.classList.add('active');
+            if (parentToggle) parentToggle.classList.add('active');
+            if (parentCollapse) {
+                const bsCollapse = new bootstrap.Collapse(parentCollapse, { toggle: false });
+                bsCollapse.show();
+            }
+        }
+    }
+
+    // Click handling (optional override if needed)
+    submenuLinks.forEach(link => {
+        link.addEventListener('click', function () {
+            clearSidebarState();
+
+            this.classList.add('active');
+
+            const parentCollapse = this.closest('.collapse');
+            if (parentCollapse) {
+                const bsCollapse = new bootstrap.Collapse(parentCollapse, { toggle: false });
+                bsCollapse.show();
+
+                const parentToggle = document.querySelector(`.sidebar-link[href="#${parentCollapse.id}"]`);
+                if (parentToggle) parentToggle.classList.add('active');
+
+                saveSidebarState(this.getAttribute('href'), `#${parentCollapse.id}`);
+            } else {
+                saveSidebarState(this.getAttribute('href'), '');
+            }
+        });
+    });
+
+    // Run logic
+    clearSidebarState();
+    setActiveBasedOnUrl();
+});

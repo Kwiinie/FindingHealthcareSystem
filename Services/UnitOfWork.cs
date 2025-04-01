@@ -19,15 +19,25 @@ namespace Services
         private readonly IFacilityRepository _facilityRepository;
         private readonly IProfessionalRepository _professionalRepository;
         private readonly IAppointmentRepository _appointmentRepository;
+        private readonly IUserRepository _userRepository;
+
+        public IGenericRepository<ArticleImage> ArticleImageRepository { get; set; }
+        public IGenericRepository<Article> ArticleRepository { get; }
+        public IGenericRepository<Category> CategoryRepository { get; }
+
 
         public UnitOfWork(FindingHealthcareSystemContext context, IFacilityRepository facilityRepository, 
-                            IProfessionalRepository professionalRepository, IAppointmentRepository appointmentRepository)
+                            IProfessionalRepository professionalRepository, IAppointmentRepository appointmentRepository, IUserRepository userRepository)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
             _repositories = new Dictionary<Type, object>();
+            ArticleRepository = GetRepository<Article>();
+            CategoryRepository = GetRepository<Category>();
+            ArticleImageRepository = GetRepository<ArticleImage>();
             _facilityRepository = facilityRepository;
             _professionalRepository = professionalRepository;
             _appointmentRepository = appointmentRepository;
+            _userRepository = userRepository;
         }
 
 
@@ -46,6 +56,8 @@ namespace Services
         public IFacilityRepository FacilityRepository => _facilityRepository;
         public IProfessionalRepository ProfessionalRepository => _professionalRepository;
         public IAppointmentRepository AppointmentRepository => _appointmentRepository;
+        public IUserRepository UserRepository => _userRepository;
+
 
         public async Task<int> SaveChangesAsync()
         {

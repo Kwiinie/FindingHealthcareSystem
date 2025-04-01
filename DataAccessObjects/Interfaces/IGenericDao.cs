@@ -1,4 +1,5 @@
 ﻿using BusinessObjects.Commons;
+using BusinessObjects.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +12,16 @@ namespace DataAccessObjects.Interfaces
     public interface IGenericDAO<T> where T : class
     {
         Task<T> GetByIdAsync(int id);
+        Task<IEnumerable<T>> GetListById(int id);
         Task<IEnumerable<T>> GetAllAsync();
 
         //filtering returns first entity
-        Task<T> FindAsync(Expression<Func<T, bool>> predicate);
+        Task<T> FindAsync(Expression<Func<T, bool>> predicate, string includeProperties = "");
 
         //filtering returns list
-        Task<IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> predicate);
+        Task<IEnumerable<T>> FindAllAsync(
+    Expression<Func<T, bool>> predicate,
+    string includeProperties = "");
 
         //pagination with filter, sort, include related entity
         Task<PaginatedList<T>> GetPagedListAsync(
@@ -34,6 +38,7 @@ namespace DataAccessObjects.Interfaces
         Task AddRangeAsync(IEnumerable<T> entities);
         void Update(T entity);
         void Remove(T entity);
+        IQueryable<T> Query();
 
         //delete a list of entities
         void RemoveRange(IEnumerable<T> entities);

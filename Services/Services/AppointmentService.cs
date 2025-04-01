@@ -37,7 +37,7 @@ namespace Services.Services
             {
                 var patientRepo = _unitOfWork.GetRepository<Patient>();
 
-                var patient = await patientRepo.GetByIdAsync(entity.PatientId);
+                var patient = await patientRepo.FindAsync(p => p.UserId == entity.PatientId);
                 if (patient == null)
                 {
                     return Result<AppointmentDTO>.ErrorResult("Invalid Patient ID.");
@@ -69,6 +69,7 @@ namespace Services.Services
                 }
 
                 entity.Status = AppointmentStatus.AwaitingPayment;
+                entity.PatientId = patient.Id;
                 var appointmentEntity = _mapper.Map<Appointment>(entity);
                 appointmentEntity.Patient = patient;
 
@@ -84,6 +85,36 @@ namespace Services.Services
             }
         }
 
+        public async Task<bool> ChangeAppointmentStatus(int id, AppointmentStatus rejected)
+        {
+            try
+            {
+                var appointment = await _unitOfWork.AppointmentRepository.GetByIdAsync(id);
+                if (appointment == null)
+                {
+                    return false;
+                }
+                appointment.Status = rejected;
+                _unitOfWork.AppointmentRepository.Update(appointment);
+                await _unitOfWork.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<int> CountAppointmentByStatus(int id, string status)
+        {
+            return await _unitOfWork.AppointmentRepository.CountAppointmentByStatus(id, status);
+        }
+
+        public async Task<List<AppointmentDTO>> GetAllAppoinmentByDate(int id, DateTime startDate, DateTime endDate)
+        {
+            var appointments = await _unitOfWork.AppointmentRepository.GetAllAppoinmentByDate(id, startDate, endDate);
+            return _mapper.Map<List<AppointmentDTO>>(appointments);
+        }
 
         public async Task<List<AppointmentDTO>> GetAllAsync()
         {
@@ -91,11 +122,30 @@ namespace Services.Services
             return _mapper.Map<List<AppointmentDTO>>(appointments);
         }
 
+
         public async Task<List<AppointmentDTO>> GetAppointmentsByProviderAndDate(int providerId, string providerType, DateTime date)
         {
             ProviderType type = (ProviderType)Enum.Parse(typeof(ProviderType), providerType);
             var appointments = await _appointmentRepository.GetAppointmentsByProviderAndDateAsync(type, providerId, date);
             return _mapper.Map<List<AppointmentDTO>>(appointments);
         }
+
+        public async Task<List<MyAppointmentDto>> GetMyAppointment(int userId)
+        {
+            var patientRepo = _unitOfWork.GetRepository<Patient>();
+
+            var patient = await patientRepo.FindAsync(p => p.UserId == userId);
+            var appointments = await _unitOfWork.AppointmentRepository.GetMyAppointment(patient.Id);
+            return _mapper.Map<List<MyAppointmentDto>>(appointments);
+        }
+
+        public async Task<MyAppointmentDto?> GetMySpecificAppointment(int appointmentId)
+        {
+            var appointment = await _unitOfWork.AppointmentRepository
+                .FindAsync(a => a.Id == appointmentId, "Facility,Professional,PrivateService,PublicService,Payment"); 
+
+            return _mapper.Map<MyAppointmentDto>(appointment);
+        }
+
     }
 }

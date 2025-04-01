@@ -30,10 +30,10 @@ namespace BusinessObjects.DTOs.Facility
         public FacilityStatus Status { get; set; }
         public string? ImgUrl { get; set; }
 
-        public List<int> DepartmentIds { get; set; } = new List<int>();
+        public List<int> DepartmentIds { get; set; }
 
         public FacilityTypeDto? Type { get; set; }
 
-        public IEnumerable<FacilityDepartmentDto>? FacilityDepartments { get; set; } = new List<FacilityDepartmentDto>();
+        public IEnumerable<FacilityDepartmentDto>? FacilityDepartments { get; set; }
     }
 }
