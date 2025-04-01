@@ -113,10 +113,9 @@
 
 .patient-info {
     display: flex;
-    justify-content: center;
     align-items: center;
     gap: 10px;
-    margin-bottom:20px;
+    margin-bottom: 20px;
 }
 
 .patient-name {
@@ -139,10 +138,10 @@
     padding: 1px 10px;
 }
 
-.edit-body{
+.edit-body {
     padding: 20px;
     overflow-y: auto;
-    flex: 1;
+    height: 70vh;
 }
 
 .edit-line {
@@ -167,6 +166,7 @@
 .note-section {
     margin-top: 10px;
 }
+
 .notes-content {
     background-color: #f8f9fa;
     border-radius: 8px;
@@ -176,6 +176,7 @@
     overflow-y: auto;
     line-height: 1.5;
     border-left: 3px solid #6c757d;
+    word-wrap: break-word;
 }
 
 .modal-container {
@@ -188,4 +189,118 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
+}
+
+.pagination {
+    justify-content: center;
+    gap: 10px;
+}
+
+.paging-btn {
+    border-radius: 5px;
+    border: none;
+    background-color: blue;
+    opacity: 0.6;
+    color: white;
+}
+
+    .paging-btn:hover {
+        opacity: 0.8;
+    }
+
+    .paging-btn:disabled {
+        background-color: lightgray;
+    }
+
+.input-page {
+    width: 30px;
+    text-align: center;
+}
+
+.reschedule-section {
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    margin-top: 15px;
+    border: 1px solid #eee;
+    display: none;
+}
+
+    .reschedule-section.active {
+        display: block;
+        animation: fadeIn 0.3s;
+    }
+
+
+.reschedule-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.reschedule-label {
+    flex: 0 0 120px;
+    color: #666;
+    padding-top: 8px;
+}
+
+.reschedule-input {
+    flex: 1;
+}
+
+input[type="date"],
+input[type="time"] {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.time-slots {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.time-slot {
+    padding: 7px 8px;
+    background-color: #f1f1f1;
+    border-radius: 4px;
+    font-size: 13px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.2s;
+}
+
+    .time-slot.disable {
+        color: lightgray;
+    }
+
+    .time-slot:hover {
+        background-color: #e3e3e3;
+    }
+
+    .time-slot.selected {
+        background-color: #E3F2FD;
+        color: #1565C0;
+    }
+
+#appointmentSelectStatus {
+    width: 50%;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 4px;
 }

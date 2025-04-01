@@ -2,6 +2,7 @@
 using BusinessObjects.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,10 +16,7 @@ namespace BusinessObjects.DTOs
 
         public string Note { get; set; }
 
-        //public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
-
-        //public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
-
+        [NotMapped]
         public GeneralUserDto? User { get; set; }
 
         public DateTime? CreatedAt { get; set; }

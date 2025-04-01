@@ -15,6 +15,8 @@ namespace Repositories.Interfaces
                                                                                            DateTime date);
         Task<IEnumerable<Appointment>> GetAllAppoinmentByDate(int id, DateTime startDate, DateTime endDate);
         Task<int> CountAppointmentByStatus(int id, string status);
+        Task<Appointment> GetAppointment(int id);
+        IQueryable<Appointment> Query();
         Task<IEnumerable<Appointment>> GetMyAppointment(int patientId);
     }
 }

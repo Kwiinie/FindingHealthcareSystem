@@ -73,6 +73,7 @@ namespace Repositories.Repositories
                 .ToListAsync();
         }
 
+
         public async Task<int> CountAppointmentByStatus(int id, string status)
         {
             var query = _dao.Query().Include(x => x.Professional);
@@ -83,5 +84,14 @@ namespace Repositories.Repositories
             return await _dao.Query().Where(a => a.Professional.UserId == id && a.ProviderId == a.Professional.Id && a.Status.ToString().Equals(status)).CountAsync();
         }
 
+        public async Task<Appointment?> GetAppointment(int id)
+        {
+            return await _dao.Query().Include(a => a.Patient).Include(a => a.Patient.User).Include(a => a.Professional).FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public IQueryable<Appointment> Query()
+        {
+            return _dao.Query();
+        }
     }
 }

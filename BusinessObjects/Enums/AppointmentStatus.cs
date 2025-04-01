@@ -16,5 +16,6 @@ namespace BusinessObjects.Enums
         Cancelled, //patient cancelled
         Rejected, //professional rejects
         Completed, //professional confirm after appointment
+        None,
     }
 }

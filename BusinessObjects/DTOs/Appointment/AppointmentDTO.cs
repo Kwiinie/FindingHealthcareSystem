@@ -2,6 +2,7 @@
 using BusinessObjects.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,9 +11,14 @@ namespace BusinessObjects.DTOs.Appointment
 {
     public class AppointmentDTO
     {
-        public int Id { get; set; }
+        [NotMapped]
+        public int? Id { get; set; }
         public DateTime Date { get; set; }
+        public int? PatientId { get; set; }
+
+        [NotMapped]
         public PatientDTO Patient { get; set; }
+
         public int? ProviderId { get; set; }
         public ProviderType ProviderType { get; set; }
         public int? ServiceId { get; set; }
@@ -21,6 +27,7 @@ namespace BusinessObjects.DTOs.Appointment
         public int? PaymentId { get; set; }
         public string Description { get; set; }
 
+        [NotMapped]
         public int Age
         {
             get
