@@ -31,14 +31,16 @@ namespace Repositories.Repositories
             return await _dao.GetAllAsync();
         }
 
-        public async Task<T> FindAsync(Expression<Func<T, bool>> predicate)
+        public async Task<T> FindAsync(Expression<Func<T, bool>> predicate, string includeProperties = "")
         {
             return await _dao.FindAsync(predicate);
         }
 
-        public async Task<IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> predicate)
+        public async Task<IEnumerable<T>> FindAllAsync(
+                                    Expression<Func<T, bool>> predicate,
+                                    string includeProperties = "")
         {
-            return await _dao.FindAllAsync(predicate);
+            return await _dao.FindAllAsync(predicate, includeProperties);
         }
 
         public async Task<PaginatedList<T>> GetPagedListAsync(
@@ -81,5 +83,6 @@ namespace Repositories.Repositories
         {
             _dao.RemoveRange(entities);
         }
+
     }
 }

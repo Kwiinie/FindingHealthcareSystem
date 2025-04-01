@@ -12,6 +12,8 @@ namespace Services.Interfaces
     {
         Task<string> CreatePaymentAsync(PaymentRequestDto requestDto, HttpContext httpContext);
         Task<PaymentResponseDto> ExecutePaymentAsync(IQueryCollection collections);
+        Task<List<PaymentDto>> GetPaymentsByPatientIdAsync(int userId);
+
 
     }
 }

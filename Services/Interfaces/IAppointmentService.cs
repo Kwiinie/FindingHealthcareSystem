@@ -18,5 +18,7 @@ namespace Services.Interfaces
         Task<Result<AppointmentDTO>> AddAsync(CreateAppointmentDto entity);
         Task<List<AppointmentDTO>> GetAllAsync();
         Task<List<AppointmentDTO>> GetAppointmentsByProviderAndDate(int providerId, string providerType, DateTime date);
+        Task<List<MyAppointmentDto>> GetMyAppointment(int userId);
+        Task<MyAppointmentDto?> GetMySpecificAppointment(int appointmentId);
     }
 }

@@ -12,8 +12,10 @@ namespace Repositories.Interfaces
     {
         Task<T> GetByIdAsync(int id);
         Task<IEnumerable<T>> GetAllAsync();
-        Task<T> FindAsync(Expression<Func<T, bool>> predicate);
-        Task<IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> predicate);
+        Task<T> FindAsync(Expression<Func<T, bool>> predicate, string includeProperties = "");
+        Task<IEnumerable<T>> FindAllAsync(
+                            Expression<Func<T, bool>> predicate,
+                            string includeProperties = "");
         Task<PaginatedList<T>> GetPagedListAsync(
             Expression<Func<T, bool>> filter,
             int pageIndex,

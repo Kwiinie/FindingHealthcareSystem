@@ -98,5 +98,23 @@ namespace Services.Services
             var appointments = await _appointmentRepository.GetAppointmentsByProviderAndDateAsync(type, providerId, date);
             return _mapper.Map<List<AppointmentDTO>>(appointments);
         }
+
+        public async Task<List<MyAppointmentDto>> GetMyAppointment(int userId)
+        {
+            var patientRepo = _unitOfWork.GetRepository<Patient>();
+
+            var patient = await patientRepo.FindAsync(p => p.UserId == userId);
+            var appointments = await _unitOfWork.AppointmentRepository.GetMyAppointment(patient.Id);
+            return _mapper.Map<List<MyAppointmentDto>>(appointments);
+        }
+
+        public async Task<MyAppointmentDto?> GetMySpecificAppointment(int appointmentId)
+        {
+            var appointment = await _unitOfWork.AppointmentRepository
+                .FindAsync(a => a.Id == appointmentId, "Facility,Professional,PrivateService,PublicService,Payment"); 
+
+            return _mapper.Map<MyAppointmentDto>(appointment);
+        }
+
     }
 }

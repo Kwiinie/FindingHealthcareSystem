@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataAccessObjects.DAOs;
 
 namespace Repositories.Repositories
 {
@@ -55,6 +56,14 @@ namespace Repositories.Repositories
             .ToListAsync();
 
             return appointmentsForDay;
+        }
+
+        public async Task<IEnumerable<Appointment>> GetMyAppointment(int patientId)
+        {
+            return await _dao.FindAllAsync(
+                a => a.PatientId == patientId && !a.IsDeleted,
+                includeProperties: "Professional.User,Professional.Expertise,Professional.ProfessionalSpecialties.Specialty,Professional.PrivateServices,Facility,Payment,PrivateService,PublicService"
+            );
         }
 
 

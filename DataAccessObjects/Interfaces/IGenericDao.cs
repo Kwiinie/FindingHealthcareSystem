@@ -14,10 +14,12 @@ namespace DataAccessObjects.Interfaces
         Task<IEnumerable<T>> GetAllAsync();
 
         //filtering returns first entity
-        Task<T> FindAsync(Expression<Func<T, bool>> predicate);
+        Task<T> FindAsync(Expression<Func<T, bool>> predicate, string includeProperties = "");
 
         //filtering returns list
-        Task<IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> predicate);
+        Task<IEnumerable<T>> FindAllAsync(
+    Expression<Func<T, bool>> predicate,
+    string includeProperties = "");
 
         //pagination with filter, sort, include related entity
         Task<PaginatedList<T>> GetPagedListAsync(

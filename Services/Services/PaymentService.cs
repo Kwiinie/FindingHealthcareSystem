@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -51,12 +52,13 @@ namespace Services.Services
             };
 
             payment.Appointments.Add(appointment);
+            payment.PaymentUrl = paymentUrl;
 
             _unitOfWork.GetRepository<Payment>().AddAsync(payment);
             await _unitOfWork.SaveChangesAsync();
 
             appointment.PaymentId = payment.Id;
-            appointment.Status = AppointmentStatus.Pending;
+            appointment.Status = AppointmentStatus.AwaitingPayment;
             _unitOfWork.AppointmentRepository.Update(appointment);
             await _unitOfWork.SaveChangesAsync();
 
@@ -108,5 +110,28 @@ namespace Services.Services
 
             throw new Exception("Không thể lấy ID lịch hẹn từ mô tả giao dịch.");
         }
+
+        public async Task<List<PaymentDto>> GetPaymentsByPatientIdAsync(int userId)
+        {
+            var appointmentRepo =  _unitOfWork.GetRepository<Appointment>();
+            var patientRepo = _unitOfWork.GetRepository<Patient>();
+
+            var patient = await patientRepo.FindAsync(p => p.UserId == userId);
+
+            var appointments = await appointmentRepo.FindAllAsync(
+                predicate: a => a.PatientId == patient.Id && a.PaymentId != null,
+                includeProperties: "Payment"
+
+            );
+
+            var payments = appointments
+                .Where(a => a.Payment != null)
+                .Select(a => a.Payment!)
+                .DistinctBy(p => p.Id)
+                .ToList();
+
+            return _mapper.Map<List<PaymentDto>>(payments);
+        }
+
     }
 }

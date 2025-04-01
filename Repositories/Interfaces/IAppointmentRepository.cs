@@ -13,5 +13,6 @@ namespace Repositories.Interfaces
         Task<IEnumerable<Appointment>> GetAppointmentsByProviderAndDateAsync(ProviderType providerType,
                                                                                            int providerId,
                                                                                            DateTime date);
+        Task<IEnumerable<Appointment>> GetMyAppointment(int patientId);
     }
 }
