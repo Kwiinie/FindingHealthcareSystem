@@ -1,0 +1,162 @@
+﻿@page "/admin/patient"
+@model FindingHealthcareSystem.Pages.Admin.Patient.IndexModel
+@{
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+<div class="container mt-10">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="mb-0">Quản Lý Bệnh Nhân</h2>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <div class="search-container">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" class="form-control" placeholder="Tìm kiếm bệnh nhân...">
+                        </div>
+                    </div>
+                    <div class="col-md-8 d-flex justify-content-md-end mt-3 mt-md-0">
+                        <div class="btn-group me-2">
+                            <button type="button" class="btn btn-outline-secondary">
+                                <i class="fas fa-filter me-2"></i>Lọc
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="visually-hidden">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Trạng thái</a></li>
+                                <li><a class="dropdown-item" href="#">Giới tính</a></li>
+                                <li><a class="dropdown-item" href="#">Ngày sinh</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="width: 5%">ID</th>
+                                <th style="width: 5%">Avatar</th>
+                                <th style="width: 13%">Họ tên</th>
+                                <th style="width: 10%">Số điện thoại</th>
+                                <th style="width: 15%">Email</th>
+                                <th style="width: 5%">Giới tính</th>
+                                <th style="width: 10%">Ngày sinh</th>
+                                <th style="width: 17%">Trạng thái</th>
+                                <th style="width: 10%">Ghi chú</th>
+                                <th style="width: 10%"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>BN001</td>
+                                <td><img src="/img/defaultAvatar.jpg" alt="Avatar" class="avatar"></td>
+                                <td>Nguyễn Văn A</td>
+                                <td>0901234567</td>
+                                <td>nguyenvana@email.com</td>
+                                <td>Nam</td>
+                                <td>10/05/1985</td>
+                                <td><span class="patient-status status-active">Hoạt động</span></td>
+                                <td>Bệnh nhân tim mạch</td>
+                                <td>
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="bi bi-slash-circle"></i> Chặn
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>BN002</td>
+                                <td><img src="/img/defaultAvatar.jpg" alt="Avatar" class="avatar"></td>
+                                <td>Trần Thị B</td>
+                                <td>0912345678</td>
+                                <td>tranthib@email.com</td>
+                                <td>Nữ</td>
+                                <td>22/11/1990</td>
+                                <td><span class="patient-status status-active">Hoạt động</span></td>
+                                <td>Khám định kỳ</td>
+                                <td>
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="bi bi-slash-circle"></i> Chặn
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>BN003</td>
+                                <td><img src="/img/defaultAvatar.jpg" alt="Avatar" class="avatar"></td>
+                                <td>Lê Văn C</td>
+                                <td>0923456789</td>
+                                <td>levanc@email.com</td>
+                                <td>Nam</td>
+                                <td>04/07/1978</td>
+                                <td><span class="patient-status status-inactive">Không hoạt động</span></td>
+                                <td>Bệnh nhân tiểu đường</td>
+                                <td>
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="bi bi-slash-circle"></i> Chặn
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>BN004</td>
+                                <td><img src="/img/defaultAvatar.jpg" alt="Avatar" class="avatar"></td>
+                                <td>Phạm Thị D</td>
+                                <td>0934567890</td>
+                                <td>phamthid@email.com</td>
+                                <td>Nữ</td>
+                                <td>15/03/1995</td>
+                                <td><span class="patient-status status-active">Hoạt động</span></td>
+                                <td>Khám tổng quát</td>
+                                <td>
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="bi bi-slash-circle"></i> Chặn
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>BN005</td>
+                                <td><img src="/img/defaultAvatar.jpg" alt="Avatar" class="avatar"></td>
+                                <td>Hoàng Văn E</td>
+                                <td>0945678901</td>
+                                <td>hoangvane@email.com</td>
+                                <td>Nam</td>
+                                <td>20/08/1987</td>
+                                <td><span class="patient-status status-active">Hoạt động</span></td>
+                                <td>Theo dõi huyết áp</td>
+                                <td>
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="bi bi-slash-circle"></i> Chặn
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <div>Hiển thị 1-5 của 48 bệnh nhân</div>
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

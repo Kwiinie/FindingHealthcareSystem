@@ -1,0 +1,165 @@
+﻿@page "/admin/professional"
+@model FindingHealthcareSystem.Pages.Admin.Professional.IndexModel
+@{
+}
+@{
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+<div class="container mt-10">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="mb-0">Quản Lý chuyên gia y tế</h2>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <div class="search-container">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" class="form-control" placeholder="Tìm kiếm chuyên gia y tế...">
+                        </div>
+                    </div>
+                    <div class="col-md-8 d-flex justify-content-md-end mt-3 mt-md-0">
+                        <div class="btn-group me-2">
+                            <button type="button" class="btn btn-outline-secondary">
+                                <i class="fas fa-filter me-2"></i>Lọc
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="visually-hidden">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Trạng thái</a></li>
+                                <li><a class="dropdown-item" href="#">Chuyên môn</a></li>
+                                <li><a class="dropdown-item" href="#">Tỉnh/Thành phố</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="width: 5%">ID</th>
+                                <th style="width: 5%">Avatar</th>
+                                <th style="width: 13%">Họ tên</th>
+                                <th style="width: 10%">Tỉnh/TP</th>
+                                <th style="width: 10%">Bằng cấp</th>
+                                <th style="width: 10%">Kinh Nghiệm</th>
+                                <th style="width: 10%">Chuyên môn</th> <!--expertise name-->
+                                <th style="width: 10%">Trạng thái yêu cầu</th>
+                                <th style="width: 17%">Trạng thái</th>
+                                <th style="width: 10%"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><img src="/img/defaultAvatar.jpg" alt="Avatar" class="avatar"></td>
+                                <td>TS. Nguyễn Văn A</td>
+                                <td>Hà Nội</td>
+                                <td>degree</td>
+                                <td>experience</td>
+                                <td>expertise</td>
+                                <td><span class="professional-status status-approved">Đã duyệt</span></td>
+                                <td><span class="professional-status status-active">Hoạt động</span></td>
+                                <td>
+
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="bi bi-slash-circle"></i> Chặn
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><img src="/img/defaultAvatar.jpg" alt="Avatar" class="avatar"></td>
+                                <td>BS. Trần Thị B</td>
+                                <td>TP Hồ Chí Minh</td>
+                                <td>degree</td>
+                                <td>experience</td>
+                                <td>expertise</td>
+                                <td><span class="professional-status status-approved">Đã duyệt</span></td>
+                                <td><span class="professional-status status-active">Hoạt động</span></td>
+                                <td>
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="bi bi-slash-circle"></i> Chặn
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><img src="/img/defaultAvatar.jpg" alt="Avatar" class="avatar"></td>
+                                <td>TS. Nguyễn Văn A</td>
+                                <td>Hà Nội</td>
+                                <td>degree</td>
+                                <td>experience</td>
+                                <td>expertise</td>
+                                <td><span class="professional-status status-approved">Đã duyệt</span></td>
+                                <td><span class="professional-status status-active">Hoạt động</span></td>
+                                <td>
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="bi bi-slash-circle"></i> Chặn
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><img src="/img/defaultAvatar.jpg" alt="Avatar" class="avatar"></td>
+                                <td>TS. Nguyễn Văn A</td>
+                                <td>Hà Nội</td>
+                                <td>degree</td>
+                                <td>experience</td>
+                                <td>expertise</td>
+                                <td><span class="professional-status status-approved">Đã duyệt</span></td>
+                                <td><span class="professional-status status-active">Hoạt động</span></td>
+                                <td>
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="bi bi-slash-circle"></i> Chặn
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><img src="/img/defaultAvatar.jpg" alt="Avatar" class="avatar"></td>
+                                <td>TS. Nguyễn Văn A</td>
+                                <td>Hà Nội</td>
+                                <td>degree</td>
+                                <td>experience</td>
+                                <td>expertise</td>
+                                <td><span class="professional-status status-approved">Đã duyệt</span></td>
+                                <td><span class="professional-status status-active">Hoạt động</span></td>
+                                <td>
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="bi bi-slash-circle"></i> Chặn
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <div>Hiển thị 1-5 của 42 chuyên gia</div>
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
