@@ -21,7 +21,7 @@
                 <div class="dashboard-card">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <div class="stats-number">248</div>
+                            <div class="stats-number">@Model.TotalFacilities</div>
                             <div class="stats-title">Tổng Cơ Sở Y Tế</div>
                         </div>
                         <div class="card-icon text-primary">
@@ -34,7 +34,7 @@
                 <div class="dashboard-card">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <div class="stats-number">1,354</div>
+                            <div class="stats-number">@Model.TotalProfessionals</div>
                             <div class="stats-title">Chuyên Gia Y Tế</div>
                         </div>
                         <div class="card-icon text-primary">
@@ -47,7 +47,7 @@
                 <div class="dashboard-card">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <div class="stats-number">7,893</div>
+                            <div class="stats-number">@Model.TotalPatients</div>
                             <div class="stats-title">Bệnh Nhân</div>
                         </div>
                         <div class="card-icon text-primary">
@@ -60,7 +60,7 @@
                 <div class="dashboard-card">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <div class="stats-number">5,762</div>
+                            <div class="stats-number">@Model.TotalPayments</div>
                             <div class="stats-title">Giao Dịch</div>
                         </div>
                         <div class="card-icon text-primary">
@@ -71,12 +71,13 @@
             </div>
         </div>
 
+
         <!-- Charts Row -->
         <div class="row g-4 mb-4">
             <!-- Pie Chart -->
             <div class="col-lg-6">
                 <div class="dashboard-card">
-                    <h5 class="card-title mb-3">Phân Bố Cơ Sở Y Tế & Chuyên Gia</h5>
+                    <h5 class="card-title mb-3">Phân Bố Trạng Thái Lịch Khám</h5>
                     <div class="chart-container">
                         <canvas id="pieChart"></canvas>
                     </div>
@@ -107,7 +108,7 @@
             <!-- Payment by Service Type -->
             <div class="col-lg-6">
                 <div class="dashboard-card">
-                    <h5 class="card-title mb-3">Tổng Thanh Toán Theo Loại Dịch Vụ</h5>
+                    <h5 class="card-title mb-3">Tổng Doanh Thu Theo Cơ Sở/Chuyên Gia Y Tế</h5>
                     <div class="chart-container">
                         <canvas id="paymentByServiceChart"></canvas>
                     </div>
@@ -126,4 +127,17 @@
         </div>
     </div>
 </div>
+
+
 <script src="~/js/AdminDashboard.js"></script>
+<script>
+
+    const appointmentStatusData = @Html.Raw(Model.AppointmentStatusChartJson);
+    const monthlyPaymentData = @Html.Raw(Model.MonthlyPaymentChartJson);
+    const monthlyAppointmentData = @Html.Raw(Model.MonthlyAppointmentChartJson);
+    const revenueByProviderData = @Html.Raw(Model.RevenueByProviderChartJson);
+
+    const provinceData = @Html.Raw(Model.ProvinceDistributionJson);
+
+
+</script>

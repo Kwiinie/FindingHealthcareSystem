@@ -42,5 +42,6 @@ namespace DataAccessObjects.Interfaces
 
         //delete a list of entities
         void RemoveRange(IEnumerable<T> entities);
+        Task<int> CountAsync(Expression<Func<T, bool>>? predicate = null);
     }
 }

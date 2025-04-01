@@ -66,6 +66,8 @@ namespace FindingHealthcareSystem
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IPaymentService, PaymentService>();
             services.AddSingleton<VNPayHelper>();
+            services.AddScoped<IDashboardService, DashboardService>();
+
 
 
             return services;
