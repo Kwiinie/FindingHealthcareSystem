@@ -1,9 +1,11 @@
-using BusinessObjects.DTOs.Department;
+﻿using BusinessObjects.DTOs.Department;
 using BusinessObjects.DTOs.Facility;
 using BusinessObjects.DTOs.Service;
 using BusinessObjects.Entities;
+using BusinessObjects.LocationModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Services.Interfaces;
 
 namespace FindingHealthcareSystem.Pages.Facility
@@ -14,13 +16,20 @@ namespace FindingHealthcareSystem.Pages.Facility
         private readonly IDepartmentService _departmentService;
         private readonly IPublicServiceLayer _publicServiceLayer;
         private readonly IFacilityTypeService _facilityTypeService;
+        private readonly ILocationService _locationService;
 
-        public DetailModel(IFacilityService facilityService, IDepartmentService departmentService, IPublicServiceLayer publicServiceLayer, IFacilityTypeService facilityTypeService)
+        public DetailModel(
+            IFacilityService facilityService,
+            IDepartmentService departmentService,
+            IPublicServiceLayer publicServiceLayer,
+            IFacilityTypeService facilityTypeService,
+            ILocationService locationService)
         {
             _facilityService = facilityService;
             _departmentService = departmentService;
             _publicServiceLayer = publicServiceLayer;
             _facilityTypeService = facilityTypeService;
+            _locationService = locationService;
         }
 
         [BindProperty(SupportsGet = true)]
@@ -49,77 +58,96 @@ namespace FindingHealthcareSystem.Pages.Facility
 
         public bool IsEdit { get; private set; } = false;
 
-        //public async Task<IActionResult> OnGetAsync()
-        //{
-        //    Facility = await _facilityService.GetById(FacilityId);
-        //    if (Facility == null)
-        //    {
-        //        throw new Exception("Facility not found");
-        //    }
-        //    if (IsEdit)
-        //    {
-        //        // If in Edit Mode, load all departments for selection
-        //        Departments = await _departmentService.GetAllDepartments();
-        //    }
-        //    else
-        //    {
-        //        // If in View Mode, only show the departments associated with this facility
-        //        Departments = await _departmentService.GetDepartmentsByFacilityIdAsync(FacilityId) ?? new List<DepartmentDto>();
-        //    }
-
-        //    Services = await _publicServiceLayer.GetServicesByFacilityId(FacilityId) ?? new List<ServiceDto>();
-        //    return Page();
-        //}
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
             Facility = await _facilityService.GetById(FacilityId);
             if (Facility == null)
             {
-                throw new Exception("Facility not found");
+                return NotFound("Facility not found");
             }
+
             Departments = await _departmentService.GetAllDepartments();
             Services = await _publicServiceLayer.GetServicesByFacilityId(FacilityId) ?? new List<ServiceDto>();
             FacilityTypes = await _facilityTypeService.GetAllActiveFacilityTypes();
-        }
 
-        public async Task<IActionResult> OnGetAllDepartmentsAsync()
-        {
-            Departments = await _departmentService.GetAllDepartments();
             return Page();
-        }
-
-        public async Task<IActionResult> OnGetAllServicesAsync()
-        {
-            Services = await _publicServiceLayer.GetAllFacilities();
-            return Page();
-        }
-
-        public async Task<IActionResult> OnPostDeleteFacilityAsync()
-        {
-            await _facilityService.DeleteAsync(FacilityId);
-            return RedirectToPage("/Facility/Index");
         }
 
         public async Task<IActionResult> OnPostEditFacilityAsync()
         {
-            if (!ModelState.IsValid)
+            //if (!ModelState.IsValid)
+            //{
+            //    return Page();
+            //}
+
+            var existingFacility = await _facilityService.GetById(FacilityId);
+            if (existingFacility == null)
             {
-                return Page();
+                return NotFound("Facility not found");
             }
 
             await _facilityService.Update(FacilityId, Facility);
-            return Page();
+            return RedirectToPage("/Facility/Detail", new { FacilityId });
         }
 
-        public async Task<IActionResult> OnPostAddServiceAsync()
+        public async Task<IActionResult> OnPostDeleteFacilityAsync()
         {
-            if (!ModelState.IsValid)
+            var existingFacility = await _facilityService.GetById(FacilityId);
+            if (existingFacility == null)
             {
-                return Page();
+                return NotFound("Facility not found");
             }
 
-            await _publicServiceLayer.Create(FacilityId, Service);
-            return RedirectToPage("/Facility/Detail", new { id = FacilityId });
+            await _facilityService.DeleteAsync(FacilityId);
+            return RedirectToPage("/Facility/Index");
         }
+
+        public async Task<IActionResult> OnPostAddService()
+        {
+           
+
+             var Name = Service.Name;
+             var Price = Service.Price;
+            var Description = Service.Description;
+
+            await _publicServiceLayer.Create(FacilityId, Service);
+
+            return RedirectToPage("/Facility/Detail", new { FacilityId });
+        }
+
+        // Cập nhật dịch vụ
+        public async Task<IActionResult> OnPostEditServiceAsync()
+        {
+         
+
+            var existingService = await _publicServiceLayer.GetPublicServiceById(ServiceId);
+            if (existingService == null)
+            {
+                return NotFound();
+            }
+
+            existingService.Name = Service.Name;
+            existingService.Price = Service.Price;
+            existingService.Description = Service.Description;
+
+            await _publicServiceLayer.Update(FacilityId, ServiceId, existingService);
+            return RedirectToPage(); // Hoặc thay bằng trang bạn muốn quay về
+        }
+
+        // Xóa dịch vụ
+        public async Task<IActionResult> OnPostDeleteServiceAsync()
+        {
+            var existingService = await _publicServiceLayer.GetPublicServiceById(ServiceId);
+            if (existingService == null)
+            {
+                return NotFound();
+            }
+
+            await _publicServiceLayer.Delete( ServiceId);
+
+            return RedirectToPage(); // Hoặc thay bằng trang bạn muốn quay về
+        }
+
+
     }
 }

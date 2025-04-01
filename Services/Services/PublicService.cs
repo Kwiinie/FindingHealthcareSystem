@@ -104,9 +104,24 @@ namespace Services.Services
             }
             pubService.Name = publicServiceDto.Name;
             pubService.Description = publicServiceDto.Description;
+            pubService.Price = publicServiceDto.Price;
             pubServiceRepo.Update(pubService);
             await _unitOfWork.SaveChangesAsync();
             return _mapper.Map<ServiceDto>(pubService);
+        }
+
+        public async Task Delete(int publicServiceId)
+        {
+        
+            var pubServiceRepo = _unitOfWork.GetRepository<PublicService>();
+            var pubService = await pubServiceRepo.GetByIdAsync(publicServiceId);
+            if (pubService == null)
+            {
+                throw new Exception("Public Service not found");
+            }
+
+            pubServiceRepo.Remove(pubService);
+            await _unitOfWork.SaveChangesAsync();
         }
     }
 }

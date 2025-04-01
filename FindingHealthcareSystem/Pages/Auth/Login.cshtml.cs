@@ -1,4 +1,5 @@
 using BusinessObjects.DTOs.Auth;
+using BusinessObjects.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
@@ -36,7 +37,10 @@ namespace FindingHealthcareSystem.Pages.Auth
 
                     var accountJson = JsonConvert.SerializeObject(result.Data);
                     HttpContext.Session.SetString("User", accountJson);
-
+                    //if (result.Data.Role == Role.Admin.ToString())
+                    //{
+                    //    return RedirectToPage("/Admin/Dashboard");
+                    //}
                     return Redirect("/");
                 }
                 else

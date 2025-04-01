@@ -103,13 +103,28 @@ namespace Services.Services
             {
                 throw new Exception("Facility not found");
             }
-            ValidateFacilityDto(facilityDto);
 
-            // Cập nhật giá trị từ DTO vào entity hiện tại (giữ nguyên giá trị không thay đổi)
-            _mapper.Map(facilityDto, facility);
+            // Chỉ cập nhật nếu facilityDto có giá trị mới
+            facility.TypeId = facilityDto.TypeId ?? facility.TypeId;
+            facility.Name = !string.IsNullOrWhiteSpace(facilityDto.Name) ? facilityDto.Name : facility.Name;
+            facility.OperationDay = facilityDto.OperationDay ?? facility.OperationDay;
+            facility.Province = !string.IsNullOrWhiteSpace(facilityDto.Province) ? facilityDto.Province : facility.Province;
+            facility.District = !string.IsNullOrWhiteSpace(facilityDto.District) ? facilityDto.District : facility.District;
+            facility.Ward = !string.IsNullOrWhiteSpace(facilityDto.Ward) ? facilityDto.Ward : facility.Ward;
+            facility.Address = !string.IsNullOrWhiteSpace(facilityDto.Address) ? facilityDto.Address : facility.Address;
+            facility.Description = !string.IsNullOrWhiteSpace(facilityDto.Description) ? facilityDto.Description : facility.Description;
+            facility.Status = facilityDto.Status ; // Kiểm tra nếu Status là enum
+            facility.ImgUrl = !string.IsNullOrWhiteSpace(facilityDto.ImgUrl) ? facilityDto.ImgUrl : facility.ImgUrl;
             facility.UpdatedAt = DateTime.UtcNow.AddHours(7);
-
+            if (facilityDto.Status == FacilityStatus.Inactive)  // nếu inactive thì isdelete =true
+            {
+                facility.IsDeleted = true;
+            }
             facRepo.Update(facility);
+
+          
+
+
             await _unitOfWork.SaveChangesAsync();
 
             // Cập nhật bảng FacilityDepartment nếu có thay đổi
@@ -124,6 +139,7 @@ namespace Services.Services
 
             return MapToFacilityResponseDto(facilityWithRelations);
         }
+
 
 
         public async Task<FacilityDto> GetById(int id)
