@@ -40,7 +40,7 @@ namespace Repositories.Repositories
 
         public async Task<T> FindAsync(Expression<Func<T, bool>> predicate, string includeProperties = "")
         {
-            return await _dao.FindAsync(predicate);
+            return await _dao.FindAsync(predicate, includeProperties);
         }
 
         public async Task<IEnumerable<T>> FindAllAsync(
