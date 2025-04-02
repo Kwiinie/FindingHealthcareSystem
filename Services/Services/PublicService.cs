@@ -119,8 +119,8 @@ namespace Services.Services
             {
                 throw new Exception("Public Service not found");
             }
-
-            pubServiceRepo.Remove(pubService);
+            pubService.IsDeleted = true;
+            pubServiceRepo.Update(pubService);
             await _unitOfWork.SaveChangesAsync();
         }
     }

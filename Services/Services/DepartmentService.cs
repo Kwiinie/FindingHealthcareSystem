@@ -44,6 +44,7 @@ namespace Services.Services
             }
             var departmentRepo = _unitOfWork.GetRepository<Department>();
             var department = _mapper.Map<Department>(departmentDto);
+            department.CreatedAt = DateTime.UtcNow;
             await departmentRepo.AddAsync(department);
             await _unitOfWork.SaveChangesAsync();
             return _mapper.Map<DepartmentDto>(department);
@@ -67,6 +68,7 @@ namespace Services.Services
             }
             department.Name = departmentDto.Name;
             department.Description = departmentDto.Description;
+            department.UpdatedAt = DateTime.UtcNow;
             departmentRepo.Update(department);
             await _unitOfWork.SaveChangesAsync();
             return _mapper.Map<DepartmentDto>(department);
@@ -90,5 +92,18 @@ namespace Services.Services
             return _mapper.Map<List<DepartmentDto>>(departments);
         }
 
+        public async Task Delete(int id)
+        {
+            var departmentRepo = _unitOfWork.GetRepository<Department>();
+            var department = await departmentRepo.GetByIdAsync(id);
+            if (department == null)
+            {
+                throw new Exception("Department not found");
+            }
+            department.IsDeleted = true;
+            department.UpdatedAt = DateTime.UtcNow;
+            departmentRepo.Update(department);
+            await _unitOfWork.SaveChangesAsync();
+        }
     }
 }

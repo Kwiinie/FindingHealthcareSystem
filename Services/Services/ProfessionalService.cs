@@ -3,6 +3,7 @@ using BusinessObjects.Commons;
 using BusinessObjects.Dtos.User;
 using BusinessObjects.DTOs;
 using BusinessObjects.DTOs.Professional;
+using BusinessObjects.DTOs.Service;
 using BusinessObjects.Entities;
 using BusinessObjects.Enums;
 using Services.Interfaces;
@@ -86,7 +87,109 @@ namespace Services.Services
                 return new List<ProfessionalDto>();
             }
             return _mapper.Map<IEnumerable<ProfessionalDto>>(professionals);
-        }       
+        }
+        public async Task<List<ServiceDto>> GetServicesByprofessionalID(int professionalID)
+        {
+            var pubServiceRepo = _unitOfWork.GetRepository<PrivateService>();
+            var pubServices = await pubServiceRepo.FindAllAsync(x => x.ProfessionalId == professionalID);
+            if (pubServices == null || !pubServices.Any())
+            {
+                return new List<ServiceDto>();
+            }
+            return _mapper.Map<List<ServiceDto>>(pubServices);
+        }
+        public async Task<List<ServiceDto>> GetServicesByProId(int professId)
+        {
+            var pubServiceRepo = _unitOfWork.GetRepository<PrivateService>();
+            var pubServices = await pubServiceRepo.FindAllAsync(x => x.ProfessionalId == professId);
+            if (pubServices == null || !pubServices.Any())
+            {
+                return new List<ServiceDto>();
+            }
+            return _mapper.Map<List<ServiceDto>>(pubServices);
+        }
 
+
+        public async Task<ServiceDto> Create(int professionalID, ServiceDto publicServiceDto)
+        {
+            if (string.IsNullOrEmpty(publicServiceDto.Name))
+            {
+                throw new Exception("Private Service name is required");
+            }
+            if (string.IsNullOrEmpty(publicServiceDto.Description))
+            {
+                throw new Exception("Private Service description is required");
+            }
+            var facRepo = _unitOfWork.GetRepository<Professional>();
+            var existedFacility = await facRepo.GetByIdAsync(professionalID);
+            if (existedFacility == null)
+            {
+                throw new Exception("Professional is not found");
+            }
+            var pubServiceRepo = _unitOfWork.GetRepository<PrivateService>();
+            var pubService = _mapper.Map<PrivateService>(publicServiceDto);
+            pubService.ProfessionalId = professionalID;
+            pubService.CreatedAt = DateTime.UtcNow.AddHours(7);
+            await pubServiceRepo.AddAsync(pubService);
+            await _unitOfWork.SaveChangesAsync();
+            return _mapper.Map<ServiceDto>(pubService);
+        }
+
+        public async Task<ServiceDto> Update(int professionalID, int publicServiceId, ServiceDto publicServiceDto)
+        {
+            if (string.IsNullOrEmpty(publicServiceDto.Name))
+            {
+                throw new Exception("Private Service name is required");
+            }
+            if (string.IsNullOrEmpty(publicServiceDto.Description))
+            {
+                throw new Exception("Private Service description is required");
+            }
+            var facRepo = _unitOfWork.GetRepository<Professional>();
+            var existedFacility = await facRepo.GetByIdAsync(professionalID);
+            if (existedFacility == null)
+            {
+                throw new Exception("Professional is not found");
+            }
+            var pubServiceRepo = _unitOfWork.GetRepository<PrivateService>();
+            var pubService = await pubServiceRepo.GetByIdAsync(publicServiceId);
+            if (pubService == null)
+            {
+                throw new Exception("Private Service not found");
+            }
+
+            pubService.Name = publicServiceDto.Name;
+            pubService.Description = publicServiceDto.Description;
+            pubService.Price = publicServiceDto.Price;
+            pubServiceRepo.Update(pubService);
+            await _unitOfWork.SaveChangesAsync();
+            return _mapper.Map<ServiceDto>(pubService);
+        }
+
+        public async Task Delete(int publicServiceId)
+        {
+
+            var pubServiceRepo = _unitOfWork.GetRepository<PrivateService>();
+            var pubService = await pubServiceRepo.GetByIdAsync(publicServiceId);
+            if (pubService == null)
+            {
+                throw new Exception("Private Service not found");
+            }
+            pubService.IsDeleted = true;
+
+            pubServiceRepo.Update(pubService);
+            await _unitOfWork.SaveChangesAsync();
+        }
+
+        public async Task<ServiceDto> GetPrivateServiceById(int professionalService)
+        {
+            var pubServiceRepo = _unitOfWork.GetRepository<PrivateService>();
+            var pubService = await pubServiceRepo.GetByIdAsync(professionalService);
+            if (pubService == null)
+            {
+                throw new Exception("Private Service not found");
+            }
+            return _mapper.Map<ServiceDto>(pubService);
+        }
     }
 }

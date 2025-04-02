@@ -101,7 +101,7 @@
                 </div>
             </div>
 
-            <!-- Services Section -->
+            <!-- Services Section 2-->
             <div class="profile-card">
                 <div class="profile-info">
                     <div class="d-flex justify-content-between align-items-center">
@@ -116,21 +116,22 @@
                         }
                     </div>
 
-                    <div id="servicesContainer" class="row">
+                    <div id="servicesContainer">
                         @if (Model.Services != null && Model.Services.Any())
                         {
                             @foreach (var service in Model.Services)
                             {
-                                <div class="col-md-4 mb-4">
-                                    <div class="card service-card">
-                                        <div class="card-body">
-                                            <h4 class="card-title">@service.Name</h4>
-                                            <h5 class="card-subtitle mb-2 text-danger fw-bold">
-                                                @service.Price VND
-                                            </h5>
+                                @if (service.IsDeleted != true)
+                                {
+                                    <div class="service-card">
+                                        <div class="service-header">
+                                            <h5>@service.Name</h5>
+                                            <span class="service-price">@service.Price VND</span>
+                                        </div>
+                                        <p>@service.Description</p>
 
-
-                                            <p class="card-text">@service.Description</p>
+                                        <!-- AUTHORIZATION REQUIRED !! -->
+                                        <div class="d-flex justify-content-between">
                                             @if (currentUser != null && currentUser.Role == "Admin")
                                             {
                                                 <button class="btn btn-sm btn-outline-primary edit-service-btn"
@@ -143,9 +144,16 @@
                                                     <i class="fas fa-edit"></i> Chỉnh sửa
                                                 </button>
                                             }
+
+                                            <button class="btn btn-primary"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#bookServiceModal"
+                                                    data-service-id="@service.Id">
+                                                Đặt lịch
+                                            </button>
                                         </div>
                                     </div>
-                                </div>
+                                }
                             }
                         }
                         else
@@ -157,6 +165,10 @@
                     </div>
                 </div>
             </div>
+
+
+
+            <!-- Reviews Section -->
         </div>
     </div>
 </div>
@@ -190,19 +202,15 @@
                         </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="editDepartments" class="form-label">Khoa phòng</label>
-                        <select class="form-select" id="editDepartments" multiple>
-                            @if (Model.Departments != null)
-                            {
-                                @foreach (var department in Model.Departments)
-                                {
-                                    bool isSelected = Model.Departments.Any(d => d.Id == department.Id);
-                                    <option value="@department.Id" selected="@isSelected">@department.Name</option>
-                                }
-                            }
-                        </select>
-                    </div>
+                    <select id="departmentSelect" name="departmentIds" multiple class="form-control">
+                        @foreach (var dept in Model.Departments)
+                        {
+                            <option value="@dept.Id" selected="@(Model.Facility.FacilityDepartments.Any(fd => fd.DepartmentId == dept.Id) ? "selected" : null)">
+                                @dept.Name
+                            </option>
+                        }
+                    </select>
+
 
 
                     <!-- Address Section -->
@@ -280,7 +288,6 @@
         </div>
     </div>
 </div>
-
 <!-- Add Service Modal -->
 <div class="modal fade" id="addServiceModal" tabindex="-1" aria-labelledby="addServiceModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -372,6 +379,7 @@
         });
     });
 </script>
+
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {

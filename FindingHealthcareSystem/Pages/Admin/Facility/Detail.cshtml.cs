@@ -84,7 +84,7 @@ namespace FindingHealthcareSystem.Pages.Admin.Facility
             }
 
             await _facilityService.Update(FacilityId, Facility);
-            return RedirectToPage("/Admin/Facility/Detail", new { FacilityId });
+            return RedirectToPage("/Facility/Detail", new { FacilityId });
         }
 
         public async Task<IActionResult> OnPostDeleteFacilityAsync()
@@ -96,7 +96,7 @@ namespace FindingHealthcareSystem.Pages.Admin.Facility
             }
 
             await _facilityService.DeleteAsync(FacilityId);
-            return RedirectToPage("/Admin/Facility/Index");
+            return RedirectToPage("/Facility/Index");
         }
 
         public async Task<IActionResult> OnPostAddService()
@@ -109,7 +109,7 @@ namespace FindingHealthcareSystem.Pages.Admin.Facility
 
             await _publicServiceLayer.Create(FacilityId, Service);
 
-            return RedirectToPage("/Admin/Facility/Detail", new { FacilityId });
+            return RedirectToPage("/Facility/Detail", new { FacilityId });
         }
 
         // Cập nhật dịch vụ

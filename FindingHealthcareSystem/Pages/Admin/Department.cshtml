@@ -1,102 +1,169 @@
 ﻿@page "/admin/department"
 @model FindingHealthcareSystem.Pages.Admin.DepartmentsModel
 @{
-    ViewData["Title"] = "Departments";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Quản lý phòng ban";
 }
+<div class="container mt-10">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Quản lý phòng ban</h1>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createDepartmentModal">
+            <i class="bi bi-plus-circle"></i> Thêm phòng ban
+        </button>
+    </div>
 
-<div class="container mt-4">
-    <h1>Departments</h1>
-    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createDepartmentModal">Create New Department</button>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var department in Model.Departments)
-            {
-                <tr>
-                    <td>@department.Name</td>
-                    <td>@department.Description</td>
-                    <td>
-                        <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editDepartmentModal" data-id="@department.Id" data-name="@department.Name" data-description="@department.Description">Edit</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    @if (Model.Departments == null || !Model.Departments.Any())
+    {
+        <div class="alert alert-info">
+            Không có dữ liệu phòng ban.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table id="departmentsTable" class="table table-striped table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên phòng ban</th>
+                        <th>Mô tả</th>
+                        <th>Trạng thái</th>
+                        <th>Ngày tạo</th>
+                        <th>Ngày cập nhật</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Departments)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.Name</td>
+                            <td>@item.Description</td>
+                            <td>
+                                @if (item.IsDeleted == true)
+                                {
+                                    <span class="badge bg-danger">Đã xóa</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success">Hoạt động</span>
+                                }
+                            </td>
+                            <td>@(item.CreatedAt?.ToString("dd/MM/yyyy HH:mm") ?? "-")</td>
+                            <td>@(item.UpdatedAt?.ToString("dd/MM/yyyy HH:mm") ?? "-")</td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-sm btn-warning" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#editDepartmentModal" 
+                                            data-id="@item.Id"
+                                            data-name="@item.Name"
+                                            data-description="@item.Description"
+                                            data-isdeleted="@(item.IsDeleted == true ? "true" : "false")">
+                                        <i class="bi bi-pencil-square"></i> Sửa
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-danger" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#deleteDepartmentModal" 
+                                            data-id="@item.Id"
+                                            data-name="@item.Name">
+                                        <i class="bi bi-trash"></i> Xóa
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
 </div>
 
-<!-- Create Department Modal -->
+<!-- Modal Thêm phòng ban -->
 <div class="modal fade" id="createDepartmentModal" tabindex="-1" aria-labelledby="createDepartmentModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="createDepartmentModalLabel">Create Department</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="createDepartmentForm" method="post" asp-page-handler="Create">
+            <form method="post" asp-page-handler="Create">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createDepartmentModalLabel">Thêm phòng ban mới</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
                     <div class="mb-3">
-                        <label for="createName" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="createName" name="Name" required>
+                        <label for="create-name" class="form-label">Tên phòng ban</label>
+                        <input type="text" class="form-control" id="create-name" name="Department.Name" required>
+                        <span class="text-danger" asp-validation-for="Department.Name"></span>
                     </div>
                     <div class="mb-3">
-                        <label for="createDescription" class="form-label">Description</label>
-                        <textarea class="form-control" id="createDescription" name="Description" rows="3"></textarea>
+                        <label for="create-description" class="form-label">Mô tả</label>
+                        <textarea class="form-control" id="create-description" name="Department.Description" rows="3"></textarea>
+                        <span class="text-danger" asp-validation-for="Department.Description"></span>
                     </div>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </form>
-            </div>
+                    <input type="hidden" name="Department.IsDeleted" value="false">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-primary">Lưu</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
-<!-- Edit Department Modal -->
+<!-- Modal Sửa phòng ban -->
 <div class="modal fade" id="editDepartmentModal" tabindex="-1" aria-labelledby="editDepartmentModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editDepartmentModalLabel">Edit Department</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="editDepartmentForm" method="post" asp-page-handler="Edit">
-                    <input type="hidden" id="editId" name="Id">
+            <form method="post" asp-page-handler="Edit">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editDepartmentModalLabel">Chỉnh sửa phòng ban</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="edit-id" name="Department.Id">
                     <div class="mb-3">
-                        <label for="editName" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="editName" name="Name" required>
+                        <label for="edit-name" class="form-label">Tên phòng ban</label>
+                        <input type="text" class="form-control" id="edit-name" name="Department.Name" required>
+                        <span class="text-danger" asp-validation-for="Department.Name"></span>
                     </div>
                     <div class="mb-3">
-                        <label for="editDescription" class="form-label">Description</label>
-                        <textarea class="form-control" id="editDescription" name="Description" rows="3"></textarea>
+                        <label for="edit-description" class="form-label">Mô tả</label>
+                        <textarea class="form-control" id="edit-description" name="Department.Description" rows="3"></textarea>
+                        <span class="text-danger" asp-validation-for="Department.Description"></span>
                     </div>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </form>
-            </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="edit-isdeleted" name="Department.IsDeleted">
+                        <label class="form-check-label" for="edit-isdeleted">Đã xóa</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
-@section Scripts {
-    <script>
-        var editDepartmentModal = document.getElementById('editDepartmentModal');
-        editDepartmentModal.addEventListener('show.bs.modal', function (event) {
-            var button = event.relatedTarget;
-            var id = button.getAttribute('data-id');
-            var name = button.getAttribute('data-name');
-            var description = button.getAttribute('data-description');
-
-            var modalIdInput = editDepartmentModal.querySelector('#editId');
-            var modalNameInput = editDepartmentModal.querySelector('#editName');
-            var modalDescriptionInput = editDepartmentModal.querySelector('#editDescription');
-
-            modalIdInput.value = id;
-            modalNameInput.value = name;
-            modalDescriptionInput.value = description;
-        });
-    </script>
-}
+<!-- Modal Xóa phòng ban -->
+<div class="modal fade" id="deleteDepartmentModal" tabindex="-1" aria-labelledby="deleteDepartmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" asp-page-handler="Delete">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteDepartmentModalLabel">Xác nhận xóa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="delete-id" name="id">
+                    <p>Bạn có chắc chắn muốn xóa phòng ban <strong id="delete-name"></strong>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-danger">Xóa</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

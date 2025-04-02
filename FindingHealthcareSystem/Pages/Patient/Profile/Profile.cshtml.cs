@@ -1,4 +1,6 @@
-﻿using BusinessObjects.Entities;
+﻿using BusinessObjects.DTOs.Appointment;
+using BusinessObjects.Entities;
+using BusinessObjects.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
@@ -10,15 +12,19 @@ namespace FindingHealthcareSystem.Pages.Patient.Profile
     public class ProfileModel : PageModel
     {
         private readonly IUserService _userService; // Inject Repository
+        private readonly IAppointmentService _appointmentService;
+
 
         public BusinessObjects.Entities.Patient CurrentUser { get; set; } // Chứa thông tin
                                                                                // user
         [BindProperty]
         public BusinessObjects.Entities.Patient UpdatedUser { get; set; } // Thuộc tính để binding dữ liệu từ form
+        public List<MyAppointmentDto> Appointments { get; set; } = new();
 
-        public ProfileModel(IUserService userService)
+        public ProfileModel(IUserService userService, IAppointmentService appointmentService)
         {
             _userService = userService;
+            _appointmentService = appointmentService;
         }
         public async Task<IActionResult> OnGet()
         {
@@ -62,6 +68,15 @@ namespace FindingHealthcareSystem.Pages.Patient.Profile
                     ImgUrl = user.ImgUrl
                 }
             };
+
+            var allAppointments = await _appointmentService.GetMyAppointment(userId);
+            var filtered = allAppointments.AsQueryable();
+            Appointments = filtered
+                .Where(a => a.Date.Date >= DateTime.UtcNow.Date &&
+                           (a.Status == AppointmentStatus.Pending ||
+                            a.Status == AppointmentStatus.Confirmed ||
+                            a.Status == AppointmentStatus.Rescheduled))
+                .ToList();
 
             return Page();
         }

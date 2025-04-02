@@ -1,7 +1,393 @@
-﻿@page "professional/profile"
+﻿@page "/professional/profile/{id}"
 @model FindingHealthcareSystem.Pages.Professional.Profile.ProfileModel
 @{
 }
+<!------------------------------------------------------------------------------------------!>
+<!--                           VIEW DETAIL OF A PROFESSIONAL                              --!>
+<!------------------------------------------------------------------------------------------!>
+
 <div class="container mt-10">
-    <h1>profile of professional</h1>
+    <div class="row justify-content-center">
+        <div class="col">
+            <!-- Profile Section -->
+            <div class="profile-card">
+                <div class="profile-header">
+                    <!-- AUTHORIZATION REQUIRED !! -->
+                    <button class="btn btn-primary edit-button" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                        <i class="fas fa-edit"></i> Chỉnh sửa hồ sơ
+                    </button>
+
+                    <div class="row">
+                        <div class="col-md-3 text-center">
+                            @* <img src="~/img/@Model.CurrentUser.User.ImgUrl" alt="Professional Photo" class="profile-img"> *@
+                           <img src="https://static.vecteezy.com/system/resources/previews/041/408/858/non_2x/ai-generated-a-smiling-doctor-with-glasses-and-a-white-lab-coat-isolated-on-transparent-background-free-png.png" alt="Professional Photo" class="profile-img">
+
+                        </div>
+                        <div class="col-md-9">
+                            <h2 id="fullName">@Model.CurrentUser.User.Fullname</h2>
+                            <!--EXPERTISE NAME-->
+                            <h5 class="text-primary" id="expertiseName">@Model.CurrentUser.Expertise?.Name</h5>
+                            <div class="mt-3">
+                                <!--GET LIST OF SPECIALTIES-->
+                                <div id="specialties">
+                                    @foreach (var specialty in Model.CurrentUser.ProfessionalSpecialties)
+                                    {
+                                        <span class="expertise-badge">@specialty.Specialty.Name</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="profile-info">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <div class="info-label">Thông tin liên hệ</div>
+                                <div class="contact-info">
+                                    <i class="fas fa-envelope contact-icon"></i>
+                                    <span id="email">@Model.CurrentUser.User.Email</span>
+                                </div>
+                                <div class="contact-info">
+                                    <i class="fas fa-phone contact-icon"></i>
+                                    <span id="phoneNumber">@Model.CurrentUser.User.PhoneNumber</span>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <div class="info-label">Địa chỉ</div>
+                                <p>
+                                    <i class="fas fa-map-marker-alt location-icon"></i>
+                                    <span id="address">@Model.CurrentUser.Address, @Model.CurrentUser.Ward, @Model.CurrentUser.District, @Model.CurrentUser.Province</span>
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <!--DEGREE-->
+                                <div class="info-label">Học vị</div>
+                                <p id="degree">@Model.CurrentUser.Degree</p>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <!--EXPERIENCE-->
+                                <div class="info-label">Kinh nghiệm</div>
+                                <p id="experience">@Model.CurrentUser.Experience năm</p> 
+                            </div>
+                            
+                            <div class="mb-4">
+                                <div class="info-label">Giờ làm việc</div>
+                                <p id="workingHours">@Model.CurrentUser.WorkingHours</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services Section -->
+            <div class="profile-card">
+                <div class="profile-info">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="section-title">Dịch vụ</h3>
+
+                        <!-- AUTHORIZATION REQUIRED !! -->
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addServiceModal">
+                            <i class="fas fa-plus"></i> Thêm dịch vụ
+                        </button>
+                    </div>
+                    
+                    <div id="servicesContainer">
+                        <!-- Service 1 -->
+                        <div class="service-card">
+                            <div class="service-header">
+                                <h5>Dịch vụ 1</h5>
+                                <span class="service-price">1200000</span>
+                            </div>
+                            <p>Mô tả dịch vụ, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh.</p>
+               
+                            <!-- AUTHORIZATION REQUIRED !! -->
+                            <div class="d-flex justify-content-between">
+                                <!--PROFESSIONAL ROLE--!>
+                                <div class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editServiceModal" data-service-id="1">
+                                    <i class="fas fa-edit"></i> Chỉnh sửa
+                                </div>
+
+                                <!--PATIENT ROLE--!>
+                                @* <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editServiceModal" data-service-id="1">
+                                    Đặt lịch
+                                </button> *@
+                            </div>
+                        </div>
+                        
+                        <!-- Service 2 -->
+                        <div class="service-card">
+                            <div class="service-header">
+                                <h5>Dịch vụ 2</h5>
+                                <span class="service-price">500000</span>
+                            </div>
+                            <p>Mô tả dịch vụ, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh.</p>
+
+                            <!-- AUTHORIZATION REQUIRED !! -->
+                            <div class="d-flex justify-content-between">
+                                <!--PROFESSIONAL ROLE--!>
+                                <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editServiceModal" data-service-id="1">
+                                    <i class="fas fa-edit"></i> Chỉnh sửa
+                                </button>
+
+                                <!--PATIENT ROLE--!>
+                                @* <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editServiceModal" data-service-id="1">
+                                    Đặt lịch
+                                </button> *@
+                            </div>
+                        </div>
+                        
+                        <!-- Service 3 -->
+                        <div class="service-card">
+                            <div class="service-header">
+                                <h5>Dichj vụ 3</h5>
+                                <span class="service-price">99999</span>
+                            </div>
+                            <p>Mô tả dịch vụ, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh.</p>
+
+                            <!-- AUTHORIZATION REQUIRED !! -->
+                            <div class="d-flex justify-content-between">
+                                <!--PROFESSIONAL ROLE--!>
+                                <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editServiceModal" data-service-id="1">
+                                    <i class="fas fa-edit"></i> Chỉnh sửa
+                                </button>
+
+                                @* <!--PATIENT ROLE--!>
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editServiceModal" data-service-id="1">
+                                    Đặt lịch
+                                </button> *@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Reviews Section -->
+            <div class="profile-card">
+                <div class="profile-info">
+                    <h3 class="section-title">Đánh giá</h3>
+
+                    <div class="filter-menu">
+                        <div class="row">
+                            <div class="col text-end">
+                                <div class="btn-group" role="group">
+                                    <input type="radio" class="btn-check" name="ratingFilter" id="allRatings" autocomplete="off" checked>
+                                    <label class="btn btn-outline-primary btn-sm" for="allRatings">All</label>
+                                    
+                                    <input type="radio" class="btn-check" name="ratingFilter" id="rating5" autocomplete="off">
+                                    <label class="btn btn-outline-primary btn-sm" for="rating5">5★</label>
+                                    
+                                    <input type="radio" class="btn-check" name="ratingFilter" id="rating4" autocomplete="off">
+                                    <label class="btn btn-outline-primary btn-sm" for="rating4">4★</label>
+                                    
+                                    <input type="radio" class="btn-check" name="ratingFilter" id="rating3" autocomplete="off">
+                                    <label class="btn btn-outline-primary btn-sm" for="rating3">3★</label>
+                                    
+                                    <input type="radio" class="btn-check" name="ratingFilter" id="rating2" autocomplete="off">
+                                    <label class="btn btn-outline-primary btn-sm" for="rating2">2★ & 1★</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="reviewsContainer">
+                        <!-- Review 1 -->
+                        <div class="review-card">
+                            <div class="review-header">
+                                <div class="reviewer-info">
+                                    <img src="~/img/defaultAvatar.jpg" alt="Reviewer" class="reviewer-avatar">
+                                    <div>
+                                        <h6 class="reviewer-name">Bệnh nhân 1</h6>
+                                        <div class="review-date">31/2/2025</div>
+                                    </div>
+                                </div>
+                                <div class="review-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                            <p class="review-text">Gất tuyệt zời</p>
+                            <span class="review-service">Dịch vụ 1</span>
+                        </div>
+                        
+                        <!-- Review 2 -->
+                        <div class="review-card">
+                            <div class="review-header">
+                                <div class="reviewer-info">
+                                    <img src="~/img/defaultAvatar.jpg" alt="Reviewer" class="reviewer-avatar">
+                                    <div>
+                                        <h6 class="reviewer-name">Bệnh nhân B</h6>
+                                        <div class="review-date">30/2/2025</div>
+                                    </div>
+                                </div>
+                                <div class="review-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                            <p class="review-text">Cũm cũm i</p>
+                            <span class="review-service">Dịch vụ 2</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Profile Modal -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProfileModalLabel">Chỉnh sửa hồ sơ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-page-handler="EditProfile">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label asp-for="UpdatedUser.User.Fullname" class="form-label">Họ và tên</label>
+                            <input asp-for="UpdatedUser.User.Fullname" class="form-control" value="@Model.UpdatedUser.User.Fullname" />
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="UpdatedUser.User.Email" class="form-label">Email</label>
+                            <input asp-for="UpdatedUser.User.Email" class="form-control" value="@Model.UpdatedUser.User.Email" />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label asp-for="UpdatedUser.User.PhoneNumber" class="form-label">Số điện thoại</label>
+                            <input asp-for="UpdatedUser.User.PhoneNumber" class="form-control" value="@Model.UpdatedUser.User.PhoneNumber" />
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="UpdatedUser.User.Birthday" class="form-label">Ngày sinh</label>
+                            <input asp-for="UpdatedUser.User.Birthday" class="form-control" type="date" value="@Model.UpdatedUser.User.Birthday?.ToString("yyyy-MM-dd")" />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label asp-for="UpdatedUser.User.Gender" class="form-label">Giới tính</label>
+                            <select asp-for="UpdatedUser.User.Gender" class="form-select">
+                                <option value="Nam" selected="@(Model.UpdatedUser.User.Gender == "Nam" ? "selected" : null)">Nam</option>
+                                <option value="Nữ" selected="@(Model.UpdatedUser.User.Gender == "Nữ" ? "selected" : null)">Nữ</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label asp-for="UpdatedUser.Province" class="form-label">Tỉnh/thành phố</label>
+                            <input asp-for="UpdatedUser.Province" class="form-control" value="@Model.UpdatedUser.Province" />
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="UpdatedUser.District" class="form-label">Quận/huyện</label>
+                            <input asp-for="UpdatedUser.District" class="form-control" value="@Model.UpdatedUser.District" />
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="UpdatedUser.Ward" class="form-label">Phường xã</label>
+                            <input asp-for="UpdatedUser.Ward" class="form-control" value="@Model.UpdatedUser.Ward" />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="UpdatedUser.Address" class="form-label">Địa chỉ chi tiết</label>
+                        <input asp-for="UpdatedUser.Address" class="form-control" value="@Model.UpdatedUser.Address" />
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="UpdatedUser.Degree" class="form-label">Học vị</label>
+                        <input asp-for="UpdatedUser.Degree" class="form-control" value="@Model.UpdatedUser.Degree" />
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="UpdatedUser.Experience" class="form-label">Kinh nghiệm</label>
+                        <textarea asp-for="UpdatedUser.Experience" class="form-control" rows="3">@Model.UpdatedUser.Experience</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="UpdatedUser.WorkingHours" class="form-label">Giờ làm việc</label>
+                        <input asp-for="UpdatedUser.WorkingHours" class="form-control" value="@Model.UpdatedUser.WorkingHours" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Service Modal -->
+<div class="modal fade" id="addServiceModal" tabindex="-1" aria-labelledby="addServiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addServiceModalLabel">Thêm dịch vụ mới</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addServiceForm">
+                    <div class="mb-3">
+                        <label for="serviceName" class="form-label">Tên dịch vụ</label>
+                        <input type="text" class="form-control" id="serviceName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="servicePrice" class="form-label">Giá </label>
+                        <input type="number" class="form-control" id="servicePrice" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="serviceDescription" class="form-label">Mô tả</label>
+                        <textarea class="form-control" id="serviceDescription" rows="3" required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" id="saveNewService">Thêm dịch vụ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Service Modal -->
+<div class="modal fade" id="editServiceModal" tabindex="-1" aria-labelledby="editServiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editServiceModalLabel">Chỉnh sửa dịch vụ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editServiceForm">
+                    <input type="hidden" id="editServiceId">
+                    <div class="mb-3">
+                        <label for="editServiceName" class="form-label">Tên dịch vụ</label>
+                        <input type="text" class="form-control" id="editServiceName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editServicePrice" class="form-label">Giá</label>
+                        <input type="number" class="form-control" id="editServicePrice" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editServiceDescription" class="form-label">Mô tả</label>
+                        <textarea class="form-control" id="editServiceDescription" rows="3" required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger me-auto" id="deleteService">Xóa dịch vụ</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" id="saveServiceChanges">Lưu thay đổi</button>
+            </div>
+        </div>
+    </div>
 </div>
