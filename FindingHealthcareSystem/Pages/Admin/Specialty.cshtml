@@ -1,16 +1,78 @@
 ﻿@page "/admin/specialty"
 @model FindingHealthcareSystem.Pages.Admin.SpecialtyModel
 @{
-	Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
 }
 <div class="container-fluid mt-10">
     <h2>Quản lý chuyên khoa</h2>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
 
     <div class="row mb-4">
         <div class="col-md-12">
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createSpecialtyModal">
                 <i class="fas fa-plus"></i> Thêm chuyên khoa mới
             </button>
+        </div>
+    </div>
+
+    <!-- Search Section -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Tìm kiếm chuyên khoa</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" asp-page-handler="Search">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label asp-for="SearchTerm" class="form-label">Tên chuyên khoa</label>
+                                    <input asp-for="SearchTerm" class="form-control" placeholder="Nhập tên chuyên khoa..." />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="mb-3">
+                                    <label class="form-label">Loại ngày</label>
+                                    <select asp-for="DateType" class="form-select">
+                                        <option value="Created">Ngày tạo</option>
+                                        <option value="Updated">Ngày cập nhật</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label asp-for="StartDate" class="form-label">Từ ngày</label>
+                                    <input type="date" asp-for="StartDate" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label asp-for="EndDate" class="form-label">Đến ngày</label>
+                                    <input type="date" asp-for="EndDate" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-end">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-search"></i> Tìm kiếm
+                                </button>
+                                <button type="submit" asp-page-handler="Reset" class="btn btn-secondary">
+                                    <i class="fas fa-sync"></i> Làm mới
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -161,3 +223,38 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Edit specialty modal
+            $('#editSpecialtyModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var id = button.data('id');
+                var name = button.data('name');
+                var description = button.data('description');
+
+                var modal = $(this);
+                modal.find('#editSpecialtyId').val(id);
+                modal.find('#editSpecialtyName').val(name);
+                modal.find('#editSpecialtyDescription').val(description);
+            });
+
+            // Delete specialty modal
+            $('#deleteSpecialtyModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var id = button.data('id');
+                var name = button.data('name');
+
+                var modal = $(this);
+                modal.find('#deleteSpecialtyId').val(id);
+                modal.find('#deleteSpecialtyName').text(name);
+            });
+
+            // Auto-hide alerts after 5 seconds
+            setTimeout(function () {
+                $('.alert-success').fadeOut('slow');
+            }, 5000);
+        });
+    </script>
+}
