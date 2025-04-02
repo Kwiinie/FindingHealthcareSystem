@@ -31,6 +31,17 @@ namespace DataAccessObjects.DAOs
                .FirstOrDefaultAsync(f => f.Id == id);
         }
 
+        public async Task<Professional> GetByUserIdAsync(int userId)
+        {
+            return await _context.Professionals
+               .Include(f => f.Expertise)
+               .Include(f => f.User)
+               .Include(f => f.PrivateServices)
+               .Include(f => f.ProfessionalSpecialties)
+               .ThenInclude(f => f.Specialty)
+               .FirstOrDefaultAsync(f => f.UserId == userId);
+        }
+
         public async Task<PaginatedList<Professional>> GetAllProfessionalsPagedAsync(
     Expression<Func<Professional, bool>> filter,
     int pageIndex,
