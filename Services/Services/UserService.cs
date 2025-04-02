@@ -122,7 +122,30 @@ namespace Services.Services
             }
           
         }
+        public async Task UpdateUserStatus(GeneralUserDto userDto)
+        {
+            try
+            {
+               
 
+
+                var userRepo = _unitOfWork.GetRepository<User>();
+                var user = await userRepo.GetByIdAsync(userDto.Id);
+                if (user == null)
+                {
+                    throw new KeyNotFoundException("User not found.");
+                }
+                _mapper.Map(userDto, user); // Update properties from DTO
+
+                userRepo.Update(user); // No need to await since it's void
+                await _unitOfWork.SaveChangesAsync(); // Ensure changes are persisted
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
         public async Task UploadUserImageAsync(int userId, string imgUrl)
         {
             try

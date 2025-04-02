@@ -66,10 +66,15 @@
                                 <td><span class="professional-status status-approved">@expert.RequestStatus</span></td>
                                 <td><span class="professional-status status-active">@expert.Status</span></td>
                                 <td>
-                                    <button type="submit" class="btn btn-danger btn-sm">
-                                        <i class="bi bi-slash-circle"></i> Chặn
-                                    </button>
+                                    <form method="post">
+                                        <input type="hidden" name="professionalId" value="@expert.Id" />
+                                        <button type="submit" formaction="?handler=Approve" class="btn btn-danger btn-sm">
+                                            Chặn
+                                        </button>
+
+                                    </form>
                                 </td>
+                             
                             </tr>
                         }
                     </tbody>
