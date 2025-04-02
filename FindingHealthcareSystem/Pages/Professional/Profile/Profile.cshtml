@@ -19,8 +19,15 @@
 
                     <div class="row">
                         <div class="col-md-3 text-center">
-                            <img src="@Model.CurrentUser.User.ImgUrl" alt="Professional Photo" class="profile-img">
+                            @if (Model.CurrentUser.User.ImgUrl != null)
+                            {
+                    <img src="@Model.CurrentUser.User.ImgUrl" alt="Professional Photo" class="profile-img">
 
+                            }
+                            else
+                            {
+                                    <img src="/images/defaultAvatar.jpg" alt="Patient Photo" class="profile-img">
+                            }
                         </div>
                         <div class="col-md-9">
                             <h2 id="fullName">@Model.CurrentUser.User.Fullname</h2>
@@ -73,7 +80,7 @@
                             <div class="mb-4">
                                 <!--EXPERIENCE-->
                                 <div class="info-label">Kinh nghiệm</div>
-                                <p id="experience">@Model.CurrentUser.Experience năm</p> 
+                                <p id="experience">@Model.CurrentUser.Experience</p> 
                             </div>
                             
                             <div class="mb-4">
@@ -181,7 +188,28 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="post" asp-page-handler="EditProfile">
+                <form method="post" asp-page-handler="EditProfile" enctype="multipart/form-data">
+                    <div class="row mb-3">
+                        <!-- Profile Image Upload -->
+                        <div class="col-md-12 mb-3 text-center">
+                            <div class="profile-image-container">
+                                @if (!string.IsNullOrEmpty(Model.UpdatedUser.User.ImgUrl))
+                                {
+                                    <img src="@Model.UpdatedUser.User.ImgUrl" alt="Profile Picture" class="profile-image-preview rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
+                                }
+                                else
+                                {
+                                    <img src="/images/defaultAvatar.jpg" alt="Patient Photo" class="profile-img">
+                                }
+                            </div>
+                            <div class="mt-2">
+                                <label for="profileImageUpload" class="btn btn-outline-primary">
+                                    <i class="fas fa-upload me-2"></i>Tải ảnh lên
+                                </label>
+                                <input id="profileImageUpload" name="ProfileImage" type="file" accept="image/*" class="d-none" onchange="previewProfileImage(this)">
+                            </div>
+                        </div>
+                    </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label asp-for="UpdatedUser.User.Fullname" class="form-label">Họ và tên</label>
@@ -316,3 +344,17 @@
         </div>
     </div>
 </div>
+
+<script>
+    function previewProfileImage(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                document.querySelector('.profile-image-preview').src = e.target.result;
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
