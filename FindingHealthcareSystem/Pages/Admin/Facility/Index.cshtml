@@ -72,7 +72,7 @@
                                     <td>@facility.Address</td>
                                     <td>@(facility.OperationDay?.ToString("dd/MM/yyyy") ?? "Chưa xác định")</td>
                                     <td>
-                                        <span class="facility-status @(facility.Status == FacilityStatus.Active ? "status-active" : "status-inactive")">
+                                        <span class="badge @(facility.Status == FacilityStatus.Active ? "bg-success" : facility.Status == FacilityStatus.Inactive ? "bg-warning" : "bg-danger")">
                                             @switch (facility.Status)
                                             {
                                                 case FacilityStatus.Active:
@@ -80,6 +80,9 @@
                                                     break;
                                                 case FacilityStatus.Inactive:
                                                     <span>Tạm ngưng</span>
+                                                    break;
+                                                case FacilityStatus.Closed:
+                                                    <span>Đóng cửa</span>
                                                     break;
                                                 default:
                                                     <span>Khác</span>

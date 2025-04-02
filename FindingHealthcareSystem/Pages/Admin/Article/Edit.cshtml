@@ -21,7 +21,7 @@
         }
 
         <div class="article-form-container">
-            <h2>Edit Article</h2>
+            <h2>Chỉnh sửa bài báo</h2>
 
             <!-- Article Form -->
             <form id="articleForm" method="post" enctype="multipart/form-data">
@@ -94,7 +94,7 @@
                     </div>
 
                     <!-- Current Images -->
-                    <h5 class="mt-4">Current Images</h5>
+                    <h5 class="mt-4">Ảnh hiện tại</h5>
                     <div class="image-preview-container">
                         @if (!string.IsNullOrEmpty(Model.Article.ImgUrl))
                         {
@@ -127,7 +127,7 @@
 
                     <!-- New Image Previews (Populated via JavaScript) -->
                     <div class="mt-4">
-                        <h5>New Images</h5>
+                        <h5>Ảnh mới</h5>
                         <div class="image-preview-container" id="newImagePreviewContainer">
                             <!-- New image previews will be added here by JavaScript -->
                         </div>
@@ -136,9 +136,9 @@
 
                 <div class="action-buttons mt-4">
                     <div class="btn-group">
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
                     </div>
-                    <a asp-page="/Admin/Article/Index" class="btn btn-outline-danger">Cancel</a>
+                    <a asp-page="/Admin/Article/Index" class="btn btn-outline-danger">Huỷ bỏ</a>
                 </div>
             </form>
         </div>

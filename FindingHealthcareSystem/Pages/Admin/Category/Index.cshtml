@@ -96,10 +96,10 @@
                                             @(category.Description.Length > 50 ? category.Description.Substring(0, 50) + "..." : category.Description)
                                         }
                                     </td>
-                                    <td>@category.CreatedAt.ToString("dd/MM/yyyy")</td>
-                                    <td>@category.UpdatedAt.ToString("dd/MM/yyyy")</td>
+                                    <td>@category.CreatedAt?.ToString("dd/MM/yyyy")</td>
+                                    <td>@category.UpdatedAt?.ToString("dd/MM/yyyy")</td>
                                     <td>
-                                        @if (category.IsDeleted)
+                                        @if (category.IsDeleted == true)
                                         {
                                             <span class="badge bg-danger">Đã xóa</span>
                                         }

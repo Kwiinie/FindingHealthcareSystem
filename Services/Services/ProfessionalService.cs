@@ -135,7 +135,7 @@ namespace Services.Services
             var pubServiceRepo = _unitOfWork.GetRepository<PrivateService>();
             var pubService = _mapper.Map<PrivateService>(publicServiceDto);
             pubService.ProfessionalId = professionalID;
-            pubService.CreatedAt = DateTime.UtcNow.AddHours(7);
+            pubService.CreatedAt = DateTime.UtcNow;
             await pubServiceRepo.AddAsync(pubService);
             await _unitOfWork.SaveChangesAsync();
             return _mapper.Map<ServiceDto>(pubService);
