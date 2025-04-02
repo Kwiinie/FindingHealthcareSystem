@@ -6,6 +6,8 @@
     ViewData["Title"] = "Danh sách cơ sở y tế";
 }
 
+<link rel="stylesheet" href="~/css/patientProfile.css" />
+
 <div class="container mt-10">
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center mb-4">
@@ -137,8 +139,23 @@
                 <h5 class="modal-title" id="createFacilityModalLabel">Thêm Cơ Sở Mới</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="createFacilityForm" method="post" asp-page-handler="CreateFacility">
+            <form id="createFacilityForm" method="post" asp-page-handler="CreateFacility" enctype="multipart/form-data">
                 <div class="modal-body">
+                    <div class="row mb-3">
+                        <!-- Profile Image Upload -->
+                        <div class="col-md-12 mb-3 text-center">
+                            <div class="profile-image-container">
+                                <img src="/images/DefaultFacility.jpg" alt="Patient Photo" class="profile-image-preview profile-img">
+                            </div>
+                            <div class="mt-2">
+                                <label for="profileImageUpload" class="btn btn-outline-primary">
+                                    <i class="fas fa-upload me-2"></i>Tải ảnh lên
+                                </label>
+                                <input id="profileImageUpload" name="ProfileImage" type="file" accept="image/*" class="d-none" onchange="previewProfileImage(this)">
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label class="form-label">Tên cơ sở y tế</label>
@@ -158,11 +175,11 @@
                   
                     <!-- Address Section -->
                     <div class="border rounded p-3 mt-4">
-                        <h4>Address</h4>
+                        <h4>Địa chỉ</h4>
                         <div class="row g-3">
                             <!-- Province -->
                             <div class="col-md-4">
-                                <label>Province</label>
+                                <label>Tỉnh/Thành</label>
                                 <select class="form-select" id="provinceDropdown" asp-for="Facility.Province" required>
                                     <option value="">Chọn Tỉnh</option>
                                 </select>
@@ -225,12 +242,6 @@
                         <textarea class="form-control" asp-for="Facility.Description" id="editDescription" rows="3"></textarea>
                     </div>
 
-
-
-                    <div class="mb-3">
-                        <label for="facilityImage" class="form-label">Ảnh cơ sở y tế</label>
-                        <input type="file" class="form-control" id="facilityImage" name="facilityImage">
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
@@ -327,5 +338,15 @@
         //     }
         // }
     });
+    function previewProfileImage(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.querySelector('.profile-img').src = e.target.result;
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
 
 </script>

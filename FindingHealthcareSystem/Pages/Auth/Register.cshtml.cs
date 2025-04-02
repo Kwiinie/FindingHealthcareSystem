@@ -15,20 +15,20 @@ namespace FindingHealthcareSystem.Pages.Auth
     public class RegisterModel : PageModel
     {
         private readonly IUserService _userService;
+        private readonly IFileUploadService _fileUploadService;
 
         [BindProperty]
         public RegisterViewModel Input { get; set; } = new();
 
         public List<Specialty> Specialties { get; private set; }
         public List<FacilityDepartment> Hospitals { get; private set; }
-
         public List<Expertise> Expertises { get; private set; }
-
         public List<CaLamViec> DanhSachCa { get; set; } = new();
 
-        public RegisterModel(IUserService userService)
+        public RegisterModel(IUserService userService, IFileUploadService fileUploadService)
         {
             _userService = userService;
+            _fileUploadService = fileUploadService;
         }
 
         public async Task OnGetAsync()
@@ -38,9 +38,7 @@ namespace FindingHealthcareSystem.Pages.Auth
             if (Specialties != null && Specialties.Count > 0)
             {
                 ViewData["Specialties"] = Specialties;
-
             }
-
             else
             {
                 ViewData["Specialties"] = new List<Specialty>(); // Avoid null issues
@@ -52,35 +50,49 @@ namespace FindingHealthcareSystem.Pages.Auth
             }
             else
             {
-                ViewData["SpecialtyMessage"] = Specialties.Count+" specialties available.";
-
-
+                ViewData["SpecialtyMessage"] = Specialties.Count + " specialties available.";
             }
 
-                Expertises = await _userService.GetAllExpertises();
+            Expertises = await _userService.GetAllExpertises();
 
-                if (Expertises != null && Expertises.Count > 0)
-                {
-                    ViewData["Expertises"] = Expertises;
-                }
+            if (Expertises != null && Expertises.Count > 0)
+            {
+                ViewData["Expertises"] = Expertises;
+            }
 
-
-                DanhSachCa = new List<CaLamViec>
-        {
-            new CaLamViec { MaCa = "Mon-Morning", MoTa = "Sáng (08:00 - 12:00)" },
-         
-        new CaLamViec { MaCa = "Tue-Afternoon", MoTa = " Chiều (13:00 - 17:00)" },
-             new CaLamViec { MaCa = "Tue-Evening", MoTa = "Tối (18:00 - 22:00)" },
-
-
-        };
+            DanhSachCa = new List<CaLamViec>
+            {
+                new CaLamViec { MaCa = "Mon-Morning", MoTa = "Sáng (08:00 - 12:00)" },
+                new CaLamViec { MaCa = "Tue-Afternoon", MoTa = " Chiều (13:00 - 17:00)" },
+                new CaLamViec { MaCa = "Tue-Evening", MoTa = "Tối (18:00 - 22:00)" },
+            };
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(IFormFile ProfileImage)
         {
             try
             {
-                
+                // Handle profile image upload if provided
+                if (ProfileImage != null && ProfileImage.Length > 0)
+                {
+                    bool isValidImage = await _fileUploadService.ValidateImageFile(ProfileImage);
+                    if (!isValidImage)
+                    {
+                        TempData["ErrorMessage"] = "Invalid image file. Please upload a valid image (JPG, JPEG, PNG) under 5MB.";
+                        await OnGetAsync();
+                        return Page();
+                    }
+
+                    // Upload the image and get the URL
+                    string entityType = Input.Role == Role.Patient ? "patients" : "professionals";
+                    Input.ImgUrl = await _fileUploadService.UploadImageAsync(ProfileImage, entityType);
+                }
+
+                // If no image was uploaded, use a default image
+                if (string.IsNullOrEmpty(Input.ImgUrl))
+                {
+                    Input.ImgUrl = "https://img.icons8.com/nolan/512w/user-default.png";
+                }
 
                 var userDto = new RegisterUserDto
                 {
@@ -89,11 +101,11 @@ namespace FindingHealthcareSystem.Pages.Auth
                     PhoneNumber = Input.PhoneNumber,
                     Password = HashPassword(Input.Password),
                     Role = Input.Role,
-                    Note=Input.Note,
+                    Note = Input.Note,
                     Birthday = Input.Birthday,
                     Gender = Input.Gender,
                     Province = Input.Province,
-                    ImgUrl= "https://img.icons8.com/nolan/512w/user-default.png",
+                    ImgUrl = Input.ImgUrl,
                     Ward = Input.Ward,
                     District = Input.District,
                     WorkingHours = Input.WorkingHours,
@@ -112,16 +124,11 @@ namespace FindingHealthcareSystem.Pages.Auth
             catch (Exception ex)
             {
                 TempData["ErrorMessage"] = ex.Message;
-                // 🚀 GỌI LẠI OnGetAsync() để nạp lại dữ liệu dropdown trước khi quay lại trang
+                // Reload dropdown data before returning to the page
                 await OnGetAsync();
-
-                return Page(); // Quay lại trang hiện tại và hiển thị thông báo lỗi
+                return Page();
             }
         }
-
-
-          
-        
 
         private string HashPassword(string password)
         {
