@@ -129,14 +129,12 @@ namespace FindingHealthcareSystem.Pages.Professional.Appointment
                 if (status == (int)AppointmentStatus.Rescheduled)
                 {
                     await _appointmentService.ChangeAppointmentStatus(id, AppointmentStatus.Cancelled);
-                    AppointmentDTO? createAppointmentDto = JsonConvert.DeserializeObject<AppointmentDTO>(entity);
-                    if (createAppointmentDto != null)
+                    RescheduleAppointmentDTO? reschedule = JsonConvert.DeserializeObject<RescheduleAppointmentDTO>(entity);
+                    if (reschedule != null)
                     {
-                        createAppointmentDto.Status = (AppointmentStatus)status;
-                        createAppointmentDto.Date = date.Add(TimeSpan.Parse(slot));
-                        createAppointmentDto.Patient = null;
-                        createAppointmentDto.Id = null;
-                        var obj = await _appointmentService.AddAsync(createAppointmentDto);
+                        reschedule.Status = (AppointmentStatus)status;
+                        reschedule.Date = date.Add(TimeSpan.Parse(slot));
+                        var obj = await _appointmentService.AddAsync(reschedule);
                     }
                 }
                 else

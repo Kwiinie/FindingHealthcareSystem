@@ -12,7 +12,7 @@ namespace BusinessObjects.DTOs.Appointment
     public class AppointmentDTO
     {
         [NotMapped]
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public DateTime Date { get; set; }
         public int? PatientId { get; set; }
 

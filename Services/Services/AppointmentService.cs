@@ -86,11 +86,11 @@ namespace Services.Services
             }
         }
 
-        public async Task<bool> AddAsync(AppointmentDTO createAppointmentDto)
+        public async Task<bool> AddAsync(RescheduleAppointmentDTO reschedule)
         {
             try
             {
-                var entity = _mapper.Map<Appointment>(createAppointmentDto);
+                var entity = _mapper.Map<Appointment>(reschedule);
                 await _unitOfWork.AppointmentRepository.AddAsync(entity);
                 await _unitOfWork.SaveChangesAsync();
                 return true;
@@ -186,7 +186,7 @@ namespace Services.Services
         public async Task<MyAppointmentDto?> GetMySpecificAppointment(int appointmentId)
         {
             var appointment = await _unitOfWork.AppointmentRepository
-                .FindAsync(a => a.Id == appointmentId, "Facility,Professional,PrivateService,PublicService,Payment"); 
+                .FindAsync(a => a.Id == appointmentId, "Facility,Professional,PrivateService,PublicService,Payment");
 
             return _mapper.Map<MyAppointmentDto>(appointment);
         }

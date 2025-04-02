@@ -21,6 +21,17 @@ navLinks.forEach(link => {
     })
 })
 
+document.addEventListener('DOMContentLoaded', function () {
+    const patientPart = $('#patientPart');
+    const patientScrollTo = $('#patientRecords');
+    const body = $("html, body");
+    patientPart.on('click', function () {
+        $(body).animate({
+            scrollTop: $(patientScrollTo).offset().top
+        }, 500);
+    })
+})
+
 
 
 
