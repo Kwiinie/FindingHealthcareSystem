@@ -13,9 +13,7 @@ namespace FindingHealthcareSystem.Pages.Admin.Payment
         private readonly IPaymentService _paymentService;
         private readonly IAppointmentService _appointmentService;
 
-        public DetailModel(
-            IPaymentService paymentService,
-            IAppointmentService appointmentService)
+        public DetailModel(IPaymentService paymentService, IAppointmentService appointmentService)
         {
             _paymentService = paymentService;
             _appointmentService = appointmentService;
@@ -23,16 +21,13 @@ namespace FindingHealthcareSystem.Pages.Admin.Payment
 
         public PaymentDto Payment { get; set; }
         public AppointmentDTO Appointment { get; set; }
+        [BindProperty]
+        public int PaymentId { get; set; }
+
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            var payments = await _paymentService.GetAllPaymentsAsync();
-            Payment = payments.FirstOrDefault(p => p.Id == id);
-
-            if (Payment == null)
-            {
-                return NotFound();
-            }
+            Payment = await _paymentService.GetPaymentByIdAsync(id);
 
             if (Payment.AppointmentId.HasValue)
             {
