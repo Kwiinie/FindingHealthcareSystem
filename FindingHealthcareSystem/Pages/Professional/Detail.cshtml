@@ -2,6 +2,17 @@
 @model FindingHealthcareSystem.Pages.Professional.DetailModel
 @{
 }
+@using Newtonsoft.Json
+@using BusinessObjects.Dtos.User
+@{
+    var currentUserJson = HttpContext.Session.GetString("User");
+    GeneralUserDto currentUser = null;
+
+    if (!string.IsNullOrEmpty(currentUserJson))
+    {
+        currentUser = JsonConvert.DeserializeObject<GeneralUserDto>(currentUserJson);
+    }
+}
 <!------------------------------------------------------------------------------------------!>
 <!--                           VIEW DETAIL OF A PROFESSIONAL                              --!>
 <!------------------------------------------------------------------------------------------!>
@@ -204,3 +215,24 @@
         <a href="javascript:history.back()" class="btn btn-secondary me-2"><i class="fas fa-arrow-left"></i> Quay lại</a>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const editButtons = document.querySelectorAll(".edit-service-btn");
+
+        editButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                // Lấy dữ liệu từ button
+                const serviceId = this.getAttribute("data-id");
+                const serviceName = this.getAttribute("data-name");
+                const servicePrice = this.getAttribute("data-price");
+                const serviceDescription = this.getAttribute("data-description");
+
+                // Gán dữ liệu vào input của modal
+                document.getElementById("editServiceId").value = serviceId;
+                document.getElementById("editServiceName").value = serviceName;
+                document.getElementById("editServicePrice").value = servicePrice;
+                document.getElementById("editServiceDescription").value = serviceDescription;
+            });
+        });
+    });
+</script>

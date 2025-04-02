@@ -4,7 +4,17 @@
 }
 
 <link rel="stylesheet" href="/css/search.css" asp-append-version="true" />
+@using Newtonsoft.Json
+@using BusinessObjects.Dtos.User
+@{
+    var currentUserJson = HttpContext.Session.GetString("User");
+    GeneralUserDto currentUser = null;
 
+    if (!string.IsNullOrEmpty(currentUserJson))
+    {
+        currentUser = JsonConvert.DeserializeObject<GeneralUserDto>(currentUserJson);
+    }
+}
 <div class="container mt-10">
     <div class="row mb-4">
         <div class="col-12">
@@ -62,7 +72,7 @@
                                     <!option value="@specialty.Name" @(specialty.Name == Model.Specialty ? "selected" : "")>@specialty.Name</!option>
                                 }
                             </select>
-                        </div> 
+                        </div>
 
                         <!-- Department Selection (Facility-specific) -->
                         <div class="col-md-6 provider-specific facility-specific d-none">
@@ -107,10 +117,10 @@
                                 @foreach (var facility in Model.Facilities)
                                 {
                                     <div class="col-12">
-                                        <div class="search-card d-flex flex-column flex-md-row">
+                                        <div class="search-card">
                                             <div class="position-relative">
                                                 <img src="@(string.IsNullOrEmpty(facility.ImgUrl) ? "/img/DefaultFacility.jpg" : facility.ImgUrl)"
-                                                     class="card-img d-none d-md-block" alt="@facility.Name">
+                                                     class="card-img" alt="@facility.Name">
                                             </div>
                                             <div class="p-3 flex-grow-1">
                                                 <div class="d-flex justify-content-between align-items-start">
@@ -121,7 +131,6 @@
                                                     <i class="bi bi-geo-alt-fill"></i>
                                                     @facility.Address, @facility.Ward, @facility.District, @facility.Province
                                                 </p>
-
                                                 @if (facility.DepartmentNames.Any())
                                                 {
                                                     <div class="mb-2">
@@ -138,21 +147,23 @@
                                                         </div>
                                                     </div>
                                                 }
-
                                                 @if (!string.IsNullOrEmpty(facility.Description))
                                                 {
                                                     <p class="mb-3">@(facility.Description.Length > 150 ? facility.Description.Substring(0, 150) + "..." : facility.Description)</p>
                                                 }
-
                                                 <div class="d-flex justify-content-end mt-auto">
                                                     <a href="/facility/@facility.Id" class="btn btn-outline-primary w-25">Xem chi tiết</a>
                                                 </div>
-                                                <div class="d-flex justify-content-end mt-1">
-                                                    <a href="/patient/appointment/create?providerId=@facility.Id&providerType=Facility"
-                                                       class="btn btn-primary w-25">
-                                                        Đặt lịch
-                                                    </a>
-                                                </div>
+                                                @if (currentUser != null && currentUser.Role == "Patient") {
+
+                                                    <div class="d-flex justify-content-end mt-1">
+                                                        <a href="/patient/appointment/create?providerId=@facility.Id&providerType=Facility"
+                                                           class="btn btn-primary w-25">
+                                                            Đặt lịch
+                                                        </a>
+                                                    </div>
+
+                                                }
                                             </div>
                                         </div>
                                     </div>
@@ -219,12 +230,15 @@
                                                 <div class="d-flex justify-content-end mt-auto">
                                                     <a href="/Professional/@professional.Id" class="btn btn-outline-primary w-25">Xem chi tiết</a>
                                                 </div>
-                                                <div class="d-flex justify-content-end mt-1">
-                                                    <a href="/patient/appointment/create?providerId=@professional.Id&providerType=Professional"
-                                                       class="btn btn-primary w-25">
-                                                        Đặt lịch
-                                                    </a>
-                                                </div>
+                                                @if (currentUser != null && currentUser.Role == "Patient")
+                                                {
+                                                    <div class="d-flex justify-content-end mt-1">
+                                                        <a href="/patient/appointment/create?providerId=@professional.Id&providerType=Professional"
+                                                           class="btn btn-primary w-25">
+                                                            Đặt lịch
+                                                        </a>
+                                                    </div>
+                                                }
                                             </div>
                                         </div>
                                     </div>

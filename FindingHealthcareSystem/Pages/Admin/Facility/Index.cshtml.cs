@@ -43,6 +43,8 @@ namespace FindingHealthcareSystem.Pages.Admin.Facility
         {
 
             var count = Facility.DepartmentIds;
+            var status = Facility.Status;
+            var type = Facility.TypeId;
             // Call the service to save the edited facility
             await _facilityService.Create(Facility);
             // Redirect back to the index page after successful save

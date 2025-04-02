@@ -1,9 +1,8 @@
 ﻿@page
 @model FindingHealthcareSystem.Pages.Professional.Appointment.IndexModel
 @{
-    Layout = "_DoctorLayout";
 }
-<div class="main-content">
+<div class="main-content container mt-10">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3 mb-4">
@@ -14,7 +13,7 @@
                         </div>
                         <div>
                             <h6 class="card-title text-muted mb-1">Lịch hẹn hôm nay</h6>
-                            <h2 class="mb-0" id="totalMyAppointment" >@Model.TotalMyAppointment</h2>
+                            <h2 class="mb-0" id="totalMyAppointment">@Model.TotalMyAppointment</h2>
                         </div>
                     </div>
                 </div>
@@ -68,7 +67,7 @@
         </div>
 
         <div id="patientRecords">
-            @await Html.PartialAsync("_PatientRecords")
+            @await Html.PartialAsync("_PatientRecords", Model)
         </div>
     </div>
 </div>

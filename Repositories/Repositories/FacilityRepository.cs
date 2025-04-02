@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BusinessObjects.Entities;
 using Microsoft.EntityFrameworkCore;
+using BusinessObjects.Enums;
 
 namespace Repositories.Repositories
 {
@@ -71,6 +72,9 @@ namespace Repositories.Repositories
                 filters.Add("Ward", ward);
             }
 
+            filters.Add("Status", FacilityStatus.Active);
+
+
             var query = _dao.GetFilteredQuery(filters, includes: new List<string>
             {
             "Type",
@@ -84,7 +88,7 @@ namespace Repositories.Repositories
                 query = query.Where(Facility =>
                     Facility.FacilityDepartments.Any(ps =>
                         ps.Department.Name != null &&
-                        ps.Department.Name.Contains(department)
+                        ps.Department.Name.Contains(department) && Facility.Status == BusinessObjects.Enums.FacilityStatus.Active
                     )
                 );
             }

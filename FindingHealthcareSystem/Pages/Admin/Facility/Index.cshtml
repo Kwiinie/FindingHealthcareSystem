@@ -163,7 +163,7 @@
                             <!-- Province -->
                             <div class="col-md-4">
                                 <label>Province</label>
-                                <select class="form-select" id="provinceDropdown" asp-for="Facility.Province">
+                                <select class="form-select" id="provinceDropdown" asp-for="Facility.Province" required>
                                     <option value="">Chọn Tỉnh</option>
                                 </select>
                             </div>
@@ -171,7 +171,7 @@
                             <!-- District -->
                             <div class="col-md-4">
                                 <label>Chọn Quận/Huyện</label>
-                                <select class="form-select" id="districtDropdown" asp-for="Facility.District" disabled>
+                                <select class="form-select" id="districtDropdown" asp-for="Facility.District" required disabled>
                                     <option value="">Chọn Thành Phố</option>
                                 </select>
                             </div>
@@ -179,7 +179,7 @@
                             <!-- Ward -->
                             <div class="col-md-4">
                                 <label>Chọn Xã</label>
-                                <select class="form-select" id="wardDropdown" asp-for="Facility.Ward" disabled>
+                                <select class="form-select" id="wardDropdown" asp-for="Facility.Ward" re disabled>
                                     <option value="">Chọn Quận/Huyện</option>
                                 </select>
                             </div>

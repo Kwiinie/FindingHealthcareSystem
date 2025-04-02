@@ -92,29 +92,190 @@ namespace DataAccessObjects.Migrations
                         {
                             Id = 1,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Date = new DateTime(2025, 3, 31, 10, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Khám bệnh tổng quát cho bệnh nhân",
+                            Date = new DateTime(2025, 3, 15, 9, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             PatientId = 1,
+                            PaymentId = 1,
                             ProviderId = 1,
                             ProviderType = "Professional",
                             ServiceId = 1,
                             ServiceType = "Private",
-                            Status = "AwaitingPayment",
+                            Status = "Completed",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 2,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Date = new DateTime(2025, 3, 31, 14, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Điều trị bằng y học cổ truyền cho bệnh nhân",
+                            Date = new DateTime(2025, 3, 18, 14, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             PatientId = 2,
-                            ProviderId = 1,
+                            PaymentId = 2,
+                            ProviderId = 3,
                             ProviderType = "Professional",
-                            ServiceId = 4,
+                            ServiceId = 11,
                             ServiceType = "Private",
+                            Status = "Completed",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 4, 5, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            PatientId = 3,
+                            PaymentId = 3,
+                            ProviderId = 4,
+                            ProviderType = "Professional",
+                            ServiceId = 14,
+                            ServiceType = "Private",
+                            Status = "Confirmed",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 4, 10, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            PatientId = 4,
+                            PaymentId = 4,
+                            ProviderId = 2,
+                            ProviderType = "Professional",
+                            ServiceId = 7,
+                            ServiceType = "Private",
+                            Status = "Pending",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 4, 12, 9, 30, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            PatientId = 5,
+                            ProviderId = 17,
+                            ProviderType = "Professional",
+                            ServiceId = 9,
+                            ServiceType = "Private",
+                            Status = "AwaitingPayment",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 4, 2, 13, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            PatientId = 6,
+                            PaymentId = 5,
+                            ProviderId = 15,
+                            ProviderType = "Professional",
+                            ServiceId = 36,
+                            ServiceType = "Private",
+                            Status = "Cancelled",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 3, 25, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            PatientId = 1,
+                            ProviderId = 1,
+                            ProviderType = "Facility",
+                            ServiceId = 1,
+                            ServiceType = "Public",
+                            Status = "Expired",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 4, 15, 10, 30, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            PatientId = 2,
+                            PaymentId = 6,
+                            ProviderId = 7,
+                            ProviderType = "Facility",
+                            ServiceId = 19,
+                            ServiceType = "Public",
+                            Status = "AwaitingPayment",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 4, 20, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            PatientId = 3,
+                            ProviderId = 17,
+                            ProviderType = "Facility",
+                            ServiceId = 9,
+                            ServiceType = "Public",
+                            Status = "Rejected",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 4, 18, 14, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            PatientId = 4,
+                            ProviderId = 3,
+                            ProviderType = "Facility",
+                            ServiceId = 39,
+                            ServiceType = "Public",
+                            Status = "Rescheduled",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 4, 22, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            PatientId = 5,
+                            PaymentId = 8,
+                            ProviderId = 6,
+                            ProviderType = "Facility",
+                            ServiceId = 36,
+                            ServiceType = "Public",
+                            Status = "AwaitingPayment",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 4, 25, 15, 30, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            PatientId = 6,
+                            PaymentId = 7,
+                            ProviderId = 5,
+                            ProviderType = "Facility",
+                            ServiceId = 29,
+                            ServiceType = "Public",
+                            Status = "AwaitingPayment",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 4, 28, 8, 30, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            PatientId = 1,
+                            PaymentId = 9,
+                            ProviderId = 12,
+                            ProviderType = "Facility",
+                            ServiceId = 41,
+                            ServiceType = "Public",
                             Status = "AwaitingPayment",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
@@ -828,98 +989,342 @@ namespace DataAccessObjects.Migrations
                         new
                         {
                             Id = 1,
-                            Address = "Số 1, Phố Lê Thánh Tông",
+                            Address = "78 Đường Giải Phóng",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Bệnh viện công cung cấp dịch vụ y tế chuyên nghiệp với chi phí hợp lý.",
-                            District = "Quận Hoàn Kiếm",
+                            Description = "Một trong những bệnh viện đa khoa lớn nhất Việt Nam, cung cấp dịch vụ y tế chất lượng cao với đội ngũ y bác sĩ hàng đầu.",
+                            District = "Quận Đống Đa",
+                            ImgUrl = "/images/facilities/bach-mai.jpg",
                             IsDeleted = false,
-                            Name = "Bệnh viện Đa khoa Quốc tế Hà Nội",
-                            OperationDay = new DateOnly(2025, 3, 17),
+                            Name = "Bệnh viện Bạch Mai",
+                            OperationDay = new DateOnly(2020, 5, 15),
                             Province = "Thành phố Hà Nội",
                             Status = "Active",
                             TypeId = 1,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Ward = "Phường Hàng Bạc"
+                            Ward = "Phường Phương Mai"
                         },
                         new
                         {
                             Id = 2,
-                            Address = "Số 25, Đường Lý Thường Kiệt",
+                            Address = "201 Nguyễn Chí Thanh",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Bệnh viện tư chuyên cung cấp dịch vụ y tế chất lượng cao.",
-                            District = "Quận 10",
+                            Description = "Bệnh viện hạng đặc biệt tại miền Nam, với trang thiết bị hiện đại và đội ngũ y bác sĩ giỏi chuyên môn.",
+                            District = "Quận 5",
+                            ImgUrl = "/images/facilities/cho-ray.jpg",
                             IsDeleted = false,
-                            Name = "Bệnh viện Đa khoa Vạn Hạnh",
-                            OperationDay = new DateOnly(2025, 3, 17),
+                            Name = "Bệnh viện Chợ Rẫy",
+                            OperationDay = new DateOnly(2019, 7, 20),
                             Province = "Thành phố Hồ Chí Minh",
                             Status = "Active",
-                            TypeId = 2,
+                            TypeId = 1,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Ward = "Phường Phú Trung"
+                            Ward = "Phường 12"
                         },
                         new
                         {
                             Id = 3,
-                            Address = "Số 45, Đường Võ Văn Tần",
+                            Address = "458 Minh Khai",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Trung tâm y tế cung cấp dịch vụ chăm sóc sức khỏe cơ bản cho cộng đồng.",
-                            District = "Quận 3",
+                            Description = "Bệnh viện tư nhân đẳng cấp quốc tế với cơ sở vật chất và trang thiết bị hiện đại hàng đầu Việt Nam.",
+                            District = "Quận Hai Bà Trưng",
+                            ImgUrl = "/images/facilities/vinmec.jpg",
                             IsDeleted = false,
-                            Name = "Trung tâm Y tế Quận 3",
-                            OperationDay = new DateOnly(2025, 3, 17),
-                            Province = "Thành phố Hồ Chí Minh",
-                            Status = "Active",
-                            TypeId = 3,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Ward = "Phường 7"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Address = "Số 78, Phố Giải Phóng",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Bệnh viện công lớn chuyên khoa về nội, ngoại, và các chuyên khoa khác.",
-                            District = "Quận Đống Đa",
-                            IsDeleted = false,
-                            Name = "Bệnh viện Bạch Mai",
-                            OperationDay = new DateOnly(2025, 3, 17),
-                            Province = "Thành phố Hà Nội",
-                            Status = "Active",
-                            TypeId = 1,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Ward = "Phường Phương Liên"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Address = "Số 458, Đường Minh Khai",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Bệnh viện tư quốc tế với các dịch vụ khám chữa bệnh tiên tiến và chuyên nghiệp.",
-                            District = "Quận Cầu Giấy",
-                            IsDeleted = false,
-                            Name = "Bệnh viện Quốc tế Vinmec",
-                            OperationDay = new DateOnly(2025, 3, 17),
+                            Name = "Bệnh viện Đa khoa Quốc tế Vinmec Times City",
+                            OperationDay = new DateOnly(2022, 3, 10),
                             Province = "Thành phố Hà Nội",
                             Status = "Active",
                             TypeId = 2,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Ward = "Phường Dịch Vọng"
+                            Ward = "Phường Vĩnh Tuy"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Address = "16 Lê Lợi",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Bệnh viện đa khoa hạng đặc biệt tại miền Trung, cung cấp dịch vụ y tế chất lượng cao cho khu vực.",
+                            District = "Thành phố Huế",
+                            ImgUrl = "/images/facilities/hue-central.jpg",
+                            IsDeleted = false,
+                            Name = "Bệnh viện Trung ương Huế",
+                            OperationDay = new DateOnly(2021, 8, 5),
+                            Province = "Thừa Thiên Huế",
+                            Status = "Active",
+                            TypeId = 1,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ward = "Phường Phước Vĩnh"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Address = "315 Nguyễn Văn Cừ",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Bệnh viện đa khoa hạng đặc biệt tại miền Tây Nam Bộ, cung cấp dịch vụ y tế cho khu vực Đồng bằng sông Cửu Long.",
+                            District = "Quận Ninh Kiều",
+                            ImgUrl = "/images/facilities/cantho-central.jpg",
+                            IsDeleted = false,
+                            Name = "Bệnh viện Đa khoa Trung ương Cần Thơ",
+                            OperationDay = new DateOnly(2020, 10, 17),
+                            Province = "Thành phố Cần Thơ",
+                            Status = "Active",
+                            TypeId = 1,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ward = "Phường Tân An"
                         },
                         new
                         {
                             Id = 6,
-                            Address = "Số 50, Đường Nguyễn Văn Linh",
+                            Address = "30 Cầu Bươu",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Trung tâm y tế cung cấp các dịch vụ chăm sóc sức khỏe cộng đồng và các dịch vụ phòng ngừa.",
-                            District = "Quận 7",
+                            Description = "Bệnh viện chuyên khoa ung bướu hàng đầu, cung cấp dịch vụ chẩn đoán và điều trị ung thư.",
+                            District = "Huyện Thanh Trì",
+                            ImgUrl = "/images/facilities/k-hospital.jpg",
                             IsDeleted = false,
-                            Name = "Trung tâm Y tế Quận 7",
-                            OperationDay = new DateOnly(2025, 3, 17),
+                            Name = "Bệnh viện K Tân Triều",
+                            OperationDay = new DateOnly(2022, 1, 20),
+                            Province = "Thành phố Hà Nội",
+                            Status = "Active",
+                            TypeId = 1,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ward = "Xã Tân Triều"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Address = "85 Bà Triệu",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Bệnh viện chuyên khoa mắt hàng đầu, cung cấp dịch vụ chẩn đoán và điều trị các bệnh lý về mắt.",
+                            District = "Quận Đống Đa",
+                            ImgUrl = "/images/facilities/eye-hospital.jpg",
+                            IsDeleted = false,
+                            Name = "Bệnh viện Mắt Trung ương",
+                            OperationDay = new DateOnly(2021, 5, 5),
+                            Province = "Thành phố Hà Nội",
+                            Status = "Active",
+                            TypeId = 1,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ward = "Phường Trung Liệt"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Address = "6 Nguyễn Lương Bằng",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Bệnh viện quốc tế với đội ngũ bác sĩ trong nước và quốc tế, cung cấp dịch vụ y tế chất lượng cao.",
+                            District = "Quận 7",
+                            ImgUrl = "/images/facilities/fv-hospital.jpg",
+                            IsDeleted = false,
+                            Name = "Bệnh viện FV",
+                            OperationDay = new DateOnly(2023, 2, 15),
+                            Province = "Thành phố Hồ Chí Minh",
+                            Status = "Active",
+                            TypeId = 2,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ward = "Phường Tân Phú"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Address = "291 Nguyễn Văn Linh",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Bệnh viện tư nhân hiện đại tại miền Trung, cung cấp dịch vụ y tế chất lượng cao.",
+                            District = "Quận Hải Châu",
+                            ImgUrl = "/images/facilities/hoan-my.jpg",
+                            IsDeleted = false,
+                            Name = "Bệnh viện Đa khoa Hoàn Mỹ Đà Nẵng",
+                            OperationDay = new DateOnly(2022, 6, 10),
+                            Province = "Thành phố Đà Nẵng",
+                            Status = "Active",
+                            TypeId = 2,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ward = "Phường Thạch Thang"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Address = "84 Đường Vành Đai 4",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Trung tâm y tế cung cấp dịch vụ khám chữa bệnh cho người dân địa phương với chi phí hợp lý.",
+                            District = "Huyện Bình Chánh",
+                            ImgUrl = "/images/facilities/binh-chanh.jpg",
+                            IsDeleted = false,
+                            Name = "Trung tâm Y tế huyện Bình Chánh",
+                            OperationDay = new DateOnly(2021, 9, 8),
                             Province = "Thành phố Hồ Chí Minh",
                             Status = "Active",
                             TypeId = 3,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Ward = "Phường Phú Mỹ"
+                            Ward = "Thị trấn Tân Túc"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Address = "30 Đường Đỗ Đức Dục",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Trung tâm y tế cung cấp dịch vụ chăm sóc sức khỏe ban đầu và phòng ngừa dịch bệnh cho cộng đồng.",
+                            District = "Quận Nam Từ Liêm",
+                            ImgUrl = "/images/facilities/nam-tu-liem.jpg",
+                            IsDeleted = false,
+                            Name = "Trung tâm Y tế quận Nam Từ Liêm",
+                            OperationDay = new DateOnly(2022, 4, 12),
+                            Province = "Thành phố Hà Nội",
+                            Status = "Active",
+                            TypeId = 3,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ward = "Phường Mỹ Đình"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Address = "638 Đường Trần Hưng Đạo",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Bệnh viện đa khoa hạng I cung cấp dịch vụ y tế cho người dân tỉnh Lào Cai và các tỉnh lân cận.",
+                            District = "Thành phố Lào Cai",
+                            ImgUrl = "/images/facilities/laocai.jpg",
+                            IsDeleted = false,
+                            Name = "Bệnh viện Đa khoa tỉnh Lào Cai",
+                            OperationDay = new DateOnly(2021, 11, 20),
+                            Province = "Tỉnh Lào Cai",
+                            Status = "Active",
+                            TypeId = 1,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ward = "Phường Nam Cường"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Address = "225 Đường Nguyễn Lương Bằng",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Bệnh viện đa khoa hạng I cung cấp dịch vụ y tế chất lượng cho người dân trong tỉnh.",
+                            District = "Thành phố Hải Dương",
+                            ImgUrl = "/images/facilities/hai-duong.jpg",
+                            IsDeleted = false,
+                            Name = "Bệnh viện Đa khoa tỉnh Hải Dương",
+                            OperationDay = new DateOnly(2020, 12, 15),
+                            Province = "Tỉnh Hải Dương",
+                            Status = "Active",
+                            TypeId = 1,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ward = "Phường Trần Phú"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Address = "Đường Phan Châu Trinh",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Bệnh viện đa khoa tuyến tỉnh, cung cấp dịch vụ khám chữa bệnh cho người dân trong tỉnh Quảng Nam.",
+                            District = "Thành phố Tam Kỳ",
+                            ImgUrl = "/images/facilities/quang-nam.jpg",
+                            IsDeleted = false,
+                            Name = "Bệnh viện Đa khoa tỉnh Quảng Nam",
+                            OperationDay = new DateOnly(2022, 2, 8),
+                            Province = "Tỉnh Quảng Nam",
+                            Status = "Active",
+                            TypeId = 1,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ward = "Phường An Xuân"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Address = "52 Trần Phú",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Bệnh viện tư nhân cung cấp dịch vụ y tế chất lượng cao cho người dân và du khách tại Nha Trang.",
+                            District = "Thành phố Nha Trang",
+                            ImgUrl = "/images/facilities/nhatrang.jpg",
+                            IsDeleted = false,
+                            Name = "Bệnh viện Đa khoa Quốc tế Nha Trang",
+                            OperationDay = new DateOnly(2023, 1, 10),
+                            Province = "Tỉnh Khánh Hòa",
+                            Status = "Active",
+                            TypeId = 2,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ward = "Phường Vĩnh Hải"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Address = "144 Đường Nguyễn Thị Minh Khai",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Bệnh viện đa khoa tuyến tỉnh, cung cấp dịch vụ y tế cho người dân tỉnh Đồng Tháp.",
+                            District = "Thành phố Cao Lãnh",
+                            ImgUrl = "/images/facilities/dong-thap.jpg",
+                            IsDeleted = false,
+                            Name = "Bệnh viện Đa khoa tỉnh Đồng Tháp",
+                            OperationDay = new DateOnly(2021, 7, 8),
+                            Province = "Tỉnh Đồng Tháp",
+                            Status = "Active",
+                            TypeId = 1,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ward = "Phường 1"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Address = "70 Đường 30/4",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Bệnh viện tư nhân chất lượng cao chuyên về sản phụ khoa và nhi khoa tại khu vực Đồng bằng sông Cửu Long.",
+                            District = "Quận Ninh Kiều",
+                            ImgUrl = "/images/facilities/phuong-chau.jpg",
+                            IsDeleted = false,
+                            Name = "Bệnh viện Đa khoa Phương Châu",
+                            OperationDay = new DateOnly(2022, 9, 15),
+                            Province = "Thành phố Cần Thơ",
+                            Status = "Active",
+                            TypeId = 2,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ward = "Phường An Bình"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Address = "17B Phù Đổng Thiên Vương",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Bệnh viện đa khoa tuyến tỉnh, cung cấp dịch vụ y tế cho người dân Lâm Đồng và các tỉnh lân cận.",
+                            District = "Thành phố Đà Lạt",
+                            ImgUrl = "/images/facilities/lam-dong.jpg",
+                            IsDeleted = false,
+                            Name = "Bệnh viện Đa khoa tỉnh Lâm Đồng",
+                            OperationDay = new DateOnly(2021, 3, 25),
+                            Province = "Tỉnh Lâm Đồng",
+                            Status = "Active",
+                            TypeId = 1,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ward = "Phường 8"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Address = "Tổ 3",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Trung tâm y tế cung cấp dịch vụ chăm sóc sức khỏe cơ bản cho đồng bào dân tộc vùng cao.",
+                            District = "Huyện Mèo Vạc",
+                            ImgUrl = "/images/facilities/meovac.jpg",
+                            IsDeleted = false,
+                            Name = "Trung tâm Y tế huyện Mèo Vạc",
+                            OperationDay = new DateOnly(2022, 8, 5),
+                            Province = "Tỉnh Hà Giang",
+                            Status = "Inactive",
+                            TypeId = 3,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ward = "Thị trấn Mèo Vạc"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Address = "24 Đường Số 4",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Bệnh viện tư nhân mới thành lập, trang bị hiện đại và cung cấp dịch vụ y tế chất lượng cao.",
+                            District = "Quận Bình Tân",
+                            ImgUrl = "/images/facilities/city-hospital.jpg",
+                            IsDeleted = false,
+                            Name = "Bệnh viện Quốc tế City",
+                            OperationDay = new DateOnly(2023, 3, 1),
+                            Province = "Thành phố Hồ Chí Minh",
+                            Status = "Active",
+                            TypeId = 2,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ward = "Phường Bình Trị Đông"
                         });
                 });
 
@@ -984,7 +1389,7 @@ namespace DataAccessObjects.Migrations
                             Id = 3,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DepartmentId = 3,
-                            FacilityId = 2,
+                            FacilityId = 1,
                             IsDeleted = false,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -993,7 +1398,7 @@ namespace DataAccessObjects.Migrations
                             Id = 4,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DepartmentId = 4,
-                            FacilityId = 2,
+                            FacilityId = 1,
                             IsDeleted = false,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1002,7 +1407,7 @@ namespace DataAccessObjects.Migrations
                             Id = 5,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DepartmentId = 5,
-                            FacilityId = 3,
+                            FacilityId = 1,
                             IsDeleted = false,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1011,7 +1416,7 @@ namespace DataAccessObjects.Migrations
                             Id = 6,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DepartmentId = 6,
-                            FacilityId = 3,
+                            FacilityId = 1,
                             IsDeleted = false,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1019,8 +1424,8 @@ namespace DataAccessObjects.Migrations
                         {
                             Id = 7,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DepartmentId = 7,
-                            FacilityId = 4,
+                            DepartmentId = 11,
+                            FacilityId = 1,
                             IsDeleted = false,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1028,8 +1433,8 @@ namespace DataAccessObjects.Migrations
                         {
                             Id = 8,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DepartmentId = 8,
-                            FacilityId = 4,
+                            DepartmentId = 12,
+                            FacilityId = 1,
                             IsDeleted = false,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1037,8 +1442,8 @@ namespace DataAccessObjects.Migrations
                         {
                             Id = 9,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DepartmentId = 9,
-                            FacilityId = 5,
+                            DepartmentId = 16,
+                            FacilityId = 1,
                             IsDeleted = false,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1046,8 +1451,8 @@ namespace DataAccessObjects.Migrations
                         {
                             Id = 10,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DepartmentId = 10,
-                            FacilityId = 5,
+                            DepartmentId = 19,
+                            FacilityId = 1,
                             IsDeleted = false,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1055,8 +1460,8 @@ namespace DataAccessObjects.Migrations
                         {
                             Id = 11,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DepartmentId = 11,
-                            FacilityId = 6,
+                            DepartmentId = 1,
+                            FacilityId = 2,
                             IsDeleted = false,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1064,8 +1469,620 @@ namespace DataAccessObjects.Migrations
                         {
                             Id = 12,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DepartmentId = 12,
+                            DepartmentId = 2,
+                            FacilityId = 2,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 5,
+                            FacilityId = 2,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 6,
+                            FacilityId = 2,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 11,
+                            FacilityId = 2,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 15,
+                            FacilityId = 2,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 17,
+                            FacilityId = 2,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 18,
+                            FacilityId = 2,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 1,
+                            FacilityId = 3,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 2,
+                            FacilityId = 3,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 3,
+                            FacilityId = 3,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 4,
+                            FacilityId = 3,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 23,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 7,
+                            FacilityId = 3,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 24,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 10,
+                            FacilityId = 3,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 25,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 1,
+                            FacilityId = 4,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 26,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 2,
+                            FacilityId = 4,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 27,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 3,
+                            FacilityId = 4,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 28,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 4,
+                            FacilityId = 4,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 29,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 11,
+                            FacilityId = 4,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 30,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 1,
+                            FacilityId = 5,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 31,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 2,
+                            FacilityId = 5,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 32,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 5,
+                            FacilityId = 5,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 33,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 14,
+                            FacilityId = 5,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 34,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 5,
                             FacilityId = 6,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 35,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 6,
+                            FacilityId = 6,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 36,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 19,
+                            FacilityId = 6,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 37,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 8,
+                            FacilityId = 7,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 38,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 1,
+                            FacilityId = 8,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 39,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 2,
+                            FacilityId = 8,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 40,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 3,
+                            FacilityId = 8,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 41,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 10,
+                            FacilityId = 8,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 42,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 1,
+                            FacilityId = 9,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 43,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 2,
+                            FacilityId = 9,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 44,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 5,
+                            FacilityId = 9,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 45,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 8,
+                            FacilityId = 9,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 46,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 1,
+                            FacilityId = 10,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 47,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 5,
+                            FacilityId = 10,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 48,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 1,
+                            FacilityId = 11,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 49,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 4,
+                            FacilityId = 11,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 50,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 1,
+                            FacilityId = 12,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 51,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 2,
+                            FacilityId = 12,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 52,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 3,
+                            FacilityId = 12,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 53,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 4,
+                            FacilityId = 12,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 54,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 1,
+                            FacilityId = 13,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 55,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 2,
+                            FacilityId = 13,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 56,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 9,
+                            FacilityId = 13,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 57,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 1,
+                            FacilityId = 14,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 58,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 2,
+                            FacilityId = 14,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 59,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 13,
+                            FacilityId = 14,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 60,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 1,
+                            FacilityId = 15,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 61,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 3,
+                            FacilityId = 15,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 62,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 10,
+                            FacilityId = 15,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 63,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 1,
+                            FacilityId = 16,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 64,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 2,
+                            FacilityId = 16,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 65,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 3,
+                            FacilityId = 17,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 66,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 4,
+                            FacilityId = 17,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 67,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 5,
+                            FacilityId = 17,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 68,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 1,
+                            FacilityId = 18,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 69,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 2,
+                            FacilityId = 18,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 70,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 5,
+                            FacilityId = 18,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 71,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 17,
+                            FacilityId = 18,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 72,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 1,
+                            FacilityId = 19,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 73,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 4,
+                            FacilityId = 19,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 74,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 1,
+                            FacilityId = 20,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 75,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 2,
+                            FacilityId = 20,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 76,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 5,
+                            FacilityId = 20,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 77,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 6,
+                            FacilityId = 20,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 78,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 7,
+                            FacilityId = 20,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 79,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 10,
+                            FacilityId = 20,
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 80,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 16,
+                            FacilityId = 20,
                             IsDeleted = false,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
@@ -1216,7 +2233,7 @@ namespace DataAccessObjects.Migrations
                             Id = 1,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
-                            Note = "Bệnh nhân có tiền sử bệnh tim mạch",
+                            Note = "Tôi có tiền sử bệnh tim mạch, đã từng phẫu thuật van tim năm 2020",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 2
                         },
@@ -1225,9 +2242,45 @@ namespace DataAccessObjects.Migrations
                             Id = 2,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
-                            Note = "Bệnh nhân bị tiểu đường type 2 và huyết áp cao",
+                            Note = "Tôi bị tiểu đường type 2 và huyết áp cao, đang điều trị thuốc ổn định",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 3
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            Note = "Tôi có tiền sử viêm gan B, đang theo dõi định kỳ",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 6
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            Note = "Tôi bị hen suyễn từ nhỏ, có dị ứng với bụi và phấn hoa",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 7
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            Note = "Bệnh nhân bị thoái hóa cột sống, đang điều trị vật lý trị liệu",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 10
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            Note = "Tôi có tiền sử sỏi thận, đã phẫu thuật lấy sỏi năm 2022",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 11
                         });
                 });
 
@@ -1276,6 +2329,125 @@ namespace DataAccessObjects.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Payments");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            PaymentDate = new DateTime(2025, 3, 15, 10, 30, 0, 0, DateTimeKind.Unspecified),
+                            PaymentMethod = "VnPay",
+                            PaymentStatus = "Completed",
+                            PaymentUrl = "https://vnpay.vn/transaction/VNP13579246",
+                            Price = 250000m,
+                            TransactionId = "VNP13579246",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            PaymentDate = new DateTime(2025, 3, 18, 14, 15, 0, 0, DateTimeKind.Unspecified),
+                            PaymentMethod = "VnPay",
+                            PaymentStatus = "Completed",
+                            PaymentUrl = "https://vnpay.vn/transaction/VNP24681357",
+                            Price = 60000m,
+                            TransactionId = "VNP24681357",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            PaymentDate = new DateTime(2025, 3, 20, 9, 45, 0, 0, DateTimeKind.Unspecified),
+                            PaymentMethod = "VnPay",
+                            PaymentStatus = "Completed",
+                            PaymentUrl = "https://vnpay.vn/transaction/VNP98765432",
+                            Price = 325000m,
+                            TransactionId = "VNP98765432",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            PaymentDate = new DateTime(2025, 3, 22, 11, 0, 0, 0, DateTimeKind.Unspecified),
+                            PaymentMethod = "VnPay",
+                            PaymentStatus = "Completed",
+                            PaymentUrl = "https://vnpay.vn/transaction/VNP12345678",
+                            Price = 200000m,
+                            TransactionId = "VNP12345678",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            PaymentDate = new DateTime(2025, 3, 25, 16, 30, 0, 0, DateTimeKind.Unspecified),
+                            PaymentMethod = "VnPay",
+                            PaymentStatus = "Completed",
+                            PaymentUrl = "https://vnpay.vn/transaction/VNP87654321",
+                            Price = 350000m,
+                            TransactionId = "VNP87654321",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            PaymentDate = new DateTime(2025, 3, 29, 10, 45, 0, 0, DateTimeKind.Unspecified),
+                            PaymentMethod = "VnPay",
+                            PaymentStatus = "Pending",
+                            PaymentUrl = "https://vnpay.vn/transaction/VNP24680135",
+                            Price = 100000m,
+                            TransactionId = "VNP24680135",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            PaymentDate = new DateTime(2025, 3, 30, 15, 20, 0, 0, DateTimeKind.Unspecified),
+                            PaymentMethod = "VnPay",
+                            PaymentStatus = "Pending",
+                            PaymentUrl = "https://vnpay.vn/transaction/VNP13572468",
+                            Price = 125000m,
+                            TransactionId = "VNP13572468",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            PaymentDate = new DateTime(2025, 3, 28, 14, 10, 0, 0, DateTimeKind.Unspecified),
+                            PaymentMethod = "VnPay",
+                            PaymentStatus = "Failed",
+                            PaymentUrl = "https://vnpay.vn/transaction/VNP11223344",
+                            Price = 250000m,
+                            TransactionId = "VNP11223344",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            PaymentDate = new DateTime(2025, 3, 29, 9, 30, 0, 0, DateTimeKind.Unspecified),
+                            PaymentMethod = "VnPay",
+                            PaymentStatus = "Failed",
+                            PaymentUrl = "https://vnpay.vn/transaction/VNP99887766",
+                            Price = 100000m,
+                            TransactionId = "VNP99887766",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("BusinessObjects.Entities.PrivateService", b =>
@@ -1324,10 +2496,10 @@ namespace DataAccessObjects.Migrations
                         {
                             Id = 1,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Khám tổng quát để kiểm tra sức khỏe định kỳ.",
+                            Description = "Khám tổng quát và tư vấn các bệnh lý nội khoa như tim mạch, tiêu hóa, hô hấp.",
                             IsDeleted = false,
-                            Name = "Khám bệnh tổng quát",
-                            Price = 300000m,
+                            Name = "Khám và tư vấn bệnh lý nội khoa",
+                            Price = 500000m,
                             ProfessionalId = 1,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1335,10 +2507,10 @@ namespace DataAccessObjects.Migrations
                         {
                             Id = 2,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Khám sức khỏe phụ khoa cho nữ giới.",
+                            Description = "Chẩn đoán và điều trị các bệnh lý về đường tiêu hóa như viêm dạ dày, trào ngược dạ dày.",
                             IsDeleted = false,
-                            Name = "Khám sức khỏe phụ khoa",
-                            Price = 350000m,
+                            Name = "Điều trị bệnh lý tiêu hóa",
+                            Price = 600000m,
                             ProfessionalId = 1,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1346,44 +2518,440 @@ namespace DataAccessObjects.Migrations
                         {
                             Id = 3,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Khám các bệnh lý về tim mạch, huyết áp và các bệnh lý liên quan.",
+                            Description = "Khám, tư vấn và quản lý các bệnh mạn tính như tăng huyết áp, tiểu đường.",
                             IsDeleted = false,
-                            Name = "Khám bệnh lý tim mạch",
-                            Price = 500000m,
-                            ProfessionalId = 1,
+                            Name = "Khám và quản lý bệnh mạn tính",
+                            Price = 450000m,
+                            ProfessionalId = 8,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 4,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Sử dụng y học cổ truyền để điều trị các bệnh lý như đau nhức, viêm nhiễm.",
+                            Description = "Tư vấn chế độ dinh dưỡng phù hợp cho người mắc các bệnh lý nội khoa.",
                             IsDeleted = false,
-                            Name = "Điều trị bằng y học cổ truyền",
-                            Price = 500000m,
-                            ProfessionalId = 2,
+                            Name = "Tư vấn dinh dưỡng cho bệnh nhân nội khoa",
+                            Price = 350000m,
+                            ProfessionalId = 8,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 5,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Điều trị đau lưng bằng phương pháp châm cứu truyền thống.",
+                            Description = "Khám và chẩn đoán chuyên sâu các bệnh lý tiêu hóa phức tạp.",
                             IsDeleted = false,
-                            Name = "Châm cứu điều trị đau lưng",
-                            Price = 400000m,
-                            ProfessionalId = 2,
+                            Name = "Khám bệnh tiêu hóa chuyên sâu",
+                            Price = 700000m,
+                            ProfessionalId = 16,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 6,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Xoa bóp và bấm huyệt giúp giảm căng thẳng và mệt mỏi.",
+                            Description = "Khám và điều trị các bệnh lý bằng phương pháp y học cổ truyền.",
+                            IsDeleted = false,
+                            Name = "Khám và điều trị bằng y học cổ truyền",
+                            Price = 450000m,
+                            ProfessionalId = 2,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Sử dụng phương pháp châm cứu để điều trị các chứng đau nhức cơ xương khớp.",
+                            IsDeleted = false,
+                            Name = "Châm cứu điều trị đau nhức",
+                            Price = 400000m,
+                            ProfessionalId = 2,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Xoa bóp, bấm huyệt kết hợp với các bài thuốc cổ truyền để điều trị đau mỏi.",
                             IsDeleted = false,
                             Name = "Xoa bóp bấm huyệt",
                             Price = 350000m,
-                            ProfessionalId = 2,
+                            ProfessionalId = 17,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Sử dụng phương pháp cấy chỉ kết hợp với châm cứu để điều trị đau thần kinh tọa.",
+                            IsDeleted = false,
+                            Name = "Cấy chỉ điều trị đau thần kinh tọa",
+                            Price = 600000m,
+                            ProfessionalId = 17,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám tổng quát răng miệng, tư vấn chăm sóc và phòng ngừa bệnh lý răng miệng.",
+                            IsDeleted = false,
+                            Name = "Khám và tư vấn răng miệng",
+                            Price = 300000m,
+                            ProfessionalId = 3,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Điều trị tủy răng cho các trường hợp viêm tủy, hoại tử tủy.",
+                            IsDeleted = false,
+                            Name = "Điều trị tủy răng",
+                            Price = 1200000m,
+                            ProfessionalId = 3,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Trám răng sâu bằng các vật liệu thẩm mỹ, màu sắc tự nhiên.",
+                            IsDeleted = false,
+                            Name = "Trám răng thẩm mỹ",
+                            Price = 500000m,
+                            ProfessionalId = 14,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Nhổ răng khôn với phương pháp ít đau, an toàn, phục hồi nhanh.",
+                            IsDeleted = false,
+                            Name = "Nhổ răng khôn",
+                            Price = 1500000m,
+                            ProfessionalId = 14,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám, chẩn đoán và tư vấn các bệnh lý tim mạch như tăng huyết áp, rối loạn nhịp tim.",
+                            IsDeleted = false,
+                            Name = "Khám và tư vấn bệnh lý tim mạch",
+                            Price = 650000m,
+                            ProfessionalId = 4,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Siêu âm tim để đánh giá cấu trúc và chức năng của tim.",
+                            IsDeleted = false,
+                            Name = "Siêu âm tim",
+                            Price = 600000m,
+                            ProfessionalId = 4,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Đo điện tâm đồ để đánh giá nhịp tim và phát hiện các bất thường về điện tim.",
+                            IsDeleted = false,
+                            Name = "Điện tâm đồ",
+                            Price = 250000m,
+                            ProfessionalId = 4,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám, chẩn đoán và tư vấn các trường hợp cần can thiệp phẫu thuật.",
+                            IsDeleted = false,
+                            Name = "Khám và tư vấn phẫu thuật",
+                            Price = 600000m,
+                            ProfessionalId = 5,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Phẫu thuật cắt bỏ các u lành tính trên da và dưới da.",
+                            IsDeleted = false,
+                            Name = "Phẫu thuật cắt u lành tính",
+                            Price = 3500000m,
+                            ProfessionalId = 5,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Phẫu thuật nội soi điều trị các bệnh lý tiêu hóa như viêm ruột thừa, sỏi mật.",
+                            IsDeleted = false,
+                            Name = "Phẫu thuật nội soi tiêu hóa",
+                            Price = 5000000m,
+                            ProfessionalId = 16,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám phụ khoa tổng quát định kỳ, phát hiện sớm các bệnh lý phụ khoa.",
+                            IsDeleted = false,
+                            Name = "Khám phụ khoa tổng quát",
+                            Price = 500000m,
+                            ProfessionalId = 6,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Siêu âm đánh giá tình trạng tử cung, buồng trứng và các cơ quan sinh sản nữ.",
+                            IsDeleted = false,
+                            Name = "Siêu âm phụ khoa",
+                            Price = 400000m,
+                            ProfessionalId = 6,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám thai định kỳ, theo dõi sự phát triển của thai nhi và sức khỏe của mẹ.",
+                            IsDeleted = false,
+                            Name = "Khám thai định kỳ",
+                            Price = 550000m,
+                            ProfessionalId = 6,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 23,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám, chẩn đoán và tư vấn các bệnh lý thần kinh như đau đầu, động kinh, đột quỵ.",
+                            IsDeleted = false,
+                            Name = "Khám và tư vấn bệnh lý thần kinh",
+                            Price = 700000m,
+                            ProfessionalId = 7,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 24,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Đo điện não đồ để đánh giá hoạt động điện của não và phát hiện bất thường.",
+                            IsDeleted = false,
+                            Name = "Điện não đồ",
+                            Price = 650000m,
+                            ProfessionalId = 7,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 25,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Đánh giá tình trạng bệnh nhân và lập kế hoạch phục hồi chức năng cá nhân hóa.",
+                            IsDeleted = false,
+                            Name = "Đánh giá và lập kế hoạch phục hồi chức năng",
+                            Price = 500000m,
+                            ProfessionalId = 9,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 26,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Vật lý trị liệu chuyên sâu cho các bệnh lý về cột sống như thoát vị đĩa đệm, đau thắt lưng.",
+                            IsDeleted = false,
+                            Name = "Vật lý trị liệu cột sống",
+                            Price = 400000m,
+                            ProfessionalId = 9,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 27,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám, tư vấn và quản lý bệnh tiểu đường, bao gồm kế hoạch điều trị và chế độ dinh dưỡng.",
+                            IsDeleted = false,
+                            Name = "Khám và điều trị bệnh tiểu đường",
+                            Price = 600000m,
+                            ProfessionalId = 10,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 28,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám, chẩn đoán và điều trị các bệnh lý của tuyến giáp như cường giáp, suy giáp.",
+                            IsDeleted = false,
+                            Name = "Khám và điều trị rối loạn tuyến giáp",
+                            Price = 650000m,
+                            ProfessionalId = 10,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 29,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám, chẩn đoán và điều trị các bệnh lý hô hấp như viêm phổi, hen suyễn, COPD.",
+                            IsDeleted = false,
+                            Name = "Khám và điều trị bệnh hô hấp",
+                            Price = 550000m,
+                            ProfessionalId = 11,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 30,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Đo và đánh giá chức năng hô hấp để chẩn đoán các bệnh lý phổi.",
+                            IsDeleted = false,
+                            Name = "Đo chức năng hô hấp",
+                            Price = 450000m,
+                            ProfessionalId = 11,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 31,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Đánh giá các yếu tố nguy cơ và tư vấn phòng ngừa ung thư cá nhân hóa.",
+                            IsDeleted = false,
+                            Name = "Tư vấn và đánh giá nguy cơ ung thư",
+                            Price = 1000000m,
+                            ProfessionalId = 12,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 32,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám định kỳ và theo dõi cho bệnh nhân sau điều trị ung thư.",
+                            IsDeleted = false,
+                            Name = "Khám và theo dõi sau điều trị ung thư",
+                            Price = 1200000m,
+                            ProfessionalId = 12,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 33,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám sức khỏe tổng quát định kỳ cho trẻ em, theo dõi sự phát triển và tầm soát bệnh lý.",
+                            IsDeleted = false,
+                            Name = "Khám sức khỏe tổng quát cho trẻ",
+                            Price = 500000m,
+                            ProfessionalId = 13,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 34,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Tư vấn chế độ dinh dưỡng và lịch tiêm chủng phù hợp theo từng độ tuổi của trẻ.",
+                            IsDeleted = false,
+                            Name = "Tư vấn dinh dưỡng và tiêm chủng cho trẻ",
+                            Price = 400000m,
+                            ProfessionalId = 13,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 35,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám, chẩn đoán và điều trị các bệnh lý về da như mụn trứng cá, viêm da, chàm.",
+                            IsDeleted = false,
+                            Name = "Khám và điều trị bệnh da liễu",
+                            Price = 550000m,
+                            ProfessionalId = 15,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 36,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Điều trị chuyên sâu mụn trứng cá và cải thiện tình trạng sẹo sau mụn.",
+                            IsDeleted = false,
+                            Name = "Điều trị mụn và sẹo",
+                            Price = 700000m,
+                            ProfessionalId = 15,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 37,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám tổng quát tai, mũi, họng và chẩn đoán các bệnh lý liên quan.",
+                            IsDeleted = false,
+                            Name = "Khám tai mũi họng tổng quát",
+                            Price = 500000m,
+                            ProfessionalId = 18,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 38,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Nội soi để chẩn đoán chính xác các bệnh lý tai, mũi, họng khó phát hiện bằng khám thường.",
+                            IsDeleted = false,
+                            Name = "Nội soi tai mũi họng",
+                            Price = 600000m,
+                            ProfessionalId = 18,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 39,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám tổng quát mắt, kiểm tra thị lực và chẩn đoán các bệnh lý về mắt.",
+                            IsDeleted = false,
+                            Name = "Khám mắt tổng quát",
+                            Price = 450000m,
+                            ProfessionalId = 19,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 40,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Đo khúc xạ chính xác và kê đơn kính phù hợp cho các trường hợp cận, viễn, loạn thị.",
+                            IsDeleted = false,
+                            Name = "Đo khúc xạ và kê đơn kính",
+                            Price = 350000m,
+                            ProfessionalId = 19,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 41,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám sức khỏe tổng quát và tầm soát các bệnh lý thường gặp.",
+                            IsDeleted = false,
+                            Name = "Khám sức khỏe tổng quát",
+                            Price = 400000m,
+                            ProfessionalId = 20,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 42,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Tư vấn các biện pháp phòng ngừa bệnh tật và duy trì lối sống lành mạnh.",
+                            IsDeleted = false,
+                            Name = "Tư vấn phòng ngừa bệnh tật",
+                            Price = 300000m,
+                            ProfessionalId = 20,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
@@ -1461,36 +3029,342 @@ namespace DataAccessObjects.Migrations
                         new
                         {
                             Id = 1,
-                            Address = "Số 10, Đường X",
+                            Address = "Số 15, Phố Hàng Bông",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Degree = "Bác sĩ đa khoa",
-                            District = "Quận Ba Đình",
-                            Experience = "Có 10 năm kinh nghiệm trong lĩnh vực khám chữa bệnh",
-                            ExpertiseId = 1,
+                            Degree = "Chuyên khoa I Nội khoa",
+                            District = "Quận Hoàn Kiếm",
+                            Experience = "Có 12 năm kinh nghiệm trong lĩnh vực khám chữa bệnh nội khoa",
+                            ExpertiseId = 8,
                             IsDeleted = false,
                             Province = "Thành phố Hà Nội",
                             RequestStatus = "Approved",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 4,
-                            Ward = "Phường Cửa Đông",
+                            Ward = "Phường Hàng Bạc",
                             WorkingHours = "8:00 - 17:00"
                         },
                         new
                         {
                             Id = 2,
-                            Address = "Số 15, Đường Y",
+                            Address = "Số 25, Đường Nguyễn Huệ",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Degree = "Bác sĩ y học cổ truyền",
+                            Degree = "Đại học Y học cổ truyền",
                             District = "Quận 1",
-                            Experience = "Có 5 năm kinh nghiệm trong điều trị các bệnh lý bằng y học cổ truyền",
+                            Experience = "Có 8 năm kinh nghiệm trong điều trị các bệnh lý bằng y học cổ truyền",
                             ExpertiseId = 2,
                             IsDeleted = false,
                             Province = "Thành phố Hồ Chí Minh",
-                            RequestStatus = "Pending",
+                            RequestStatus = "Approved",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 5,
                             Ward = "Phường Bến Nghé",
                             WorkingHours = "9:00 - 18:00"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Address = "Số 42, Đường Trần Phú",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Degree = "Đại học Răng Hàm Mặt",
+                            District = "Quận Hải Châu",
+                            Experience = "Có 15 năm kinh nghiệm trong lĩnh vực nha khoa và phẫu thuật hàm mặt",
+                            ExpertiseId = 3,
+                            IsDeleted = false,
+                            Province = "Thành phố Đà Nẵng",
+                            RequestStatus = "Approved",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 8,
+                            Ward = "Phường Thạch Thang",
+                            WorkingHours = "8:30 - 17:30"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Address = "Số 28, Đường Hòa Bình",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Degree = "Chuyên khoa II Tim mạch",
+                            District = "Quận Ninh Kiều",
+                            Experience = "Có 9 năm kinh nghiệm trong lĩnh vực tim mạch và nội khoa",
+                            ExpertiseId = 9,
+                            IsDeleted = false,
+                            Province = "Thành phố Cần Thơ",
+                            RequestStatus = "Approved",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 9,
+                            Ward = "Phường Tân An",
+                            WorkingHours = "7:00 - 16:00"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Address = "Số 55, Đường Ngô Gia Tự",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Degree = "Tiến sĩ Y khoa chuyên ngành Ngoại khoa",
+                            District = "Thành phố Bắc Ninh",
+                            Experience = "Có 18 năm kinh nghiệm trong lĩnh vực ngoại khoa và phẫu thuật tổng quát",
+                            ExpertiseId = 11,
+                            IsDeleted = false,
+                            Province = "Tỉnh Bắc Ninh",
+                            RequestStatus = "Approved",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 12,
+                            Ward = "Phường Đại Phúc",
+                            WorkingHours = "7:30 - 16:30"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Address = "Số 105, Đường Xuân Thủy",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Degree = "Thạc sĩ Y khoa chuyên ngành Sản phụ khoa",
+                            District = "Quận Cầu Giấy",
+                            Experience = "Có 11 năm kinh nghiệm trong lĩnh vực sản khoa và phụ khoa",
+                            ExpertiseId = 10,
+                            IsDeleted = false,
+                            Province = "Thành phố Hà Nội",
+                            RequestStatus = "Approved",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 13,
+                            Ward = "Phường Dịch Vọng",
+                            WorkingHours = "8:00 - 17:00"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Address = "Số 215, Đường Hồng Bàng",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Degree = "Phó Giáo sư - Tiến sĩ Y khoa",
+                            District = "Quận 5",
+                            Experience = "Có 25 năm kinh nghiệm trong lĩnh vực thần kinh và nghiên cứu khoa học",
+                            ExpertiseId = 12,
+                            IsDeleted = false,
+                            Province = "Thành phố Hồ Chí Minh",
+                            RequestStatus = "Approved",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 14,
+                            Ward = "Phường 5",
+                            WorkingHours = "9:00 - 16:00"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Address = "Số 38, Đường Trần Phú",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Degree = "Đại học Y khoa",
+                            District = "Thành phố Nha Trang",
+                            Experience = "Có 5 năm kinh nghiệm trong lĩnh vực khám chữa bệnh tổng quát",
+                            ExpertiseId = 1,
+                            IsDeleted = false,
+                            Province = "Tỉnh Khánh Hòa",
+                            RequestStatus = "Approved",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 15,
+                            Ward = "Phường Lộc Thọ",
+                            WorkingHours = "7:30 - 17:00"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Address = "Số 77, Đường Lê Hồng Phong",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Degree = "Cử nhân Điều dưỡng",
+                            District = "Thành phố Thủ Dầu Một",
+                            Experience = "Có 7 năm kinh nghiệm trong chăm sóc và điều dưỡng bệnh nhân",
+                            ExpertiseId = 6,
+                            IsDeleted = false,
+                            Province = "Tỉnh Bình Dương",
+                            RequestStatus = "Approved",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 16,
+                            Ward = "Phường Phú Cường",
+                            WorkingHours = "7:00 - 19:00"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Address = "Số 12, Đường Lạch Tray",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Degree = "Dược sĩ đại học",
+                            District = "Quận Hồng Bàng",
+                            Experience = "Có 10 năm kinh nghiệm trong lĩnh vực dược phẩm và tư vấn thuốc",
+                            ExpertiseId = 5,
+                            IsDeleted = false,
+                            Province = "Thành phố Hải Phòng",
+                            RequestStatus = "Approved",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 17,
+                            Ward = "Phường Hoàng Văn Thụ",
+                            WorkingHours = "8:00 - 18:00"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Address = "Số 65, Đường Nguyễn Huệ",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Degree = "Đại học Y học dự phòng",
+                            District = "Thành phố Huế",
+                            Experience = "Có 14 năm kinh nghiệm trong lĩnh vực y học dự phòng và kiểm soát dịch bệnh",
+                            ExpertiseId = 4,
+                            IsDeleted = false,
+                            Province = "Tỉnh Thừa Thiên Huế",
+                            RequestStatus = "Approved",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 18,
+                            Ward = "Phường Phú Nhuận",
+                            WorkingHours = "7:30 - 16:30"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Address = "Số 43, Đường Liễu Giai",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Degree = "Giáo sư - Tiến sĩ Y khoa",
+                            District = "Quận Ba Đình",
+                            Experience = "Có 32 năm kinh nghiệm trong lĩnh vực nghiên cứu và điều trị ung thư",
+                            ExpertiseId = 13,
+                            IsDeleted = false,
+                            Province = "Thành phố Hà Nội",
+                            RequestStatus = "Approved",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 19,
+                            Ward = "Phường Kim Mã",
+                            WorkingHours = "9:00 - 15:00"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Address = "Số 153, Đường Nguyễn Thị Thập",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Degree = "Bác sĩ nội trú chuyên ngành Nhi",
+                            District = "Quận 7",
+                            Experience = "Có 6 năm kinh nghiệm trong lĩnh vực nhi khoa và hồi sức cấp cứu nhi",
+                            ExpertiseId = 7,
+                            IsDeleted = false,
+                            Province = "Thành phố Hồ Chí Minh",
+                            RequestStatus = "Approved",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 20,
+                            Ward = "Phường Tân Phú",
+                            WorkingHours = "8:00 - 20:00"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Address = "Số 88, Đường Lê Lợi",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Degree = "Đại học Răng Hàm Mặt",
+                            District = "Thành phố Vinh",
+                            Experience = "Có 9 năm kinh nghiệm trong lĩnh vực chỉnh nha và thẩm mỹ răng",
+                            ExpertiseId = 3,
+                            IsDeleted = false,
+                            Province = "Tỉnh Nghệ An",
+                            RequestStatus = "Approved",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 21,
+                            Ward = "Phường Hà Huy Tập",
+                            WorkingHours = "8:30 - 17:30"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Address = "Số 27, Đường Lê Hồng Phong",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Degree = "Chuyên khoa I Da liễu",
+                            District = "Thành phố Vũng Tàu",
+                            Experience = "Có 13 năm kinh nghiệm trong lĩnh vực da liễu và thẩm mỹ da",
+                            ExpertiseId = 8,
+                            IsDeleted = false,
+                            Province = "Tỉnh Bà Rịa - Vũng Tàu",
+                            RequestStatus = "Approved",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 22,
+                            Ward = "Phường Thắng Tam",
+                            WorkingHours = "8:00 - 17:00"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Address = "Số 56, Đường Phan Đình Phùng",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Degree = "Chuyên khoa II Ngoại Tiêu hóa",
+                            District = "Thành phố Đà Lạt",
+                            Experience = "Có 16 năm kinh nghiệm trong lĩnh vực ngoại tiêu hóa và phẫu thuật nội soi",
+                            ExpertiseId = 9,
+                            IsDeleted = false,
+                            Province = "Tỉnh Lâm Đồng",
+                            RequestStatus = "Approved",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 23,
+                            Ward = "Phường 1",
+                            WorkingHours = "8:00 - 16:00"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Address = "Số 19, Đường Hạ Long",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Degree = "Đại học Y học cổ truyền",
+                            District = "Thành phố Hạ Long",
+                            Experience = "Có 11 năm kinh nghiệm trong lĩnh vực y học cổ truyền và châm cứu",
+                            ExpertiseId = 2,
+                            IsDeleted = false,
+                            Province = "Tỉnh Quảng Ninh",
+                            RequestStatus = "Approved",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 24,
+                            Ward = "Phường Bãi Cháy",
+                            WorkingHours = "8:00 - 17:30"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Address = "Số 33, Đường Hùng Vương",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Degree = "Tiến sĩ Y khoa chuyên ngành Tai Mũi Họng",
+                            District = "Thành phố Việt Trì",
+                            Experience = "Có 17 năm kinh nghiệm trong lĩnh vực tai mũi họng và phẫu thuật đầu cổ",
+                            ExpertiseId = 11,
+                            IsDeleted = false,
+                            Province = "Tỉnh Phú Thọ",
+                            RequestStatus = "Approved",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 25,
+                            Ward = "Phường Nông Trang",
+                            WorkingHours = "7:30 - 17:00"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Address = "Số 48, Đường Nguyễn Tất Thành",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Degree = "Thạc sĩ Y khoa chuyên ngành Mắt",
+                            District = "Thành phố Cà Mau",
+                            Experience = "Có 8 năm kinh nghiệm trong lĩnh vực nhãn khoa và phẫu thuật mắt",
+                            ExpertiseId = 10,
+                            IsDeleted = false,
+                            Province = "Tỉnh Cà Mau",
+                            RequestStatus = "Approved",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 26,
+                            Ward = "Phường 5",
+                            WorkingHours = "7:30 - 16:30"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Address = "Số 10, Đường Tô Hiệu",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Degree = "Đại học Y khoa",
+                            District = "Thành phố Sơn La",
+                            Experience = "Có 4 năm kinh nghiệm trong lĩnh vực y học gia đình và chăm sóc sức khỏe cộng đồng",
+                            ExpertiseId = 1,
+                            IsDeleted = false,
+                            Province = "Tỉnh Sơn La",
+                            RequestStatus = "Pending",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 27,
+                            Ward = "Phường Quyết Thắng",
+                            WorkingHours = "7:00 - 17:00"
                         });
                 });
 
@@ -1534,29 +3408,155 @@ namespace DataAccessObjects.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = 9,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
-                            ProfessionalId = 1,
+                            ProfessionalId = 6,
+                            SpecialtyId = 6,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ProfessionalId = 7,
+                            SpecialtyId = 4,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ProfessionalId = 8,
                             SpecialtyId = 1,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = 2,
+                            Id = 12,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
-                            ProfessionalId = 1,
+                            ProfessionalId = 9,
+                            SpecialtyId = 11,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ProfessionalId = 10,
+                            SpecialtyId = 14,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ProfessionalId = 11,
+                            SpecialtyId = 13,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ProfessionalId = 12,
+                            SpecialtyId = 8,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ProfessionalId = 13,
+                            SpecialtyId = 7,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ProfessionalId = 14,
+                            SpecialtyId = 15,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ProfessionalId = 15,
+                            SpecialtyId = 5,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ProfessionalId = 16,
                             SpecialtyId = 2,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = 3,
+                            Id = 20,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
-                            ProfessionalId = 2,
+                            ProfessionalId = 17,
                             SpecialtyId = 12,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ProfessionalId = 18,
+                            SpecialtyId = 10,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ProfessionalId = 19,
+                            SpecialtyId = 9,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 23,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ProfessionalId = 20,
+                            SpecialtyId = 1,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 24,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ProfessionalId = 12,
+                            SpecialtyId = 3,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 25,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ProfessionalId = 16,
+                            SpecialtyId = 1,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
@@ -1607,143 +3607,495 @@ namespace DataAccessObjects.Migrations
                         {
                             Id = 1,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Khám tổng quát để kiểm tra sức khỏe định kỳ.",
+                            Description = "Khám và tư vấn các bệnh lý nội khoa tổng quát, bao gồm đánh giá sức khỏe toàn diện.",
                             FacilityId = 1,
                             IsDeleted = false,
-                            Name = "Khám bệnh tổng quát",
-                            Price = 300000m,
+                            Name = "Khám nội khoa tổng quát",
+                            Price = 350000m,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 2,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Xét nghiệm máu để kiểm tra các chỉ số sức khỏe.",
+                            Description = "Khám, chẩn đoán và điều trị các bệnh lý về đường tiêu hóa như viêm dạ dày, trào ngược dạ dày.",
                             FacilityId = 1,
                             IsDeleted = false,
-                            Name = "Xét nghiệm máu",
-                            Price = 150000m,
+                            Name = "Khám và điều trị bệnh tiêu hóa",
+                            Price = 450000m,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 3,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Khám các bệnh lý về tim mạch, huyết áp và các bệnh lý liên quan.",
-                            FacilityId = 1,
+                            Description = "Khám và tư vấn các bệnh lý nội khoa, bao gồm đánh giá chức năng các cơ quan nội tạng.",
+                            FacilityId = 2,
                             IsDeleted = false,
-                            Name = "Khám bệnh lý tim mạch",
-                            Price = 500000m,
+                            Name = "Khám nội khoa tổng quát",
+                            Price = 400000m,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 4,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Sử dụng phương pháp y học cổ truyền để điều trị các bệnh lý như đau nhức, viêm nhiễm.",
+                            Description = "Khám, chẩn đoán và tư vấn điều trị cho bệnh nhân tiểu đường, bao gồm kiểm tra đường huyết.",
                             FacilityId = 2,
                             IsDeleted = false,
-                            Name = "Điều trị bằng y học cổ truyền",
-                            Price = 400000m,
+                            Name = "Khám bệnh tiểu đường",
+                            Price = 500000m,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 5,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Châm cứu để điều trị các cơn đau lưng mãn tính.",
-                            FacilityId = 2,
+                            Description = "Khám và tư vấn các vấn đề ngoại khoa, bao gồm các bệnh lý cần can thiệp phẫu thuật.",
+                            FacilityId = 1,
                             IsDeleted = false,
-                            Name = "Châm cứu điều trị đau lưng",
-                            Price = 350000m,
+                            Name = "Khám ngoại khoa tổng quát",
+                            Price = 400000m,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 6,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Xoa bóp và bấm huyệt giúp giảm căng thẳng và mệt mỏi.",
+                            Description = "Phẫu thuật cắt ruột thừa viêm bằng phương pháp nội soi hoặc mổ mở.",
                             FacilityId = 2,
                             IsDeleted = false,
-                            Name = "Xoa bóp bấm huyệt",
-                            Price = 250000m,
+                            Name = "Phẫu thuật cắt ruột thừa",
+                            Price = 5000000m,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 7,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Khám các bệnh lý về tai mũi họng như viêm họng, viêm amidan.",
+                            Description = "Khám thai định kỳ, theo dõi sự phát triển của thai nhi và sức khỏe của mẹ.",
                             FacilityId = 1,
                             IsDeleted = false,
-                            Name = "Khám tai mũi họng",
-                            Price = 200000m,
+                            Name = "Khám thai định kỳ",
+                            Price = 400000m,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 8,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Khám mắt để kiểm tra sức khỏe mắt, phát hiện các bệnh lý như cận thị, loạn thị.",
-                            FacilityId = 1,
+                            Description = "Dịch vụ sinh thường trọn gói, bao gồm theo dõi chuyển dạ và chăm sóc sau sinh.",
+                            FacilityId = 3,
                             IsDeleted = false,
-                            Name = "Khám mắt",
-                            Price = 250000m,
+                            Name = "Sinh thường",
+                            Price = 6000000m,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 9,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Sử dụng thuốc thảo dược để điều trị các bệnh lý như cảm cúm, tiêu hóa.",
-                            FacilityId = 2,
+                            Description = "Dịch vụ sinh mổ trọn gói theo yêu cầu, bao gồm phẫu thuật, chăm sóc sau sinh và hỗ trợ nuôi con bằng sữa mẹ.",
+                            FacilityId = 17,
                             IsDeleted = false,
-                            Name = "Điều trị bằng thuốc thảo dược",
-                            Price = 300000m,
+                            Name = "Sinh mổ theo yêu cầu",
+                            Price = 25000000m,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 10,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Khám và kiểm tra tình trạng răng miệng, phát hiện sâu răng, viêm lợi.",
-                            FacilityId = 3,
+                            Description = "Khám sức khỏe tổng quát cho trẻ em, đánh giá sự phát triển và tầm soát bệnh lý.",
+                            FacilityId = 1,
                             IsDeleted = false,
-                            Name = "Khám răng miệng",
-                            Price = 250000m,
+                            Name = "Khám nhi tổng quát",
+                            Price = 350000m,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 11,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Lấy cao răng, giúp làm sạch răng miệng và ngăn ngừa bệnh về nướu.",
-                            FacilityId = 3,
+                            Description = "Gói tiêm chủng cơ bản cho trẻ theo lịch của Bộ Y tế, bao gồm vắc xin và theo dõi sau tiêm.",
+                            FacilityId = 4,
                             IsDeleted = false,
-                            Name = "Lấy cao răng",
-                            Price = 150000m,
+                            Name = "Tiêm chủng cho trẻ",
+                            Price = 1500000m,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 12,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Cấy ghép răng implant cho những người mất răng.",
-                            FacilityId = 3,
+                            Description = "Xét nghiệm máu cơ bản bao gồm công thức máu, đường huyết và chức năng gan thận.",
+                            FacilityId = 1,
                             IsDeleted = false,
-                            Name = "Cấy ghép răng implant",
-                            Price = 1000000m,
+                            Name = "Xét nghiệm máu cơ bản",
+                            Price = 200000m,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 13,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Dịch vụ tẩy trắng răng giúp cải thiện màu sắc răng miệng.",
+                            Description = "Xét nghiệm vi sinh để phát hiện các tác nhân gây bệnh như vi khuẩn, virus.",
+                            FacilityId = 5,
+                            IsDeleted = false,
+                            Name = "Xét nghiệm vi sinh",
+                            Price = 350000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Chụp X-quang các bộ phận cơ thể để chẩn đoán bệnh lý xương khớp và phổi.",
+                            FacilityId = 1,
+                            IsDeleted = false,
+                            Name = "Chụp X-quang",
+                            Price = 180000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Chụp cộng hưởng từ để chẩn đoán chi tiết các bệnh lý về não, cột sống và các cơ quan nội tạng.",
+                            FacilityId = 2,
+                            IsDeleted = false,
+                            Name = "Chụp cộng hưởng từ (MRI)",
+                            Price = 2500000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Chụp cắt lớp vi tính để chẩn đoán chi tiết các bệnh lý khác nhau trong cơ thể.",
+                            FacilityId = 6,
+                            IsDeleted = false,
+                            Name = "Chụp cắt lớp vi tính (CT)",
+                            Price = 1500000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám tổng quát răng miệng, tư vấn chăm sóc và phòng ngừa bệnh lý răng miệng.",
                             FacilityId = 3,
                             IsDeleted = false,
-                            Name = "Tẩy trắng răng",
+                            Name = "Khám răng tổng quát",
+                            Price = 150000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Cạo vôi răng để loại bỏ cao răng và mảng bám, giúp răng chắc khỏe và ngăn ngừa bệnh nướu.",
+                            FacilityId = 20,
+                            IsDeleted = false,
+                            Name = "Cạo vôi răng",
+                            Price = 350000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám tổng quát mắt, kiểm tra thị lực và chẩn đoán các bệnh lý về mắt.",
+                            FacilityId = 7,
+                            IsDeleted = false,
+                            Name = "Khám mắt tổng quát",
+                            Price = 200000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Phẫu thuật Lasik điều trị cận thị, viễn thị và loạn thị bằng công nghệ laser hiện đại.",
+                            FacilityId = 7,
+                            IsDeleted = false,
+                            Name = "Phẫu thuật Lasik",
+                            Price = 25000000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám tổng quát tai, mũi, họng và chẩn đoán các bệnh lý liên quan.",
+                            FacilityId = 13,
+                            IsDeleted = false,
+                            Name = "Khám tai mũi họng",
+                            Price = 250000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Nội soi tai mũi họng để chẩn đoán chính xác các bệnh lý tai, mũi, họng.",
+                            FacilityId = 13,
+                            IsDeleted = false,
+                            Name = "Nội soi tai mũi họng",
+                            Price = 450000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 23,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám và điều trị các bệnh lý về da như mụn trứng cá, viêm da, chàm.",
+                            FacilityId = 3,
+                            IsDeleted = false,
+                            Name = "Khám da liễu",
+                            Price = 300000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 24,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Điều trị chuyên sâu mụn trứng cá và cải thiện tình trạng sẹo sau mụn.",
+                            FacilityId = 15,
+                            IsDeleted = false,
+                            Name = "Điều trị mụn chuyên sâu",
+                            Price = 800000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 25,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Dịch vụ cấp cứu cho các trường hợp chấn thương, tai nạn.",
+                            FacilityId = 1,
+                            IsDeleted = false,
+                            Name = "Cấp cứu chấn thương",
                             Price = 500000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 26,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Dịch vụ cấp cứu cho các trường hợp đột quỵ, nhồi máu cơ tim và các cấp cứu nội khoa khác.",
+                            FacilityId = 2,
+                            IsDeleted = false,
+                            Name = "Cấp cứu nội khoa",
+                            Price = 450000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 27,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Chăm sóc đặc biệt cho bệnh nhân trong tình trạng nguy kịch (tính theo ngày).",
+                            FacilityId = 1,
+                            IsDeleted = false,
+                            Name = "Hồi sức tích cực",
+                            Price = 3500000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 28,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Tư vấn và hỗ trợ tâm lý cho người gặp vấn đề về stress, lo âu, trầm cảm.",
+                            FacilityId = 14,
+                            IsDeleted = false,
+                            Name = "Tư vấn tâm lý",
+                            Price = 400000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 29,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Vật lý trị liệu cho các bệnh nhân đau cột sống, chấn thương và sau phẫu thuật.",
+                            FacilityId = 5,
+                            IsDeleted = false,
+                            Name = "Vật lý trị liệu",
+                            Price = 250000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 30,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám và điều trị các bệnh lý về hệ tiết niệu như sỏi thận, viêm đường tiết niệu.",
+                            FacilityId = 2,
+                            IsDeleted = false,
+                            Name = "Khám tiết niệu",
+                            Price = 350000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 31,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám và tư vấn các bệnh lý tim mạch như tăng huyết áp, rối loạn nhịp tim.",
+                            FacilityId = 1,
+                            IsDeleted = false,
+                            Name = "Khám tim mạch",
+                            Price = 400000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 32,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Siêu âm tim để đánh giá cấu trúc và chức năng của tim.",
+                            FacilityId = 20,
+                            IsDeleted = false,
+                            Name = "Siêu âm tim",
+                            Price = 500000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 33,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám và điều trị các bệnh lý hô hấp như viêm phổi, hen suyễn, COPD.",
+                            FacilityId = 2,
+                            IsDeleted = false,
+                            Name = "Khám hô hấp",
+                            Price = 350000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 34,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Đo và đánh giá chức năng hô hấp để chẩn đoán các bệnh lý phổi.",
+                            FacilityId = 18,
+                            IsDeleted = false,
+                            Name = "Đo chức năng hô hấp",
+                            Price = 300000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 35,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám và điều trị các bệnh lý nội tiết như tiểu đường, rối loạn tuyến giáp.",
+                            FacilityId = 2,
+                            IsDeleted = false,
+                            Name = "Khám nội tiết",
+                            Price = 400000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 36,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám, chẩn đoán và tư vấn điều trị các bệnh lý ung thư.",
+                            FacilityId = 1,
+                            IsDeleted = false,
+                            Name = "Khám ung bướu",
+                            Price = 500000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 37,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Điều trị ung thư bằng phương pháp xạ trị với máy móc hiện đại (tính cho một liệu trình).",
+                            FacilityId = 6,
+                            IsDeleted = false,
+                            Name = "Xạ trị ung thư",
+                            Price = 12000000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 38,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Tư vấn chế độ dinh dưỡng cá nhân hóa cho các bệnh lý khác nhau.",
+                            FacilityId = 1,
+                            IsDeleted = false,
+                            Name = "Tư vấn dinh dưỡng",
+                            Price = 300000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 39,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Gói khám sức khỏe tổng quát cơ bản bao gồm khám nội khoa, xét nghiệm máu, X-quang ngực.",
+                            FacilityId = 3,
+                            IsDeleted = false,
+                            Name = "Gói khám sức khỏe tổng quát cơ bản",
+                            Price = 1500000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 40,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Gói khám sức khỏe toàn diện bao gồm khám chuyên khoa, xét nghiệm, siêu âm và chẩn đoán hình ảnh.",
+                            FacilityId = 8,
+                            IsDeleted = false,
+                            Name = "Gói khám sức khỏe toàn diện",
+                            Price = 5000000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 41,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám và điều trị bằng các phương pháp y học cổ truyền như châm cứu, bấm huyệt.",
+                            FacilityId = 12,
+                            IsDeleted = false,
+                            Name = "Khám và điều trị y học cổ truyền",
+                            Price = 200000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 42,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám sức khỏe toàn diện theo yêu cầu cho người đi xuất khẩu lao động.",
+                            FacilityId = 16,
+                            IsDeleted = false,
+                            Name = "Khám sức khỏe đi xuất khẩu lao động",
+                            Price = 1800000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 43,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám và điều trị các bệnh thông thường như cảm cúm, viêm họng, tiêu chảy.",
+                            FacilityId = 10,
+                            IsDeleted = false,
+                            Name = "Khám và điều trị bệnh thông thường",
+                            Price = 120000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 44,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Tiêm các loại vắc xin theo yêu cầu (giá chưa bao gồm vắc xin).",
+                            FacilityId = 11,
+                            IsDeleted = false,
+                            Name = "Tiêm vắc xin theo yêu cầu",
+                            Price = 500000m,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 45,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Khám sức khỏe cơ bản và tư vấn phòng bệnh cho người dân địa phương.",
+                            FacilityId = 19,
+                            IsDeleted = false,
+                            Name = "Khám sức khỏe cơ bản",
+                            Price = 80000m,
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
@@ -2033,7 +4385,7 @@ namespace DataAccessObjects.Migrations
                             Birthday = new DateOnly(1990, 1, 1),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@example.com",
-                            Fullname = "Admin",
+                            Fullname = "Nguyễn Văn Admin",
                             Gender = "Nam",
                             IsDeleted = false,
                             Password = "ad123456",
@@ -2048,7 +4400,7 @@ namespace DataAccessObjects.Migrations
                             Birthday = new DateOnly(1995, 5, 20),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "patient1@example.com",
-                            Fullname = "Trần Thị B",
+                            Fullname = "Trần Thị Bích",
                             Gender = "Nữ",
                             IsDeleted = false,
                             Password = "pa123456",
@@ -2060,11 +4412,11 @@ namespace DataAccessObjects.Migrations
                         new
                         {
                             Id = 3,
-                            Birthday = new DateOnly(1996, 10, 12),
+                            Birthday = new DateOnly(1988, 10, 12),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "patient2@example.com",
-                            Fullname = "Nguyễn Thị C",
-                            Gender = "Nữ",
+                            Fullname = "Lê Văn Cường",
+                            Gender = "Nam",
                             IsDeleted = false,
                             Password = "pa123456",
                             PhoneNumber = "0903456789",
@@ -2078,7 +4430,7 @@ namespace DataAccessObjects.Migrations
                             Birthday = new DateOnly(1985, 3, 15),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "professional1@example.com",
-                            Fullname = "Lê Minh D",
+                            Fullname = "Phạm Minh Đức",
                             Gender = "Nam",
                             IsDeleted = false,
                             Password = "pro123456",
@@ -2093,11 +4445,341 @@ namespace DataAccessObjects.Migrations
                             Birthday = new DateOnly(1987, 7, 30),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "professional2@example.com",
-                            Fullname = "Phan Minh E",
-                            Gender = "Nam",
+                            Fullname = "Vũ Thị Hương",
+                            Gender = "Nữ",
                             IsDeleted = false,
                             Password = "pro123456",
                             PhoneNumber = "0905678901",
+                            Role = "Professional",
+                            Status = "Active",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Birthday = new DateOnly(1992, 8, 25),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "patient3@example.com",
+                            Fullname = "Hoàng Thị Mai",
+                            Gender = "Nữ",
+                            IsDeleted = false,
+                            Password = "pa123456",
+                            PhoneNumber = "0906789012",
+                            Role = "Patient",
+                            Status = "Active",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Birthday = new DateOnly(1998, 4, 17),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "patient4@example.com",
+                            Fullname = "Đỗ Quang Nam",
+                            Gender = "Nam",
+                            IsDeleted = false,
+                            Password = "pa123456",
+                            PhoneNumber = "0907890123",
+                            Role = "Patient",
+                            Status = "Active",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Birthday = new DateOnly(1980, 11, 5),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "professional3@example.com",
+                            Fullname = "Ngô Thanh Tùng",
+                            Gender = "Nam",
+                            IsDeleted = false,
+                            Password = "pro123456",
+                            PhoneNumber = "0908901234",
+                            Role = "Professional",
+                            Status = "Active",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Birthday = new DateOnly(1983, 6, 10),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "professional4@example.com",
+                            Fullname = "Lý Thị Hoa",
+                            Gender = "Nữ",
+                            IsDeleted = false,
+                            Password = "pro123456",
+                            PhoneNumber = "0909012345",
+                            Role = "Professional",
+                            Status = "Active",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Birthday = new DateOnly(1990, 9, 15),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "patient5@example.com",
+                            Fullname = "Dương Văn Khải",
+                            Gender = "Nam",
+                            IsDeleted = false,
+                            Password = "pa123456",
+                            PhoneNumber = "0910123456",
+                            Role = "Patient",
+                            Status = "Active",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Birthday = new DateOnly(1994, 2, 28),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "patient6@example.com",
+                            Fullname = "Trịnh Thu Phương",
+                            Gender = "Nữ",
+                            IsDeleted = false,
+                            Password = "pa123456",
+                            PhoneNumber = "0911234567",
+                            Role = "Patient",
+                            Status = "Active",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Birthday = new DateOnly(1978, 4, 20),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "professional5@example.com",
+                            Fullname = "Bùi Quốc Anh",
+                            Gender = "Nam",
+                            IsDeleted = false,
+                            Password = "pro123456",
+                            PhoneNumber = "0912345678",
+                            Role = "Professional",
+                            Status = "Active",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Birthday = new DateOnly(1982, 5, 15),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "lananh@example.com",
+                            Fullname = "Nguyễn Thị Lan Anh",
+                            Gender = "Nữ",
+                            IsDeleted = false,
+                            Password = "pro123456",
+                            PhoneNumber = "0913456789",
+                            Role = "Professional",
+                            Status = "Active",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Birthday = new DateOnly(1970, 8, 22),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "tranminh@example.com",
+                            Fullname = "Trần Văn Minh",
+                            Gender = "Nam",
+                            IsDeleted = false,
+                            Password = "pro123456",
+                            PhoneNumber = "0912345678",
+                            Role = "Professional",
+                            Status = "Active",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Birthday = new DateOnly(1990, 3, 10),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "thanhhuong@example.com",
+                            Fullname = "Phan Thị Thanh Hương",
+                            Gender = "Nữ",
+                            IsDeleted = false,
+                            Password = "pro123456",
+                            PhoneNumber = "0923456789",
+                            Role = "Professional",
+                            Status = "Active",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Birthday = new DateOnly(1988, 11, 5),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "mylinh@example.com",
+                            Fullname = "Ngô Thị Mỹ Linh",
+                            Gender = "Nữ",
+                            IsDeleted = false,
+                            Password = "pro123456",
+                            PhoneNumber = "0934567890",
+                            Role = "Professional",
+                            Status = "Active",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Birthday = new DateOnly(1985, 4, 18),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "quoctuan@example.com",
+                            Fullname = "Đặng Quốc Tuấn",
+                            Gender = "Nam",
+                            IsDeleted = false,
+                            Password = "pro123456",
+                            PhoneNumber = "0945678901",
+                            Role = "Professional",
+                            Status = "Active",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Birthday = new DateOnly(1981, 6, 25),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "kimngan@example.com",
+                            Fullname = "Lê Thị Kim Ngân",
+                            Gender = "Nữ",
+                            IsDeleted = false,
+                            Password = "pro123456",
+                            PhoneNumber = "0956789012",
+                            Role = "Professional",
+                            Status = "Active",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Birthday = new DateOnly(1965, 10, 15),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "ducthinh@example.com",
+                            Fullname = "Hoàng Đức Thịnh",
+                            Gender = "Nam",
+                            IsDeleted = false,
+                            Password = "pro123456",
+                            PhoneNumber = "0967890123",
+                            Role = "Professional",
+                            Status = "Active",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Birthday = new DateOnly(1989, 2, 8),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "minhquan@example.com",
+                            Fullname = "Vũ Minh Quân",
+                            Gender = "Nam",
+                            IsDeleted = false,
+                            Password = "pro123456",
+                            PhoneNumber = "0978901234",
+                            Role = "Professional",
+                            Status = "Active",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Birthday = new DateOnly(1986, 7, 12),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "minhhai@example.com",
+                            Fullname = "Trịnh Minh Hải",
+                            Gender = "Nam",
+                            IsDeleted = false,
+                            Password = "pro123456",
+                            PhoneNumber = "0989012345",
+                            Role = "Professional",
+                            Status = "Active",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Birthday = new DateOnly(1982, 9, 28),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "thuytrang@example.com",
+                            Fullname = "Phạm Thị Thùy Trang",
+                            Gender = "Nữ",
+                            IsDeleted = false,
+                            Password = "pro123456",
+                            PhoneNumber = "0990123456",
+                            Role = "Professional",
+                            Status = "Active",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Birthday = new DateOnly(1979, 12, 5),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "vanhung@example.com",
+                            Fullname = "Bùi Văn Hưng",
+                            Gender = "Nam",
+                            IsDeleted = false,
+                            Password = "pro123456",
+                            PhoneNumber = "0901234567",
+                            Role = "Professional",
+                            Status = "Active",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Birthday = new DateOnly(1984, 5, 15),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "bichngoc@example.com",
+                            Fullname = "Nguyễn Thị Bích Ngọc",
+                            Gender = "Nữ",
+                            IsDeleted = false,
+                            Password = "pro123456",
+                            PhoneNumber = "0912345678",
+                            Role = "Professional",
+                            Status = "Active",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Birthday = new DateOnly(1978, 8, 20),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "quangvinh@example.com",
+                            Fullname = "Trương Quang Vinh",
+                            Gender = "Nam",
+                            IsDeleted = false,
+                            Password = "pro123456",
+                            PhoneNumber = "0923456789",
+                            Role = "Professional",
+                            Status = "Active",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Birthday = new DateOnly(1987, 3, 12),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "duongha@example.com",
+                            Fullname = "Dương Thị Hà",
+                            Gender = "Nữ",
+                            IsDeleted = false,
+                            Password = "pro123456",
+                            PhoneNumber = "0934567890",
+                            Role = "Professional",
+                            Status = "Active",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 27,
+                            Birthday = new DateOnly(1991, 10, 8),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "vanthang@example.com",
+                            Fullname = "Mai Văn Thắng",
+                            Gender = "Nam",
+                            IsDeleted = false,
+                            Password = "pro123456",
+                            PhoneNumber = "0945678901",
                             Role = "Professional",
                             Status = "Inactive",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)

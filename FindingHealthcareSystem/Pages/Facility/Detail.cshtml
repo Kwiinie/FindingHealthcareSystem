@@ -102,7 +102,7 @@
                 </div>
             </div>
 
-            <!-- Services Section -->
+            <!-- Services Section 2-->
             <div class="profile-card">
                 <div class="profile-info">
                     <div class="d-flex justify-content-between align-items-center">
@@ -117,36 +117,43 @@
                         }
                     </div>
 
-                    <div id="servicesContainer" class="row">
-                        @if (Model.Services != null && Model.Services.Any())
+                    <div id="servicesContainer">
+                        @if (Model.Services != null && Model.Services.Any() )
                         {
                             @foreach (var service in Model.Services)
                             {
-                                <div class="col-md-4 mb-4">
-                                    <div class="card service-card">
-                                        <div class="card-body">
-                                            <h4 class="card-title">@service.Name</h4>
-                                            <h5 class="card-subtitle mb-2 text-danger fw-bold">
-                                                 @service.Price VND
-                                            </h5>
+                                @if(service.IsDeleted!=true){
+                                <div class="service-card">
+                                    <div class="service-header">
+                                        <h5>@service.Name</h5>
+                                        <span class="service-price">@service.Price VND</span>
+                                    </div>
+                                    <p>@service.Description</p>
 
+                                    <!-- AUTHORIZATION REQUIRED !! -->
+                                    <div class="d-flex justify-content-between">
+                                        @if (currentUser != null && currentUser.Role == "Admin")
+                                        {
+                                            <button class="btn btn-sm btn-outline-primary edit-service-btn"
+                                                    data-id="@service.Id"
+                                                    data-name="@service.Name"
+                                                    data-price="@service.Price"
+                                                    data-description="@service.Description"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#editServiceModal">
+                                                <i class="fas fa-edit"></i> Chỉnh sửa
+                                            </button>
+                                        }
 
-                                            <p class="card-text">@service.Description</p>
-                                            @if (currentUser != null && currentUser.Role == "Admin")
-                                            {
-                                                <button class="btn btn-sm btn-outline-primary edit-service-btn"
-                                                        data-id="@service.Id"
-                                                        data-name="@service.Name"
-                                                        data-price="@service.Price"
-                                                        data-description="@service.Description"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#editServiceModal">
-                                                    <i class="fas fa-edit"></i> Chỉnh sửa
-                                                </button>
-                                            }
-                                        </div>
+                                        <button class="btn btn-primary"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#bookServiceModal"
+                                                data-service-id="@service.Id">
+                                            Đặt lịch
+                                        </button>
                                     </div>
                                 </div>
+                                }
                             }
                         }
                         else
@@ -159,39 +166,9 @@
                 </div>
             </div>
 
+
+
             <!-- Reviews Section -->
-            <div class="profile-card">
-                <div class="profile-info">
-                    <h3 class="section-title">Đánh giá</h3>
-
-                    <div class="filter-menu">
-                        <div class="row">
-                            <div class="col text-end">
-                                <div class="btn-group" role="group">
-                                    <input type="radio" class="btn-check" name="ratingFilter" id="allRatings" autocomplete="off" checked>
-                                    <label class="btn btn-outline-primary btn-sm" for="allRatings">All</label>
-
-                                    <input type="radio" class="btn-check" name="ratingFilter" id="rating5" autocomplete="off">
-                                    <label class="btn btn-outline-primary btn-sm" for="rating5">5★</label>
-
-                                    <input type="radio" class="btn-check" name="ratingFilter" id="rating4" autocomplete="off">
-                                    <label class="btn btn-outline-primary btn-sm" for="rating4">4★</label>
-
-                                    <input type="radio" class="btn-check" name="ratingFilter" id="rating3" autocomplete="off">
-                                    <label class="btn btn-outline-primary btn-sm" for="rating3">3★</label>
-
-                                    <input type="radio" class="btn-check" name="ratingFilter" id="rating2" autocomplete="off">
-                                    <label class="btn btn-outline-primary btn-sm" for="rating2">2★ & 1★</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="reviewsContainer">
-                        <!-- Reviews will be loaded dynamically -->
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -225,19 +202,15 @@
                         </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="editDepartments" class="form-label">Khoa phòng</label>
-                        <select class="form-select" id="editDepartments" multiple>
-                            @if (Model.Departments != null)
-                            {
-                                @foreach (var department in Model.Departments)
-                                {
-                                    bool isSelected = Model.Departments.Any(d => d.Id == department.Id);
-                                    <option value="@department.Id" selected="@isSelected">@department.Name</option>
-                                }
-                            }
-                        </select>
-                    </div>
+                    <select id="departmentSelect" name="departmentIds" multiple class="form-control">
+                        @foreach (var dept in Model.Departments)
+                        {
+                            <option value="@dept.Id" selected="@(Model.Facility.FacilityDepartments.Any(fd => fd.DepartmentId == dept.Id) ? "selected" : null)">
+                                @dept.Name
+                            </option>
+                        }
+                    </select>
+
 
 
                     <!-- Address Section -->
@@ -315,7 +288,6 @@
         </div>
     </div>
 </div>
-
 <!-- Add Service Modal -->
 <div class="modal fade" id="addServiceModal" tabindex="-1" aria-labelledby="addServiceModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -330,7 +302,7 @@
 
                     <div class="mb-3">
                         <label asp-for="Service.Name" c
-                        lass="form-label">Tên dịch vụ</label>
+                               lass="form-label">Tên dịch vụ</label>
                         <input type="text" class="form-control" asp-for="Service.Name" id="serviceName" required>
                     </div>
                     <div class="mb-3">
@@ -386,27 +358,28 @@
         </div>
     </div>
 </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const editButtons = document.querySelectorAll(".edit-service-btn");
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const editButtons = document.querySelectorAll(".edit-service-btn");
 
-            editButtons.forEach(button => {
-                button.addEventListener("click", function () {
-                    // Lấy dữ liệu từ button
-                    const serviceId = this.getAttribute("data-id");
-                    const serviceName = this.getAttribute("data-name");
-                    const servicePrice = this.getAttribute("data-price");
-                    const serviceDescription = this.getAttribute("data-description");
+        editButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                // Lấy dữ liệu từ button
+                const serviceId = this.getAttribute("data-id");
+                const serviceName = this.getAttribute("data-name");
+                const servicePrice = this.getAttribute("data-price");
+                const serviceDescription = this.getAttribute("data-description");
 
-                    // Gán dữ liệu vào input của modal
-                    document.getElementById("editServiceId").value = serviceId;
-                    document.getElementById("editServiceName").value = serviceName;
-                    document.getElementById("editServicePrice").value = servicePrice;
-                    document.getElementById("editServiceDescription").value = serviceDescription;
-                });
+                // Gán dữ liệu vào input của modal
+                document.getElementById("editServiceId").value = serviceId;
+                document.getElementById("editServiceName").value = serviceName;
+                document.getElementById("editServicePrice").value = servicePrice;
+                document.getElementById("editServiceDescription").value = serviceDescription;
             });
         });
-    </script>
+    });
+</script>
+
 
 <script>
      document.addEventListener("DOMContentLoaded", function () {
