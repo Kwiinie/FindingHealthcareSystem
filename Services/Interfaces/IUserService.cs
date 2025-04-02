@@ -33,7 +33,7 @@ namespace Services.Interfaces
         Task<List<FacilityDepartment>> GetAllHospitalsAsync();
 
         Task<List<Expertise>> GetAllExpertises();
-
+        Task UpdateUserStatus(GeneralUserDto userDto);
         Task RegisterUserAsync(RegisterUserDto userDto);
 
         Task UpdateProfessionalAsync(Professional professional);

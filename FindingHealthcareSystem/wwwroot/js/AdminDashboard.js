@@ -188,7 +188,7 @@ function initMonthlyAppointmentChart(months) {
                 y: {
                     beginAtZero: true,
                     ticks: {
-                        stepSize: 1 // Chia nhỏ nhất là 1
+                        stepSize: 1
                     }
                 }
             }

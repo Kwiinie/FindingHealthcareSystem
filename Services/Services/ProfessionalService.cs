@@ -109,6 +109,12 @@ namespace Services.Services
             return _mapper.Map<List<ServiceDto>>(pubServices);
         }
 
+        public async Task<Professional> GetProfessionalByProId(int professId) {
+             
+            return await  _unitOfWork.ProfessionalRepository.GetByIdAsync(professId);
+           
+        }
+
 
         public async Task<ServiceDto> Create(int professionalID, ServiceDto publicServiceDto)
         {
