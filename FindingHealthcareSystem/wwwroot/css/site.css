@@ -819,3 +819,7 @@ h1 {
 .filter-menu {
     margin-bottom: 20px;
 }
+
+.bg-custom-green {
+    background-color: var(--primary-active) !important;
+}
