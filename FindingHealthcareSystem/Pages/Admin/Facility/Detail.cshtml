@@ -202,7 +202,7 @@
                         </div>
                     </div>
 
-                    <select id="departmentSelect" name="departmentIds" multiple class="form-control">
+                    <select id="departmentSelect" asp-for="Facility.DepartmentIds" multiple class="form-control">
                         @foreach (var dept in Model.Departments)
                         {
                             <option value="@dept.Id" selected="@(Model.Facility.FacilityDepartments.Any(fd => fd.DepartmentId == dept.Id) ? "selected" : null)">
