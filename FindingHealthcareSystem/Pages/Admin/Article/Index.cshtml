@@ -5,53 +5,67 @@
 }
 <link rel="stylesheet" href="/css/article.css" />
 
+
 <div class="container mt-10">
     <div class="row mb-4">
         <div class="col-12">
             <h1 class="text-center">Bài viết</h1>
-            <!--OTHER ROLES EXCEPT FOR ADMIN CAN USE THIS BUTTON-->
+
+            @if (!string.IsNullOrEmpty(TempData["StatusMessage"] as string))
+            {
+                var statusMessage = TempData["StatusMessage"] as string;
+                var statusMessageClass = statusMessage.StartsWith("Error") ? "alert-danger" : "alert-success";
+                <div class="alert @statusMessageClass alert-dismissible fade show" role="alert">
+                    @statusMessage
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
             <div>
                 <div class="d-flex justify-content-center">
                     <a href="/admin/article/create" class="btn btn-outline-primary col-2" id="btnNew">
-                        <i class="fas fa-plus me-2"></i> New
+                        <i class="fas fa-plus me-2"></i> Tạo bài viết mới
                     </a>
                 </div>
-
             </div>
-
-    </div>
-
-            <div class="article-grid">
-                @if (Model.Articles != null && Model.Articles.Any())
+        </div>
+        <div class="article-grid">
+            @if (Model.Articles != null && Model.Articles.Any())
+            {
+                @foreach (var article in Model.Articles)
                 {
-                    @foreach (var article in Model.Articles)
-                    {
-                        <!-- Article Card 1 -->
-                        <div class="article-card">
-                            <img src="img/DefaultNews.jpg" alt="Article image" class="article-image">
-                            <div class="article-content">
-                                <h2 class="article-title">@article.Title</h2>
-                                <p class="article-text"> @article.Content</p>
-                                <div class="article-meta">
-                                    <span class="article-category">@article.CategoryName</span>
-                                    <span class="article-date">@article.CreatedAt</span>
-                                </div>
-                                <a asp-page="/Article/Detail" asp-route-id="@article.Id" class="btn btn-primary mt-3">Xem chi tiết</a>
-
-                <a href="/admin/article/edit/1" class="btn btn-primary mt-3">Chỉnh sửa</a>
+                    <!-- Article Card -->
+                    <div class="article-card">
+                        <img src="@article.ImgUrl" alt="Article image" class="article-image">
+                        <div class="article-content">
+                            <h2 class="article-title">@article.Title</h2>
+                            <p class="article-text">@article.Content</p>
+                            <div class="article-meta">
+                                <span class="article-category">@article.CategoryName</span>
+                                <span class="article-date">@article.CreatedAt</span>
+                                <span class="article-status @(article.IsDeleted ? "text-danger" : "text-success")">
+                                    @(article.IsDeleted ? "Chưa xuất bản" : "Đã xuất bản")
+                                </span>
+                            </div>
+                            <div class="article-actions mt-3">
+                                <a asp-page="/admin/article/detail" asp-route-id="@article.Id" class="btn btn-primary">Xem chi tiết</a>
+                                <a asp-page="/admin/article/edit" asp-route-id="@article.Id" class="btn btn-outline-primary">Chỉnh sửa</a>
+                                <form method="post" class="d-inline">
+                                    <input type="hidden" name="articleId" value="@article.Id" />
+                                    <input type="hidden" name="currentStatus" value="@article.IsDeleted" />
+                                    <button type="submit" class="btn @(article.IsDeleted ? "btn-success" : "btn-warning") ms-2">
+                                        @(article.IsDeleted ? "Xuất bản" : "Hủy xuất bản")
+                                    </button>
+                                </form>
                             </div>
                         </div>
-                    }
+                    </div>
                 }
-                else
-                {
-                    <p class="text-center">Không có bài viết nào.</p>
-                }
-            </div>
-            <a href="article/1" class="btn btn-primary mt-3">Xem chi tiết</a>
-
-            <a href="/admin/article/edit/1" class="btn btn-primary mt-3">Chỉnh sửa</a>
-
+            }
+            else
+            {
+                <p class="text-center">Không có bài viết nào.</p>
+            }
         </div>
     </div>
 </div>

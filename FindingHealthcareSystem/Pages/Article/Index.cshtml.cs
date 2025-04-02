@@ -17,8 +17,10 @@ namespace FindingHealthcareSystem.Pages.Article
         public IEnumerable<ArticleDTO>? Articles { get; set; }
         public async Task OnGetAsync()
         {
-            Articles = await _articleService.GetAllArticlesAsync();
-            
+            var allArticles = await _articleService.GetAllArticlesAsync();
+            Articles = allArticles.Where(a => a.IsDeleted == false).ToList();
+
+
         }
     }
 }

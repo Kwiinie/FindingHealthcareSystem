@@ -13,16 +13,21 @@ namespace FindingHealthcareSystem.Pages.Professional.Profile
     {
         private readonly IProfessionalService _professionalService;
         private readonly IUserService _userService;
-        public ProfileModel(IProfessionalService professionalService, IUserService userService)
+        private readonly IFileUploadService _fileUploadService;
+
+        public ProfileModel(IProfessionalService professionalService, IUserService userService, IFileUploadService fileUploadService)
         {
             _professionalService = professionalService;
             _userService = userService;
+            _fileUploadService = fileUploadService;
         }
         public BusinessObjects.Entities.Professional CurrentUser { get; set; } // Chứa thông tin
                                                                                // user
         [BindProperty]
         public BusinessObjects.Entities.Professional UpdatedUser { get; set; } // Thuộc tính để binding dữ liệu từ form
 
+        [BindProperty]
+        public IFormFile? ProfileImage { get; set; }
 
         public ProfessionalDto professional { get; set; }
         [BindProperty(SupportsGet = true)]
@@ -122,6 +127,16 @@ namespace FindingHealthcareSystem.Pages.Professional.Profile
 
                 var professional = await _userService.GetProfessionalById(userId);
                 if (professional == null) return NotFound();
+
+                // Handle image upload if a new image was provided
+                if (ProfileImage != null && ProfileImage.Length > 0)
+                {
+                    // Use FileUploadService to upload the image
+                    string imageUrl = await _fileUploadService.UploadImageAsync(ProfileImage, "users");
+                    await _userService.UploadUserImageAsync(userId, imageUrl);
+                    user.ImgUrl = imageUrl;
+
+                }
 
                 // Cập nhật thông tin User
                 user.Fullname = UpdatedUser.User.Fullname;

@@ -73,7 +73,13 @@
                     @if (currentUser != null && currentUser.Role.Equals("Professional"))
                     {
                         <li class="nav-card-item">
-                            <a class="nav-link" asp-page="Professional/Appointment/Index" id="article-link">Quản lý</a>
+                            <a class="nav-link" href="/professional/appointment" id="article-link">Quản lý</a>
+                        </li>
+                    }
+                    @if (currentUser != null && currentUser.Role.Equals("Patient"))
+                    {
+                        <li class="nav-card-item">
+                            <a class="nav-link" href="/patient/appointment" id="article-link">Xem lịch</a>
                         </li>
                     }
                 </ul>

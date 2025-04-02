@@ -40,7 +40,7 @@ namespace Services.Interfaces
         Task UpdatePatientAsync(Patient patient);
         Task<Patient> GetPatientById(int userId);
         Task<IEnumerable<PatientDTO>> GetAllPatientAsync();
-
+        Task UploadUserImageAsync(int userId, string imgUrl);
 
     }
 }
