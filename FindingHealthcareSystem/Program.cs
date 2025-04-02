@@ -52,6 +52,8 @@ namespace FindingHealthcareSystem
                 app.UseHsts();
             }
             app.MapHub<UpdateHub>("/updateHub");
+            app.MapHub<NotificationHub>("/notificationHub");
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

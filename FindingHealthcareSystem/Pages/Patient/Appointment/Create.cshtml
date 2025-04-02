@@ -101,8 +101,7 @@
                     <div class="service-options">
                         @foreach (var service in Model.services)
                         {
-                            if(service.IsDeleted == false)
-                            {
+
                                 <div class="service-item">
                                     <div class="custom-control custom-radio">
                                         <input type="radio" id="service@service.Id" name="serviceOption" class="custom-control-input"
@@ -116,7 +115,7 @@
                                         </label>
                                     </div>
                                 </div>
-                            }
+                            
                         }
 
                     </div>
