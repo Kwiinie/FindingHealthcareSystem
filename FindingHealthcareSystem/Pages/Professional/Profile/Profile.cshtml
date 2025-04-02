@@ -290,7 +290,7 @@
                     </div>
                     <div class="mb-3">
                         <label asp-for="Service.Price" class="form-label">Giá (VNĐ)</label>
-                        <input type="number" class="form-control" asp-for="Service.Price" id="servicePrice" required>
+                        <input type="number" class="form-control" asp-for="Service.Price" id="servicePrice" min="1000" required>
                     </div>
                     <div class="mb-3">
                         <label asp-for="Service.Description" class="form-label">Mô tả</label>
@@ -325,7 +325,7 @@
                     </div>
                     <div class="mb-3">
                         <label asp-for="Service.Price" class="form-label">Giá (VNĐ)</label>
-                        <input type="number" class="form-control" asp-for="Service.Price" id="editServicePrice" required>
+                        <input type="number" class="form-control" asp-for="Service.Price" id="editServicePrice" min="1000" required>
                     </div>
                     <div class="mb-3">
                         <label asp-for="Service.Description" class="form-label">Mô tả</label>
