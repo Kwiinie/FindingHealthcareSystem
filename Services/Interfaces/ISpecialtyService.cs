@@ -11,6 +11,9 @@ namespace Services.Interfaces
     public interface ISpecialtyService
     {
         Task<List<SpecialtyDto>> GetAllSpecialties();
-
+        Task<SpecialtyDto> GetSpecialtyById(int id);
+        Task<SpecialtyDto> CreateSpecialty(SpecialtyDto input);
+        Task<SpecialtyDto> UpdateSpecialty(SpecialtyDto input);
+        Task DeleteSpecialty(int id);
     }
 }

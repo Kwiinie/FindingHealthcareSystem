@@ -240,6 +240,32 @@ namespace DataAccessObjects.DAOs
             return await query.CountAsync();
         }
 
+        public async Task<PaginatedList<T>> GetPagedListWithMultiSearchAsync(
+            Expression<Func<T, bool>>? filter,
+            int pageIndex,
+            int pageSize,
+            Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+            List<string>? includes = null,
+            Dictionary<string, object?>? filters = null)
+        {
+            IQueryable<T> query = _dbSet;
+
+            if (filters != null)
+            {
+                query = GetFilteredQuery(filters, includes);
+            }
+            else if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            if (orderBy != null)
+            {
+                query = orderBy(query);
+            }
+
+            return await PaginatedList<T>.CreateAsync(query, pageIndex, pageSize);
+        }
 
     }
 }

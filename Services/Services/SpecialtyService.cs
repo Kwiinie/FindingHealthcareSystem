@@ -25,12 +25,95 @@ namespace Services.Services
         public async Task<List<SpecialtyDto>> GetAllSpecialties()
         {
             var specialtyRepo = _unitOfWork.GetRepository<Specialty>();
-            var specs = await specialtyRepo.GetAllAsync();
-            if (specs == null || !specs.Any())
+            var specialties = await specialtyRepo.GetAllAsync();
+            return _mapper.Map<List<SpecialtyDto>>(specialties);
+        }
+
+        public async Task<SpecialtyDto> GetSpecialtyById(int id)
+        {
+            var specialtyRepo = _unitOfWork.GetRepository<Specialty>();
+            var specialty = await specialtyRepo.GetByIdAsync(id);
+
+            if (specialty == null || specialty.IsDeleted)
             {
-                return new List<SpecialtyDto>();
+                throw new Exception("Không tìm thấy chuyên khoa.");
             }
-            return _mapper.Map<List<SpecialtyDto>>(specs);
+
+            return _mapper.Map<SpecialtyDto>(specialty);
+        }
+
+        public async Task<SpecialtyDto> CreateSpecialty(SpecialtyDto input)
+        {
+            var specialtyRepo = _unitOfWork.GetRepository<Specialty>();
+
+            // Check if a specialty with same name exists
+            var existingSpecialty = await specialtyRepo.FindAsync(x => x.Name == input.Name && !x.IsDeleted);
+            if (existingSpecialty != null)
+            {
+                throw new Exception("Chuyên khoa với tên này đã tồn tại.");
+            }
+
+            var newSpecialty = _mapper.Map<Specialty>(input);
+            newSpecialty.CreatedAt = DateTime.Now;
+            newSpecialty.UpdatedAt = DateTime.Now;
+            newSpecialty.IsDeleted = false;
+
+            await specialtyRepo.AddAsync(newSpecialty);
+            await _unitOfWork.SaveChangesAsync();
+
+            return _mapper.Map<SpecialtyDto>(newSpecialty);
+        }
+
+        public async Task<SpecialtyDto> UpdateSpecialty(SpecialtyDto input)
+        {
+            if (!input.Id.HasValue)
+            {
+                throw new Exception("ID chuyên khoa không được để trống.");
+            }
+
+            var specialtyRepo = _unitOfWork.GetRepository<Specialty>();
+
+            // Check if specialty exists
+            var existingSpecialty = await specialtyRepo.GetByIdAsync(input.Id.Value);
+            if (existingSpecialty == null || existingSpecialty.IsDeleted)
+            {
+                throw new Exception("Không tìm thấy chuyên khoa.");
+            }
+
+            // Check if a different specialty with same name exists
+            var duplicateSpecialty = await specialtyRepo.FindAsync(x => x.Name == input.Name && x.Id != input.Id && !x.IsDeleted);
+
+            if (duplicateSpecialty != null)
+            {
+                throw new Exception("Chuyên khoa với tên này đã tồn tại.");
+            }
+
+            existingSpecialty.Name = input.Name;
+            existingSpecialty.Description = input.Description;
+            existingSpecialty.UpdatedAt = DateTime.Now;
+
+            specialtyRepo.Update(existingSpecialty);
+            await _unitOfWork.SaveChangesAsync();
+
+            return _mapper.Map<SpecialtyDto>(existingSpecialty);
+        }
+
+        public async Task DeleteSpecialty(int id)
+        {
+            var specialtyRepo = _unitOfWork.GetRepository<Specialty>();
+
+            var specialty = await specialtyRepo.GetByIdAsync(id);
+            if (specialty == null || specialty.IsDeleted)
+            {
+                throw new Exception("Không tìm thấy chuyên khoa.");
+            }
+
+            // Soft delete
+            specialty.IsDeleted = true;
+            specialty.UpdatedAt = DateTime.Now;
+
+            specialtyRepo.Update(specialty);
+            await _unitOfWork.SaveChangesAsync();
         }
     }
 }
