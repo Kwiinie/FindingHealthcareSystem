@@ -1,10 +1,11 @@
 ﻿@page "/admin/professional-requests"
 @model FindingHealthcareSystem.Pages.Admin.ProfessionalRequestsModel
 @{
-}
-@{
     Layout = "~/Pages/Shared/_AdminLayout.cshtml";
 }
+
+@Html.AntiForgeryToken()
+
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="mb-0">Quản Lý Chuyên Gia Y Tế</h2>
@@ -12,30 +13,6 @@
 
     <div class="card mb-4">
         <div class="card-body">
-            <div class="row mb-3">
-                <div class="col-md-4">
-                    <div class="search-container">
-                        <i class="fas fa-search search-icon"></i>
-                        <input type="text" class="form-control" placeholder="Tìm kiếm chuyên gia y tế...">
-                    </div>
-                </div>
-                <div class="col-md-8 d-flex justify-content-md-end mt-3 mt-md-0">
-                    <div class="btn-group">
-                        <button class="btn btn-outline-secondary">
-                            <i class="fas fa-filter me-2"></i>Lọc
-                        </button>
-                        <button class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">
-                            <span class="visually-hidden">Toggle Dropdown</span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Trạng thái</a></li>
-                            <li><a class="dropdown-item" href="#">Chuyên môn</a></li>
-                            <li><a class="dropdown-item" href="#">Tỉnh/Thành phố</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
             <div class="table-responsive">
                 <table class="table">
                     <thead>
@@ -48,8 +25,7 @@
                             <th>Kinh Nghiệm</th>
                             <th>Chuyên môn</th>
                             <th>Trạng thái yêu cầu</th>
-                            <th>Trạng thái</th>
-                            <th></th>
+                            <th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -57,38 +33,35 @@
                         {
                             <tr>
                                 <td>@expert.Id</td>
-                                <td><img src="@expert.ImgUrl" alt="Avatar" class="avatar"></td>
+                                <td><img src="@expert.ImgUrl" alt="Avatar" class="avatar" style="width:50px;height:50px;"></td>
                                 <td>@expert.FullName</td>
                                 <td>@expert.Province</td>
                                 <td>@expert.Degree</td>
                                 <td>@expert.Experience</td>
                                 <td>@expert.ExpertiseName</td>
-                                <td><span class="professional-status status-approved">@expert.RequestStatus</span></td>
-                                <td><span class="professional-status status-active">@expert.Status</span></td>
                                 <td>
-                                    <button type="submit" class="btn btn-danger btn-sm">
-                                        <i class="bi bi-slash-circle"></i> Chặn
-                                    </button>
+                                    <span class="badge @(expert.RequestStatus == "Pending" ? "bg-warning" :
+                                                     expert.RequestStatus == "Approved" ? "bg-success" : "bg-danger")">
+                                        @expert.RequestStatus
+                                    </span>
+                                </td>
+                                <td>
+                                    <form method="post">
+                                        <input type="hidden" name="professionalId" value="@expert.Id" />
+                                        <button type="submit" formaction="?handler=Approve" class="btn btn-success btn-sm">
+                                            Duyệt
+                                        </button>
+                                        <button type="submit" formaction="?handler=Reject" class="btn btn-danger btn-sm">
+                                            Từ chối
+                                        </button>
+                                    </form>
+
                                 </td>
                             </tr>
                         }
                     </tbody>
                 </table>
             </div>
-
-            <div class="d-flex justify-content-between align-items-center mt-4">
-                @* <div>Hiển thị 1-5 của 42 chuyên gia</div> *@
-                <nav aria-label="Page navigation">
-                    <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-                    </ul>
-                </nav>
-            </div>
         </div>
     </div>
 </div>
-
