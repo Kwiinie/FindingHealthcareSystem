@@ -303,6 +303,9 @@ namespace DataAccessObjects.Migrations
                     b.Property<int?>("CreatedById")
                         .HasColumnType("int");
 
+                    b.Property<string>("ImgUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -332,6 +335,7 @@ namespace DataAccessObjects.Migrations
                             Content = "<p>Kiểm tra sức khỏe định kỳ là một trong những phương pháp quan trọng giúp phát hiện sớm các vấn đề sức khỏe tiềm ẩn. Việc kiểm tra thường xuyên không chỉ giúp bạn hiểu rõ hơn về tình trạng sức khỏe của mình mà còn giúp bác sĩ đưa ra các biện pháp điều trị kịp thời nếu phát hiện ra vấn đề.</p><p><strong>Các lợi ích chính của việc kiểm tra sức khỏe định kỳ bao gồm:</strong></p><ol><li><strong>Phát hiện sớm các bệnh lý tiềm ẩn</strong>: Việc kiểm tra sức khỏe giúp phát hiện sớm các bệnh lý như tiểu đường, huyết áp cao, hay các vấn đề tim mạch mà bạn có thể không nhận ra. Việc phát hiện sớm giúp điều trị hiệu quả hơn, giảm thiểu các biến chứng nghiêm trọng về sau.</li><li><strong>Tiết kiệm chi phí điều trị</strong>: Việc phát hiện bệnh sớm sẽ giúp bạn tiết kiệm chi phí điều trị, bởi vì bệnh sẽ dễ dàng được điều trị hơn khi phát hiện ở giai đoạn đầu. Điều này không chỉ giúp giảm chi phí cá nhân mà còn giúp hệ thống y tế giảm gánh nặng.</li><li><strong>Tăng tuổi thọ</strong>: Các kiểm tra định kỳ giúp phát hiện sớm các yếu tố nguy cơ sức khỏe và điều chỉnh kịp thời, từ đó tăng khả năng sống lâu. Ví dụ, việc kiểm soát mức huyết áp hoặc cholesterol có thể giúp giảm nguy cơ đột quỵ và các bệnh tim mạch.</li><li><strong>Cải thiện chất lượng cuộc sống</strong>: Việc kiểm tra sức khỏe sẽ giúp bạn có lối sống lành mạnh hơn, với chế độ ăn uống và tập thể dục phù hợp. Điều này sẽ giúp bạn có nhiều năng lượng hơn và cảm thấy tự tin vào sức khỏe của mình.</li><li><strong>Giảm căng thẳng và lo âu</strong>: Khi bạn biết rằng sức khỏe của mình ổn định, bạn sẽ cảm thấy an tâm và ít lo lắng hơn. Việc biết rằng bạn không mắc bệnh gì nghiêm trọng giúp bạn giảm bớt lo âu, từ đó cải thiện tâm trạng và chất lượng cuộc sống.</li></ol>",
                             CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedById = 1,
+                            ImgUrl = "/images/articles/health-checkup.jpg",
                             IsDeleted = false,
                             Title = "5 Lợi Ích Của Việc Kiểm Tra Sức Khỏe Định Kỳ",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -343,6 +347,7 @@ namespace DataAccessObjects.Migrations
                             Content = "<p>Tiêm chủng là một trong những phương pháp phòng ngừa bệnh hiệu quả nhất mà chúng ta có. Việc tiêm chủng định kỳ giúp cơ thể tạo ra miễn dịch đối với các bệnh truyền nhiễm, bảo vệ không chỉ cho bản thân mà còn cho cộng đồng. Dưới đây là những lý do tại sao tiêm chủng là quan trọng và cần thiết:</p><p><strong>1. Bảo vệ khỏi bệnh truyền nhiễm</strong>: Tiêm chủng giúp cơ thể chống lại các bệnh như sởi, thủy đậu, viêm gan B, bạch hầu và nhiều bệnh khác. Bằng cách tiêm phòng, bạn giảm nguy cơ mắc phải các bệnh này, giúp bạn bảo vệ sức khỏe của mình và những người xung quanh. Các bệnh truyền nhiễm có thể gây hậu quả nghiêm trọng, thậm chí là tử vong, nhưng có thể phòng ngừa dễ dàng nhờ tiêm chủng.</p><p><strong>2. Bảo vệ cộng đồng</strong>: Tiêm chủng không chỉ giúp bảo vệ bản thân mà còn giúp bảo vệ những người xung quanh, đặc biệt là những người không thể tiêm chủng như trẻ em, phụ nữ mang thai hoặc người có hệ miễn dịch yếu. Khi càng nhiều người trong cộng đồng tiêm phòng, khả năng lây lan của bệnh sẽ giảm thiểu, từ đó bảo vệ cả cộng đồng khỏi sự bùng phát của các dịch bệnh.</p><p><strong>3. Ngăn ngừa dịch bệnh</strong>: Khi đủ nhiều người trong cộng đồng được tiêm phòng, các dịch bệnh sẽ không có cơ hội bùng phát, giúp bảo vệ cả cộng đồng khỏi những đợt dịch nguy hiểm. Điều này đã được chứng minh qua nhiều quốc gia trên thế giới khi tiêm chủng giúp ngăn ngừa sự bùng phát của các bệnh như sởi, bại liệt, và cúm.</p><p><strong>4. Giảm chi phí chăm sóc sức khỏe</strong>: Khi tiêm chủng, bạn giảm nguy cơ mắc bệnh, từ đó giảm chi phí điều trị và chăm sóc y tế lâu dài. Các bệnh do không tiêm phòng có thể tốn kém hơn rất nhiều trong việc điều trị và chăm sóc sau này.</p><p><strong>5. Đảm bảo an toàn cho trẻ em</strong>: Việc tiêm chủng cho trẻ em giúp bảo vệ các em khỏi những bệnh tật nguy hiểm và giảm tỷ lệ tử vong do bệnh truyền nhiễm. Trẻ em có hệ miễn dịch yếu, nên việc tiêm chủng là biện pháp cần thiết để bảo vệ các em khỏi các mối đe dọa bệnh tật.</p>",
                             CreatedAt = new DateTime(2025, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedById = 1,
+                            ImgUrl = "/images/articles/vaccination.jpg",
                             IsDeleted = false,
                             Title = "Tầm Quan Trọng Của Việc Tiêm Chủng Định Kỳ",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -354,6 +359,7 @@ namespace DataAccessObjects.Migrations
                             Content = "<p>Một chế độ ăn uống cân bằng là nền tảng quan trọng để duy trì sức khỏe. Để có một chế độ ăn uống lành mạnh, bạn cần đảm bảo rằng cơ thể nhận được đủ các nhóm chất dinh dưỡng cần thiết. Sau đây là một số lời khuyên để duy trì chế độ ăn uống cân bằng và hợp lý:</p><p><strong>1. Ăn đủ 5 nhóm thực phẩm</strong>: Đảm bảo rằng mỗi bữa ăn của bạn bao gồm đủ các nhóm thực phẩm như tinh bột (gạo, khoai), protein (thịt, cá, đậu), chất béo lành mạnh (dầu olive, bơ), vitamin và khoáng chất (rau xanh, trái cây), và chất xơ. Việc kết hợp đa dạng các thực phẩm sẽ cung cấp đầy đủ dinh dưỡng cho cơ thể.</p><p><strong>2. Hạn chế thức ăn chế biến sẵn</strong>: Thực phẩm chế biến sẵn chứa nhiều chất bảo quản, đường và muối, có thể gây hại cho sức khỏe nếu tiêu thụ quá nhiều. Hãy tránh thức ăn nhanh, thực phẩm chiên rán, và thay vào đó là các món ăn tươi sống, chế biến tại nhà.</p><p><strong>3. Uống đủ nước</strong>: Cung cấp đủ nước cho cơ thể là một yếu tố quan trọng trong chế độ ăn uống. Nước giúp cơ thể hấp thu chất dinh dưỡng, giải độc và duy trì nhiệt độ cơ thể ổn định. Bạn nên uống ít nhất 8 cốc nước mỗi ngày và uống thêm nếu bạn tham gia các hoạt động thể thao.</p><p><strong>4. Ăn nhiều rau củ quả</strong>: Rau củ quả chứa nhiều vitamin, khoáng chất và chất xơ, giúp hỗ trợ hệ tiêu hóa, tăng cường hệ miễn dịch và giúp da khỏe mạnh. Hãy cố gắng ăn ít nhất 5 khẩu phần rau quả mỗi ngày để cung cấp các dưỡng chất thiết yếu cho cơ thể.</p><p><strong>5. Kiểm soát lượng đường và muối</strong>: Việc giảm lượng đường và muối trong chế độ ăn uống có thể giúp ngăn ngừa các bệnh lý như tiểu đường, huyết áp cao và bệnh tim. Bạn nên hạn chế các thực phẩm ngọt và thức uống có gas, thay vào đó là ăn trái cây tươi và sử dụng gia vị tự nhiên.</p>",
                             CreatedAt = new DateTime(2025, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedById = 1,
+                            ImgUrl = "/images/articles/balanced-diet.jpg",
                             IsDeleted = false,
                             Title = "Chế Độ Ăn Uống Cân Bằng Cho Sức Khỏe",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -365,6 +371,7 @@ namespace DataAccessObjects.Migrations
                             Content = "<p>Hệ tiêu hóa đóng một vai trò quan trọng trong việc duy trì sức khỏe. Khi hệ tiêu hóa hoạt động tốt, cơ thể sẽ hấp thụ dinh dưỡng hiệu quả, giảm nguy cơ mắc các bệnh lý và cải thiện chất lượng cuộc sống. Dưới đây là một số thực phẩm giúp cải thiện hệ tiêu hóa:</p><p><strong>1. Sữa chua</strong>: Sữa chua chứa các vi khuẩn có lợi giúp duy trì sự cân bằng của hệ vi sinh đường ruột, từ đó giúp hệ tiêu hóa hoạt động hiệu quả hơn. Các lợi khuẩn này giúp cải thiện sự hấp thu chất dinh dưỡng và tăng cường hệ miễn dịch.</p><p><strong>2. Chuối</strong>: Chuối là một nguồn cung cấp chất xơ tuyệt vời, giúp cải thiện nhu động ruột và ngăn ngừa táo bón. Chuối cũng có thể làm dịu dạ dày và giúp giảm cảm giác đầy bụng.</p><p><strong>3. Rau xanh</strong>: Các loại rau như rau cải, rau bina và bông cải xanh chứa nhiều chất xơ và vitamin, giúp tăng cường chức năng tiêu hóa và làm sạch đường ruột. Rau xanh giúp cải thiện nhu động ruột và giảm nguy cơ mắc bệnh về đường tiêu hóa.</p><p><strong>4. Hạt chia</strong>: Hạt chia giàu chất xơ, giúp cải thiện nhu động ruột và giảm táo bón. Ngoài ra, hạt chia còn cung cấp các axit béo omega-3 có lợi cho sức khỏe.</p><p><strong>5. Gừng</strong>: Gừng có tính kháng viêm và có thể giúp làm dịu dạ dày, hỗ trợ tiêu hóa và giảm đầy bụng. Uống trà gừng hoặc thêm gừng tươi vào các món ăn có thể giúp cải thiện hệ tiêu hóa.</p>",
                             CreatedAt = new DateTime(2025, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedById = 1,
+                            ImgUrl = "/images/articles/digestive-health.jpg",
                             IsDeleted = false,
                             Title = "Thực Phẩm Giúp Cải Thiện Hệ Tiêu Hóa",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -376,6 +383,7 @@ namespace DataAccessObjects.Migrations
                             Content = "<p>Bệnh tim mạch là một trong những nguyên nhân hàng đầu gây tử vong trên toàn cầu. Tuy nhiên, bệnh tim mạch có thể được phòng ngừa thông qua các biện pháp thay đổi lối sống lành mạnh. Dưới đây là những phương pháp phòng ngừa hiệu quả bệnh tim mạch:</p><p><strong>1. Duy trì một chế độ ăn uống lành mạnh</strong>: Chế độ ăn uống giàu trái cây, rau củ, ngũ cốc nguyên hạt, và giảm thiểu các thực phẩm giàu chất béo bão hòa và cholesterol sẽ giúp bảo vệ tim mạch. Hãy bổ sung các thực phẩm giàu omega-3 như cá hồi và các loại hạt giúp làm giảm nguy cơ bệnh tim.</p><p><strong>2. Tập thể dục thường xuyên</strong>: Các nghiên cứu đã chứng minh rằng việc tập thể dục thường xuyên, ít nhất 30 phút mỗi ngày, giúp cải thiện sức khỏe tim mạch. Việc này giúp tăng cường lưu thông máu, kiểm soát huyết áp và cholesterol.</p><p><strong>3. Kiểm soát cân nặng</strong>: Thừa cân làm tăng nguy cơ mắc bệnh tim mạch. Việc duy trì cân nặng hợp lý thông qua chế độ ăn uống và luyện tập sẽ giảm thiểu gánh nặng cho tim, giúp tim hoạt động hiệu quả hơn.</p><p><strong>4. Hạn chế căng thẳng</strong>: Căng thẳng kéo dài có thể làm tăng huyết áp và làm tổn thương mạch máu. Hãy áp dụng các phương pháp giảm stress như thiền, yoga, hoặc đi bộ để giảm mức độ căng thẳng trong cuộc sống hàng ngày.</p><p><strong>5. Kiểm tra sức khỏe định kỳ</strong>: Việc kiểm tra sức khỏe định kỳ, bao gồm kiểm tra huyết áp và mức cholesterol, sẽ giúp bạn phát hiện sớm các yếu tố nguy cơ và có biện pháp can thiệp kịp thời để bảo vệ sức khỏe tim mạch.</p>",
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedById = 1,
+                            ImgUrl = "/images/articles/heart-health.jpg",
                             IsDeleted = false,
                             Title = "Cách Phòng Ngừa Bệnh Tim Mạch",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -387,6 +395,7 @@ namespace DataAccessObjects.Migrations
                             Content = "<p>Ung thư phổi là một trong những loại ung thư nguy hiểm và có tỷ lệ tử vong cao. Việc phát hiện bệnh sớm sẽ giúp điều trị hiệu quả và cải thiện cơ hội sống sót. Dưới đây là một số dấu hiệu cảnh báo ung thư phổi mà bạn không nên bỏ qua:</p><p><strong>1. Ho kéo dài</strong>: Ho kéo dài, đặc biệt là ho có đờm hoặc ho ra máu, có thể là dấu hiệu của ung thư phổi. Nếu bạn có ho liên tục trong nhiều tuần, hãy đi kiểm tra để xác định nguyên nhân.</p><p><strong>2. Khó thở</strong>: Khó thở hoặc cảm giác hụt hơi khi làm những việc bình thường có thể là triệu chứng của bệnh ung thư phổi. Sự tắc nghẽn trong phổi do khối u có thể làm giảm khả năng hô hấp của bạn.</p><p><strong>3. Đau ngực</strong>: Đau hoặc cảm giác tức ngực, đặc biệt là khi ho hoặc thở sâu, có thể là dấu hiệu của ung thư phổi. Cơn đau có thể lan ra vai hoặc lưng, đặc biệt khi khối u chèn ép lên các cơ quan lân cận.</p><p><strong>4. Giảm cân không rõ lý do</strong>: Giảm cân đột ngột mà không thay đổi chế độ ăn uống hoặc lối sống có thể là một dấu hiệu của ung thư phổi. Đây là triệu chứng chung của nhiều loại ung thư, trong đó có ung thư phổi.</p><p><strong>5. Mệt mỏi kéo dài</strong>: Cảm giác mệt mỏi và yếu ớt kéo dài có thể là dấu hiệu của ung thư phổi. Khi các tế bào ung thư phát triển, cơ thể sẽ trở nên mệt mỏi hơn, và năng lượng của bạn sẽ giảm sút.</p><p>Việc kiểm tra y tế kịp thời sẽ giúp phát hiện ung thư phổi ở giai đoạn sớm, từ đó tăng cơ hội điều trị và cải thiện khả năng sống sót của bệnh nhân.</p>",
                             CreatedAt = new DateTime(2025, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedById = 1,
+                            ImgUrl = "/images/articles/lung-cancer.jpg",
                             IsDeleted = false,
                             Title = "Những Dấu Hiệu Cảnh Báo Ung Thư Phổi",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -428,6 +437,116 @@ namespace DataAccessObjects.Migrations
                     b.HasIndex("ArticleId");
 
                     b.ToTable("ArticleImage");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ArticleId = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImgUrl = "/images/articles/health-checkup-1.jpg",
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ArticleId = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImgUrl = "/images/articles/health-checkup-2.jpg",
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ArticleId = 2,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImgUrl = "/images/articles/vaccination-1.jpg",
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ArticleId = 2,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImgUrl = "/images/articles/vaccination-2.jpg",
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ArticleId = 3,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImgUrl = "/images/articles/balanced-diet-1.jpg",
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ArticleId = 3,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImgUrl = "/images/articles/balanced-diet-2.jpg",
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ArticleId = 4,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImgUrl = "/images/articles/digestive-health-1.jpg",
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ArticleId = 4,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImgUrl = "/images/articles/digestive-health-2.jpg",
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 9,
+                            ArticleId = 5,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImgUrl = "/images/articles/heart-health-1.jpg",
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 10,
+                            ArticleId = 5,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImgUrl = "/images/articles/heart-health-2.jpg",
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 11,
+                            ArticleId = 6,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImgUrl = "/images/articles/lung-cancer-1.jpg",
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 12,
+                            ArticleId = 6,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImgUrl = "/images/articles/lung-cancer-2.jpg",
+                            IsDeleted = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("BusinessObjects.Entities.Attachment", b =>
@@ -4387,6 +4506,7 @@ namespace DataAccessObjects.Migrations
                             Email = "admin@example.com",
                             Fullname = "Nguyễn Văn Admin",
                             Gender = "Nam",
+                            ImgUrl = "/images/users/admin_avatar.jpg",
                             IsDeleted = false,
                             Password = "ad123456",
                             PhoneNumber = "0901234567",
@@ -4402,6 +4522,7 @@ namespace DataAccessObjects.Migrations
                             Email = "patient1@example.com",
                             Fullname = "Trần Thị Bích",
                             Gender = "Nữ",
+                            ImgUrl = "/images/users/patient_female_1.jpg",
                             IsDeleted = false,
                             Password = "pa123456",
                             PhoneNumber = "0902345678",
@@ -4417,6 +4538,7 @@ namespace DataAccessObjects.Migrations
                             Email = "patient2@example.com",
                             Fullname = "Lê Văn Cường",
                             Gender = "Nam",
+                            ImgUrl = "/images/users/patient_male_1.jpg",
                             IsDeleted = false,
                             Password = "pa123456",
                             PhoneNumber = "0903456789",
@@ -4432,6 +4554,7 @@ namespace DataAccessObjects.Migrations
                             Email = "professional1@example.com",
                             Fullname = "Phạm Minh Đức",
                             Gender = "Nam",
+                            ImgUrl = "/images/users/doctor_male_1.jpg",
                             IsDeleted = false,
                             Password = "pro123456",
                             PhoneNumber = "0904567890",
@@ -4447,6 +4570,7 @@ namespace DataAccessObjects.Migrations
                             Email = "professional2@example.com",
                             Fullname = "Vũ Thị Hương",
                             Gender = "Nữ",
+                            ImgUrl = "/images/users/doctor_female_1.jpg",
                             IsDeleted = false,
                             Password = "pro123456",
                             PhoneNumber = "0905678901",
@@ -4462,6 +4586,7 @@ namespace DataAccessObjects.Migrations
                             Email = "patient3@example.com",
                             Fullname = "Hoàng Thị Mai",
                             Gender = "Nữ",
+                            ImgUrl = "/images/users/patient_female_2.jpg",
                             IsDeleted = false,
                             Password = "pa123456",
                             PhoneNumber = "0906789012",
@@ -4477,6 +4602,7 @@ namespace DataAccessObjects.Migrations
                             Email = "patient4@example.com",
                             Fullname = "Đỗ Quang Nam",
                             Gender = "Nam",
+                            ImgUrl = "/images/users/patient_male_2.jpg",
                             IsDeleted = false,
                             Password = "pa123456",
                             PhoneNumber = "0907890123",
@@ -4492,6 +4618,7 @@ namespace DataAccessObjects.Migrations
                             Email = "professional3@example.com",
                             Fullname = "Ngô Thanh Tùng",
                             Gender = "Nam",
+                            ImgUrl = "/images/users/doctor_male_2.jpg",
                             IsDeleted = false,
                             Password = "pro123456",
                             PhoneNumber = "0908901234",
@@ -4507,6 +4634,7 @@ namespace DataAccessObjects.Migrations
                             Email = "professional4@example.com",
                             Fullname = "Lý Thị Hoa",
                             Gender = "Nữ",
+                            ImgUrl = "/images/users/doctor_female_2.jpg",
                             IsDeleted = false,
                             Password = "pro123456",
                             PhoneNumber = "0909012345",
@@ -4522,6 +4650,7 @@ namespace DataAccessObjects.Migrations
                             Email = "patient5@example.com",
                             Fullname = "Dương Văn Khải",
                             Gender = "Nam",
+                            ImgUrl = "/images/users/patient_male_3.jpg",
                             IsDeleted = false,
                             Password = "pa123456",
                             PhoneNumber = "0910123456",
@@ -4537,6 +4666,7 @@ namespace DataAccessObjects.Migrations
                             Email = "patient6@example.com",
                             Fullname = "Trịnh Thu Phương",
                             Gender = "Nữ",
+                            ImgUrl = "/images/users/patient_female_3.jpg",
                             IsDeleted = false,
                             Password = "pa123456",
                             PhoneNumber = "0911234567",
@@ -4552,6 +4682,7 @@ namespace DataAccessObjects.Migrations
                             Email = "professional5@example.com",
                             Fullname = "Bùi Quốc Anh",
                             Gender = "Nam",
+                            ImgUrl = "/images/users/doctor_male_3.jpg",
                             IsDeleted = false,
                             Password = "pro123456",
                             PhoneNumber = "0912345678",
@@ -4567,6 +4698,7 @@ namespace DataAccessObjects.Migrations
                             Email = "lananh@example.com",
                             Fullname = "Nguyễn Thị Lan Anh",
                             Gender = "Nữ",
+                            ImgUrl = "/images/users/doctor_female_3.jpg",
                             IsDeleted = false,
                             Password = "pro123456",
                             PhoneNumber = "0913456789",
@@ -4582,6 +4714,7 @@ namespace DataAccessObjects.Migrations
                             Email = "tranminh@example.com",
                             Fullname = "Trần Văn Minh",
                             Gender = "Nam",
+                            ImgUrl = "/images/users/doctor_male_4.jpg",
                             IsDeleted = false,
                             Password = "pro123456",
                             PhoneNumber = "0912345678",
@@ -4597,6 +4730,7 @@ namespace DataAccessObjects.Migrations
                             Email = "thanhhuong@example.com",
                             Fullname = "Phan Thị Thanh Hương",
                             Gender = "Nữ",
+                            ImgUrl = "/images/users/doctor_female_4.jpg",
                             IsDeleted = false,
                             Password = "pro123456",
                             PhoneNumber = "0923456789",
@@ -4612,6 +4746,7 @@ namespace DataAccessObjects.Migrations
                             Email = "mylinh@example.com",
                             Fullname = "Ngô Thị Mỹ Linh",
                             Gender = "Nữ",
+                            ImgUrl = "/images/users/doctor_female_5.jpg",
                             IsDeleted = false,
                             Password = "pro123456",
                             PhoneNumber = "0934567890",
@@ -4627,6 +4762,7 @@ namespace DataAccessObjects.Migrations
                             Email = "quoctuan@example.com",
                             Fullname = "Đặng Quốc Tuấn",
                             Gender = "Nam",
+                            ImgUrl = "/images/users/doctor_male_5.jpg",
                             IsDeleted = false,
                             Password = "pro123456",
                             PhoneNumber = "0945678901",
@@ -4642,6 +4778,7 @@ namespace DataAccessObjects.Migrations
                             Email = "kimngan@example.com",
                             Fullname = "Lê Thị Kim Ngân",
                             Gender = "Nữ",
+                            ImgUrl = "/images/users/doctor_female_6.jpg",
                             IsDeleted = false,
                             Password = "pro123456",
                             PhoneNumber = "0956789012",
@@ -4657,6 +4794,7 @@ namespace DataAccessObjects.Migrations
                             Email = "ducthinh@example.com",
                             Fullname = "Hoàng Đức Thịnh",
                             Gender = "Nam",
+                            ImgUrl = "/images/users/doctor_male_6.jpg",
                             IsDeleted = false,
                             Password = "pro123456",
                             PhoneNumber = "0967890123",
@@ -4672,6 +4810,7 @@ namespace DataAccessObjects.Migrations
                             Email = "minhquan@example.com",
                             Fullname = "Vũ Minh Quân",
                             Gender = "Nam",
+                            ImgUrl = "/images/users/doctor_male_7.jpg",
                             IsDeleted = false,
                             Password = "pro123456",
                             PhoneNumber = "0978901234",
@@ -4687,6 +4826,7 @@ namespace DataAccessObjects.Migrations
                             Email = "minhhai@example.com",
                             Fullname = "Trịnh Minh Hải",
                             Gender = "Nam",
+                            ImgUrl = "/images/users/doctor_male_8.jpg",
                             IsDeleted = false,
                             Password = "pro123456",
                             PhoneNumber = "0989012345",
@@ -4702,6 +4842,7 @@ namespace DataAccessObjects.Migrations
                             Email = "thuytrang@example.com",
                             Fullname = "Phạm Thị Thùy Trang",
                             Gender = "Nữ",
+                            ImgUrl = "/images/users/doctor_female_7.jpg",
                             IsDeleted = false,
                             Password = "pro123456",
                             PhoneNumber = "0990123456",
@@ -4717,6 +4858,7 @@ namespace DataAccessObjects.Migrations
                             Email = "vanhung@example.com",
                             Fullname = "Bùi Văn Hưng",
                             Gender = "Nam",
+                            ImgUrl = "/images/users/doctor_male_9.jpg",
                             IsDeleted = false,
                             Password = "pro123456",
                             PhoneNumber = "0901234567",
@@ -4732,6 +4874,7 @@ namespace DataAccessObjects.Migrations
                             Email = "bichngoc@example.com",
                             Fullname = "Nguyễn Thị Bích Ngọc",
                             Gender = "Nữ",
+                            ImgUrl = "/images/users/doctor_female_8.jpg",
                             IsDeleted = false,
                             Password = "pro123456",
                             PhoneNumber = "0912345678",
@@ -4747,6 +4890,7 @@ namespace DataAccessObjects.Migrations
                             Email = "quangvinh@example.com",
                             Fullname = "Trương Quang Vinh",
                             Gender = "Nam",
+                            ImgUrl = "/images/users/doctor_male_10.jpg",
                             IsDeleted = false,
                             Password = "pro123456",
                             PhoneNumber = "0923456789",
@@ -4762,6 +4906,7 @@ namespace DataAccessObjects.Migrations
                             Email = "duongha@example.com",
                             Fullname = "Dương Thị Hà",
                             Gender = "Nữ",
+                            ImgUrl = "/images/users/doctor_female_9.jpg",
                             IsDeleted = false,
                             Password = "pro123456",
                             PhoneNumber = "0934567890",
@@ -4777,6 +4922,7 @@ namespace DataAccessObjects.Migrations
                             Email = "vanthang@example.com",
                             Fullname = "Mai Văn Thắng",
                             Gender = "Nam",
+                            ImgUrl = "/images/users/doctor_male_11.jpg",
                             IsDeleted = false,
                             Password = "pro123456",
                             PhoneNumber = "0945678901",

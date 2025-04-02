@@ -15,6 +15,11 @@ namespace BusinessObjects.DTOs.Article
         public string CategoryName { get; set; }
         public int? CategoryId { get; set; }
         public string CreatedBy { get; set; }
-/*        public List<string> ImageUrls { get; set; }*/
+        public int CreatedById { get; set; }
+        public string? ImgUrl { get; set; }
+        public List<string> ImgUrls { get; set; }
+
+        public bool IsDeleted { get; set; }
+
     }
 }

@@ -11,7 +11,7 @@ namespace Services.Interfaces
     {
         Task<IEnumerable<ArticleDTO>> GetAllArticlesAsync();
         Task<ArticleDTO> GetArticleByIdAsync(int id);
-        Task UpdateArticleAsync(ArticleDTO articleDTO);
+        Task<bool> UpdateArticleAsync(ArticleDTO articleDto);
         Task AddArticleAsync(ArticleDTO articleDTO);
         Task DeleteArticleAsync(int id);
     }

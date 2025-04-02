@@ -144,13 +144,6 @@
                                                     <i class="fas fa-edit"></i> Chỉnh sửa
                                                 </button>
                                             }
-
-                                            <button class="btn btn-primary"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#bookServiceModal"
-                                                    data-service-id="@service.Id">
-                                                Đặt lịch
-                                            </button>
                                         </div>
                                     </div>
                                 }
@@ -202,7 +195,7 @@
                         </div>
                     </div>
 
-                    <select id="departmentSelect" name="departmentIds" multiple class="form-control">
+                    <select id="departmentSelect" asp-for="Facility.DepartmentIds" multiple class="form-control">
                         @foreach (var dept in Model.Departments)
                         {
                             <option value="@dept.Id" selected="@(Model.Facility.FacilityDepartments.Any(fd => fd.DepartmentId == dept.Id) ? "selected" : null)">

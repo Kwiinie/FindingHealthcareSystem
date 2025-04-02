@@ -13,7 +13,7 @@ namespace DataAccessObjects.Interfaces
     {
         Task<T> GetByIdAsync(int id);
         Task<IEnumerable<T>> GetListById(int id);
-        Task<IEnumerable<T>> GetAllAsync();
+        Task<IEnumerable<T>> GetAllAsync(string includeProperties = "");
 
         //filtering returns first entity
         Task<T> FindAsync(Expression<Func<T, bool>> predicate, string includeProperties = "");

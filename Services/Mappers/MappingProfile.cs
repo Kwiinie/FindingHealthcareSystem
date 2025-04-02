@@ -35,8 +35,16 @@ namespace Services.Mappers
             CreateMap<User, LoginDto>().ReverseMap();
 
             CreateMap<Article, ArticleDTO>()
-                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name))
-                .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy.Fullname));
+            .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name))
+            .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy.Fullname))
+            .ForMember(dest => dest.ImgUrl, opt => opt.MapFrom(src => src.ImgUrl))
+            .ForMember(dest => dest.IsDeleted, opt => opt.MapFrom(src => src.IsDeleted))
+            .ForMember(dest => dest.ImgUrls, opt => opt.MapFrom(src => src.ArticleImages.Select(ai => ai.ImgUrl).ToList()));
+            CreateMap<ArticleDTO, Article>()
+      .ForMember(dest => dest.Category, opt => opt.Ignore())
+      .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
+      .ForMember(dest => dest.ArticleImages, opt => opt.Ignore());
+
             CreateMap<Category, CategoryDTO>().ReverseMap();
             CreateMap<Specialty, SpecialtyDto>().ReverseMap();
             CreateMap<PublicService, ServiceDto>().ReverseMap();

@@ -17,7 +17,14 @@
                     <span class="article-category">@Model.Article.CategoryName</span>
 
                     <!-- Featured Image -->
-                    <img src="~/img/DefaultNews.jpg" alt="Article featured image" class="article-featured-image">
+                @if (!string.IsNullOrEmpty(Model.Article.ImgUrl))
+                {
+                <img src="@Model.Article.ImgUrl" alt="Article featured image" class="article-featured-image">
+                }
+                else
+                {
+                <img src="~/images/DefaultNews.jpg" alt="Article featured image" class="article-featured-image">
+                }
 
                     <!-- Article Content -->
                     <div class="article-content">
@@ -25,23 +32,20 @@
                     </div>
 
                     <!-- Image Gallery -->
-                    <div class="article-gallery">
-                        <h3 class="gallery-title">Ảnh</h3>
-                        <div class="gallery-grid">
+                @if (Model.Article.ImgUrls != null && Model.Article.ImgUrls.Count > 0)
+                {
+                <div class="article-gallery">
+                    <h3 class="gallery-title">Ảnh</h3>
+                    <div class="gallery-grid">
+                            @foreach (var imgUrl in Model.Article.ImgUrls)
+                            {
                             <div class="gallery-item">
-                                <img src="~/img/DefaultNews.jpg" alt="Gallery image 1" class="gallery-image">
+                                <img src="@imgUrl" alt="Gallery image" class="gallery-image">
                             </div>
-                            <div class="gallery-item">
-                                <img src="~/img/DefaultNews.jpg" alt="Gallery image 2" class="gallery-image">
-                            </div>
-                            <div class="gallery-item">
-                                <img src="~/img/DefaultNews.jpg" alt="Gallery image 3" class="gallery-image">
-                            </div>
-                            <div class="gallery-item">
-                                <img src="~/img/DefaultNews.jpg" alt="Gallery image 4" class="gallery-image">
-                            </div>
-                        </div>
+                            }
                     </div>
+                </div>
+                }
                 </div>
             </div>
         </div>

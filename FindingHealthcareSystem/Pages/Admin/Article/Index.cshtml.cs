@@ -33,6 +33,8 @@ namespace FindingHealthcareSystem.Pages.Admin.Article
 
         [BindProperty(SupportsGet = true)]
         public DateTime? CreatedDate { get; set; }
+        [TempData]
+        public string StatusMessage { get; set; }
 
         public async Task OnGetAsync(int page = 1)
         {
@@ -102,6 +104,49 @@ namespace FindingHealthcareSystem.Pages.Admin.Article
                 .ToList();
 
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync(int articleId, bool currentStatus)
+        {
+            try
+            {
+                var article = await _articleService.GetArticleByIdAsync(articleId);
+                currentStatus = article.IsDeleted;
+                if (article == null)
+                {
+                    StatusMessage = $"Error: Article with ID {articleId} not found.";
+                    return RedirectToPage();
+                }
+
+                if (currentStatus == true)
+                {
+                    article.IsDeleted = false;
+                }
+                else
+                {
+                    article.IsDeleted = true;
+
+                }
+
+                bool updateSuccess = await _articleService.UpdateArticleAsync(article);
+
+                if (updateSuccess)
+                {
+                    StatusMessage = article.IsDeleted
+                        ? $"Bài viết '{article.Title}' đã dừng xuất bản."
+                        : $"Bài viết '{article.Title}' đã xuất bản.";
+                }
+                else
+                {
+                    StatusMessage = $"Lỗi: Không thể thay đổi trạng thái bài viết.";
+                }
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = $"Error: {ex.Message}";
+            }
+
+            return RedirectToPage();
         }
     }
 }
