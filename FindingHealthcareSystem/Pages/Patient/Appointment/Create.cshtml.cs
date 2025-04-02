@@ -138,7 +138,7 @@ namespace FindingHealthcareSystem.Pages.Patient.Appointment
 
                 var paymentRequest = new PaymentRequestDto
                 {
-                    AppointmentId = result.Data.Id,
+                    AppointmentId = result.Data.Id.Value,
                     Amount = (float)depositAmount
                 };
 
