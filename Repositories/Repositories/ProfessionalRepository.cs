@@ -1,5 +1,6 @@
 ﻿using BusinessObjects.Commons;
 using BusinessObjects.Entities;
+using BusinessObjects.Enums;
 using DataAccessObjects.DAOs;
 using DataAccessObjects.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -65,6 +66,8 @@ namespace Repositories.Repositories
             {
                 filters.Add("User.Name", professionalName);
             }
+
+            filters.Add("RequestStatus", ProfessionalRequestStatus.Approved);
 
             var query = _professionalDao.GetFilteredQuery(filters, includes: new List<string> {
             "Expertise",
