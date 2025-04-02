@@ -3,6 +3,7 @@ using BusinessObjects.DTOs.Facility;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Services.Interfaces;
+using Services.Services;
 
 namespace FindingHealthcareSystem.Pages.Admin.Facility
 {
@@ -10,11 +11,17 @@ namespace FindingHealthcareSystem.Pages.Admin.Facility
     {
         private readonly IFacilityService _facilityService;
         private readonly IDepartmentService _departmentService;
+        private readonly IFileUploadService _fileUploadService;
 
-        public IndexModel(IFacilityService facilityService, IDepartmentService departmentService)
+
+        [BindProperty]
+        public IFormFile? ProfileImage { get; set; }
+
+        public IndexModel(IFacilityService facilityService, IDepartmentService departmentService, IFileUploadService fileUploadService)
         {
             _facilityService = facilityService;
             _departmentService = departmentService;
+            _fileUploadService = fileUploadService;
         }
 
         [BindProperty]
@@ -45,6 +52,13 @@ namespace FindingHealthcareSystem.Pages.Admin.Facility
             var count = Facility.DepartmentIds;
             var status = Facility.Status;
             var type = Facility.TypeId;
+            if (ProfileImage != null && ProfileImage.Length > 0)
+            {
+                // Use FileUploadService to upload the image
+                string imageUrl = await _fileUploadService.UploadImageAsync(ProfileImage, "users");
+                Facility.ImgUrl = imageUrl;
+
+            }
             // Call the service to save the edited facility
             await _facilityService.Create(Facility);
             // Redirect back to the index page after successful save

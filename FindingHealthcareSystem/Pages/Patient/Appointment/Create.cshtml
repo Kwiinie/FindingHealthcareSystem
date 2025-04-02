@@ -101,19 +101,22 @@
                     <div class="service-options">
                         @foreach (var service in Model.services)
                         {
-                            <div class="service-item">
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="service@service.Id" name="serviceOption" class="custom-control-input"
-                                           value="@service.Id" onclick="selectService(@service.Id)" />
-                                    <label class="custom-control-label" for="service@(service.Id)">
-                                        <div class="service-info">
-                                            <div class="service-name">@service.Name</div>
-                                            <div class="service-description">@service.Description</div>
-                                        </div>
-                                        <div class="service-price">@service.Price?.ToString("C0")</div>
-                                    </label>
+                            if(service.IsDeleted == false)
+                            {
+                                <div class="service-item">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" id="service@service.Id" name="serviceOption" class="custom-control-input"
+                                               value="@service.Id" onclick="selectService(@service.Id)" />
+                                        <label class="custom-control-label" for="service@(service.Id)">
+                                            <div class="service-info">
+                                                <div class="service-name">@service.Name</div>
+                                                <div class="service-description">@service.Description</div>
+                                            </div>
+                                            <div class="service-price">@service.Price?.ToString("C0")</div>
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>
+                            }
                         }
 
                     </div>
