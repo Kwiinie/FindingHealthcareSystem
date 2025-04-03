@@ -56,10 +56,17 @@
     }
 }
 <body>
-    <nav class="navbar navbar-expand-xl fixed-top nav-bg d-flex justify-content-between">
+    <nav class="navbar navbar-expand-xl fixed-top nav-bg">
         <div class="container">
-            <a class="navbar-brand " href="/">FindingHealthcare</a>
-            <div class="collapse navbar-collapse" id="navbarNav">
+            <a class="navbar-brand" href="/">FindingHealthcare</a>
+
+            <!-- Add this navbar toggler button for mobile -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-card-item">
                         <a class="nav-link" href="/" id="home-link">Trang chủ</a>
@@ -83,7 +90,7 @@
                         </li>
                     }
                 </ul>
-                <ul class="right navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto">
                     @if (currentUser != null)
                     {
                         <li class="nav-item dropdown user-dropdown">
@@ -98,11 +105,10 @@
                                         <img src="/img/defaultAvatar.jpg" alt="@currentUser.Fullname" class="user-img">
                                     }
                                 </div>
-                                <span>@currentUser.Fullname</span>
+                                <span class="username-text">@currentUser.Fullname</span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                                <li class="dropdown-item-header">
-                                    <div class="d-flex align-items-center p-2">
+                                <div class="d-flex align-items-center p-2">
                                         <div class="user-avatar me-3">
                                             @if (!string.IsNullOrEmpty(currentUser.ImgUrl))
                                             {
@@ -136,7 +142,7 @@
                                         </div>
 
                                     </div>
-                                </li>
+
                                 <li><hr class="dropdown-divider"></li>
                                 <li class="px-3 py-1">
                                     <div class="user-detail">
@@ -187,10 +193,10 @@
                     }
                     else
                     {
-                        <li class="nav-card-item-right">
+                        <li class="nav-card-item auth-item">
                             <a class="nav-link" href="/login">Đăng nhập</a>
                         </li>
-                        <li class="nav-card-item-right create-account">
+                        <li class="nav-card-item auth-item create-account">
                             <a class="nav-link" href="/Auth/register">Tạo tài khoản</a>
                         </li>
                     }
@@ -198,7 +204,10 @@
             </div>
         </div>
     </nav>
+            <div id="toastContainer" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999;"></div>
+
     <main role="main" class="pb-3 mt-5">
+
         @RenderBody()
     </main>
 
@@ -206,6 +215,90 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+    <script>
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/notificationHub")
+            .build();
+
+        connection.on("ReceiveNotification", function (data) {
+            showToast(data.message, data.type);
+        });
+
+        connection.start().catch(err => console.error(err.toString()));
+
+        function showToast(message, type = "info") {
+            const toast = document.createElement("div");
+            toast.className = `toast-${type}`;
+
+            // Determine background and text colors based on toast type
+            let bgColor, textColor, borderColor;
+
+            switch (type) {
+                case "success":
+                    bgColor = "var(--secondary-color)";
+                    textColor = "var(--text-on-primary)";
+                    borderColor = "var(--primary-active)";
+                    break;
+                case "error":
+                    bgColor = "var(--danger-color)";
+                    textColor = "var(--text-on-danger)";
+                    borderColor = "var(--danger-active)";
+                    break;
+                case "warning":
+                    bgColor = "#FFCC00";
+                    textColor = "#333333";
+                    borderColor = "#E6B800";
+                    break;
+                default: // info
+                    bgColor = "#f1f7eb";
+                    textColor = "#333333";
+                    borderColor = "#99d255";
+            }
+
+            toast.style = `
+                background-color: ${bgColor};
+                color: ${textColor};
+                border-left: 4px solid ${borderColor};
+                padding: 12px 20px;
+                margin-top: 15px;
+                border-radius: 6px;
+                box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+                animation: fadeInOut 4s forwards;
+                font-family: 'Lexend Deca', sans-serif;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+                max-width: 350px;
+            `;
+
+            const icon = document.createElement("i");
+            icon.style = "margin-right: 10px; font-size: 18px;";
+
+            switch (type) {
+                case "success":
+                    icon.className = "bi bi-check-circle-fill";
+                    break;
+                case "error":
+                    icon.className = "bi bi-x-circle-fill";
+                    break;
+                case "warning":
+                    icon.className = "bi bi-exclamation-triangle-fill";
+                    break;
+                default: // info
+                    icon.className = "bi bi-info-circle-fill";
+            }
+
+            toast.appendChild(icon);
+
+            const messageSpan = document.createElement("span");
+            messageSpan.innerText = message;
+            toast.appendChild(messageSpan);
+
+            document.getElementById("toastContainer").appendChild(toast);
+
+            setTimeout(() => toast.remove(), 4000);
+        }</script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

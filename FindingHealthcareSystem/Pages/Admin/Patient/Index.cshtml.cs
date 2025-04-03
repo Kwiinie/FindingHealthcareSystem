@@ -1,4 +1,4 @@
-using BusinessObjects.DTOs;
+﻿using BusinessObjects.DTOs;
 using BusinessObjects.Entities;
 using BusinessObjects.Enums;
 using Microsoft.AspNetCore.Mvc;
@@ -127,6 +127,37 @@ namespace FindingHealthcareSystem.Pages.Admin.Patient
             Patients = filteredPatients
                 .Skip((PageIndex - 1) * PageSize)
                 .Take(PageSize);
+        }
+
+
+
+        public async Task<IActionResult> OnPostApproveAsync(int professionalId)
+        {
+            return await ProcessRequest(professionalId);
+        }
+
+
+
+        private async Task<IActionResult> ProcessRequest(int userid)
+        {
+
+
+            try
+            {
+
+
+                var user = await _userService.GetUserByIdAsync(userid);
+                user.Status = UserStatus.Inactive.ToString();
+
+                await _userService.UpdateUserStatus(user);
+
+                return RedirectToPage();
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, $"Lỗi khi xử lý yêu cầu: {ex.Message}");
+                return Page();
+            }
         }
     }
 }
