@@ -4,6 +4,7 @@ using BusinessObjects.DTOs.Appointment;
 using BusinessObjects.Entities;
 using BusinessObjects.Enums;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using Repositories.Interfaces;
 using Services.Interfaces;
 using System;
@@ -146,17 +147,18 @@ namespace Services.Services
             return _mapper.Map<List<AppointmentDTO>>(appointments);
         }
 
-        public async Task<AppointmentDTO> GetAsync(int id)
-        {
-            var appointment = await _unitOfWork.AppointmentRepository.GetAppointment(id);
-            return _mapper.Map<AppointmentDTO>(appointment);
-        }
 
-        public async Task<List<AppointmentDTO>> GetPagenagingAppointments(int pagee, int size)
+        public async Task<(int, List<AppointmentDTO>)> GetPagenagingAppointments(int id, int pagee, int size)
         {
-            var list = (await _unitOfWork.AppointmentRepository.Query().Include(x => x.Patient).Include(x => x.Patient.User).ToListAsync())
-                .OrderByDescending(x => x.Date).Skip((pagee - 1) * size).Take(size).ToList();
-            return _mapper.Map<List<AppointmentDTO>>(list);
+            var list = await _unitOfWork.AppointmentRepository.Query()
+                .Include(x => x.Professional)
+                .Where(x => x.Professional.UserId == id && x.ProviderId == x.Professional.Id && x.Status == AppointmentStatus.Completed)
+                .Include(x => x.Patient)
+                .Include(x => x.Patient.User)
+                .ToListAsync();
+
+            var maxPage = (int)Math.Floor((decimal)list.Count / size);
+            return (maxPage, _mapper.Map<List<AppointmentDTO>>(list.OrderByDescending(x => x.Date).Skip((pagee - 1) * size).Take(size).ToList()));
         }
 
         public async Task<List<string>> GetSlotsExistedByDate(DateTime date, List<string> slots)
@@ -191,5 +193,45 @@ namespace Services.Services
             return _mapper.Map<MyAppointmentDto>(appointment);
         }
 
+        public async Task<AppointmentDTO> GetAppointmentByDateAndSlot(int id, ServiceType type)
+        {
+            var query = _unitOfWork.AppointmentRepository.Query()
+                        .Where(x => x.Id == id)
+                        .Include(x => x.Patient)
+                        .ThenInclude(x => x.User)
+                        .Include(x => x.Payment).AsQueryable();
+            if (type == ServiceType.Private)
+            {
+                query = query.Include(x => x.PrivateService);
+            }
+            else
+            {
+                query = query.Include(x => x.PublicService);
+            }
+            var appointment = await query.FirstOrDefaultAsync();
+            return _mapper.Map<AppointmentDTO>(appointment);
+        }
+
+        public async Task UpdateAppointmentDiagnose(int id, string diagnose)
+        {
+            var appointment = await _unitOfWork.AppointmentRepository.GetByIdAsync(id);
+            if (appointment == null)
+            {
+                return;
+            }
+            appointment.Description = diagnose;
+            _unitOfWork.AppointmentRepository.Update(appointment);
+            await _unitOfWork.SaveChangesAsync();
+        }
+
+        public async Task<int> CountTotalPatient(int id)
+        {
+            return await _unitOfWork.AppointmentRepository.Query()
+                .Include(x => x.Professional)
+                .Where(x => x.Professional.UserId == id && x.ProviderId == x.Professional.Id)
+                .Select(x => x.PatientId)
+                .Distinct()
+                .CountAsync();
+        }
     }
 }

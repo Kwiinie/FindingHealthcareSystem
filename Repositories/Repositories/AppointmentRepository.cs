@@ -68,8 +68,13 @@ namespace Repositories.Repositories
 
         public async Task<IEnumerable<Appointment>> GetAllAppoinmentByDate(int id, DateTime startDate, DateTime endDate)
         {
-            return await _dao.Query().Include(a => a.Patient).Include(a => a.Patient.User).Include(a => a.Professional)
-                .Where(a => a.Date >= startDate && a.Date <= endDate && a.Professional.UserId == id && a.ProviderId == a.Professional.Id)
+            return await _dao.Query()
+                .Include(a => a.Patient)
+                .ThenInclude(a => a.User)
+                .Where(a => a.Date.HasValue &&
+                a.Date.Value >= startDate && a.Date.Value <= endDate
+                && a.Professional.UserId == id
+                && a.ProviderId == a.Professional.Id)
                 .ToListAsync();
         }
 
@@ -86,7 +91,14 @@ namespace Repositories.Repositories
 
         public async Task<Appointment?> GetAppointment(int id)
         {
-            return await _dao.Query().Include(a => a.Patient).Include(a => a.Patient.User).Include(a => a.Professional).FirstOrDefaultAsync(x => x.Id == id);
+            return await _dao.Query()
+                .Include(a => a.Patient)
+                .Include(a => a.Patient.User)
+                .Include(a => a.Professional)
+                .Include(a => a.Payment)
+                .Include(a => a.PrivateService)
+                .Include(a => a.PublicService)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public IQueryable<Appointment> Query()

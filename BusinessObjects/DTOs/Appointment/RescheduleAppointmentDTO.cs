@@ -14,6 +14,7 @@ namespace BusinessObjects.DTOs.Appointment
         public int? ProviderId { get; set; }
         public ProviderType ProviderType { get; set; }
         public int? ServiceId { get; set; }
+        public int? PaymentId { get; set; }
         public ServiceType ServiceType { get; set; }
         public AppointmentStatus Status { get; set; }
         public string Description { get; set; }
