@@ -29,7 +29,7 @@ namespace Services.Services
 
 
             var category = _mapper.Map<Category>(categoryDTO);
-
+            category.CreatedAt = DateTime.UtcNow.AddHours(7);
             await _unitOfWork.CategoryRepository.AddAsync(category);
             await _unitOfWork.SaveChangesAsync();
         }

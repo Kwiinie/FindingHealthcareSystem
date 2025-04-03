@@ -40,9 +40,10 @@
                                 <td>@expert.Experience</td>
                                 <td>@expert.ExpertiseName</td>
                                 <td>
-                                    <span class="badge @(expert.RequestStatus == "Pending" ? "bg-warning" :
-                                                     expert.RequestStatus == "Approved" ? "bg-success" : "bg-danger")">
-                                        @expert.RequestStatus
+                                    <span class="badge @(expert.RequestStatus == "Pending" ? "bg-warning" : expert.RequestStatus == "Approved" ? "bg-success" : "bg-danger")">
+                                        @(expert.RequestStatus == "Pending" ? "Đang chờ duyệt"
+                                            : expert.RequestStatus == "Approved" ? "Đã phê duyệt"
+                                            : "Bị từ chối")
                                     </span>
                                 </td>
                                 <td>

@@ -74,7 +74,7 @@ namespace Services.Services
             var pubServiceRepo = _unitOfWork.GetRepository<PublicService>();
             var pubService = _mapper.Map<PublicService>(publicServiceDto);
             pubService.FacilityId = facilityId;
-            pubService.CreatedAt = DateTime.UtcNow.AddHours(7);
+            pubService.CreatedAt = DateTime.UtcNow;
             await pubServiceRepo.AddAsync(pubService);
             await _unitOfWork.SaveChangesAsync();
             return _mapper.Map<ServiceDto>(pubService);

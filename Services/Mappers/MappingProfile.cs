@@ -72,6 +72,7 @@ namespace Services.Mappers
            .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.User.PhoneNumber))
            .ForMember(dest => dest.ImgUrl, opt => opt.MapFrom(src => src.User.ImgUrl))
            .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.User.Gender))
+           .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.User.Status.ToString()))
            .ForMember(dest => dest.ExpertiseName, opt => opt.MapFrom(src => src.Expertise.Name))
            .ForMember(dest => dest.Specialties, opt => opt.MapFrom(src => src.ProfessionalSpecialties.Select(ps => ps.Specialty.Name).ToList()))
            .ForMember(dest => dest.PrivateServices, opt => opt.MapFrom(src => src.PrivateServices.Select(ps => new ServiceDto

@@ -52,26 +52,26 @@ namespace FindingHealthcareSystem.Pages.Admin.Category
             if (SearchCreatedFrom.HasValue)
             {
                 filteredCategories = filteredCategories.Where(c =>
-                    c.CreatedAt.Date >= SearchCreatedFrom.Value.Date);
+                    c.CreatedAt?.Date >= SearchCreatedFrom.Value.Date);
             }
 
             if (SearchCreatedTo.HasValue)
             {
                 filteredCategories = filteredCategories.Where(c =>
-                    c.CreatedAt.Date <= SearchCreatedTo.Value.Date);
+                    c.CreatedAt?.Date <= SearchCreatedTo.Value.Date);
             }
 
             // Filter by updated date range
             if (SearchUpdatedFrom.HasValue)
             {
                 filteredCategories = filteredCategories.Where(c =>
-                    c.UpdatedAt.Date >= SearchUpdatedFrom.Value.Date);
+                    c.UpdatedAt?.Date >= SearchUpdatedFrom.Value.Date);
             }
 
             if (SearchUpdatedTo.HasValue)
             {
                 filteredCategories = filteredCategories.Where(c =>
-                    c.UpdatedAt.Date <= SearchUpdatedTo.Value.Date);
+                    c.UpdatedAt?.Date <= SearchUpdatedTo.Value.Date);
             }
 
             // Filter by status
@@ -79,11 +79,11 @@ namespace FindingHealthcareSystem.Pages.Admin.Category
             {
                 if (StatusFilter == "active")
                 {
-                    filteredCategories = filteredCategories.Where(c => !c.IsDeleted);
+                    filteredCategories = filteredCategories.Where(c => !(bool)c.IsDeleted);
                 }
                 else if (StatusFilter == "deleted")
                 {
-                    filteredCategories = filteredCategories.Where(c => c.IsDeleted);
+                    filteredCategories = filteredCategories.Where(c => (bool)c.IsDeleted);
                 }
                 // If "all" is selected, no filtering needed
             }

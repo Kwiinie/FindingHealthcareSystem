@@ -949,3 +949,7 @@ h1 {
         margin-top: 5px;
     }
 }
+
+.bg-custom-green {
+    background-color: var(--primary-active) !important;
+}
