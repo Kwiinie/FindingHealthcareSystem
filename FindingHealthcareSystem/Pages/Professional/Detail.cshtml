@@ -23,28 +23,31 @@
 <div class="profile-card">
     <div class="profile-header">
         <div class="row">
-            <div class="col-md-3 text-center">
-                            @if (!string.IsNullOrEmpty(Model.Professional.ImgUrl))
-                            {
-                    <img src="@Model.Professional.ImgUrl" alt="Professional Photo" class="profile-img">
-                            }
-                            else
-                            {
-                    <img src="https://static.vecteezy.com/system/resources/previews/041/408/858/non_2x/ai-generated-a-smiling-doctor-with-glasses-and-a-white-lab-coat-isolated-on-transparent-background-free-png.png" alt="Professional Photo" class="profile-img">
-                            }
-            </div>
-            <div class="col-md-9">
-                <h2 id="fullName">@Model.Professional.FullName</h2>
-                <h5 class="text-primary" id="expertiseName">@Model.Professional.ExpertiseName</h5>
-                <div class="mt-3">
-                    <div id="specialties">
-                                    @foreach (var specialty in Model.Professional.Specialties)
-                                    {
-                            <span class="expertise-badge">@specialty</span>
-                                    }
+                        @if (Model.Professional != null)
+                        {
+                <div class="col-md-3 text-center">
+                                @if (Model.Professional.ImgUrl != null && !string.IsNullOrEmpty(Model.Professional.ImgUrl))
+                                {
+                        <img src="@Model.Professional.ImgUrl" alt="Professional Photo" class="profile-img">
+                                }
+                                else
+                                {
+                        <img src="https://static.vecteezy.com/system/resources/previews/041/408/858/non_2x/ai-generated-a-smiling-doctor-with-glasses-and-a-white-lab-coat-isolated-on-transparent-background-free-png.png" alt="Professional Photo" class="profile-img">
+                                }
+                </div>
+                <div class="col-md-9">
+                    <h2 id="fullName">@Model.Professional.FullName</h2>
+                    <h5 class="text-primary" id="expertiseName">@Model.Professional.ExpertiseName</h5>
+                    <div class="mt-3">
+                        <div id="specialties">
+                                        @foreach (var specialty in Model.Professional.Specialties)
+                                        {
+                                <span class="expertise-badge">@specialty</span>
+                                        }
+                        </div>
                     </div>
                 </div>
-            </div>
+                        }
         </div>
     </div>
 

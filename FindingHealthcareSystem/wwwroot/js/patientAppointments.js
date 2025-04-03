@@ -28,6 +28,17 @@ function AddEvents() {
     const timeSlots = $('#time-slots');
     const rescheduleSection = $('#reschedule-section');
     const rescheduleRow = $('#reschedule-row');
+    const nextPageBtn = $('#nextPage');
+    const previousPageBtn = $('#previousPage');
+    const diagnoseSection = $('#diagnose-section');
+    const diagnoseText = $('#diagnoseText');
+
+    nextPageBtn.on('click', async function () {
+        await loadPage($(this).data("page"));
+    })
+    previousPageBtn.on('click', async function () {
+        await loadPage($(this).data("page"));
+    })
 
 
     newDate.on('change', async function () {
@@ -43,15 +54,22 @@ function AddEvents() {
     })
 
     $('.appointment-card').on('click', async function () {
-        await fetchAppointment($(this).data('id'));
+        await fetchAppointment($(this).data('id'), $(this).data('servicetype'));
     })
+
 
     $(dropdownStatus).on('change', async function () {
         const value = $(dropdownStatus).val();
         if (value === '4') {
             await showRescheduleSection();
+            hideInputDiagnose();
+        }
+        else if (value == '7') {
+            hideRescheduleSection();
+            showInputDiagnose();
         } else {
             hideRescheduleSection();
+            hideInputDiagnose();
         }
         handleButtonAppointment(appointmentStatuses[value]);
     });
@@ -70,6 +88,15 @@ function AddEvents() {
         newDate.val(new Date().toISOString().split('T')[0]);
         await fetchLastDateNoSlots(newDate.val());
         rescheduleSection.addClass('active');
+    }
+
+    function showInputDiagnose() {
+        diagnoseSection.addClass('active');
+        diagnoseText.prop('readonly', false);
+    }
+
+    function hideInputDiagnose() {
+        diagnoseSection.removeClass('active');
     }
 
     function setEventSlots() {
@@ -92,6 +119,7 @@ function AddEvents() {
     }
 
     function setAppointmentDetail(entity) {
+        console.log(entity);
         entity = entity;
         idAppointment = entity.id;
         $('.patient-name').text(entity.patient.user.fullname);
@@ -102,6 +130,19 @@ function AddEvents() {
         $('.modal-edit-date').text(new Date(entity.date).toLocaleDateString('vi-VN'));
         $('.modal-edit-hour').text(new Date(entity.date).toLocaleTimeString('vi-VN'));
         $('.notes-content').text(entity.description);
+        $('.modal-edit-totalPrice').text(`${entity.payment.price} VNĐ`);
+        if (entity.privateService !== null) {
+            $('.service-name').text(entity.privateService.name);
+            $('.modal-edit-servicePrice').text(`${entity.privateService.price} VNĐ`);
+            $('.service-description').text(entity.privateService.description);
+        } else {
+            $('.service-name').text(entity.publicService.name);
+            $('.modal-edit-servicePrice').text(`${entity.publicService.price} VNĐ`);
+            $('.service-description').text(entity.publicService.description);
+        }
+        if (entity.diagnose) {
+            diagnoseText.prop('readonly', true);
+        }
         handleButtonAppointment(appointmentStatuses[entity.status]);
         getStatusBgColor(appointmentStatuses[entity.status]);
     }
@@ -166,11 +207,12 @@ function AddEvents() {
     }
 
 
-    async function fetchAppointment(id) {
+    async function fetchAppointment(id, type) {
         try {
             const params = new URLSearchParams({
                 handler: 'Appointment',
-                id: id
+                id: id,
+                type: type
             });
             const response = await fetch(`?${params.toString()}`, {
                 method: 'GET'
@@ -268,9 +310,15 @@ function AddEvents() {
                 status: status,
                 date: newDate.val()
             });
-            if (appointmentStatuses[status] === "Rejected" && selectedSlot && entity) {
+            if (appointmentStatuses[status] === "Rescheduled" && selectedSlot && entity) {
                 params.append('slot', selectedSlot);
                 params.append('entity', JSON.stringify(entity));
+            } else if (appointmentStatuses[status] === "Completed") {
+                if (diagnoseText.val().length == 0) {
+                    alert("Vui lòng nhập chẩn đoán!");
+                    return;
+                }
+                params.append('diagnose', diagnoseText.val());
             }
             const response = await fetch(`?${params.toString()}`, {
                 method: "GET"
@@ -281,6 +329,7 @@ function AddEvents() {
             const data = await response.text();
             $('#patientAppointments').empty();
             $('#patientAppointments').append(data);
+            await loadPage(1);
             AddEvents();
             appointmentModal.modal("hide");
         } catch (err) {

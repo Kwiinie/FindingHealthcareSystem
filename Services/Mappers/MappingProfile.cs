@@ -134,6 +134,8 @@ namespace Services.Mappers
                 .ForMember(dest => dest.Payment, opt => opt.MapFrom(src => src.Payment))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description));
 
+            CreateMap<Appointment, RescheduleAppointmentDTO>().ReverseMap();
+
         }
     }
 }

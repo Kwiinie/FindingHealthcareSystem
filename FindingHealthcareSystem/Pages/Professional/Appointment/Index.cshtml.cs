@@ -35,6 +35,8 @@ namespace FindingHealthcareSystem.Pages.Professional.Appointment
         public int TotalCompleteAppointment { get; set; }
         [BindProperty(SupportsGet = true)]
         public int CurrentPage { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int MaxPage { get; set; }
         public DateTime Monday { get; set; }
         public IndexModel(IAppointmentService appointmentService, IHubContext<UpdateHub> hubContext, IMemoryCache cache)
         {
@@ -42,20 +44,31 @@ namespace FindingHealthcareSystem.Pages.Professional.Appointment
             _hubContext = hubContext;
             _cache = cache;
         }
+
+        public GeneralUserDto GetUser()
+        {
+            var textAcc = HttpContext.Session.GetString("User");
+            return JsonConvert.DeserializeObject<GeneralUserDto>(textAcc);
+        }
+
         public async Task<IActionResult> OnGet(int pagee = 1)
         {
             try
             {
-                var textAcc = HttpContext.Session.GetString("User");
-                var acc = JsonConvert.DeserializeObject<GeneralUserDto>(textAcc);
+                var acc = GetUser();
                 Monday = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Monday);
                 Appointments = (await _appointmentService.GetAllAppoinmentByDate(acc.Id, Monday, Monday.AddDays(7)))
-                    .Where(x => x.Status is AppointmentStatus.Pending or AppointmentStatus.Confirmed or AppointmentStatus.Completed or AppointmentStatus.Cancelled or AppointmentStatus.Rescheduled)
-                    .ToList();
-                PatientRecently = await _appointmentService.GetPagenagingAppointments(pagee, 5);
+                .Where(x => x.Status is AppointmentStatus.Pending or AppointmentStatus.Confirmed
+                or AppointmentStatus.Completed or AppointmentStatus.Cancelled
+                or AppointmentStatus.Rescheduled or AppointmentStatus.Rejected)
+                .ToList();
+                var result = await _appointmentService.GetPagenagingAppointments(acc.Id, pagee, 5);
+                MaxPage = result.Item1;
+                PatientRecently = result.Item2;
                 TotalMyAppointment = await _appointmentService.CountAppointmentByStatus(acc.Id, "");
                 TotalWaitAppointment = await _appointmentService.CountAppointmentByStatus(acc.Id, AppointmentStatus.Pending.ToString());
                 TotalCompleteAppointment = await _appointmentService.CountAppointmentByStatus(acc.Id, AppointmentStatus.Completed.ToString());
+                TotalPatient = await _appointmentService.CountTotalPatient(acc.Id);
                 CurrentPage = pagee;
                 //_cache.Set("Page", pagee);
                 return Page();
@@ -75,7 +88,7 @@ namespace FindingHealthcareSystem.Pages.Professional.Appointment
                 AppointmentStatus.Confirmed => new List<AppointmentStatus> { AppointmentStatus.Confirmed, AppointmentStatus.Completed },
                 AppointmentStatus.Cancelled => new List<AppointmentStatus> { AppointmentStatus.Cancelled },
                 AppointmentStatus.Completed => new List<AppointmentStatus> { AppointmentStatus.Completed },
-                AppointmentStatus.Rescheduled => new List<AppointmentStatus> { AppointmentStatus.Rescheduled },
+                AppointmentStatus.Rescheduled => new List<AppointmentStatus> { AppointmentStatus.Rescheduled, AppointmentStatus.Completed },
                 _ => new List<AppointmentStatus>()
             };
         }
@@ -84,8 +97,7 @@ namespace FindingHealthcareSystem.Pages.Professional.Appointment
         {
             try
             {
-                var textAcc = HttpContext.Session.GetString("User");
-                var acc = JsonConvert.DeserializeObject<GeneralUserDto>(textAcc);
+                var acc = GetUser();
                 Monday = monday.AddDays(next);
                 if (next == 0)
                 {
@@ -95,7 +107,9 @@ namespace FindingHealthcareSystem.Pages.Professional.Appointment
                 _cache.Set("Monday", Monday);
 
                 Appointments = (await _appointmentService.GetAllAppoinmentByDate(acc.Id, Monday, Monday.AddDays(7)))
-                    .Where(x => x.Status is AppointmentStatus.Pending or AppointmentStatus.Confirmed or AppointmentStatus.Completed or AppointmentStatus.Cancelled or AppointmentStatus.Rescheduled)
+                    .Where(x => x.Status is AppointmentStatus.Pending or AppointmentStatus.Confirmed
+                    or AppointmentStatus.Completed or AppointmentStatus.Cancelled
+                    or AppointmentStatus.Rescheduled or AppointmentStatus.Rejected)
                     .ToList();
                 return Partial("_PatientAppointments", this);
             }
@@ -109,8 +123,7 @@ namespace FindingHealthcareSystem.Pages.Professional.Appointment
 
         public async Task fetchDataSignalR()
         {
-            var textAcc = HttpContext.Session.GetString("User");
-            var acc = JsonConvert.DeserializeObject<GeneralUserDto>(textAcc);
+            var acc = GetUser();
             TotalMyAppointment = await _appointmentService.CountAppointmentByStatus(acc.Id, "");
             TotalWaitAppointment = await _appointmentService.CountAppointmentByStatus(acc.Id, AppointmentStatus.Pending.ToString());
             TotalCompleteAppointment = await _appointmentService.CountAppointmentByStatus(acc.Id, AppointmentStatus.Completed.ToString());
@@ -122,33 +135,37 @@ namespace FindingHealthcareSystem.Pages.Professional.Appointment
             });
         }
 
-        public async Task<IActionResult> OnGetChangeAppointmentStatus(int id, int status, DateTime date, string slot = "", string entity = null)
+        public async Task<IActionResult> OnGetChangeAppointmentStatus(int id, int status, DateTime date, string slot = "", string entity = null, string diagnose = "")
         {
             try
             {
                 if (status == (int)AppointmentStatus.Rescheduled)
                 {
                     await _appointmentService.ChangeAppointmentStatus(id, AppointmentStatus.Cancelled);
-                    AppointmentDTO? createAppointmentDto = JsonConvert.DeserializeObject<AppointmentDTO>(entity);
-                    if (createAppointmentDto != null)
+                    RescheduleAppointmentDTO? reschedule = JsonConvert.DeserializeObject<RescheduleAppointmentDTO>(entity);
+                    if (reschedule != null)
                     {
-                        createAppointmentDto.Status = (AppointmentStatus)status;
-                        createAppointmentDto.Date = date.Add(TimeSpan.Parse(slot));
-                        createAppointmentDto.Patient = null;
-                        createAppointmentDto.Id = null;
-                        var obj = await _appointmentService.AddAsync(createAppointmentDto);
+                        reschedule.Status = (AppointmentStatus)status;
+                        reschedule.Date = date.Add(TimeSpan.Parse(slot));
+                        var result = await _appointmentService.AddAsync(reschedule);
                     }
+                }
+                else if (status == (int)AppointmentStatus.Completed)
+                {
+                    await _appointmentService.ChangeAppointmentStatus(id, (AppointmentStatus)status);
+                    await _appointmentService.UpdateAppointmentDiagnose(id, diagnose);
                 }
                 else
                 {
                     bool success = await _appointmentService.ChangeAppointmentStatus(id, (AppointmentStatus)status);
                 }
-                var textAcc = HttpContext.Session.GetString("User");
-                var acc = JsonConvert.DeserializeObject<GeneralUserDto>(textAcc);
+                var acc = GetUser();
                 Monday = _cache.Get<DateTime>("Monday");
                 Appointments = (await _appointmentService.GetAllAppoinmentByDate(acc.Id, Monday, Monday.AddDays(7)))
-                    .Where(x => x.Status is AppointmentStatus.Pending or AppointmentStatus.Confirmed or AppointmentStatus.Completed or AppointmentStatus.Cancelled or AppointmentStatus.Rescheduled)
-                    .ToList();
+                .Where(x => x.Status is AppointmentStatus.Pending or AppointmentStatus.Confirmed
+                or AppointmentStatus.Completed or AppointmentStatus.Cancelled
+                or AppointmentStatus.Rescheduled or AppointmentStatus.Rejected)
+                .ToList();
                 await fetchDataSignalR();
                 return Partial("_PatientAppointments", this);
             }
@@ -159,9 +176,9 @@ namespace FindingHealthcareSystem.Pages.Professional.Appointment
             }
         }
 
-        public async Task<IActionResult> OnGetAppointment(int id)
+        public async Task<IActionResult> OnGetAppointment(int id, ServiceType type)
         {
-            AppointmentDTO appointment = await _appointmentService.GetAsync(id);
+            AppointmentDTO appointment = await _appointmentService.GetAppointmentByDateAndSlot(id, type);
             AvailableStatuses = GetAvailableStatuses(appointment.Status);
             return new JsonResult(new
             {
@@ -172,7 +189,10 @@ namespace FindingHealthcareSystem.Pages.Professional.Appointment
 
         public async Task<IActionResult> OnGetLoadPage(int pagee)
         {
-            PatientRecently = await _appointmentService.GetPagenagingAppointments(pagee, 5);
+            var acc = GetUser();
+            var result = await _appointmentService.GetPagenagingAppointments(acc.Id, pagee, 5);
+            MaxPage = result.Item1;
+            PatientRecently = result.Item2;
             CurrentPage = pagee;
             return Partial("_PatientRecords", this);
         }
