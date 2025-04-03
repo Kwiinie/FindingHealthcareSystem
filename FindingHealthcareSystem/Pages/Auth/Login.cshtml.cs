@@ -31,19 +31,21 @@ namespace FindingHealthcareSystem.Pages.Auth
             if (ModelState.IsValid)
             {
                 var result = await _authService.LoginAsync(loginDto);
-
                 if (result.Success)
                 {
+                   
+                        var accountJson = JsonConvert.SerializeObject(result.Data);
+                        HttpContext.Session.SetString("User", accountJson);
 
-                    var accountJson = JsonConvert.SerializeObject(result.Data);
-                    HttpContext.Session.SetString("User", accountJson);
+                        if (result.Data.Role == "Admin")
+                        {
+                            return Redirect("/admin/dashboard");
+                        }
 
-                    if(result.Data.Role == "Admin")
-                    {
-                        return Redirect("/admin/dashboard");
-                    }
+                        return Redirect("/");
+                    
 
-                    return Redirect("/");
+                
                 }
                 else
                 {
