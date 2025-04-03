@@ -24,7 +24,7 @@ namespace Services.Interfaces
         Task<ProfessionalDto> GetById (int id);
         Task<List<ServiceDto>> GetServicesByProId(int professId);
         Task<ServiceDto> GetPrivateServiceById(int professionalService);
-
+        Task<Professional> GetProfessionalByProId(int professId);
         Task<PaginatedList<ProfessionalDto>> GetProfessionalsPagedAsync(
         Expression<Func<Professional, bool>> filter = null,
         int pageIndex = 1,

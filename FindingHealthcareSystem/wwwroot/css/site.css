@@ -179,7 +179,7 @@ body {
 
 
 .nav-bg {
-    background-image: url(../img/hader-bg.png);
+    background-image: url(../images/hader-bg.png);
     background-color: #f1f7eb;
     background-repeat: no-repeat;
     background-position: center 0;
@@ -241,6 +241,84 @@ body {
     font-weight: bold;
 }
 
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-collapse {
+    justify-content: center;
+}
+
+/* Adjust spacing for centered links */
+.navbar-nav {
+    text-align: center;
+}
+
+/* Style navbar links */
+.navbar li .nav-link {
+    display: inline-block;
+    color: #4b4b4b;
+    padding: 15px 20px !important;
+}
+
+
+
+/* Responsive adjustments */
+@media (max-width: 1199.98px) {
+    .navbar-brand {
+        margin-right: 0;
+    }
+
+    .navbar li .nav-link {
+        padding: 10px 15px !important;
+    }
+
+    .navbar-collapse {
+        background-color: #f1f7eb;
+    }
+
+    .navbar-expand-xl .navbar-collapse {
+        justify-content: flex-start;
+    }
+}
+
+/* Mobile styling */
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        padding: 10px;
+        border-radius: 8px;
+        margin-top: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .navbar-nav {
+        text-align: left;
+    }
+
+        .navbar-nav.ms-auto {
+            margin-top: 10px;
+        }
+
+    .username-text {
+        max-width: 120px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+/* Toggle button styling */
+.navbar-toggler {
+    border: 1px solid var(--primary-color);
+    padding: 5px 10px;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(153, 210, 85, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
 
 .intro {
     height: 95vh;
@@ -818,4 +896,60 @@ h1 {
 
 .filter-menu {
     margin-bottom: 20px;
+}
+
+
+/* User dropdown styling */
+.user-dropdown .dropdown-menu {
+    z-index: 1030; /* Higher than the navbar's z-index (1010) */
+    min-width: 280px;
+    padding: 0;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.08);
+    background-color: #fff;
+    margin-top: 10px;
+    position: absolute;
+}
+
+/* Add a slight animation for better UX */
+.user-dropdown .dropdown-menu {
+    transform-origin: top right;
+    animation: dropdown-animation 0.2s ease-out forwards;
+}
+
+@keyframes dropdown-animation {
+    from {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Ensure dropdown is visible over all elements */
+.user-dropdown {
+    position: relative;
+}
+
+    /* Fix any potential issues with dropdown toggle */
+    .user-dropdown .dropdown-toggle::after {
+        vertical-align: middle;
+    }
+
+/* Fix dropdown positioning on mobile */
+@media (max-width: 991.98px) {
+    .user-dropdown .dropdown-menu {
+        position: absolute;
+        right: 0;
+        left: auto;
+        margin-top: 5px;
+    }
+}
+
+.bg-custom-green {
+    background-color: var(--primary-active) !important;
 }

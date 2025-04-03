@@ -32,24 +32,29 @@ namespace DataAccessObjects.DAOs
         }
 
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public async Task<IEnumerable<T>> GetAllAsync(string includeProperties = "")
         {
-            if (_dbSet == null)
+            IQueryable<T> query = _dbSet;
+
+            if (!string.IsNullOrWhiteSpace(includeProperties))
             {
-                return Enumerable.Empty<T>(); // Trả về danh sách rỗng thay vì null
+                foreach (var includeProperty in includeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProperty.Trim());
+                }
             }
 
             try
             {
-                return await _dbSet.ToListAsync();
+                return await query.ToListAsync();
             }
             catch (Exception ex)
             {
-                // Log lỗi nếu cần
                 Console.WriteLine($"Lỗi khi lấy danh sách: {ex.Message}");
-                return Enumerable.Empty<T>(); // Trả về danh sách rỗng khi có lỗi
+                return Enumerable.Empty<T>();
             }
         }
+
 
         public async Task<T> FindAsync(Expression<Func<T, bool>> predicate, string includeProperties = "")
         {
@@ -240,6 +245,32 @@ namespace DataAccessObjects.DAOs
             return await query.CountAsync();
         }
 
+        public async Task<PaginatedList<T>> GetPagedListWithMultiSearchAsync(
+            Expression<Func<T, bool>>? filter,
+            int pageIndex,
+            int pageSize,
+            Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+            List<string>? includes = null,
+            Dictionary<string, object?>? filters = null)
+        {
+            IQueryable<T> query = _dbSet;
+
+            if (filters != null)
+            {
+                query = GetFilteredQuery(filters, includes);
+            }
+            else if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            if (orderBy != null)
+            {
+                query = orderBy(query);
+            }
+
+            return await PaginatedList<T>.CreateAsync(query, pageIndex, pageSize);
+        }
 
     }
 }

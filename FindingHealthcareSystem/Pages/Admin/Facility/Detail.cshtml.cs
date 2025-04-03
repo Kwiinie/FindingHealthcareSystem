@@ -1,9 +1,11 @@
 ﻿using BusinessObjects.DTOs.Department;
 using BusinessObjects.DTOs.Facility;
 using BusinessObjects.DTOs.Service;
+using BusinessObjects.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Services.Interfaces;
+using Services.Services;
 
 namespace FindingHealthcareSystem.Pages.Admin.Facility
 {
@@ -14,19 +16,22 @@ namespace FindingHealthcareSystem.Pages.Admin.Facility
         private readonly IPublicServiceLayer _publicServiceLayer;
         private readonly IFacilityTypeService _facilityTypeService;
         private readonly ILocationService _locationService;
+        private readonly IFileUploadService _fileUploadService;
 
         public DetailModel(
             IFacilityService facilityService,
             IDepartmentService departmentService,
             IPublicServiceLayer publicServiceLayer,
             IFacilityTypeService facilityTypeService,
-            ILocationService locationService)
+            ILocationService locationService,
+            IFileUploadService fileUploadService)
         {
             _facilityService = facilityService;
             _departmentService = departmentService;
             _publicServiceLayer = publicServiceLayer;
             _facilityTypeService = facilityTypeService;
             _locationService = locationService;
+            _fileUploadService = fileUploadService;
         }
 
         [BindProperty(SupportsGet = true)]
@@ -53,6 +58,9 @@ namespace FindingHealthcareSystem.Pages.Admin.Facility
         [BindProperty]
         public ServiceDto Service { get; set; }
 
+        [BindProperty]
+        public IFormFile? ProfileImage { get; set; }
+
         public bool IsEdit { get; private set; } = false;
 
         public async Task<IActionResult> OnGetAsync()
@@ -76,15 +84,25 @@ namespace FindingHealthcareSystem.Pages.Admin.Facility
             //{
             //    return Page();
             //}
+            // Handle image upload if a new image was provided
+            if (ProfileImage != null && ProfileImage.Length > 0)
+            {
+                // Use FileUploadService to upload the image
+                string imageUrl = await _fileUploadService.UploadImageAsync(ProfileImage, "users");
+                Facility.ImgUrl = imageUrl;
+
+            }
 
             var existingFacility = await _facilityService.GetById(FacilityId);
             if (existingFacility == null)
             {
                 return NotFound("Facility not found");
             }
-
+            var c = Facility.DepartmentIds;
+             
             await _facilityService.Update(FacilityId, Facility);
-            return RedirectToPage("/Facility/Detail", new { FacilityId });
+            return RedirectToPage(); // Hoặc thay bằng trang bạn muốn quay về
+
         }
 
         public async Task<IActionResult> OnPostDeleteFacilityAsync()
@@ -96,7 +114,8 @@ namespace FindingHealthcareSystem.Pages.Admin.Facility
             }
 
             await _facilityService.DeleteAsync(FacilityId);
-            return RedirectToPage("/Facility/Index");
+            return RedirectToPage(); // Hoặc thay bằng trang bạn muốn quay về
+
         }
 
         public async Task<IActionResult> OnPostAddService()
@@ -109,7 +128,7 @@ namespace FindingHealthcareSystem.Pages.Admin.Facility
 
             await _publicServiceLayer.Create(FacilityId, Service);
 
-            return RedirectToPage("/Facility/Detail", new { FacilityId });
+            return RedirectToPage();
         }
 
         // Cập nhật dịch vụ

@@ -90,7 +90,7 @@ namespace Services.Services
 
             var result = appointments
                 .Where(a => a.Date.HasValue &&
-                      (a.Status == AppointmentStatus.Confirmed || a.Status == AppointmentStatus.Completed))
+                      (a.Status == AppointmentStatus.Confirmed || a.Status == AppointmentStatus.Completed || a.Status == AppointmentStatus.Rescheduled))
                 .GroupBy(a => a.Date.Value.Month)
                 .OrderBy(g => g.Key)
                 .Select(g => new MonthlyAppointmentDto

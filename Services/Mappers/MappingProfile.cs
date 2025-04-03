@@ -35,8 +35,16 @@ namespace Services.Mappers
             CreateMap<User, LoginDto>().ReverseMap();
 
             CreateMap<Article, ArticleDTO>()
-                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name))
-                .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy.Fullname));
+            .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name))
+            .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy.Fullname))
+            .ForMember(dest => dest.ImgUrl, opt => opt.MapFrom(src => src.ImgUrl))
+            .ForMember(dest => dest.IsDeleted, opt => opt.MapFrom(src => src.IsDeleted))
+            .ForMember(dest => dest.ImgUrls, opt => opt.MapFrom(src => src.ArticleImages.Select(ai => ai.ImgUrl).ToList()));
+            CreateMap<ArticleDTO, Article>()
+      .ForMember(dest => dest.Category, opt => opt.Ignore())
+      .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
+      .ForMember(dest => dest.ArticleImages, opt => opt.Ignore());
+
             CreateMap<Category, CategoryDTO>().ReverseMap();
             CreateMap<Specialty, SpecialtyDto>().ReverseMap();
             CreateMap<PublicService, ServiceDto>().ReverseMap();
@@ -64,6 +72,7 @@ namespace Services.Mappers
            .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.User.PhoneNumber))
            .ForMember(dest => dest.ImgUrl, opt => opt.MapFrom(src => src.User.ImgUrl))
            .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.User.Gender))
+           .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.User.Status.ToString()))
            .ForMember(dest => dest.ExpertiseName, opt => opt.MapFrom(src => src.Expertise.Name))
            .ForMember(dest => dest.Specialties, opt => opt.MapFrom(src => src.ProfessionalSpecialties.Select(ps => ps.Specialty.Name).ToList()))
            .ForMember(dest => dest.PrivateServices, opt => opt.MapFrom(src => src.PrivateServices.Select(ps => new ServiceDto

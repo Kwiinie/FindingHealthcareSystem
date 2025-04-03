@@ -94,14 +94,6 @@
                     <div class="info-label">Giờ làm việc</div>
                     <p id="workingHours">@Model.Professional.WorkingHours</p>
                 </div>
-
-                <div class="mb-4">
-                    <div class="info-label">Trạng thái</div>
-                    <p>
-                        <span class="badge bg-@(Model.Professional.Status == "Active" ? "success" : "warning")">@Model.Professional.Status</span>
-                        <span class="badge bg-@(Model.Professional.RequestStatus == "Approved" ? "success" : (Model.Professional.RequestStatus == "Pending" ? "warning" : "danger"))">@Model.Professional.RequestStatus</span>
-                    </p>
-                </div>
             </div>
         </div>
     </div>
@@ -134,81 +126,6 @@
                     Chuyên gia chưa cung cấp dịch vụ nào.
                 </div>
                         }
-        </div>
-    </div>
-</div>
-
-<!-- Reviews Section -->
-<div class="profile-card">
-    <div class="profile-info">
-        <h3 class="section-title">Đánh giá</h3>
-
-        <div class="filter-menu">
-            <div class="row">
-                <div class="col text-end">
-                    <div class="btn-group" role="group">
-                        <input type="radio" class="btn-check" name="ratingFilter" id="allRatings" autocomplete="off" checked>
-                        <label class="btn btn-outline-primary btn-sm" for="allRatings">All</label>
-
-                        <input type="radio" class="btn-check" name="ratingFilter" id="rating5" autocomplete="off">
-                        <label class="btn btn-outline-primary btn-sm" for="rating5">5★</label>
-
-                        <input type="radio" class="btn-check" name="ratingFilter" id="rating4" autocomplete="off">
-                        <label class="btn btn-outline-primary btn-sm" for="rating4">4★</label>
-
-                        <input type="radio" class="btn-check" name="ratingFilter" id="rating3" autocomplete="off">
-                        <label class="btn btn-outline-primary btn-sm" for="rating3">3★</label>
-
-                        <input type="radio" class="btn-check" name="ratingFilter" id="rating2" autocomplete="off">
-                        <label class="btn btn-outline-primary btn-sm" for="rating2">2★ & 1★</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="reviewsContainer">
-            <!-- Placeholder Reviews -->
-            <div class="review-card">
-                <div class="review-header">
-                    <div class="reviewer-info">
-                        <img src="~/img/defaultAvatar.jpg" alt="Reviewer" class="reviewer-avatar">
-                        <div>
-                            <h6 class="reviewer-name">Bệnh nhân A</h6>
-                            <div class="review-date">31/2/2025</div>
-                        </div>
-                    </div>
-                    <div class="review-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                </div>
-                <p class="review-text">Gất tuyệt zời</p>
-                <span class="review-service">Dịch vụ tư vấn</span>
-            </div>
-
-            <div class="review-card">
-                <div class="review-header">
-                    <div class="reviewer-info">
-                        <img src="~/img/defaultAvatar.jpg" alt="Reviewer" class="reviewer-avatar">
-                        <div>
-                            <h6 class="reviewer-name">Bệnh nhân B</h6>
-                            <div class="review-date">30/2/2025</div>
-                        </div>
-                    </div>
-                    <div class="review-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                </div>
-                <p class="review-text">Cũm cũm i</p>
-                <span class="review-service">Khám tổng quát</span>
-            </div>
         </div>
     </div>
 </div>

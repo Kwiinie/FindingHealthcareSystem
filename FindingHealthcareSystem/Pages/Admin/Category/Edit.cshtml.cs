@@ -17,8 +17,6 @@ namespace FindingHealthcareSystem.Pages.Admin.Category
         [BindProperty]
         public CategoryDTO Category { get; set; }
 
-
-
         public async Task<IActionResult> OnGetAsync(int id)
         {
             Category = await _categoryService.GetCategoryByIdAsync(id);
@@ -39,18 +37,26 @@ namespace FindingHealthcareSystem.Pages.Admin.Category
                 return Page();
             }
 
-            var existingCategory = await _categoryService.GetCategoryByIdAsync(Category.Id);
-            if (existingCategory == null)
-            {
-                return NotFound();
-            }
+            //var existingCategory = await _categoryService.GetCategoryByIdAsync(Category.Id.Value);
+            //if (existingCategory == null)
+            //{
+            //    TempData["ErrorMessage"] = "Không tìm thấy thể loại!";
+            //    return RedirectToPage("Index");
+            //}
 
-            existingCategory.Name = Category.Name;
-            existingCategory.Description = Category.Description;
-            existingCategory.IsDeleted = Category.IsDeleted;
-            existingCategory.UpdatedAt = DateTime.Now;
+            //existingCategory.Name = Category.Name;
+            //existingCategory.Description = Category.Description;
+            //existingCategory.IsDeleted = Category.IsDeleted;
+            //existingCategory.UpdatedAt = DateTime.UtcNow;
 
-            await _categoryService.UpdateCategoryAsync(existingCategory);
+            //await _categoryService.UpdateCategoryAsync(existingCategory);
+
+            //TempData["SuccessMessage"] = "Cập nhật thể loại thành công!";
+            //return RedirectToPage("Index");
+            Category.UpdatedAt = DateTime.UtcNow;
+
+            // Just update the Category object that was bound from the form
+            await _categoryService.UpdateCategoryAsync(Category);
 
             TempData["SuccessMessage"] = "Cập nhật thể loại thành công!";
             return RedirectToPage("Index");
@@ -59,7 +65,7 @@ namespace FindingHealthcareSystem.Pages.Admin.Category
         {
             await _categoryService.DeleteCategoryAsync(id);
             TempData["SuccessMessage"] = "Xóa thể loại thành công!";
-            return RedirectToPage();
+            return RedirectToPage("Index");
         }
     }
 }

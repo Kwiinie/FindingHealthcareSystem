@@ -33,14 +33,14 @@ namespace Services.Interfaces
         Task<List<FacilityDepartment>> GetAllHospitalsAsync();
 
         Task<List<Expertise>> GetAllExpertises();
-
+        Task UpdateUserStatus(GeneralUserDto userDto);
         Task RegisterUserAsync(RegisterUserDto userDto);
 
         Task UpdateProfessionalAsync(Professional professional);
         Task UpdatePatientAsync(Patient patient);
         Task<Patient> GetPatientById(int userId);
         Task<IEnumerable<PatientDTO>> GetAllPatientAsync();
-
+        Task UploadUserImageAsync(int userId, string imgUrl);
 
     }
 }

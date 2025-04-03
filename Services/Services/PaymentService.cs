@@ -132,6 +132,23 @@ namespace Services.Services
 
             return _mapper.Map<List<PaymentDto>>(payments);
         }
+        public async Task<List<PaymentDto>> GetAllPaymentsAsync()
+        {
+            var payments = await _unitOfWork.GetRepository<Payment>().FindAllAsync(
+                predicate: p => true,
+                includeProperties: "Appointments"
+            );
 
+            return _mapper.Map<List<PaymentDto>>(payments);
+        }
+
+        public async Task<PaymentDto> GetPaymentByIdAsync(int paymentId)
+        {
+            var payment = await _unitOfWork.GetRepository<Payment>().FindAsync(
+                predicate: p => true,
+                includeProperties: "Appointments"
+            );
+            return _mapper.Map<PaymentDto>(payment);
+        }
     }
 }

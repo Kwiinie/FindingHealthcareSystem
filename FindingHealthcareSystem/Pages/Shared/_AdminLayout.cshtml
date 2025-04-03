@@ -105,12 +105,7 @@
                                     <span class="sidebar-text">Quản lý cơ sở y tế</span>
                                 </a>
                             </li>
-                            <li class="sidebar-item">
-                                <a href="/admin/facilitiy/service" class="sidebar-link">
-                                    <i class="bi bi-clipboard2-pulse-fill"></i>
-                                    <span class="sidebar-text">Quản lý dịch vụ y tế</span>
-                                </a>
-                            </li>
+                            
                         </ul>
                     </div>
                 </li>
@@ -148,29 +143,12 @@
 
                 <!-- Quản lý đánh giá with submenu -->
                 <li class="sidebar-item">
-                    <a href="#reviewManagement" class="sidebar-link" data-bs-toggle="collapse">
+                    <a href="/admin/payment" class="sidebar-link active">
                         <div class="icon-circle">
-                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-credit-card-fill"></i>
                         </div>
-                        <span class="sidebar-text">Quản lý đánh giá</span>
-                        <i class="bi bi-chevron-down ms-auto"></i>
+                        <span class="sidebar-text">Quản lý giao dịch</span>
                     </a>
-                    <div class="collapse" id="reviewManagement">
-                        <ul class="sidebar-submenu">
-                            <li class="sidebar-item">
-                                <a href="/admin/reviews/professionals" class="sidebar-link">
-                                    <i class="bi bi-award-fill"></i>
-                                    <span class="sidebar-text">Đánh giá chuyên gia y tế</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-item">
-                                <a href="/admin/reviews/facilities" class="sidebar-link">
-                                    <i class="bi bi-building-check"></i>
-                                    <span class="sidebar-text">Đánh giá cơ sở y tế</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
                 </li>
 
 
@@ -299,16 +277,106 @@
                     </div>
                 </div>
             </nav>
+            <div id="toastContainer" style="position: fixed; top: 20px; right: 20px; z-index: 9999;"></div>
+
             @RenderBody()
         </main>
     </div>
     @RenderSection("Scripts", required: false)
-
-</body>
-
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+    <script>
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/notificationHub")
+            .build();
+
+        connection.on("ReceiveNotification", function (data) {
+            showToast(data.message, data.type);
+            setTimeout(() => {
+            location.reload();
+        }, 3000); // Wait 3 seconds before refreshing
+        });
+
+        connection.start().catch(err => console.error(err.toString()));
+
+        function showToast(message, type = "info") {
+            const toast = document.createElement("div");
+            toast.className = `toast-${type}`;
+
+            // Determine background and text colors based on toast type
+            let bgColor, textColor, borderColor;
+
+            switch (type) {
+                case "success":
+                    bgColor = "var(--secondary-color)";
+                    textColor = "var(--text-on-primary)";
+                    borderColor = "var(--primary-active)";
+                    break;
+                case "error":
+                    bgColor = "var(--danger-color)";
+                    textColor = "var(--text-on-danger)";
+                    borderColor = "var(--danger-active)";
+                    break;
+                case "warning":
+                    bgColor = "#FFCC00";
+                    textColor = "#333333";
+                    borderColor = "#E6B800";
+                    break;
+                default: // info
+                    bgColor = "#f1f7eb";
+                    textColor = "#333333";
+                    borderColor = "#99d255";
+            }
+
+            toast.style = `
+                background-color: ${bgColor};
+                color: ${textColor};
+                border-left: 4px solid ${borderColor};
+                padding: 12px 20px;
+                margin-top: 15px;
+                border-radius: 6px;
+                box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+                animation: fadeInOut 4s forwards;
+                font-family: 'Lexend Deca', sans-serif;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+                max-width: 350px;
+            `;
+
+            const icon = document.createElement("i");
+            icon.style = "margin-right: 10px; font-size: 18px;";
+
+            switch (type) {
+                case "success":
+                    icon.className = "bi bi-check-circle-fill";
+                    break;
+                case "error":
+                    icon.className = "bi bi-x-circle-fill";
+                    break;
+                case "warning":
+                    icon.className = "bi bi-exclamation-triangle-fill";
+                    break;
+                default: // info
+                    icon.className = "bi bi-info-circle-fill";
+            }
+
+            toast.appendChild(icon);
+
+            const messageSpan = document.createElement("span");
+            messageSpan.innerText = message;
+            toast.appendChild(messageSpan);
+
+            document.getElementById("toastContainer").appendChild(toast);
+
+            setTimeout(() => toast.remove(), 4000);
+        }
+        </script>
+
+
+</body>
 
 
 </html>

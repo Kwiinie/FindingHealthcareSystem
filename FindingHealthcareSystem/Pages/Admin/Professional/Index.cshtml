@@ -1,7 +1,6 @@
 ﻿@page "/admin/professional"
 @model FindingHealthcareSystem.Pages.Admin.Professional.IndexModel
-@{
-}
+@using BusinessObjects.Enums
 @{
     Layout = "~/Pages/Shared/_AdminLayout.cshtml";
 }
@@ -63,13 +62,29 @@
                                 <td>@expert.Degree</td>
                                 <td>@expert.Experience</td>
                                 <td>@expert.ExpertiseName</td>
-                                <td><span class="professional-status status-approved">@expert.RequestStatus</span></td>
-                                <td><span class="professional-status status-active">@expert.Status</span></td>
                                 <td>
-                                    <button type="submit" class="btn btn-danger btn-sm">
-                                        <i class="bi bi-slash-circle"></i> Chặn
-                                    </button>
+                                    <span class="badge @(expert.RequestStatus == "Pending" ? "bg-warning" : expert.RequestStatus == "Approved" ? "bg-success" : "bg-danger")">
+                                        @(expert.RequestStatus == "Pending" ? "Đang chờ duyệt"
+                                            : expert.RequestStatus == "Approved" ? "Đã phê duyệt"
+                                            : "Bị từ chối")
+                                    </span>
                                 </td>
+
+                                <td>
+                                    <span class="badge @(expert.Status == "Active" ? "bg-success" : "bg-danger")">
+                                        @(expert.Status == "Active" ? "Đang hoạt động" : "Không hoạt động")
+                                    </span>
+                                </td>
+                                <td>
+                                    <form method="post">
+                                        <input type="hidden" name="professionalId" value="@expert.Id" />
+                                        <button type="submit" formaction="?handler=Approve" class="btn btn-danger btn-sm">
+                                            Chặn
+                                        </button>
+
+                                    </form>
+                                </td>
+                             
                             </tr>
                         }
                     </tbody>

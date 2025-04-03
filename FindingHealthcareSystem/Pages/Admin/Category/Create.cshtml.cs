@@ -13,11 +13,16 @@ namespace FindingHealthcareSystem.Pages.Admin.Category
         {
             _categoryService = categoryService;
         }
-
+        [BindProperty]
         public CategoryDTO Category { get; set; }
         public async Task OnGet()
         {
             //Category = (await _categoryService.GetAllCategories()).ToList();
+        }
+        public async Task OnPostAsync()
+        {
+            await _categoryService.AddCategoryAsync(Category);
+            RedirectToPage("Index");
         }
     }
 }

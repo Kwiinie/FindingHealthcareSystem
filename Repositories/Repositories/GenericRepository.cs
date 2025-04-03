@@ -33,14 +33,14 @@ namespace Repositories.Repositories
             return await _dao.GetListById(id);
         }   
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public async Task<IEnumerable<T>> GetAllAsync(string includeProperties = "")
         {
-            return await _dao.GetAllAsync();
+            return await _dao.GetAllAsync(includeProperties);
         }
 
         public async Task<T> FindAsync(Expression<Func<T, bool>> predicate, string includeProperties = "")
         {
-            return await _dao.FindAsync(predicate);
+            return await _dao.FindAsync(predicate, includeProperties);
         }
 
         public async Task<IEnumerable<T>> FindAllAsync(

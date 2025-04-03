@@ -30,7 +30,7 @@ namespace Services.Services
         public async Task<List<FacilityDto>> GetAllFacilities()
         {
             var facRepo = _unitOfWork.GetRepository<Facility>();
-            var facilities = await facRepo.GetAllAsync();
+            var facilities = await facRepo.GetAllAsync("Type");
             if (facilities == null || !facilities.Any())
             {
                 return new List<FacilityDto>();

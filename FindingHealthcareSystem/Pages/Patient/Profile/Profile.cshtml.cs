@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using Repositories.Interfaces;
 using Services.Interfaces;
+using Services.Services;
 
 namespace FindingHealthcareSystem.Pages.Patient.Profile
 {
@@ -13,6 +14,7 @@ namespace FindingHealthcareSystem.Pages.Patient.Profile
     {
         private readonly IUserService _userService; // Inject Repository
         private readonly IAppointmentService _appointmentService;
+        private readonly IFileUploadService _fileUploadService;
 
 
         public BusinessObjects.Entities.Patient CurrentUser { get; set; } // Chứa thông tin
@@ -21,10 +23,14 @@ namespace FindingHealthcareSystem.Pages.Patient.Profile
         public BusinessObjects.Entities.Patient UpdatedUser { get; set; } // Thuộc tính để binding dữ liệu từ form
         public List<MyAppointmentDto> Appointments { get; set; } = new();
 
-        public ProfileModel(IUserService userService, IAppointmentService appointmentService)
+        [BindProperty]
+        public IFormFile? ProfileImage { get; set; }
+
+        public ProfileModel(IUserService userService, IAppointmentService appointmentService, IFileUploadService fileUploadService)
         {
             _userService = userService;
             _appointmentService = appointmentService;
+            _fileUploadService = fileUploadService;
         }
         public async Task<IActionResult> OnGet()
         {
@@ -106,12 +112,23 @@ namespace FindingHealthcareSystem.Pages.Patient.Profile
                 var patient = await _userService.GetPatientById(userId);
                 if (patient == null) return NotFound();
 
+                // Handle image upload if a new image was provided
+                if (ProfileImage != null && ProfileImage.Length > 0)
+                {
+                    // Use FileUploadService to upload the image
+                    string imageUrl = await _fileUploadService.UploadImageAsync(ProfileImage, "users");
+                    await _userService.UploadUserImageAsync(userId, imageUrl);
+                    user.ImgUrl = imageUrl;
+
+                }
+
                 // Cập nhật thông tin User
                 user.Fullname = UpdatedUser.User.Fullname;
                 user.Email = UpdatedUser.User.Email;
                 user.PhoneNumber = UpdatedUser.User.PhoneNumber;
                 user.Gender = UpdatedUser.User.Gender;
                 user.Birthday = UpdatedUser.User.Birthday.GetValueOrDefault();
+                
 
                 // Cập nhật thông tin Professional
                 patient.Note = UpdatedUser.Note;
