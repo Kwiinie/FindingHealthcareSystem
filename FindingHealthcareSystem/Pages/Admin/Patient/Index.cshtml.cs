@@ -43,7 +43,16 @@ namespace FindingHealthcareSystem.Pages.Admin.Patient
 
 
                 var user = await _userService.GetUserByIdAsync(userid);
-                user.Status = UserStatus.Inactive.ToString();
+                if (user.Status.Equals(UserStatus.Active.ToString()))
+                {
+                    user.Status = UserStatus.Inactive.ToString();
+
+                }
+                else
+                {
+                    user.Status = UserStatus.Active.ToString();
+
+                }
 
                 await _userService.UpdateUserStatus(user);
 

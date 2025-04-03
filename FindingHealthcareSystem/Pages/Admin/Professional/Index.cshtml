@@ -68,9 +68,18 @@
                                 <td>
                                     <form method="post">
                                         <input type="hidden" name="professionalId" value="@expert.Id" />
-                                        <button type="submit" formaction="?handler=Approve" class="btn btn-danger btn-sm">
-                                            Chặn
-                                        </button>
+                                        @if (expert.Status == "Active")
+                                        {
+                                            <button type="submit" formaction="?handler=Approve" class="btn btn-danger btn-sm">
+                                                Chặn
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button type="submit" formaction="?handler=Approve" class="btn btn-warning btn-sm">
+                                                Bỏ chặn
+                                            </button>
+                                        }
 
                                     </form>
                                 </td>
