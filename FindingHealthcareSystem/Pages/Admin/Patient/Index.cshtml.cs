@@ -129,26 +129,26 @@ namespace FindingHealthcareSystem.Pages.Admin.Patient
                 .Take(PageSize);
         }
 
-
-
         public async Task<IActionResult> OnPostApproveAsync(int professionalId)
         {
             return await ProcessRequest(professionalId);
         }
 
-
-
         private async Task<IActionResult> ProcessRequest(int userid)
         {
-
-
             try
             {
-
-
                 var user = await _userService.GetUserByIdAsync(userid);
-                user.Status = UserStatus.Inactive.ToString();
+                if (user.Status.Equals(UserStatus.Active.ToString()))
+                {
+                    user.Status = UserStatus.Inactive.ToString();
 
+                }
+                else
+                {
+                    user.Status = UserStatus.Active.ToString();
+
+                }
                 await _userService.UpdateUserStatus(user);
 
                 return RedirectToPage();

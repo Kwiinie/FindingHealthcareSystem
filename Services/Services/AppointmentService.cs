@@ -102,6 +102,19 @@ namespace Services.Services
             }
         }
 
+        public async Task<AppointmentDTO> GetAsync(int id)
+        {
+            var appointment = await _unitOfWork.AppointmentRepository
+                .Query()
+                .Include(x => x.Patient)
+                .ThenInclude(x => x.User)
+                .Include(x => x.Payment)
+                .Include(x => x.PrivateService)
+                .Include(x => x.PublicService)
+                .FirstOrDefaultAsync(x => x.Id == id);
+            return _mapper.Map<AppointmentDTO>(appointment);
+        }
+
         public async Task<bool> ChangeAppointmentStatus(int id, AppointmentStatus rejected)
         {
             try

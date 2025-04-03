@@ -63,7 +63,16 @@ namespace FindingHealthcareSystem.Pages.Admin.Professional
 
                 professional.RequestStatus = status;
                 var user = await _userService.GetUserByIdAsync(professional.UserId.GetValueOrDefault());
-                user.Status= UserStatus.Inactive.ToString(); 
+                if (user.Status.Equals(UserStatus.Active.ToString()))
+                {
+                    user.Status = UserStatus.Inactive.ToString();
+
+                }
+                else
+                {
+                    user.Status = UserStatus.Active.ToString();
+
+                }
 
                 await _userService.UpdateUserStatus(user);
 
